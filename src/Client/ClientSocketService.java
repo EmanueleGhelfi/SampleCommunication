@@ -3,7 +3,8 @@ package Client;
 /**
  * Created by Emanuele on 09/05/2016.
  */
-public class ClientSocketService extends ClientService {
+public class ClientSocketService extends ClientService implements Runnable {
+
     @Override
     void SendMessage(String message) {
 
@@ -15,4 +16,8 @@ public class ClientSocketService extends ClientService {
     }
 
 
+    @Override
+    public void run() {
+
+    }
 }
