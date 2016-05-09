@@ -1,6 +1,6 @@
-package Listener;
+package Server.Listeners;
 
-import Communication.SocketCommunication;
+import Server.Communication.SocketCommunication;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,6 +18,7 @@ public class SocketListener implements Runnable {
 
     private SocketListener( ) throws IOException {
         serverSocket = new ServerSocket(4333);
+
     }
 
     public static SocketListener getInstance() throws IOException {
@@ -31,12 +32,14 @@ public class SocketListener implements Runnable {
     @Override
     public void run() {
 
+        System.out.println("Socket Listener Started");
         Socket clientSocket;
         ExecutorService executorService = Executors.newCachedThreadPool();
 
         while (true){
             try {
                 clientSocket = serverSocket.accept();
+                System.out.println("Socket accepted");
                 SocketCommunication socketCommunication = new SocketCommunication(clientSocket);
                 executorService.execute(socketCommunication);
             } catch (IOException e) {

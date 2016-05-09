@@ -1,4 +1,4 @@
-package Communication;
+package Server.Communication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,9 +31,10 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     @Override
     public void run() {
         String line;
+        System.out.println("Socket communication started");
         try {
             while ((line = in.readLine()) != null) {
-                System.out.println(line);
+                System.out.println("Received in Socket : "+line);
                 out.println(line);
             }
         } catch (IOException e) {

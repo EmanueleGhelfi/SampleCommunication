@@ -1,4 +1,4 @@
-package Communication;
+package Server.Communication;
 
 /**
  * Created by Emanuele on 09/05/2016.

@@ -1,7 +1,6 @@
-package Client;
+package Client.Service;
 
 import Interface.RMIClientHandler;
-import Interface.RMIClientInterface;
 import Interface.RMIListenerInterface;
 
 import java.rmi.NotBoundException;
@@ -22,23 +21,33 @@ public class ClientRMIService extends ClientService {
 
 
     @Override
-    void SendMessage(String message) {
-        rmiClientHandler.sayHello();
+    public void SendMessage(String message) {
+        try {
+            rmiClientHandler.sayHello();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    void Connect() {
-        rmiHandlerName = rmiListenerInterface.Connect();
+    public boolean Connect() {
         try {
+        rmiHandlerName = rmiListenerInterface.Connect();
+
             rmiClientHandler = (RMIClientHandler) registry.lookup(rmiHandlerName);
+            System.out.println("Connected to server");
+            return true;
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotBoundException e) {
             e.printStackTrace();
         }
+
+        return false;
     }
 
-    public ClientRMIService() throws RemoteException, NotBoundException {
+     ClientRMIService(String serverName) throws RemoteException, NotBoundException {
+        this.serverName = serverName;
         registry = LocateRegistry.getRegistry();
         rmiListenerInterface = (RMIListenerInterface) registry.lookup(serverName);
     }

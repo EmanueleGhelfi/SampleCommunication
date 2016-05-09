@@ -13,6 +13,7 @@ import java.rmi.registry.Registry;
 public class ClientMain {
 
     public static void main(String[] args){
-
+        Client client = new Client();
+        client.Start();
     }
 }

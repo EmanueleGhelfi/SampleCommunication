@@ -1,4 +1,4 @@
-package Listener;
+package Server.Listeners;
 
 import Interface.RMIClientHandler;
 import Interface.RMIListenerInterface;
@@ -11,20 +11,22 @@ import java.rmi.server.UnicastRemoteObject;
 /**
  * Created by Emanuele on 09/05/2016.
  */
-public class RMIListener extends UnicastRemoteObject implements RMIListenerInterface {
+public class RMIListener implements RMIListenerInterface {
 
-    protected RMIListener() throws RemoteException {
-        super();
+    public RMIListener() throws RemoteException {
+        //super();
+        UnicastRemoteObject.exportObject(this,0);
     }
 
     @Override
     public String Connect() {
         String name = "ClientHandler";
+        System.out.println("Client connected in rmi");
         try {
-            RMIHandler rmiHandler = new RMIHandler();
-            RMIClientHandler rmiClientHandler = (RMIClientHandler) UnicastRemoteObject.exportObject(rmiHandler,0);
+            RMIClientHandler rmiHandler = new RMIHandler(name);
+            //RMIClientHandler rmiClientHandler = (RMIClientHandler) UnicastRemoteObject.exportObject(rmiHandler,0);
             Registry registry = LocateRegistry.getRegistry();
-            registry.rebind(name,rmiClientHandler);
+            registry.rebind(name,rmiHandler);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
