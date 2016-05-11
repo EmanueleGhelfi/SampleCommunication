@@ -37,6 +37,7 @@ public class RMIListener implements RMIListenerInterface {
             Registry registry = LocateRegistry.getRegistry();
             registry.rebind(name,rmiHandler);
             User user = new User((BaseCommunication) rmiHandler,"blabla",server);
+            ((BaseCommunication) rmiHandler).setUser(user);
             server.AddToUsers(user);
             clientNumber++;
         } catch (RemoteException e) {

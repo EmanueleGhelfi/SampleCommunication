@@ -45,6 +45,7 @@ public class SocketListener implements Runnable {
                 System.out.println("Socket accepted");
                 SocketCommunication socketCommunication = new SocketCommunication(clientSocket);
                 User user = new User(socketCommunication, "provetta", server);
+                socketCommunication.setUser(user);
                 server.AddToUsers(user);
                 executorService.execute(socketCommunication);
             } catch (IOException e) {
