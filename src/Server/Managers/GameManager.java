@@ -1,4 +1,4 @@
-package Server.Main;
+package Server.Managers;
 
 import Interface.RMIListenerInterface;
 import Server.Listeners.RMIListener;
@@ -15,11 +15,27 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 09/05/2016.
  */
-public class Server {
+public class GameManager {
 
     private ArrayList<User> users = new ArrayList<>();
 
-    public Server(){
+    private static GameManager gameManager;
+
+    /**
+     * Created games (and maybe started)
+     */
+    private ArrayList<Game> games = new ArrayList<>();
+
+    private GameManager(){
+        start();
+    }
+
+    public static GameManager getInstance(){
+        if(gameManager==null){
+            gameManager = new GameManager();
+        }
+
+        return gameManager;
 
     }
 
@@ -49,16 +65,39 @@ public class Server {
         }
     }
 
-    public void AddToUsers(User userToAdd){
-        users.add(userToAdd);
+    public void addToGame(User userToAdd){
+        for (Game game: games) {
+            if(!game.isStarted()){
+                game.addUserToGame(userToAdd);
+                userToAdd.setGame(game);
+            }
+        }
     }
 
+    /**
+     * Send message to all client
+     * @param message
+     */
     public void OnMessage(String message) {
 
-        System.out.println("On message Server");
-        for (User user: users
-             ) {
+        System.out.println("On message GameManager");
+        for (User user: users) {
             user.getBaseCommunication().sendMessage(message);
         }
+    }
+
+    public boolean userAlreadyPresent(String username){
+        for (User user: users) {
+            if(user.getUsername().equals(username)){
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    public void AddToUsers(User user) {
+        users.add(user);
     }
 }

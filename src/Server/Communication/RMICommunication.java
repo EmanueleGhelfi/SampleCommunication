@@ -2,6 +2,8 @@ package Server.Communication;
 
 import Interface.RMIClientHandler;
 import Interface.RMIClientInterface;
+import Server.Managers.Game;
+import Server.Managers.GameManager;
 import Server.UserClasses.User;
 
 import java.rmi.NotBoundException;
@@ -17,9 +19,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     private User user;
     private RMIClientInterface rmiClientInterface;
+    private GameManager gameManager;
 
     public RMICommunication(String name) throws RemoteException {
         //super();
+        gameManager = GameManager.getInstance();
         UnicastRemoteObject.exportObject(this,0);
     }
 
@@ -40,6 +44,17 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public boolean tryToSetName(String username) throws RemoteException {
+        if(!gameManager.userAlreadyPresent(username)){
+            this.user.setUsername(username);
+            gameManager.addToGame(user);
+            return true;
+        }
+
+        return false;
     }
 
     @Override

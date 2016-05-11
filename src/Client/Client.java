@@ -62,7 +62,7 @@ public class Client {
     }
 
     public String getServerIP (BufferedReader inKeyboard) throws IOException {
-        System.out.println("Inserisci IP Server");
+        System.out.println("Inserisci IP GameManager");
         String scelta = inKeyboard.readLine();
         return scelta;
     }

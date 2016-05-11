@@ -1,7 +1,7 @@
 package Server.Listeners;
 
 import Server.Communication.SocketCommunication;
-import Server.Main.Server;
+import Server.Managers.GameManager;
 import Server.UserClasses.User;
 
 import java.io.IOException;
@@ -17,16 +17,16 @@ public class SocketListener implements Runnable {
 
     private ServerSocket serverSocket;
     private static SocketListener socketListener;
-    private Server server;
+    private GameManager gameManager;
 
-    private SocketListener(Server server) throws IOException {
+    private SocketListener(GameManager gameManager) throws IOException {
         serverSocket = new ServerSocket(4333);
-        this.server = server;
+        this.gameManager = gameManager;
     }
 
-    public static SocketListener getInstance(Server server) throws IOException {
+    public static SocketListener getInstance(GameManager gameManager) throws IOException {
         if(socketListener==null){
-            socketListener = new SocketListener(server);
+            socketListener = new SocketListener(gameManager);
         }
 
         return socketListener;
@@ -44,9 +44,9 @@ public class SocketListener implements Runnable {
                 clientSocket = serverSocket.accept();
                 System.out.println("Socket accepted");
                 SocketCommunication socketCommunication = new SocketCommunication(clientSocket);
-                User user = new User(socketCommunication, "provetta", server);
+                User user = new User(socketCommunication, gameManager);
                 socketCommunication.setUser(user);
-                server.AddToUsers(user);
+                gameManager.AddToUsers(user);
                 executorService.execute(socketCommunication);
             } catch (IOException e) {
                 e.printStackTrace();
