@@ -5,6 +5,7 @@ import Interface.RMIListenerInterface;
 import Server.Listeners.RMIHandler;
 import Server.Listeners.RMIListener;
 import Server.Listeners.SocketListener;
+import Server.UserClasses.User;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -12,11 +13,14 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 09/05/2016.
  */
 public class Server {
+
+    private ArrayList<User> users = new ArrayList<>();
 
     public Server(){
 
@@ -46,5 +50,9 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void AddToUsers(User userToAdd){
+        users.add(userToAdd);
     }
 }
