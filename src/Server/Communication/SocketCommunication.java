@@ -34,7 +34,8 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
 
     @Override
     public void sendMessage(String message) {
-            out.println(message);
+        System.out.println("SENDING MESSAGE" +message);
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_CHAT,message);
     }
 
     @Override

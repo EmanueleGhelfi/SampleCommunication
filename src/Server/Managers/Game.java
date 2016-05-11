@@ -39,6 +39,7 @@ public class Game {
     private void notifyStarted() {
         started=true;
         for (User user: usersInGame.values()) {
+            System.out.println("Sending to "+user.getUsername());
             user.notifyGameStart();
         }
     }

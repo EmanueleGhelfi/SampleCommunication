@@ -4,6 +4,7 @@ import ClientPackage.Client;
 import CommonModel.CommunicationInfo;
 import CommonModel.Constants;
 import com.google.gson.Gson;
+import javafx.application.Platform;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -72,7 +73,12 @@ public class ClientSocketService extends ClientService implements Runnable {
                 switch (communicationInfo.getCode()){
                     case Constants.CODE_NAME:{
                         boolean result =  gson.fromJson(communicationInfo.getInfo(),boolean.class);
-                        client.onNameReceived(result);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                client.onNameReceived(result);
+                            }
+                        });
                         break;
                     }
                     case Constants.CODE_CHAT:{
