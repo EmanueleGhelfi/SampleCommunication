@@ -24,6 +24,12 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     private String rmiHandlerName;
     RMIClientHandler rmiClientHandler;
 
+    ClientRMIService(String serverName, String serverIP) throws RemoteException, NotBoundException {
+        this.serverName = serverName;
+        registry = LocateRegistry.getRegistry(serverIP, 1099);
+        rmiListenerInterface = (RMIListenerInterface) registry.lookup(serverName);
+        UnicastRemoteObject.exportObject(this,0);
+    }
 
     @Override
     public void SendMessage(String message) {
@@ -70,14 +76,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         return randomSequence;
 
     }
-
-    ClientRMIService(String serverName) throws RemoteException, NotBoundException {
-        this.serverName = serverName;
-        registry = LocateRegistry.getRegistry();
-        rmiListenerInterface = (RMIListenerInterface) registry.lookup(serverName);
-         UnicastRemoteObject.exportObject(this,0);
-    }
-
 
     @Override
     public void OnMessage(String message) {

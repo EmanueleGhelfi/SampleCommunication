@@ -44,8 +44,8 @@ public class ClientSocketService extends ClientService implements Runnable {
 
     }
 
-     ClientSocketService(){
-
+     ClientSocketService(String serverIP){
+        hostname = serverIP;
     }
 
 

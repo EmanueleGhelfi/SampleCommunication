@@ -20,17 +20,11 @@ public class Client {
     public void Start(){
         try {
             String method = "";
-            System.out.println("Inserisci metodo comunicazione\n 1. RMI \n 2. Socket \n (So che non sai cosa sono ma metti una cosa a caso)");
             BufferedReader inKeyboard = new BufferedReader(new InputStreamReader(System.in));
-            String scelta = inKeyboard.readLine();
-            if(scelta.equals("1")){
-                method="RMI";
-            }
-            else {
-                method="SOCKET";
-            }
+            method = getChoiceConnection(inKeyboard);
+            String serverIP = getServerIP(inKeyboard);
             ClientService clientService = FactoryService.getService(method);
-            if(clientService.Connect()) {
+            if(clientService.Connect(serverIP)) {
                 System.out.println("connected");
                 clientService.SendMessage("Hello server");
 
@@ -52,5 +46,24 @@ public class Client {
         }
 
 
+    }
+
+
+    public String getChoiceConnection (BufferedReader inKeyboard) throws IOException {
+        String method;
+        System.out.println("Inserisci metodo comunicazione\n 1. RMI \n 2. Socket \n (So che non sai cosa sono ma metti una cosa a caso)");
+        String scelta = inKeyboard.readLine();
+        if (scelta.equals("1")) {
+            method = "RMI";
+        } else {
+            method = "SOCKET";
+        }
+        return method;
+    }
+
+    public String getServerIP (BufferedReader inKeyboard) throws IOException {
+        System.out.println("Inserisci IP Server");
+        String scelta = inKeyboard.readLine();
+        return scelta;
     }
 }

@@ -8,13 +8,13 @@ import java.rmi.RemoteException;
  */
 public class FactoryService {
 
-    public static ClientService getService(String method) throws RemoteException, NotBoundException {
+    public static ClientService getService(String method, String serverIP) throws RemoteException, NotBoundException {
         if(method.equals("RMI")) {
 
-            return new ClientRMIService("server");
+            return new ClientRMIService("server", serverIP);
         }
         else{
-            return new ClientSocketService();
+            return new ClientSocketService(serverIP);
         }
 
 
