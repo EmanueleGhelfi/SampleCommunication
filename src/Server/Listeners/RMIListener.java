@@ -3,7 +3,7 @@ package Server.Listeners;
 import Interface.RMIClientHandler;
 import Interface.RMIListenerInterface;
 import Server.Communication.BaseCommunication;
-import Server.Communication.RMIHandler;
+import Server.Communication.RMICommunication;
 import Server.Main.Server;
 import Server.UserClasses.User;
 
@@ -32,7 +32,7 @@ public class RMIListener implements RMIListenerInterface {
 
         System.out.println("Client connected in rmi");
         try {
-            RMIClientHandler rmiHandler = new RMIHandler(name);
+            RMIClientHandler rmiHandler = new RMICommunication(name);
             //RMIClientHandler rmiClientHandler = (RMIClientHandler) UnicastRemoteObject.exportObject(rmiHandler,0);
             Registry registry = LocateRegistry.getRegistry();
             registry.rebind(name,rmiHandler);

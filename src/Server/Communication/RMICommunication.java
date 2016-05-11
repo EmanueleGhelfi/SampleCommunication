@@ -10,11 +10,11 @@ import java.rmi.server.UnicastRemoteObject;
 /**
  * Created by Emanuele on 09/05/2016.
  */
-public class RMIHandler extends BaseCommunication implements RMIClientHandler {
+public class RMICommunication extends BaseCommunication implements RMIClientHandler {
 
     private User user;
 
-    protected RMIHandler(String name) throws RemoteException {
+    protected RMICommunication(String name) throws RemoteException {
         //super();
         UnicastRemoteObject.exportObject(this,0);
     }
