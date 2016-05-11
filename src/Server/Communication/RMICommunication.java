@@ -14,7 +14,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     private User user;
 
-    protected RMICommunication(String name) throws RemoteException {
+    public RMICommunication(String name) throws RemoteException {
         //super();
         UnicastRemoteObject.exportObject(this,0);
     }

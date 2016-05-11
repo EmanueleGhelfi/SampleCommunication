@@ -52,4 +52,11 @@ public class Server {
     public void AddToUsers(User userToAdd){
         users.add(userToAdd);
     }
+
+    public void OnMessage(String message) {
+        for (User user: users
+             ) {
+            user.getBaseCommunication().sendMessage(message);
+        }
+    }
 }

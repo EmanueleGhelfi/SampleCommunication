@@ -36,7 +36,7 @@ public class RMIListener implements RMIListenerInterface {
             //RMIClientHandler rmiClientHandler = (RMIClientHandler) UnicastRemoteObject.exportObject(rmiHandler,0);
             Registry registry = LocateRegistry.getRegistry();
             registry.rebind(name,rmiHandler);
-            User user = new User((BaseCommunication) rmiHandler,"blabla");
+            User user = new User((BaseCommunication) rmiHandler,"blabla",server);
             server.AddToUsers(user);
             clientNumber++;
         } catch (RemoteException e) {
