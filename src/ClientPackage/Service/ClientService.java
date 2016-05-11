@@ -1,4 +1,4 @@
-package Client.Service;
+package ClientPackage.Service;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -8,4 +8,6 @@ package Client.Service;
     public abstract void SendMessage(String message);
 
     public abstract boolean Connect();
+
+    public abstract void sendName(String name);
 }

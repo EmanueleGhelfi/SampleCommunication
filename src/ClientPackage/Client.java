@@ -1,7 +1,7 @@
-package Client;
+package ClientPackage;
 
-import Client.Service.ClientService;
-import Client.Service.FactoryService;
+import ClientPackage.Service.ClientService;
+import ClientPackage.Service.FactoryService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +13,9 @@ import java.rmi.NotBoundException;
  */
 public class Client {
 
+    private ClientService clientService;
+    private BufferedReader inKeyboard;
+
     public Client(){
 
     }
@@ -20,20 +23,14 @@ public class Client {
     public void Start(){
         try {
             String method = "";
-            BufferedReader inKeyboard = new BufferedReader(new InputStreamReader(System.in));
+
+             inKeyboard = new BufferedReader(new InputStreamReader(System.in));
             method = getChoiceConnection(inKeyboard);
             String serverIP = getServerIP(inKeyboard);
-            ClientService clientService = FactoryService.getService(method,serverIP);
+            clientService = FactoryService.getService(method,serverIP,this);
             if(clientService.Connect()) {
                 System.out.println("connected");
-                clientService.SendMessage("Hello server");
-
-
-                while (true) {
-                    System.out.println("Cosa vuoi mandare?");
-                    String line = inKeyboard.readLine();
-                    clientService.SendMessage(line);
-                }
+                ReadName();
             }
             else{
                 System.out.println("not connected, sorry");
@@ -44,6 +41,16 @@ public class Client {
         } catch (NotBoundException e) {
             e.printStackTrace();
         }
+
+
+    }
+
+    private void ReadName() throws IOException {
+
+        System.out.println("Inserisci il tuo nome:");
+        String name = inKeyboard.readLine();
+        System.out.println("Attendi la verifica...");
+        clientService.sendName(name);
 
 
     }
@@ -65,5 +72,26 @@ public class Client {
         System.out.println("Inserisci IP GameManager");
         String scelta = inKeyboard.readLine();
         return scelta;
+    }
+
+    public void onNameReceived(boolean result) {
+        try {
+            if(!result){
+                ReadName();
+        }
+            else{
+                goToChat();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void goToChat() throws IOException {
+        while (true) {
+            System.out.println("Cosa vuoi mandare?");
+            String line = inKeyboard.readLine();
+            clientService.SendMessage(line);
+        }
     }
 }

@@ -1,4 +1,9 @@
-package Client.Service;
+package ClientPackage.Service;
+
+import ClientPackage.Client;
+import CommonModel.CommunicationInfo;
+import CommonModel.Constants;
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,13 +21,18 @@ public class ClientSocketService extends ClientService implements Runnable {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
+    private Client client;
 
+    ClientSocketService(String serverIP, Client client){
+        hostname = serverIP;
+        this.client = client;
+    }
 
 
     @Override
     public void SendMessage(String message) {
         System.out.println("sended "+message);
-        out.println(message);
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_CHAT,message);
     }
 
     @Override
@@ -44,18 +54,34 @@ public class ClientSocketService extends ClientService implements Runnable {
 
     }
 
-     ClientSocketService(String serverIP){
-        hostname = serverIP;
+    @Override
+    public void sendName(String name) {
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME,name);
     }
+
+
 
 
     @Override
     public void run() {
         System.out.println("ClientSocketService Started");
         String line = null;
+        Gson gson = new Gson();
         try {
             while ( (line = in.readLine())!=null){
-                System.out.println(line);
+                CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
+                switch (communicationInfo.getCode()){
+                    case Constants.CODE_NAME:{
+                        boolean result =  gson.fromJson(communicationInfo.getInfo(),boolean.class);
+                        client.onNameReceived(result);
+                        break;
+                    }
+                    case Constants.CODE_CHAT:{
+                        String message = gson.fromJson(communicationInfo.getInfo(),String.class);
+                        System.out.println(message);
+                        break;
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package Client;
+package ClientPackage;
 
 import Interface.RMIClientInterface;
 

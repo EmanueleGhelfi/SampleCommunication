@@ -30,7 +30,7 @@ public class RMIListener implements RMIListenerInterface {
     public String Connect() {
         String name = "ClientHandler"+clientNumber;
 
-        System.out.println("Client connected in rmi");
+        System.out.println("ClientPackage connected in rmi");
         try {
             RMIClientHandler rmiHandler = new RMICommunication(name);
             //RMIClientHandler rmiClientHandler = (RMIClientHandler) UnicastRemoteObject.exportObject(rmiHandler,0);

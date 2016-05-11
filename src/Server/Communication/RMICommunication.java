@@ -57,6 +57,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         return false;
     }
 
+    // send a message to client
     @Override
     public void sendMessage(String message) {
         try {

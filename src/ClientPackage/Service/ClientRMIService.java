@@ -1,5 +1,6 @@
-package Client.Service;
+package ClientPackage.Service;
 
+import ClientPackage.Client;
 import Interface.RMIClientHandler;
 import Interface.RMIClientInterface;
 import Interface.RMIListenerInterface;
@@ -23,9 +24,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     Registry registry;
     private String rmiHandlerName;
     RMIClientHandler rmiClientHandler;
+    private Client client;
 
-    ClientRMIService(String serverName, String serverIP) throws RemoteException, NotBoundException {
+    ClientRMIService(String serverName, String serverIP, Client client) throws RemoteException, NotBoundException {
         this.serverName = serverName;
+        this.client = client;
         registry = LocateRegistry.getRegistry(serverIP, 1099);
         rmiListenerInterface = (RMIListenerInterface) registry.lookup(serverName);
         UnicastRemoteObject.exportObject(this,0);
@@ -63,6 +66,17 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         }
 
         return false;
+    }
+
+    @Override
+    public void sendName(String name) {
+        try {
+            boolean result = rmiClientHandler.tryToSetName(name);
+            client.onNameReceived(result);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private String generateName() {
