@@ -24,7 +24,7 @@ public class Server {
 
     public void start(){
         try {
-            RMIListenerInterface rmiListener = new RMIListener();
+            RMIListenerInterface rmiListener = new RMIListener(this);
             Registry registry=null;
         try{
              registry = LocateRegistry.createRegistry(1099);
@@ -36,7 +36,7 @@ public class Server {
         }
         registry.rebind("server",rmiListener);
 
-            SocketListener socketListener = SocketListener.getInstance();
+            SocketListener socketListener = SocketListener.getInstance(this);
             Thread thread = new Thread(socketListener);
             thread.start();
 

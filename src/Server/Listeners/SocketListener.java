@@ -1,6 +1,7 @@
 package Server.Listeners;
 
 import Server.Communication.SocketCommunication;
+import Server.Main.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,15 +16,16 @@ public class SocketListener implements Runnable {
 
     private ServerSocket serverSocket;
     private static SocketListener socketListener;
+    private Server server;
 
-    private SocketListener( ) throws IOException {
+    private SocketListener(Server server) throws IOException {
         serverSocket = new ServerSocket(4333);
-
+        this.server = server;
     }
 
-    public static SocketListener getInstance() throws IOException {
+    public static SocketListener getInstance(Server server) throws IOException {
         if(socketListener==null){
-            socketListener = new SocketListener();
+            socketListener = new SocketListener(server);
         }
 
         return socketListener;
