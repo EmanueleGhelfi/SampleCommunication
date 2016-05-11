@@ -26,7 +26,7 @@ public class Game {
     private int duration = 5000;
     private HashMap<String,User> usersInGame = new HashMap<>();
 
-    public Game(boolean started) {
+    public Game() {
         this.started = false;
         timerTask = new TimerTask() {
             @Override

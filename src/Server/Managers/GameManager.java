@@ -72,6 +72,12 @@ public class GameManager {
                 userToAdd.setGame(game);
             }
         }
+
+        Game game = new Game();
+        games.add(game);
+        game.addUserToGame(userToAdd);
+        userToAdd.setGame(game);
+
     }
 
     /**
