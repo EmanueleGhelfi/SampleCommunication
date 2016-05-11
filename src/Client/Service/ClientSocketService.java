@@ -55,7 +55,7 @@ public class ClientSocketService extends ClientService implements Runnable {
         String line = null;
         try {
             while ( (line = in.readLine())!=null){
-
+                System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

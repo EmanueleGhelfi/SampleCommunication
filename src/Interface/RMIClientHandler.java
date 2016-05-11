@@ -9,4 +9,6 @@ import java.rmi.RemoteException;
 public interface RMIClientHandler extends Remote{
 
     String sayHello() throws RemoteException;
+
+    boolean sendIP(String ip, String name) throws RemoteException;
 }

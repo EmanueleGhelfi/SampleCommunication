@@ -1,10 +1,13 @@
 package Server.Communication;
 
 import Interface.RMIClientHandler;
-import Server.Communication.BaseCommunication;
+import Interface.RMIClientInterface;
 import Server.UserClasses.User;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
@@ -13,6 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class RMICommunication extends BaseCommunication implements RMIClientHandler {
 
     private User user;
+    private RMIClientInterface rmiClientInterface;
 
     public RMICommunication(String name) throws RemoteException {
         //super();
@@ -26,8 +30,20 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
-    public void sendMessage(String message) {
+    public boolean sendIP(String ip, String name) throws RemoteException {
+        Registry registry = LocateRegistry.getRegistry(ip,1099);
+        try {
+            rmiClientInterface = (RMIClientInterface) registry.lookup(name);
+            return true;
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    @Override
+    public void sendMessage(String message) {
+        rmiClientInterface.OnMessage(message);
     }
 
     @Override
