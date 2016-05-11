@@ -73,12 +73,7 @@ public class ClientSocketService extends ClientService implements Runnable {
                 switch (communicationInfo.getCode()){
                     case Constants.CODE_NAME:{
                         boolean result =  gson.fromJson(communicationInfo.getInfo(),boolean.class);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                client.onNameReceived(result);
-                            }
-                        });
+                        client.onNameReceived(result);
                         break;
                     }
                     case Constants.CODE_CHAT:{

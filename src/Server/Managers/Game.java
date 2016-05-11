@@ -50,6 +50,7 @@ public class Game {
 
 
     public boolean addUserToGame(User userToAdd) {
+        System.out.println("ADDING A USER TO A GAME "+userToAdd);
         if(!usersInGame.containsKey(userToAdd.getUsername())){
             usersInGame.put(userToAdd.getUsername(),userToAdd);
             if(usersInGame.size()>=2 && usersInGame.size()<4){

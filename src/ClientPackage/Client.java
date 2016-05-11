@@ -75,16 +75,23 @@ public class Client {
     }
 
     public void onNameReceived(boolean result) {
-        try {
-            if(!result){
-                ReadName();
-        }
-            else{
-                goToChat();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if(!result){
+                        ReadName();
+                    }
+                    else{
+                        goToChat();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
+        thread.start();
+
     }
 
     private void goToChat() throws IOException {
