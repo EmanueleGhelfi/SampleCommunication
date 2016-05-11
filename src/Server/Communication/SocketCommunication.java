@@ -24,7 +24,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
 
 
     @Override
-    void sendMessage(String message) {
+    public void sendMessage(String message) {
             out.println(message);
     }
 
