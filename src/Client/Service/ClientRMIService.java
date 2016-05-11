@@ -51,6 +51,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             String ip = getIP();
 
             String name = generateName();
+            registry.rebind(name,this);
             rmiClientHandler.sendIP(ip,name);
             return true;
         } catch (RemoteException e) {

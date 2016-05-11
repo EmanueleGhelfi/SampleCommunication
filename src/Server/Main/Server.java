@@ -54,6 +54,8 @@ public class Server {
     }
 
     public void OnMessage(String message) {
+
+        System.out.println("On message Server");
         for (User user: users
              ) {
             user.getBaseCommunication().sendMessage(message);

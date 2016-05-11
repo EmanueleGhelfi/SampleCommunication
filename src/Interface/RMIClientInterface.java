@@ -1,6 +1,7 @@
 package Interface;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 
 /**
@@ -8,7 +9,7 @@ import java.rmi.Remote;
  */
 public interface RMIClientInterface extends Remote {
 
-    void OnMessage(String message);
+    void OnMessage(String message) throws RemoteException;
 
 
 }

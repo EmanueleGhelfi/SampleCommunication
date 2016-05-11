@@ -23,8 +23,8 @@ public class Client {
             BufferedReader inKeyboard = new BufferedReader(new InputStreamReader(System.in));
             method = getChoiceConnection(inKeyboard);
             String serverIP = getServerIP(inKeyboard);
-            ClientService clientService = FactoryService.getService(method);
-            if(clientService.Connect(serverIP)) {
+            ClientService clientService = FactoryService.getService(method,serverIP);
+            if(clientService.Connect()) {
                 System.out.println("connected");
                 clientService.SendMessage("Hello server");
 

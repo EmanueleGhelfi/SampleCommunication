@@ -43,7 +43,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void sendMessage(String message) {
-        rmiClientInterface.OnMessage(message);
+        try {
+            rmiClientInterface.OnMessage(message);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
