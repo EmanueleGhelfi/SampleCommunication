@@ -1,5 +1,7 @@
 package Server.Communication;
 
+import Server.UserClasses.User;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +16,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    private User user;
 
     public SocketCommunication(Socket socket) throws IOException {
         this.socket = socket;
@@ -29,6 +32,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
     public void run() {
         String line;
         System.out.println("Socket communication started");
@@ -41,5 +49,6 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
             e.printStackTrace();
         }
     }
+
 
 }

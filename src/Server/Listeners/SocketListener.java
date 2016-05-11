@@ -2,6 +2,7 @@ package Server.Listeners;
 
 import Server.Communication.SocketCommunication;
 import Server.Main.Server;
+import Server.UserClasses.User;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -43,6 +44,8 @@ public class SocketListener implements Runnable {
                 clientSocket = serverSocket.accept();
                 System.out.println("Socket accepted");
                 SocketCommunication socketCommunication = new SocketCommunication(clientSocket);
+                User user = new User(socketCommunication, "provetta");
+                server.AddToUsers(user);
                 executorService.execute(socketCommunication);
             } catch (IOException e) {
                 e.printStackTrace();
