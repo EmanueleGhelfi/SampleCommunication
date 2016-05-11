@@ -54,7 +54,7 @@ public class Game {
             if(usersInGame.size()>=2 && usersInGame.size()<4){
                 setTimeout();
             }
-            else {
+            else if(usersInGame.size()>=2){
                 cancelTimeout();
                 notifyStarted();
             }
@@ -84,7 +84,9 @@ public class Game {
     }
 
     public void OnMessage(String message) {
+        System.out.println("In Game: received "+message);
         for (User user: usersInGame.values()) {
+            System.out.println("sending a message to "+user.getUsername());
             user.getBaseCommunication().sendMessage(message);
         }
     }

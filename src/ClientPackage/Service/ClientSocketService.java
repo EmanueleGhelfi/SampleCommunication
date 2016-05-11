@@ -41,7 +41,6 @@ public class ClientSocketService extends ClientService implements Runnable {
             socket = new Socket(hostname,port);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out.println("HELLO");
             Thread thread = new Thread(this);
             thread.start();
             System.out.println("Thread started");
