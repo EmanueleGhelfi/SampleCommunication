@@ -44,6 +44,7 @@ public class CommunicationInfo {
     }
 
     public static CommunicationInfo decodeCommunicationInfo(String communicationInfo){
+        System.out.println(communicationInfo);
         Gson gson = new Gson();
         return gson.fromJson(communicationInfo,CommunicationInfo.class);
     }

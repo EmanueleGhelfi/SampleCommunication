@@ -68,11 +68,13 @@ public class GameManager {
     public void addToGame(User userToAdd){
         for (Game game: games) {
             if(!game.isStarted()){
+                System.out.println("adding user to a game");
                 game.addUserToGame(userToAdd);
                 userToAdd.setGame(game);
             }
         }
 
+        System.out.println("creating a new game");
         Game game = new Game();
         games.add(game);
         game.addUserToGame(userToAdd);
@@ -80,19 +82,9 @@ public class GameManager {
 
     }
 
-    /**
-     * Send message to all client
-     * @param message
-     */
-    public void OnMessage(String message) {
-
-        System.out.println("On message GameManager");
-        for (User user: users) {
-            user.getBaseCommunication().sendMessage(message);
-        }
-    }
 
     public boolean userAlreadyPresent(String username){
+        System.out.println("User already present called");
         for (User user: users) {
             if(user.getUsername().equals(username)){
                 return true;
