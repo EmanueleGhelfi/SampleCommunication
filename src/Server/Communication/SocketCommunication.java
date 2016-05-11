@@ -44,6 +44,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
             while ((line = in.readLine()) != null) {
                 System.out.println("Received in Socket : "+line);
                 out.println(line);
+                user.OnMessage(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

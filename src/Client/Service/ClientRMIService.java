@@ -34,7 +34,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     @Override
     public void SendMessage(String message) {
         try {
-            rmiClientHandler.sayHello();
+            rmiClientHandler.OnMessage(message);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

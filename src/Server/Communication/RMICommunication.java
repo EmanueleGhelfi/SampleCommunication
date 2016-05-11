@@ -23,10 +23,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         UnicastRemoteObject.exportObject(this,0);
     }
 
+
+    // receive a message from client
     @Override
-    public String sayHello() {
-        System.out.println("Say hello");
-        return "Hello!";
+    public void OnMessage(String message) {
+        user.OnMessage(message);
     }
 
     @Override
