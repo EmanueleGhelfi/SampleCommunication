@@ -23,7 +23,7 @@ public class Game {
     private Timer timer;
     private TimerTask timerTask;
 
-    private int duration = 5000;
+    private int duration = 20000;
     private HashMap<String,User> usersInGame = new HashMap<>();
 
     public Game() {
@@ -79,6 +79,12 @@ public class Game {
         else{
             System.out.println("Restarted timeout");
             timer.cancel();
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    notifyStarted();
+                }
+            };
             timer = new Timer();
         }
 
