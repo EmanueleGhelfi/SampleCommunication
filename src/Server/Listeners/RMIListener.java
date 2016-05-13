@@ -4,7 +4,7 @@ import Interface.RMIClientHandler;
 import Interface.RMIListenerInterface;
 import Server.Communication.BaseCommunication;
 import Server.Communication.RMICommunication;
-import Server.Managers.GameManager;
+import Server.Managers.GamesManager;
 import Server.UserClasses.User;
 
 import java.rmi.RemoteException;
@@ -18,12 +18,12 @@ import java.rmi.server.UnicastRemoteObject;
 public class RMIListener implements RMIListenerInterface {
 
     private int clientNumber = 0;
-    private GameManager gameManager;
+    private GamesManager gamesManager;
 
-    public RMIListener(GameManager gameManager) throws RemoteException {
+    public RMIListener(GamesManager gamesManager) throws RemoteException {
         //super();
         UnicastRemoteObject.exportObject(this,0);
-        this.gameManager = gameManager;
+        this.gamesManager = gamesManager;
     }
 
     @Override
@@ -36,9 +36,9 @@ public class RMIListener implements RMIListenerInterface {
             //RMIClientHandler rmiClientHandler = (RMIClientHandler) UnicastRemoteObject.exportObject(rmiHandler,0);
             Registry registry = LocateRegistry.getRegistry();
             registry.rebind(name,rmiHandler);
-            User user = new User((BaseCommunication) rmiHandler, gameManager);
+            User user = new User((BaseCommunication) rmiHandler, gamesManager);
             ((BaseCommunication) rmiHandler).setUser(user);
-            gameManager.AddToUsers(user);
+            gamesManager.AddToUsers(user);
             clientNumber++;
         } catch (RemoteException e) {
             e.printStackTrace();

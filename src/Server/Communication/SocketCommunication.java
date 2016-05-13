@@ -2,7 +2,9 @@ package Server.Communication;
 
 import CommonModel.CommunicationInfo;
 import CommonModel.Constants;
-import Server.Managers.GameManager;
+import CommonModel.GameImmutable;
+import Server.Controller.GameController;
+import Server.Managers.GamesManager;
 import Server.UserClasses.User;
 import com.google.gson.Gson;
 
@@ -21,14 +23,16 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     private BufferedReader in;
     private PrintWriter out;
     private User user;
-    private GameManager gameManager;
+    private GamesManager gamesManager;
+    private GameController gameController;
+    private GameImmutable gameImmutable;
 
     public SocketCommunication(Socket socket) throws IOException {
         this.socket = socket;
         //Open the buffers
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
-        gameManager = GameManager.getInstance();
+        gamesManager = GamesManager.getInstance();
     }
 
 
@@ -54,9 +58,9 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                 switch (communicationInfo.getCode()) {
                     case Constants.CODE_NAME: {
                         String username = gson.fromJson(communicationInfo.getInfo(),String.class);
-                        if(!gameManager.userAlreadyPresent(username)) {
+                        if(!gamesManager.userAlreadyPresent(username)) {
                             this.user.setUsername(username);
-                            gameManager.addToGame(user);
+                            gamesManager.addToGame(user);
                             CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME, true);
                         }
                         else{
@@ -74,6 +78,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
             }
         }catch (IOException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 

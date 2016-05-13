@@ -3,6 +3,7 @@ package Server.Managers;
 import Interface.RMIListenerInterface;
 import Server.Listeners.RMIListener;
 import Server.Listeners.SocketListener;
+import Server.Model.Game;
 import Server.UserClasses.User;
 
 import java.io.IOException;
@@ -15,27 +16,27 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 09/05/2016.
  */
-public class GameManager {
+public class GamesManager {
 
     private ArrayList<User> users = new ArrayList<>();
 
-    private static GameManager gameManager;
+    private static GamesManager gamesManager;
 
     /**
      * Created games (and maybe started)
      */
     private ArrayList<Game> games = new ArrayList<>();
 
-    private GameManager(){
+    private GamesManager(){
         start();
     }
 
-    public static GameManager getInstance(){
-        if(gameManager==null){
-            gameManager = new GameManager();
+    public static GamesManager getInstance(){
+        if(gamesManager ==null){
+            gamesManager = new GamesManager();
         }
 
-        return gameManager;
+        return gamesManager;
 
     }
 

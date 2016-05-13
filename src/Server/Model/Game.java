@@ -1,5 +1,7 @@
-package Server.Managers;
+package Server.Model;
 
+import CommonModel.GameImmutable;
+import Server.Controller.GameController;
 import Server.UserClasses.User;
 
 import java.util.HashMap;
@@ -9,22 +11,27 @@ import java.util.TimerTask;
 /**
  * Created by Emanuele on 11/05/2016.
  */
-public class Game {
+public class Game implements GameImmutable{
 
     /**
      * True if game is full (There game is started and the players are playing)
      */
     private boolean started;
 
+
+
     /**
      * All users in the game with their name
      */
+    private HashMap<String,User> usersInGame = new HashMap<>();
 
     private Timer timer;
     private TimerTask timerTask;
 
     private int duration = 20000;
-    private HashMap<String,User> usersInGame = new HashMap<>();
+
+    private GameController gameController;
+
 
     public Game() {
         this.started = false;
@@ -44,6 +51,7 @@ public class Game {
         }
     }
 
+    @Override
     public boolean isStarted() {
         return started;
     }

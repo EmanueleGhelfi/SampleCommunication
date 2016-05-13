@@ -1,7 +1,10 @@
-package ClientPackage;
+package ClientPackage.Controller;
 
 import ClientPackage.Service.ClientService;
 import ClientPackage.Service.FactoryService;
+import ClientPackage.View.BaseView;
+import ClientPackage.View.FactoryView;
+import ClientPackage.View.ViewException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,26 +14,33 @@ import java.rmi.NotBoundException;
 /**
  * Created by Emanuele on 09/05/2016.
  */
-public class Client {
+
+/**
+ * This class manage event and transaction with server
+ */
+public class ClientController {
 
     private ClientService clientService;
     private BufferedReader inKeyboard;
+    private BaseView baseView;
 
-    public Client(){
+    public ClientController(){
 
     }
 
-    public void Start(){
+    public void init(){
         try {
-            String method = "";
+            String networkMethod = "";
+            String uiMethod = "";
 
              inKeyboard = new BufferedReader(new InputStreamReader(System.in));
-            method = getChoiceConnection(inKeyboard);
+            networkMethod = getChoiceConnection(inKeyboard);
             String serverIP = getServerIP(inKeyboard);
-            clientService = FactoryService.getService(method,serverIP,this);
+            clientService = FactoryService.getService(networkMethod,serverIP,this);
             if(clientService.Connect()) {
-                System.out.println("connected");
-                ReadName();
+                uiMethod = getUIMethod(inKeyboard);
+                baseView = FactoryView.getBaseView(uiMethod);
+                baseView.initView();
             }
             else{
                 System.out.println("not connected, sorry");
@@ -40,9 +50,30 @@ public class Client {
             e.printStackTrace();
         } catch (NotBoundException e) {
             e.printStackTrace();
+        } catch (ViewException e) {
+            e.printStackTrace();
         }
 
 
+    }
+
+    private String getUIMethod(BufferedReader inKeyboard) throws IOException {
+        String method = "";
+        System.out.println("Quale UI vuoi utilizzare? \n 1. GUI \n 2. CLI");
+        String choice = inKeyboard.readLine();
+        while(method.equals("")) {
+            switch (choice) {
+                case "1":
+                    method = "GUI";
+                    break;
+                case "2":
+                    method = "CLI";
+                    break;
+                default:
+                    System.out.println("Scelta non valida");
+            }
+        }
+        return method;
     }
 
     private void ReadName() throws IOException {
@@ -69,7 +100,7 @@ public class Client {
     }
 
     public String getServerIP (BufferedReader inKeyboard) throws IOException {
-        System.out.println("Inserisci IP GameManager");
+        System.out.println("Inserisci IP GamesManager");
         String scelta = inKeyboard.readLine();
         return scelta;
     }

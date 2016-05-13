@@ -1,10 +1,9 @@
 package ClientPackage.Service;
 
-import ClientPackage.Client;
+import ClientPackage.Controller.ClientController;
 import CommonModel.CommunicationInfo;
 import CommonModel.Constants;
 import com.google.gson.Gson;
-import javafx.application.Platform;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,11 +21,11 @@ public class ClientSocketService extends ClientService implements Runnable {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private Client client;
+    private ClientController clientController;
 
-    ClientSocketService(String serverIP, Client client){
+    ClientSocketService(String serverIP, ClientController clientController){
         hostname = serverIP;
-        this.client = client;
+        this.clientController = clientController;
     }
 
 
@@ -73,7 +72,7 @@ public class ClientSocketService extends ClientService implements Runnable {
                 switch (communicationInfo.getCode()){
                     case Constants.CODE_NAME:{
                         boolean result =  gson.fromJson(communicationInfo.getInfo(),boolean.class);
-                        client.onNameReceived(result);
+                        clientController.onNameReceived(result);
                         break;
                     }
                     case Constants.CODE_CHAT:{
