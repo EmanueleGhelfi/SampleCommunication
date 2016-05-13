@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
  */
 public interface RMIClientHandler extends Remote{
 
-    void OnMessage(String message) throws RemoteException;
+
 
     boolean sendIP(String ip, String name) throws RemoteException;
 

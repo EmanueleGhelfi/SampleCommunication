@@ -28,13 +28,6 @@ public class User {
         this.connected=true;
     }
 
-    /**
-     * Called when the user receive a message on RMI or socket
-     * @param message the message
-     */
-    public void OnMessage(String message){
-        game.OnMessage(message);
-    }
 
     /**
      *

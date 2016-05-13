@@ -105,6 +105,10 @@ public class ClientController {
         return scelta;
     }
 
+    /**
+     * Called when the name is accepted
+     * @param result
+     */
     public void onNameReceived(boolean result) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -114,7 +118,7 @@ public class ClientController {
                         ReadName();
                     }
                     else{
-                        goToChat();
+                        // Start All
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -125,11 +129,5 @@ public class ClientController {
 
     }
 
-    private void goToChat() throws IOException {
-        while (true) {
-            System.out.println("Cosa vuoi mandare?");
-            String line = inKeyboard.readLine();
-            clientService.SendMessage(line);
-        }
-    }
+
 }

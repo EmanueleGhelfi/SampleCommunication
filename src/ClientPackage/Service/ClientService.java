@@ -5,7 +5,7 @@ package ClientPackage.Service;
  */
  public abstract class ClientService {
 
-    public abstract void SendMessage(String message);
+
 
     public abstract boolean Connect();
 

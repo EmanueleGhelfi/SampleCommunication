@@ -29,11 +29,7 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
 
-    @Override
-    public void SendMessage(String message) {
-        System.out.println("sended "+message);
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_CHAT,message);
-    }
+
 
     @Override
     public boolean Connect() {

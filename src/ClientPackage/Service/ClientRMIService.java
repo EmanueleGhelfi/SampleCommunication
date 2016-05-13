@@ -34,14 +34,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         UnicastRemoteObject.exportObject(this,0);
     }
 
-    @Override
-    public void SendMessage(String message) {
-        try {
-            rmiClientHandler.OnMessage(message);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @Override
     public boolean Connect() {
@@ -92,11 +85,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     }
 
-    @Override
-    public void OnMessage(String message) {
-        System.out.println(message);
 
-    }
 
     public String getIP() throws UnknownHostException {
         InetAddress IP=InetAddress.getLocalHost();

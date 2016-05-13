@@ -31,12 +31,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
 
-    // receive a message from client
-    @Override
-    public void OnMessage(String message) {
-        System.out.println("Received in RMI"+message);
-        user.OnMessage(message);
-    }
+
 
     @Override
     public boolean sendIP(String ip, String name) throws RemoteException {
