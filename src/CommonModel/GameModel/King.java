@@ -8,4 +8,6 @@ public class King {
     private City currentCity;
     private Council council;
 
+
+
 }
