@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="loginPane" stylesheets="@CSS/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.GUIController">
    <center>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EHIIIIIIIIIIIIIIIIIIII" BorderPane.alignment="CENTER" />
+      <VBox alignment="CENTER">
+         <children>
+            <Label fx:id="errorText" text="CIAO BELLO" />
+            <JFXTextField fx:id="usernameText" maxWidth="308.0" minWidth="308.0" prefHeight="31.0" prefWidth="308.0" promptText="Inserisci qui il tuo nome" BorderPane.alignment="CENTER">
+
+            </JFXTextField>
+            <JFXButton onAction="#onButtonLoginPressed" text="LOGIN!" />
+         </children>
+      </VBox>
    </center>
 </BorderPane>

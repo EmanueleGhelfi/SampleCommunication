@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -22,10 +24,12 @@ public class ClientSocketService extends ClientService implements Runnable {
     private PrintWriter out;
     private BufferedReader in;
     private ClientController clientController;
+    private ExecutorService executorService;
 
     ClientSocketService(String serverIP, ClientController clientController){
         hostname = serverIP;
         this.clientController = clientController;
+        executorService = Executors.newCachedThreadPool();
     }
 
 
@@ -61,27 +65,49 @@ public class ClientSocketService extends ClientService implements Runnable {
     public void run() {
         System.out.println("ClientSocketService Started");
         String line = null;
-        Gson gson = new Gson();
         try {
             while ( (line = in.readLine())!=null){
-                CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
-                switch (communicationInfo.getCode()){
-                    case Constants.CODE_NAME:{
-                        boolean result =  gson.fromJson(communicationInfo.getInfo(),boolean.class);
-                        clientController.onNameReceived(result);
-                        break;
+
+                // create a new runnable and use a executor service in order to execute this task
+                class DecoderTask implements Runnable{
+
+                    String lineToDecode;
+                    public DecoderTask(String line) {
+
+                        this.lineToDecode = line;
                     }
-                    case Constants.CODE_CHAT:{
-                        String message = gson.fromJson(communicationInfo.getInfo(),String.class);
-                        System.out.println(message);
-                        break;
+
+                    @Override
+                    public void run() {
+                        decodeInfo(lineToDecode);
                     }
                 }
+
+                DecoderTask decoderTask = new DecoderTask(line);
+                executorService.execute(decoderTask);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
+    }
+
+    public void decodeInfo(String line){
+        Gson gson = new Gson();
+        CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
+        switch (communicationInfo.getCode()){
+            case Constants.CODE_NAME:{
+                boolean result =  gson.fromJson(communicationInfo.getInfo(),boolean.class);
+                clientController.onNameReceived(result);
+                break;
+            }
+            case Constants.CODE_CHAT:{
+                String message = gson.fromJson(communicationInfo.getInfo(),String.class);
+                System.out.println(message);
+                break;
+            }
+        }
     }
 }

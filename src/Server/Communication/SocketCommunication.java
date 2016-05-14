@@ -36,15 +36,16 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
 
-    @Override
-    public void sendMessage(String message) {
-        System.out.println("SENDING MESSAGE" +message);
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_CHAT,message);
-    }
 
     @Override
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public void notifyGameStart() {
+
+
     }
 
     @Override
@@ -71,7 +72,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                     case Constants.CODE_CHAT: {
                         String message = gson.fromJson(communicationInfo.getInfo(), String.class);
                         System.out.println(message);
-                        user.OnMessage(message);
+                       // user.OnMessage(message);
                         break;
                     }
                 }

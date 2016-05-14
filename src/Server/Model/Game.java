@@ -1,12 +1,11 @@
 package Server.Model;
 
 import CommonModel.GameImmutable;
+import CommonModel.GameModel.*;
 import Server.Controller.GameController;
 import Server.UserClasses.User;
 
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Created by Emanuele on 11/05/2016.
@@ -19,37 +18,41 @@ public class Game implements GameImmutable{
     private boolean started;
 
 
-
     /**
      * All users in the game with their name
      */
     private HashMap<String,User> usersInGame = new HashMap<>();
 
-    private Timer timer;
-    private TimerTask timerTask;
+    /**
+     * All cities
+     */
+    private ArrayList<City> cities;
 
-    private int duration = 20000;
+    /**
+     * King with his cities
+     */
+    private King king;
+
+    private VictoryPath victoryPath;
+
+    private NobilityPath nobilityPath;
+
+    private ArrayList<PoliticCard> politicCards;
+
+
+
+
 
     private GameController gameController;
 
 
     public Game() {
         this.started = false;
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                notifyStarted();
-            }
-        };
+        gameController = new GameController(this);
+        gameController.startTimer();
     }
 
-    private void notifyStarted() {
-        started=true;
-        for (User user: usersInGame.values()) {
-            System.out.println("Sending to "+user.getUsername());
-            user.notifyGameStart();
-        }
-    }
+
 
     @Override
     public boolean isStarted() {
@@ -62,48 +65,27 @@ public class Game implements GameImmutable{
         if(!usersInGame.containsKey(userToAdd.getUsername())){
             usersInGame.put(userToAdd.getUsername(),userToAdd);
             if(usersInGame.size()>=2 && usersInGame.size()<4){
-                setTimeout();
+                gameController.setTimeout();
             }
             else if(usersInGame.size()>=2){
-                cancelTimeout();
-                notifyStarted();
+                gameController.cancelTimeout();
+                gameController.notifyStarted();
             }
             return true;
         }
         return false;
     }
 
-    private void cancelTimeout() {
-        System.out.println("Cancelled timeout");
-        timer.cancel();
+
+
+
+
+    public void setStarted(boolean started) {
+        // inizializzazione partita
+        this.started = started;
     }
 
-    private void setTimeout() {
-        if(timer==null){
-            System.out.println("Started timeout for the first time");
-            timer = new Timer();
-
-        }
-        else{
-            System.out.println("Restarted timeout");
-            timer.cancel();
-            timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    notifyStarted();
-                }
-            };
-            timer = new Timer();
-        }
-
-        timer.schedule(timerTask,duration);
-    }
-
-    public void OnMessage(String message) {
-        System.out.println("In Game: received "+message);
-        for (User user: usersInGame.values()) {
-            System.out.println("sending a message to "+user.getUsername());
-            user.getBaseCommunication().sendMessage(message);
-        }
+    public Collection<User> getUsers() {
+        return usersInGame.values();
     }
 }

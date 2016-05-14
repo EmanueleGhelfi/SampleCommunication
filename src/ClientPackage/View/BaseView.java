@@ -6,4 +6,8 @@ package ClientPackage.View;
 public interface BaseView {
 
     void initView();
+
+    void showLoginError();
+
+    void showWaitingForStart();
 }

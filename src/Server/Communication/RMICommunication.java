@@ -56,19 +56,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         return false;
     }
 
-    // send a message to client
-    @Override
-    public void sendMessage(String message) {
-        try {
-            rmiClientInterface.OnMessage(message);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            user.setConnected(false);
-        }
-    }
+
 
     @Override
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public void notifyGameStart() {
+
     }
 }

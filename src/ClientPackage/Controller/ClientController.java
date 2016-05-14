@@ -39,7 +39,7 @@ public class ClientController {
             clientService = FactoryService.getService(networkMethod,serverIP,this);
             if(clientService.Connect()) {
                 uiMethod = getUIMethod(inKeyboard);
-                baseView = FactoryView.getBaseView(uiMethod);
+                baseView = FactoryView.getBaseView(uiMethod,this);
                 baseView.initView();
             }
             else{
@@ -78,10 +78,7 @@ public class ClientController {
 
     private void ReadName() throws IOException {
 
-        System.out.println("Inserisci il tuo nome:");
-        String name = inKeyboard.readLine();
-        System.out.println("Attendi la verifica...");
-        clientService.sendName(name);
+        baseView.showLoginError();
 
 
     }
@@ -110,24 +107,21 @@ public class ClientController {
      * @param result
      */
     public void onNameReceived(boolean result) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if(!result){
-                        ReadName();
-                    }
-                    else{
-                        // Start All
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
+       try {
+           if (!result) {
+               ReadName();
+           } else {
+               baseView.showWaitingForStart();
+           }
+       }catch (Exception e ){
+           e.printStackTrace();
+       }
 
     }
 
+
+    public void onSendLogin(String userName) {
+        clientService.sendName(userName);
+    }
 
 }

@@ -46,7 +46,7 @@ public class User {
     }
 
     public void notifyGameStart() {
-        baseCommunication.sendMessage("PARTITA INIZIATA");
+        baseCommunication.notifyGameStart();
     }
 
     public boolean isConnected() {
