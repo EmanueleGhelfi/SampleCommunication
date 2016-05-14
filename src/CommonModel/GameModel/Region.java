@@ -9,10 +9,15 @@ public enum Region {
 
     private String region;
     private int cityNumber;
+    private Council council;
 
     private Region (String region, int cityNumber){
         this.region = region;
         this.cityNumber = cityNumber;
+    }
+
+    public void setCouncil(Council council){
+        this.council = council;
     }
 
 }
