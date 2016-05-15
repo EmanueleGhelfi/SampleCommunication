@@ -4,6 +4,11 @@ import CommonModel.GameImmutable;
 import CommonModel.GameModel.*;
 import Server.Controller.GameController;
 import Server.UserClasses.User;
+import com.sun.corba.se.impl.orbutil.graph.Graph;
+import com.sun.corba.se.impl.orbutil.graph.GraphImpl;
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 
 import java.util.*;
 
@@ -26,7 +31,7 @@ public class Game implements GameImmutable{
     /**
      * All cities
      */
-    private ArrayList<City> cities;
+    private UndirectedGraph<City,DefaultEdge> cities;
 
     /**
      * King with his cities
@@ -53,6 +58,7 @@ public class Game implements GameImmutable{
         this.started = false;
         gameController = new GameController(this);
         gameController.startTimer();
+        cities = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
     }
 
 

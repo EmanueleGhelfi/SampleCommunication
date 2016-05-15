@@ -1,10 +1,13 @@
 package Server.UserClasses;
 
 import CommonModel.GameImmutable;
+import CommonModel.GameModel.City;
 import CommonModel.GameModel.Position;
 import Server.Communication.BaseCommunication;
 import Server.Model.Game;
 import Server.Managers.GamesManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 11/05/2016.
@@ -26,6 +29,8 @@ public class User {
     private int victoryPathPosition;
 
     private Position nobilityPathPosition;
+
+    private ArrayList<City> usersEmporium;
 
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;

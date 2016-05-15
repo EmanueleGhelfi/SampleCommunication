@@ -10,5 +10,6 @@
     <orderEntry type="library" name="com.google.code.gson:gson:2.6.2" level="project" />
     <orderEntry type="library" name="jfoenix" level="project" />
     <orderEntry type="library" name="controlsfx-8.40.10" level="project" />
+    <orderEntry type="library" name="org.javabits.jgrapht:jgrapht-core:0.9.3" level="project" />
   </component>
 </module>
