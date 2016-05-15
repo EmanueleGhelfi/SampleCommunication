@@ -39,6 +39,9 @@ public class Game implements GameImmutable{
 
     private ArrayList<PoliticCard> politicCards;
 
+    private MoneyPath moneyPath;
+
+
 
 
 
@@ -87,5 +90,13 @@ public class Game implements GameImmutable{
 
     public Collection<User> getUsers() {
         return usersInGame.values();
+    }
+
+    public MoneyPath getMoneyPath() {
+        return moneyPath;
+    }
+
+    public VictoryPath getVictoryPath() {
+        return victoryPath;
     }
 }

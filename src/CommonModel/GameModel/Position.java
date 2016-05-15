@@ -3,6 +3,10 @@ package CommonModel.GameModel;
 /**
  * Created by Giulio on 14/05/2016.
  */
+
+/**
+ * Position in nobility path
+ */
 public class Position {
 
     private int position;

@@ -1,5 +1,6 @@
 package CommonModel.GameModel;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -18,12 +19,22 @@ public class PermitDeck implements Deck {
     @Override
     public void createRandomDeck() {
         //create a deck for this region
+        ArrayList<ArrayList<Character>> citiesPermitCard = CityFactory.getCity(region);
         for(int i = 0; i<15;i++){
             PermitCard permitCard = new PermitCard();
             permitCard.setRetroType(region);
-
-            permitCard.setBonus(new MainBonus(1,3,6));
+            permitCard.setCityAcronimous(citiesPermitCard.get(i));
+            permitCard.setBonus(new MainBonus(1,3,6,false));
         }
+
+
+    }
+
+    public static void main(String[] args){
+        System.out.println("Start test deck");
+        PermitDeck permitDeckMountain = new PermitDeck(Region.MOUNTAIN);
+        permitDeckMountain.createRandomDeck();
+
 
 
     }

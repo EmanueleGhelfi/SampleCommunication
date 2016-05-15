@@ -5,13 +5,13 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 15/05/2016.
  */
-public enum CoastCityPermitCard implements CityEnum{
+public enum CoastCityPermitCard {
 
     ABE('A','B','E'),A('A',null,null),CD('C','D',null),B('B',null,null),D('D',null,null),AB('A','B',null),
     CDE('C','D','E'),AE('A','E',null),BCD('B','C','D'),C('C',null,null),DE('D','E',null),BC('B','C',null),ADE('A','D','E'),
     E('E',null,null),ABC('A','B','C');
 
-    ArrayList<Character> cities;
+    ArrayList<Character> cities = new ArrayList<>();
 
 
 
@@ -27,7 +27,11 @@ public enum CoastCityPermitCard implements CityEnum{
         }
     }
 
-    public static CityEnum[] getCities() {
-        return CoastCityPermitCard.values();
+    public static  ArrayList<ArrayList<Character>> getCities() {
+        ArrayList<ArrayList<Character>> cities = new ArrayList<>();
+        for(CoastCityPermitCard coastCityPermitCard : CoastCityPermitCard.values()){
+            cities.add(coastCityPermitCard.cities);
+        }
+        return cities;
     }
 }

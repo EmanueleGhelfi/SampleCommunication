@@ -5,7 +5,8 @@ package CommonModel.GameModel;
  */
 public enum CityName {
 
-    ARKON("Arkon");//TODO inserire nomi
+    ARKON("Arkon"), BURGEN("Burgen"),CASTRUM("Castrum"), DORFUL("Dorful"), ESTI("Esti"), FRAMEK("Framek"), GRADEN("Graden"), HELLAR("Hellar"),
+    INDUR("Indur"), JUVELAR("Juvelar"), KULTOS("Kultos"), LYRAM("Lyram"), MERKATIM("Merkatim"), NARIS("Naris"), OSIUM("Osium");
 
     private String cityName;
 
@@ -13,4 +14,7 @@ public enum CityName {
         this.cityName = cityName;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
 }

@@ -1,10 +1,17 @@
 package CommonModel.GameModel;
 
+import Server.UserClasses.User;
+
 /**
  * Created by Giulio on 14/05/2016.
  */
 public interface Path {
 
-    void goAhead();
+    /**
+     *
+     * @param user
+     * @param value
+     */
+    void goAhead(User user, int value) throws ActionNotPossibleException;
 
 }

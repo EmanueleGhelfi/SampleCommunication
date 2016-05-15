@@ -5,17 +5,13 @@ import java.util.ArrayList;
 /**
  * Created by Giulio on 15/05/2016.
  */
-public enum HillCityPermitCard implements CityEnum {
+public enum HillCityPermitCard {
 
     H('H', null, null), GHI('G', 'H', 'I'), F('F', null, null), HI('H', 'I', null), I('I', null, null), FG('F', 'G', null), J('J', null, null),
     HG('H', 'G', null), FGH('F', 'G', 'H'), G('G', null, null), FJ('F', 'J', null), IJ('I', 'J', null), FGJ('F', 'G', 'J'), FIJ('F', 'I', 'J'),
     IJH('I', 'J', 'H');
 
-    public static CityEnum[] getCities() {
-        return HillCityPermitCard.values();
-    }
-
-    ArrayList<Character> cities;
+    ArrayList<Character> cities = new ArrayList<>();
 
 
     private HillCityPermitCard(Character city1, Character city2, Character city3) {
@@ -28,5 +24,13 @@ public enum HillCityPermitCard implements CityEnum {
         if (city3 != null) {
             cities.add(city3);
         }
+    }
+
+    public static  ArrayList<ArrayList<Character>> getCities() {
+        ArrayList<ArrayList<Character>> cities = new ArrayList<>();
+        for(HillCityPermitCard hillCityPermitCard : HillCityPermitCard.values()){
+            cities.add(hillCityPermitCard.cities);
+        }
+        return cities;
     }
 }

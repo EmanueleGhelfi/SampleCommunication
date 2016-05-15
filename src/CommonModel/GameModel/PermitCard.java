@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class PermitCard {
 
     private Bonus bonus;
-    private ArrayList<CityName> cityAcronimous;
+    private ArrayList<Character> cityAcronimous;
     private Region retroType;
 
     public PermitCard(Bonus bonus, ArrayList<CityName> cityAcronimous, Region retroType) {
         this.bonus = bonus;
-        this.cityAcronimous = cityAcronimous;
+        //this.cityAcronimous = cityAcronimous;
         this.retroType = retroType;
     }
 
@@ -28,11 +28,11 @@ public class PermitCard {
         this.bonus = bonus;
     }
 
-    public ArrayList<CityName> getCityAcronimous() {
+    public ArrayList<Character> getCityAcronimous() {
         return cityAcronimous;
     }
 
-    public void setCityAcronimous(ArrayList<CityName> cityAcronimous) {
+    public void setCityAcronimous(ArrayList<Character> cityAcronimous) {
         this.cityAcronimous = cityAcronimous;
     }
 
@@ -43,4 +43,5 @@ public class PermitCard {
     public void setRetroType(Region retroType) {
         this.retroType = retroType;
     }
+
 }

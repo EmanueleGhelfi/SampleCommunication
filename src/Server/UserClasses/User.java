@@ -1,6 +1,7 @@
 package Server.UserClasses;
 
 import CommonModel.GameImmutable;
+import CommonModel.GameModel.Position;
 import Server.Communication.BaseCommunication;
 import Server.Model.Game;
 import Server.Managers.GamesManager;
@@ -16,9 +17,15 @@ public class User {
 
     private GamesManager gamesManager;
 
-    private GameImmutable game;
+    private Game game;
 
     private boolean connected;
+
+    private int coinPathPosition;
+
+    private int victoryPathPosition;
+
+    private Position nobilityPathPosition;
 
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;
@@ -59,5 +66,33 @@ public class User {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public void setCoinPathPosition(int coinPathPosition) {
+        this.coinPathPosition = coinPathPosition;
+    }
+
+    public int getCoinPathPosition() {
+        return coinPathPosition;
+    }
+
+    public int getVictoryPathPosition() {
+        return victoryPathPosition;
+    }
+
+    public void setVictoryPathPosition(int victoryPathPosition) {
+        this.victoryPathPosition = victoryPathPosition;
+    }
+
+    public Position getNobilityPathPosition() {
+        return nobilityPathPosition;
+    }
+
+    public void setNobilityPathPosition(Position nobilityPathPosition) {
+        this.nobilityPathPosition = nobilityPathPosition;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }
