@@ -17,10 +17,12 @@ public class PermitDeck implements Deck {
 
     @Override
     public void createRandomDeck() {
+        //create a deck for this region
         for(int i = 0; i<15;i++){
             PermitCard permitCard = new PermitCard();
+            permitCard.setRetroType(region);
 
-            permitCard.setBonus();
+            permitCard.setBonus(new MainBonus(1,3,6));
         }
 
 
