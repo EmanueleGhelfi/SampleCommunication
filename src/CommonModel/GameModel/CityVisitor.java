@@ -37,7 +37,7 @@ public class CityVisitor{
     public ArrayList<City> visit(City city){
         System.out.println("Visiting "+city.toString());
         ArrayList<City> visitedCity = new ArrayList<>();
-
+        alreadyVisited.put(city,true);
         for (Object city1: neighborIndex.neighborListOf(city)) {
 
             City realCity = (City)city1;
@@ -55,32 +55,50 @@ public class CityVisitor{
     }
 
     public static void main(String[] args){
-        City city = new City(Color.BLUE,CityName.ARKON,Region.COAST);
-        City city2 = new City(Color.GREY,CityName.BURGEN,Region.COAST);
-        City city3 = new City(Color.BLUE,CityName.KULTOS,Region.COAST);
-        City city4 = new City(Color.GREY,CityName.NARIS,Region.COAST);
-        City city5 = new City(Color.BLUE,CityName.OSIUM,Region.COAST);
-        City city6 = new City(Color.GREY,CityName.GRADEN,Region.COAST);
+        City framek = new City(Color.BLUE,CityName.FRAMEK,Region.COAST);
+        City indur = new City(Color.GREY,CityName.INDUR,Region.COAST);
+        City juvelar = new City(Color.BLUE,CityName.JUVELAR,Region.COAST);
+        City graden = new City(Color.GREY,CityName.GRADEN,Region.COAST);
+        City hellar = new City(Color.BLUE,CityName.HELLAR,Region.COAST);
+        City castrum = new City(Color.GREY,CityName.CASTRUM,Region.COAST);
+        City arkon = new City(Color.GREY,CityName.ARKON,Region.COAST);
+        City burgen = new City(Color.BLUE,CityName.BURGEN,Region.COAST);
+        City dorful = new City(Color.GREY,CityName.DORFUL,Region.COAST);
+        City esti = new City(Color.GREY,CityName.GRADEN,Region.COAST);
+
         UndirectedGraph<City,DefaultEdge> graph = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
-        graph.addVertex(city);
-        graph.addVertex(city2);
-        graph.addVertex(city3);
-        graph.addVertex(city4);
-        graph.addVertex(city5);
-        graph.addVertex(city6);
-        graph.addEdge(city,city2);
-        graph.addEdge(city2,city5);
-        graph.addEdge(city2,city4);
-        graph.addEdge(city3,city4);
-        graph.addEdge(city4,city5);
+        graph.addVertex(framek);
+        graph.addVertex(indur);
+        graph.addVertex(juvelar);
+        graph.addVertex(graden);
+        graph.addVertex(hellar);
+        graph.addVertex(castrum);
+        graph.addVertex(arkon);
+        graph.addVertex(burgen);
+        graph.addVertex(dorful);
+        graph.addVertex(esti);
+
+        graph.addEdge(framek,indur);
+        graph.addEdge(graden,juvelar);
+        graph.addEdge(juvelar,indur);
+        graph.addEdge(juvelar,hellar);
+        graph.addEdge(castrum,framek);
+        graph.addEdge(arkon,castrum);
+        graph.addEdge(arkon,burgen);
+        graph.addEdge(burgen,dorful);
+        graph.addEdge(burgen,esti);
+        graph.addEdge(dorful,graden);
+        graph.addEdge(esti,hellar);
         ArrayList<City> usersEmporium = new ArrayList<>();
-        usersEmporium.add(city2);
-        usersEmporium.add(city3);
-        usersEmporium.add(city4);
-        System.out.println("MAIN: " +usersEmporium.contains(city2));
+        usersEmporium.add(framek);
+        usersEmporium.add(indur);
+        usersEmporium.add(juvelar);
+        usersEmporium.add(graden);
+        usersEmporium.add(esti);
+        System.out.println("MAIN: " +usersEmporium.contains(framek));
         System.out.println("EMPORIUMS");
         CityVisitor cityVisitor = new CityVisitor(graph, usersEmporium);
-        ArrayList<City> cities = cityVisitor.visit(city2);
+        ArrayList<City> cities = cityVisitor.visit(framek);
         System.out.println(cities);
 
 
