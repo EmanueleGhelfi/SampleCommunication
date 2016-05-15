@@ -9,6 +9,8 @@ public class VictoryPath implements Path {
 
     private final int length = 100;
 
+    public VictoryPath() {
+    }
 
     @Override
     public void goAhead(User user, int value) throws ActionNotPossibleException {

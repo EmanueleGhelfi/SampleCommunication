@@ -29,7 +29,7 @@ public class Game implements GameImmutable{
     private HashMap<String,User> usersInGame = new HashMap<>();
 
     /**
-     * All cities
+     * All cities in undirectedgraph
      */
     private UndirectedGraph<City,DefaultEdge> cities;
 
@@ -38,29 +38,45 @@ public class Game implements GameImmutable{
      */
     private King king;
 
+    // PATHS
     private VictoryPath victoryPath;
 
     private NobilityPath nobilityPath;
 
-    private ArrayList<PoliticCard> politicCards;
-
     private MoneyPath moneyPath;
-
-
-
-
-
 
     private GameController gameController;
 
+    // PERMIT DECK
+    private PermitDeck mountainDeck;
 
+    private PermitDeck hillDeck;
+
+    private PermitDeck coastDeck;
+
+    // POLITIC CARD
+    private ArrayList<PoliticCard> politicCards;
+    
+    
     public Game() {
         this.started = false;
         gameController = new GameController(this);
         gameController.startTimer();
         cities = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
+        createDecks();
+        createPaths();
+        createCityGraph();
     }
 
+    private void createCityGraph() {
+        //TODO: create graph and connection
+    }
+
+    private void createPaths() {
+        nobilityPath = new NobilityPath();
+        moneyPath = new MoneyPath();
+        victoryPath = new VictoryPath();
+    }
 
 
     @Override
@@ -91,7 +107,15 @@ public class Game implements GameImmutable{
 
     public void setStarted(boolean started) {
         // inizializzazione partita
+        
         this.started = started;
+    }
+
+    private void createDecks() {
+        //create mountainDeck
+        mountainDeck = new PermitDeck(Region.MOUNTAIN);
+        hillDeck = new PermitDeck(Region.HILL);
+        coastDeck = new PermitDeck(Region.COAST);
     }
 
     public Collection<User> getUsers() {
