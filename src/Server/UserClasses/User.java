@@ -38,6 +38,7 @@ public class User {
         this.gamesManager = gamesManager;
         this.game = null;
         this.connected=true;
+        usersEmporium = new ArrayList<>();
     }
 
 
@@ -99,5 +100,13 @@ public class User {
 
     public Game getGame() {
         return game;
+    }
+
+    public ArrayList<City> getUsersEmporium() {
+        return usersEmporium;
+    }
+
+    public void addEmporium(City cityEmporium) {
+        this.usersEmporium.add(cityEmporium);
     }
 }
