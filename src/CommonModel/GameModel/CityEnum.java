@@ -5,7 +5,5 @@ package CommonModel.GameModel;
  */
 public interface CityEnum {
 
-    public CityEnum[] getCities();
-
 
 }

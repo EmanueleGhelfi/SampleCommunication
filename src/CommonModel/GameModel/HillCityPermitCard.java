@@ -11,8 +11,7 @@ public enum HillCityPermitCard implements CityEnum {
     HG('H', 'G', null), FGH('F', 'G', 'H'), G('G', null, null), FJ('F', 'J', null), IJ('I', 'J', null), FGJ('F', 'G', 'J'), FIJ('F', 'I', 'J'),
     IJH('I', 'J', 'H');
 
-    @Override
-    public CityEnum[] getCities() {
+    public static CityEnum[] getCities() {
         return HillCityPermitCard.values();
     }
 
