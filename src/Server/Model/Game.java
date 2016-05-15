@@ -69,7 +69,7 @@ public class Game implements GameImmutable{
     }
 
     private void createCityGraph() {
-        //TODO: create graph and connection
+        //TODO: create graph and connection between city
     }
 
     private void createPaths() {
