@@ -3,25 +3,33 @@ package CommonModel.GameModel;
 import java.util.ArrayList;
 
 /**
- * Created by Emanuele on 15/05/2016.
+ * Created by Giulio on 15/05/2016.
  */
-public enum MountainCityPermitCard {
+public enum MountainCityPermitCard implements CityEnum{
 
-    N('N',null,null),KNO('K','N','O'),L('L',null,null),KL('K','L',null),OK('O','K',null),ML('M','L',null),LMN('L','M','N'),
-    KLM('K','L','M'),KLO('K','L','O'),O('O',null,null),K('K',null,null),M('M',null,null),MN('M','N',null),MNO('M','N','O'),
-    NO('N','O',null);
+    H('H', null, null), GHI('G', 'H', 'I'), F('F', null, null), HI('H', 'I', null), I('I', null, null), FG('F', 'G', null), J('J', null, null),
+    HG('H', 'G', null), FGH('F', 'G', 'H'), G('G', null, null), FJ('F', 'J', null), IJ('I', 'J', null), FGJ('F', 'G', 'J'), FIJ('F','I','J'),
+    IJH('I', 'J', 'H');
+
+    @Override
+    public CityEnum[] getCities() {
+        return MountainCityPermitCard.values();
+    }
 
     ArrayList<Character> cities;
 
-    MountainCityPermitCard(Character city1,Character city2, Character city3) {
-        if(city1!=null){
+
+
+    private MountainCityPermitCard(Character city1, Character city2, Character city3){
+        if (city1 != null){
             cities.add(city1);
         }
-        if(city2!=null){
+        if (city2 != null){
             cities.add(city2);
         }
-        if(city3!=null){
+        if (city3 != null){
             cities.add(city3);
         }
     }
+
 }
