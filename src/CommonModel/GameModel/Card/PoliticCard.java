@@ -7,4 +7,7 @@ public class PoliticCard {
 
     private PoliticColor politicColor;
 
+    public PoliticCard(PoliticColor politicColor) {
+        this.politicColor = politicColor;
+    }
 }

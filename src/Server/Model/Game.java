@@ -8,8 +8,10 @@ import CommonModel.GameModel.Bonus.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.Card.PoliticCard;
+import CommonModel.GameModel.Card.PoliticColor;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.CityName;
+import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Path.MoneyPath;
 import CommonModel.GameModel.Path.NobilityPath;
@@ -73,7 +75,7 @@ public class Game implements GameImmutable{
 
     private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
-    private Stack<KingBonusCard> kingBonusCard;
+    private Stack<KingBonusCard> kingBonusCard = new Stack<>();
 
 
     public Game() {
@@ -81,9 +83,57 @@ public class Game implements GameImmutable{
         gameController = new GameController(this);
         gameController.startTimer();
         cities = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
+        // create permit card decks
         createDecks();
+        // create nobility, victory and moneyPath
         createPaths();
+        // create city Graph
         createCityGraph();
+        //create regionBonusCard, kingBonusCard, colorBonusCard
+        createBonusDeck();
+        //create Politic Card Deck
+        createPoliticCards();
+        //create Region
+        createRegion();
+        //create king
+        king = new King();
+    }
+
+    private void createRegion() {
+        for (Region region:Region.values()) {
+            regions.put(region.getRegion(),region);
+        }
+    }
+
+    private void createPoliticCards() {
+        // foreach color create thirteen cards
+        for (PoliticColor politicColor:PoliticColor.values()) {
+
+            for (int i = 0; i< 13; i++){
+                politicCards.add(new PoliticCard(politicColor));
+            }
+
+        }
+        //TODO: Add multicolor card
+    }
+
+    private void createBonusDeck() {
+        //region bonus
+        for (Region region:Region.values()) {
+            regionBonusCard.put(region.getRegion(),new RegionBonusCard(region));
+        }
+
+        // color bonus
+        for (Color color:Color.values()) {
+            colorBonusCard.put(color.getColor(),new ColorBonusCard(color));
+        }
+
+        //king bonus
+        for (int i= 1; i<6;i++){
+            kingBonusCard.add(new KingBonusCard(i));
+        }
+
+
     }
 
     private void createCityGraph() {

@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Action;
 
+import CommonModel.GameModel.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council;
 import CommonModel.GameModel.Councilor;
@@ -30,7 +31,7 @@ public class ElectCouncillor implements Action {
     }
 
     @Override
-    public void doAction(Game game, User user) {
+    public void doAction(Game game, User user) throws ActionNotPossibleException {
         Council council = null;
         if(king==null) {
             Region councilRegion = game.getRegion(region.getRegion());
@@ -41,7 +42,7 @@ public class ElectCouncillor implements Action {
         }
         // and councilor to councilor to council (and remove the first councillor)
         council.add(councilorToAdd);
-        user.setCoinPathPosition(user.getCoinPathPosition()+4);
+        game.getMoneyPath().goAhead(user,4);
     }
 
     @Override
