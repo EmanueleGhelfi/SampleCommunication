@@ -2,7 +2,10 @@ package Server.Model;
 
 import CommonModel.GameImmutable;
 import CommonModel.GameModel.*;
+import CommonModel.GameModel.Bonus.ColorBonusCard;
+import CommonModel.GameModel.Bonus.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
+import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.Card.PoliticCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.CityName;
@@ -65,6 +68,9 @@ public class Game implements GameImmutable{
     // POLITIC CARD
     private ArrayList<PoliticCard> politicCards;
     private UndirectedGraph<City, DefaultEdge> graph;
+
+    private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
+    private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
 
 
     public Game() {
@@ -163,5 +169,13 @@ public class Game implements GameImmutable{
 
     public UndirectedGraph<City, DefaultEdge> getGraph() {
         return graph;
+    }
+
+    public RegionBonusCard getRegionBonusCard(String region) {
+        return regionBonusCard.get(region);
+    }
+
+    public ColorBonusCard getColorBonusCard(String color) {
+        return colorBonusCard.get(color);
     }
 }

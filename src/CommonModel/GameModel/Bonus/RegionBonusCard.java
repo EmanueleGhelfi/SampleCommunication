@@ -13,10 +13,14 @@ public class RegionBonusCard implements GenericBonusCard {
     private Region region;
     private VictoryPointBonus victoryPointBonus;
 
-
+    public RegionBonusCard(Region region) {
+        this.region = region;
+        victoryPointBonus = new VictoryPointBonus(5);
+    }
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-
+        victoryPointBonus.getBonus(user, game);
     }
+
 }

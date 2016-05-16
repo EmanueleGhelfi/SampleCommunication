@@ -2,6 +2,7 @@ package CommonModel.GameModel.Action;
 
 import ClientPackage.Service.FactoryService;
 import CommonModel.GameModel.ActionNotPossibleException;
+import CommonModel.GameModel.Bonus.RegionBonusCard;
 import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.City.*;
 import Server.Model.Game;
@@ -44,10 +45,10 @@ public class BuildWithPermitCard implements Action{
                 cityToVisit.getBonus().getBonus(user, game);
             }
             if (gameCity.getRegion().checkRegion(user.getUsersEmporium())){
-                //TODO premio bonus card regione + king
+                game.getRegionBonusCard(gameCity.getRegion().getRegion()).getBonus(user, game);
             }
             if (gameCity.getColor().checkColor(user.getUsersEmporium())){
-                //TODO premio bonus card colore + king
+                game.getColorBonusCard(gameCity.getColor().getColor()).getBonus(user, game);
             }
         } else {
             throw new ActionNotPossibleException();
@@ -59,63 +60,6 @@ public class BuildWithPermitCard implements Action{
     @Override
     public String getType() {
         return type;
-    }
-
-
-
-
-
-
-
-
-    //TODO TEST!!!!
-    public static void main(String[] args){
-        City framek = new City(Color.BLUE, CityName.FRAMEK, Region.COAST);
-        City indur = new City(Color.GREY,CityName.INDUR,Region.COAST);
-        City juvelar = new City(Color.BLUE,CityName.JUVELAR,Region.COAST);
-        City graden = new City(Color.GREY,CityName.GRADEN,Region.COAST);
-        City hellar = new City(Color.BLUE,CityName.HELLAR,Region.COAST);
-        City castrum = new City(Color.GREY,CityName.CASTRUM,Region.COAST);
-        City arkon = new City(Color.GREY,CityName.ARKON,Region.COAST);
-        City burgen = new City(Color.BLUE,CityName.BURGEN,Region.COAST);
-        City dorful = new City(Color.GREY,CityName.DORFUL,Region.COAST);
-        City esti = new City(Color.GREY,CityName.GRADEN,Region.COAST);
-
-        UndirectedGraph<City,DefaultEdge> graph = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
-        graph.addVertex(framek);
-        graph.addVertex(indur);
-        graph.addVertex(juvelar);
-        graph.addVertex(graden);
-        graph.addVertex(hellar);
-        graph.addVertex(castrum);
-        graph.addVertex(arkon);
-        graph.addVertex(burgen);
-        graph.addVertex(dorful);
-        graph.addVertex(esti);
-
-        graph.addEdge(framek,indur);
-        graph.addEdge(graden,juvelar);
-        graph.addEdge(juvelar,indur);
-        graph.addEdge(juvelar,hellar);
-        graph.addEdge(castrum,framek);
-        graph.addEdge(arkon,castrum);
-        graph.addEdge(arkon,burgen);
-        graph.addEdge(burgen,dorful);
-        graph.addEdge(burgen,esti);
-        graph.addEdge(dorful,graden);
-        graph.addEdge(esti,hellar);
-        ArrayList<City> usersEmporium = new ArrayList<>();
-        usersEmporium.add(framek);
-        usersEmporium.add(indur);
-        usersEmporium.add(juvelar);
-        usersEmporium.add(graden);
-        usersEmporium.add(esti);
-
-        Game game = new Game();
-
-        game.setGraph(graph);
-        BuildWithPermitCard buildWithPermitCard = new BuildWithPermitCard(arkon);
-        buildWithPermitCard.doAction(game, new User(FactoryService.getService));
     }
 
 }
