@@ -2,7 +2,9 @@ package CommonModel.GameModel;
 
 import CommonModel.GameModel.Card.PoliticColor;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Color;
+import CommonModel.GameModel.City.Region;
 
 /**
  * Created by Giulio on 14/05/2016.
@@ -19,6 +21,15 @@ public class King {
         council.add(new Councilor(PoliticColor.PINK));
         council.add(new Councilor(PoliticColor.WHITE));
         this.currentCity = currentCity;
+    }
+
+    public King() {
+        this.council = new Council();
+        council.add(new Councilor(PoliticColor.BLACK));
+        council.add(new Councilor(PoliticColor.ORANGE));
+        council.add(new Councilor(PoliticColor.PINK));
+        council.add(new Councilor(PoliticColor.WHITE));
+        this.currentCity = new City(Color.BLUE, CityName.ARKON, Region.COAST);
     }
 
     public void setCouncil(Council council) {
