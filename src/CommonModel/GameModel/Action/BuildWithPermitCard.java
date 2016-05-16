@@ -2,6 +2,7 @@ package CommonModel.GameModel.Action;
 
 import ClientPackage.Service.FactoryService;
 import CommonModel.GameModel.ActionNotPossibleException;
+import CommonModel.GameModel.Bonus.KingBonusCard;
 import CommonModel.GameModel.Bonus.RegionBonusCard;
 import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.City.*;
@@ -46,9 +47,17 @@ public class BuildWithPermitCard implements Action{
             }
             if (gameCity.getRegion().checkRegion(user.getUsersEmporium())){
                 game.getRegionBonusCard(gameCity.getRegion().getRegion()).getBonus(user, game);
+                KingBonusCard kingBonusCard = game.getKingBonusCard();
+                if (kingBonusCard != null){
+                    kingBonusCard.getBonus(user, game);
+                }
             }
             if (gameCity.getColor().checkColor(user.getUsersEmporium())){
                 game.getColorBonusCard(gameCity.getColor().getColor()).getBonus(user, game);
+                KingBonusCard kingBonusCard = game.getKingBonusCard();
+                if (kingBonusCard != null){
+                    kingBonusCard.getBonus(user, game);
+                }
             }
         } else {
             throw new ActionNotPossibleException();

@@ -3,6 +3,7 @@ package Server.Model;
 import CommonModel.GameImmutable;
 import CommonModel.GameModel.*;
 import CommonModel.GameModel.Bonus.ColorBonusCard;
+import CommonModel.GameModel.Bonus.KingBonusCard;
 import CommonModel.GameModel.Bonus.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.PermitCard;
@@ -71,6 +72,7 @@ public class Game implements GameImmutable{
 
     private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
+    private Stack<KingBonusCard> kingBonusCard;
 
 
     public Game() {
@@ -177,5 +179,20 @@ public class Game implements GameImmutable{
 
     public ColorBonusCard getColorBonusCard(String color) {
         return colorBonusCard.get(color);
+    }
+
+    public KingBonusCard getKingBonusCard() {
+        try{
+            return kingBonusCard.peek();
+        } catch (EmptyStackException e){
+            return null;
+        }
+    }
+
+    public void popKingBonusCard(){
+        try {
+            kingBonusCard.pop();
+        } catch (EmptyStackException e){
+        }
     }
 }
