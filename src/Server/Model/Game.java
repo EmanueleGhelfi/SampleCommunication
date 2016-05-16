@@ -46,7 +46,7 @@ public class Game implements GameImmutable{
      */
     private UndirectedGraph<City,DefaultEdge> cities;
 
-    private HashMap<String,Region> regions;
+    private HashMap<String,Region> regions = new HashMap<>();
 
     /**
      * King with his cities
@@ -70,7 +70,7 @@ public class Game implements GameImmutable{
     private PermitDeck coastDeck;
 
     // POLITIC CARD
-    private ArrayList<PoliticCard> politicCards;
+    private ArrayList<PoliticCard> politicCards = new ArrayList<>();
     private UndirectedGraph<City, DefaultEdge> graph;
 
     private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
@@ -102,6 +102,7 @@ public class Game implements GameImmutable{
     private void createRegion() {
         for (Region region:Region.values()) {
             regions.put(region.getRegion(),region);
+            System.out.println(region);
         }
     }
 
@@ -249,5 +250,27 @@ public class Game implements GameImmutable{
             kingBonusCard.pop();
         } catch (EmptyStackException e){
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "started=" + started +
+                ", cities=" + cities +
+                ", regions=" + regions +
+                ", king=" + king +
+                ", victoryPath=" + victoryPath +
+                ", nobilityPath=" + nobilityPath +
+                ", moneyPath=" + moneyPath +
+                ", gameController=" + gameController +
+                ", mountainDeck=" + mountainDeck +
+                ", hillDeck=" + hillDeck +
+                ", coastDeck=" + coastDeck +
+                ", politicCards=" + politicCards +
+                ", graph=" + graph +
+                ", regionBonusCard=" + regionBonusCard +
+                ", colorBonusCard=" + colorBonusCard +
+                ", kingBonusCard=" + kingBonusCard +
+                '}';
     }
 }

@@ -3,6 +3,7 @@ package ClientPackage.Service;
 import ClientPackage.Controller.ClientController;
 import CommonModel.CommunicationInfo;
 import CommonModel.Constants;
+import CommonModel.GameModel.Action.ElectCouncillor;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -58,7 +59,10 @@ public class ClientSocketService extends ClientService implements Runnable {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME,name);
     }
 
-
+    @Override
+    public void onTestAction(ElectCouncillor electCouncillor) {
+        CommunicationInfo.SendCommunicationInfo(out, "PROVA", electCouncillor);
+    }
 
 
     @Override

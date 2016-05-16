@@ -1,6 +1,8 @@
 package ClientPackage.Service;
 
 import ClientPackage.Controller.ClientController;
+import CommonModel.GameModel.Action.ElectCouncillor;
+import CommonModel.GameModel.ActionNotPossibleException;
 import Interface.RMIClientHandler;
 import Interface.RMIClientInterface;
 import Interface.RMIListenerInterface;
@@ -70,6 +72,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void onTestAction(ElectCouncillor electCouncillor) throws ActionNotPossibleException, RemoteException {
+        rmiClientHandler.test(electCouncillor);
     }
 
     private String generateName() {

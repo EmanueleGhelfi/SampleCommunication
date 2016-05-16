@@ -5,11 +5,23 @@ import ClientPackage.Service.FactoryService;
 import ClientPackage.View.BaseView;
 import ClientPackage.View.FactoryView;
 import ClientPackage.View.ViewException;
+import CommonModel.GameModel.Action.BuildWithPermitCard;
+import CommonModel.GameModel.Action.ElectCouncillor;
+import CommonModel.GameModel.ActionNotPossibleException;
+import CommonModel.GameModel.Card.PermitCard;
+import CommonModel.GameModel.Card.PoliticColor;
+import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.CityName;
+import CommonModel.GameModel.City.Color;
+import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.Councilor;
+import com.sun.deploy.util.SessionState;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -23,9 +35,16 @@ public class ClientController {
     private ClientService clientService;
     private BufferedReader inKeyboard;
     private BaseView baseView;
+    private static ClientController clientController;
 
-    public ClientController(){
+    private ClientController(){
 
+    }
+
+    public static ClientController getInstance(){
+        if (clientController == null)
+            clientController = new ClientController();
+        return clientController;
     }
 
     public void init(){
@@ -124,4 +143,16 @@ public class ClientController {
         clientService.sendName(userName);
     }
 
+    public void onTestAction() {
+        ElectCouncillor electCouncillor = new ElectCouncillor(new Councilor(PoliticColor.BLACK), null, Region.COAST);
+        try {
+            try {
+                clientService.onTestAction(electCouncillor);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -8,10 +8,12 @@ import CommonModel.GameModel.King;
 import Server.Model.Game;
 import Server.UserClasses.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Emanuele on 16/05/2016.
  */
-public class ElectCouncillor implements Action {
+public class ElectCouncillor implements Action, Serializable {
 
     private Councilor councilorToAdd;
     private Region region;

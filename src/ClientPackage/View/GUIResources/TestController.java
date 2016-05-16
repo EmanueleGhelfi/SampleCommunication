@@ -11,14 +11,18 @@ import java.util.ResourceBundle;
  */
 public class TestController implements Initializable {
 
-    private ClientController clientController = new ClientController();
+    private ClientController clientController;
 
     public void testAction(){
-        //do something
+        clientController.onTestAction();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void setClientController(ClientController clientController) {
+        this.clientController = clientController;
     }
 }

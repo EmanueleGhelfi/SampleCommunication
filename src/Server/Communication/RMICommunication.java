@@ -1,6 +1,8 @@
 package Server.Communication;
 
 import CommonModel.GameImmutable;
+import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.ActionNotPossibleException;
 import Interface.RMIClientHandler;
 import Interface.RMIClientInterface;
 import Server.Controller.GameController;
@@ -56,6 +58,10 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         return false;
     }
 
+    @Override
+    public void test(Action electCouncillor) throws ActionNotPossibleException {
+        electCouncillor.doAction(user.getGame(), user);
+    }
 
 
     @Override

@@ -1,6 +1,8 @@
 package CommonModel.GameModel.City;
 
+import CommonModel.GameModel.Card.PoliticColor;
 import CommonModel.GameModel.Council;
+import CommonModel.GameModel.Councilor;
 import Server.Model.Game;
 
 import java.util.ArrayList;
@@ -19,6 +21,11 @@ public enum Region {
     private Region (String region, int cityNumber){
         this.region = region;
         this.cityNumber = cityNumber;
+        council = new Council();
+        council.add(new Councilor(PoliticColor.WHITE));
+        council.add(new Councilor(PoliticColor.WHITE));
+        council.add(new Councilor(PoliticColor.ORANGE));
+        council.add(new Councilor(PoliticColor.BLUE));
     }
 
     public boolean checkRegion(ArrayList<City> userEmporiums){

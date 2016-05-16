@@ -79,8 +79,10 @@ public class GamesManager {
         System.out.println("creating a new game");
         Game game = new Game();
         games.add(game);
+        System.out.println(game + " GAMEEEEEEEEEEEEEEEEEEEEEEEEEE PORCA MADDONA");
         game.addUserToGame(userToAdd);
         userToAdd.setGame(game);
+        System.out.println(userToAdd + " USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR PORCA MADDONA");
 
     }
 

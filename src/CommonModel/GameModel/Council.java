@@ -23,6 +23,7 @@ public class Council {
         catch (IllegalStateException e){
             councilorQueue.remove();
             councilorQueue.add(councilorToAdd);
+            System.out.println(councilorQueue);
         }
     }
 

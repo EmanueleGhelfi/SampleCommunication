@@ -2,6 +2,7 @@ package ClientPackage.View;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.GUIController;
+import ClientPackage.View.GUIResources.TestController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,10 @@ public class GUIView extends Application implements BaseView {
 
     public GUIView(ClientController clientController) {
         this.clientController = clientController;
+    }
 
+    public GUIView(){
+        clientController = ClientController.getInstance();
     }
 
     @Override
@@ -62,8 +66,8 @@ public class GUIView extends Application implements BaseView {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        guiController = loader.getController();
-        guiController.setClientController(clientController);
+        TestController testController = loader.getController();
+        testController.setClientController(clientController);
         Scene scene = new Scene(screen);
         Stage testStage = new Stage();
         testStage.setScene(scene);

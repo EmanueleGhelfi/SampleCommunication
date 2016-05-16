@@ -119,4 +119,20 @@ public class User {
     public void setHelpers(int helpers) {
         this.helpers = helpers;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "baseCommunication=" + baseCommunication +
+                ", username='" + username + '\'' +
+                ", gamesManager=" + gamesManager +
+                ", game=" + game +
+                ", connected=" + connected +
+                ", coinPathPosition=" + coinPathPosition +
+                ", victoryPathPosition=" + victoryPathPosition +
+                ", nobilityPathPosition=" + nobilityPathPosition +
+                ", usersEmporium=" + usersEmporium +
+                ", helpers=" + helpers +
+                '}';
+    }
 }
