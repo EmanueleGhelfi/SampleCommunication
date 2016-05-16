@@ -1,7 +1,6 @@
 package Server.UserClasses;
 
-import CommonModel.GameImmutable;
-import CommonModel.GameModel.City;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Position;
 import Server.Communication.BaseCommunication;
 import Server.Model.Game;

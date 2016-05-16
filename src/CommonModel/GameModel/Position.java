@@ -4,6 +4,8 @@ package CommonModel.GameModel;
  * Created by Giulio on 14/05/2016.
  */
 
+import CommonModel.GameModel.Bonus.Bonus;
+
 /**
  * Position in nobility path
  */

@@ -1,5 +1,7 @@
 package CommonModel.GameModel;
 
+import CommonModel.GameModel.City.City;
+
 /**
  * Created by Giulio on 14/05/2016.
  */

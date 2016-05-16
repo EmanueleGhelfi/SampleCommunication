@@ -2,10 +2,15 @@ package Server.Model;
 
 import CommonModel.GameImmutable;
 import CommonModel.GameModel.*;
+import CommonModel.GameModel.Card.Deck.PermitDeck;
+import CommonModel.GameModel.Card.PoliticCard;
+import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.Path.MoneyPath;
+import CommonModel.GameModel.Path.NobilityPath;
+import CommonModel.GameModel.Path.VictoryPath;
 import Server.Controller.GameController;
 import Server.UserClasses.User;
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-import com.sun.corba.se.impl.orbutil.graph.GraphImpl;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
@@ -32,6 +37,8 @@ public class Game implements GameImmutable{
      * All cities in undirectedgraph
      */
     private UndirectedGraph<City,DefaultEdge> cities;
+
+    private HashMap<String,Region> regions;
 
     /**
      * King with his cities
@@ -128,5 +135,12 @@ public class Game implements GameImmutable{
 
     public VictoryPath getVictoryPath() {
         return victoryPath;
+    }
+
+
+    public Region getRegion(String region){
+        if(regions.containsKey(region))
+            return regions.get(region);
+        return null;
     }
 }
