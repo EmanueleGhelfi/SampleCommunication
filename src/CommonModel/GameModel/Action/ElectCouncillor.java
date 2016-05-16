@@ -17,6 +17,12 @@ public class ElectCouncillor implements Action {
     private King king;
     private final String type = "MAIN_ACTION"; // todo: create constants
 
+    /**
+     * Create ElectCouncillor action
+     * @param councilorToAdd
+     * @param king null if you want to add councillor to region's council
+     * @param region null if you want to add councillor to king's council
+     */
     public ElectCouncillor(Councilor councilorToAdd, King king, Region region) {
         this.councilorToAdd = councilorToAdd;
         this.king = king;
@@ -25,8 +31,15 @@ public class ElectCouncillor implements Action {
 
     @Override
     public void doAction(Game game, User user) {
-         Region councilregion = game.getRegion(region.getRegion());
-        Council council = councilregion.getCouncil();
+        Council council = null;
+        if(king==null) {
+            Region councilRegion = game.getRegion(region.getRegion());
+            council = councilRegion.getCouncil();
+        }
+        else{
+            council = game.getKing().getCouncil();
+        }
+        // and councilor to councilor to council (and remove the first councillor)
         council.add(councilorToAdd);
     }
 

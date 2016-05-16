@@ -20,6 +20,7 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
+import java.sql.Statement;
 import java.util.*;
 
 /**
@@ -179,6 +180,10 @@ public class Game implements GameImmutable{
 
     public ColorBonusCard getColorBonusCard(String color) {
         return colorBonusCard.get(color);
+    }
+
+    public King getKing() {
+        return king;
     }
 
     public KingBonusCard getKingBonusCard() {

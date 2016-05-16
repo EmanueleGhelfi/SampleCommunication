@@ -1,8 +1,6 @@
 package CommonModel.GameModel;
 
 import CommonModel.GameModel.Card.PoliticColor;
-import CommonModel.GameModel.City.Color;
-import CommonModel.GameModel.City.Region;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -26,7 +24,10 @@ public class Council {
             councilorQueue.remove();
             councilorQueue.add(councilorToAdd);
         }
+    }
 
+    public Queue<Councilor> getCouncil(){
+        return councilorQueue;
     }
 
     @Override
@@ -53,9 +54,6 @@ public class Council {
         System.out.println(council);
         council.add(councilor6);
         System.out.println(council);
-
-
-
 
     }
 }
