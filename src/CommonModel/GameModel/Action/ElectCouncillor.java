@@ -41,6 +41,7 @@ public class ElectCouncillor implements Action {
         }
         // and councilor to councilor to council (and remove the first councillor)
         council.add(councilorToAdd);
+        user.setCoinPathPosition(user.getCoinPathPosition()+4);
     }
 
     @Override
