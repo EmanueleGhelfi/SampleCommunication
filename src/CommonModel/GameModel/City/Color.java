@@ -1,5 +1,9 @@
 package CommonModel.GameModel.City;
 
+import Server.Model.Game;
+
+import java.util.ArrayList;
+
 /**
  * Created by Giulio on 13/05/2016.
  */
@@ -15,6 +19,19 @@ public enum Color {
         this.cityNumber = cityNumber;
     }
 
+    public boolean checkColor(ArrayList<City> userEmporiums){
+        int cityCounter = 0;
+        for (City city: userEmporiums) {
+            if (city.getColor() == this) {
+                cityCounter++;
+            }
+        }
+        if (cityCounter == cityNumber){
+            return true;
+        }
+        return false;
+    }
+
     public String getColor(){
         return color;
     }
@@ -22,4 +39,5 @@ public enum Color {
     public int getCityNumber(){
         return cityNumber;
     }
+
 }

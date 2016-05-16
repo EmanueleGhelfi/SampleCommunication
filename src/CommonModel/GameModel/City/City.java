@@ -14,15 +14,12 @@ public class City {
     private CityName cityName;
     private Color cityColor;
     private Region cityRegion;
-    private ArrayList<City> closestCity;
-    private ArrayList<User> userEmporiums; //TODO review emporiums of cities
     private Bonus bonus;
 
     public City(Color cityColor, CityName cityName, Region cityRegion) {
         this.cityColor = cityColor;
         this.cityName = cityName;
         this.cityRegion = cityRegion;
-        userEmporiums =  new ArrayList<>();
         bonus = new MainBonus(1,2,5,false);
     }
 
@@ -60,5 +57,17 @@ public class City {
         result = 31 * result + (cityColor != null ? cityColor.hashCode() : 0);
         result = 31 * result + (cityRegion != null ? cityRegion.hashCode() : 0);
         return result;
+    }
+
+    public Bonus getBonus() {
+        return bonus;
+    }
+
+    public Region getRegion() {
+        return cityRegion;
+    }
+
+    public Color getColor() {
+        return cityColor;
     }
 }

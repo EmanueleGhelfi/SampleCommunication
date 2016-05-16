@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Action;
 
+import CommonModel.GameModel.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.UserClasses.User;
 
@@ -8,6 +9,6 @@ import Server.UserClasses.User;
  */
 public interface Action {
 
-    void doAction(Game game, User user);
+    void doAction(Game game, User user) throws ActionNotPossibleException;
     String getType();
 }

@@ -5,6 +5,7 @@ import CommonModel.GameModel.*;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Path.MoneyPath;
 import CommonModel.GameModel.Path.NobilityPath;
@@ -63,8 +64,9 @@ public class Game implements GameImmutable{
 
     // POLITIC CARD
     private ArrayList<PoliticCard> politicCards;
-    
-    
+    private UndirectedGraph<City, DefaultEdge> graph;
+
+
     public Game() {
         this.started = false;
         gameController = new GameController(this);
@@ -142,5 +144,24 @@ public class Game implements GameImmutable{
         if(regions.containsKey(region))
             return regions.get(region);
         return null;
+    }
+
+    public City getCity(City city) {
+        if(cities.containsVertex(city)){
+            for (City cityToSearch: cities.vertexSet()) {
+                if (cityToSearch.equals(city)){
+                    return cityToSearch;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void setGraph(UndirectedGraph<City, DefaultEdge> graph) {
+        this.graph = graph;
+    }
+
+    public UndirectedGraph<City, DefaultEdge> getGraph() {
+        return graph;
     }
 }

@@ -5,6 +5,7 @@ import CommonModel.GameModel.Position;
 import Server.Communication.BaseCommunication;
 import Server.Model.Game;
 import Server.Managers.GamesManager;
+import com.sun.deploy.ref.Helpers;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,8 @@ public class User {
     private Position nobilityPathPosition;
 
     private ArrayList<City> usersEmporium;
+
+    private int helpers;
 
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;
@@ -107,5 +110,13 @@ public class User {
 
     public void addEmporium(City cityEmporium) {
         this.usersEmporium.add(cityEmporium);
+    }
+
+    public int getHelpers() {
+        return helpers;
+    }
+
+    public void setHelpers(int helpers) {
+        this.helpers = helpers;
     }
 }
