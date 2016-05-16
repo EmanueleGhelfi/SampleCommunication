@@ -40,7 +40,4 @@ public class GUIController {
         errorText.setText("ERRORE LOGIN");
     }
 
-    public void showWaitingForStart() {
-        errorText.setText("Waiting...");
-    }
 }

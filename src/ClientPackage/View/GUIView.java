@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
  * Created by Emanuele on 13/05/2016.
  */
@@ -53,6 +55,18 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void showWaitingForStart() {
-        guiController.showWaitingForStart();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientPackage/View/GUIResources/Test.fxml"));
+        Parent screen = null;
+        try {
+            screen = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        guiController = loader.getController();
+        guiController.setClientController(clientController);
+        Scene scene = new Scene(screen);
+        Stage testStage = new Stage();
+        testStage.setScene(scene);
+        testStage.show();
     }
 }

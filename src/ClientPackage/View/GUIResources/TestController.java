@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  */
 public class TestController implements Initializable {
 
-    private ClientController clientController;
+    private ClientController clientController = new ClientController();
 
     public void testAction(){
         //do something
