@@ -234,6 +234,14 @@ public class Game implements GameImmutable{
         return king;
     }
 
+    public NobilityPath getNobilityPath() {
+        return nobilityPath;
+    }
+
+    public void setNobilityPath(NobilityPath nobilityPath) {
+        this.nobilityPath = nobilityPath;
+    }
+
     public KingBonusCard getKingBonusCard() {
         try{
             return kingBonusCard.peek();
