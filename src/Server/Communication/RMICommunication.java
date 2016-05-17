@@ -39,6 +39,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     public boolean sendIP(String ip, String name) throws RemoteException {
         Registry registry = LocateRegistry.getRegistry(ip,1099);
         try {
+            // get remote object from client
             rmiClientInterface = (RMIClientInterface) registry.lookup(name);
             return true;
         } catch (NotBoundException e) {

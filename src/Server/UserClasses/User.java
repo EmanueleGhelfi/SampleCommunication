@@ -1,5 +1,6 @@
 package Server.UserClasses;
 
+import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Position;
 import Server.Communication.BaseCommunication;
@@ -37,6 +38,8 @@ public class User {
     private int mainActionCounter=0;
 
     private int fastActionCounter = 0;
+
+    private ArrayList<PermitCard> permitCards;
 
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;
@@ -154,5 +157,9 @@ public class User {
                 ", usersEmporium=" + usersEmporium +
                 ", helpers=" + helpers +
                 '}';
+    }
+
+    public void addPermitCard(PermitCard permitCard){
+        permitCards.add(permitCard);
     }
 }

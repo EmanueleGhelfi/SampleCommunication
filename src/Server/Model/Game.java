@@ -63,11 +63,7 @@ public class Game implements GameImmutable{
     private GameController gameController;
 
     // PERMIT DECK
-    private PermitDeck mountainDeck;
-
-    private PermitDeck hillDeck;
-
-    private PermitDeck coastDeck;
+    private HashMap<Region,PermitDeck> permitDecks;
 
     // POLITIC CARD
     private ArrayList<PoliticCard> politicCards = new ArrayList<>();
@@ -182,9 +178,10 @@ public class Game implements GameImmutable{
 
     private void createDecks() {
         //create mountainDeck
-        mountainDeck = new PermitDeck(Region.MOUNTAIN);
-        hillDeck = new PermitDeck(Region.HILL);
-        coastDeck = new PermitDeck(Region.COAST);
+        permitDecks = new HashMap<Region, PermitDeck>();
+        for (Region region : Region.values()) {
+            permitDecks.put(region, new PermitDeck(region));
+        }
     }
 
     public Collection<User> getUsers() {
@@ -255,22 +252,24 @@ public class Game implements GameImmutable{
     @Override
     public String toString() {
         return "Game{" +
-                "started=" + started +
-                ", cities=" + cities +
+                "cities=" + cities +
+                ", started=" + started +
                 ", regions=" + regions +
                 ", king=" + king +
                 ", victoryPath=" + victoryPath +
                 ", nobilityPath=" + nobilityPath +
                 ", moneyPath=" + moneyPath +
                 ", gameController=" + gameController +
-                ", mountainDeck=" + mountainDeck +
-                ", hillDeck=" + hillDeck +
-                ", coastDeck=" + coastDeck +
+                ", permitDecks=" + permitDecks +
                 ", politicCards=" + politicCards +
                 ", graph=" + graph +
                 ", regionBonusCard=" + regionBonusCard +
                 ", colorBonusCard=" + colorBonusCard +
                 ", kingBonusCard=" + kingBonusCard +
                 '}';
+    }
+
+    public PermitDeck getPermitDeck(Region region){
+        return permitDecks.get(region);
     }
 }

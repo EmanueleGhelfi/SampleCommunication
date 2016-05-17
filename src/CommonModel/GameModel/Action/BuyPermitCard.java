@@ -1,5 +1,7 @@
 package CommonModel.GameModel.Action;
 
+import CommonModel.GameModel.ActionNotPossibleException;
+import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.Card.PoliticCard;
 import CommonModel.GameModel.City.Region;
@@ -19,6 +21,7 @@ public class BuyPermitCard extends Action {
     private PermitCard permitCard;
 
 
+    // TODO: test
     public BuyPermitCard(ArrayList<PoliticCard> politicCard, Region userRegion, PermitCard permitCard) {
         this.politicCard = politicCard;
         this.userRegion = userRegion;
@@ -27,14 +30,21 @@ public class BuyPermitCard extends Action {
     }
 
     @Override
-    public void doAction(Game game, User user) {
+    public void doAction(Game game, User user) throws ActionNotPossibleException {
         Region region = game.getRegion(userRegion.getRegion());
+        PermitDeck permitDeck = game.getPermitDeck(region);
+        PermitCard permitCardToBuy = permitDeck.getPermitCardVisible(permitCard);
+        permitCardToBuy.getBonus().getBonus(user,game);
+        user.addPermitCard(permitCardToBuy);
+        int newPositionInMoneyPath =0;
+        if(politicCard.size()<4 && politicCard.size()>0)
+            newPositionInMoneyPath=10-(politicCard.size()-1);
+        else if(politicCard.size()==4)
+            newPositionInMoneyPath = 0;
+            else throw new ActionNotPossibleException();
+        game.getMoneyPath().goAhead(user,newPositionInMoneyPath);
 
-
+        removeAction(game, user);
     }
 
-    @Override
-    public String getType() {
-        return null;
-    }
 }
