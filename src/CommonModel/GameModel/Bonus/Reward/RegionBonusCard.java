@@ -1,7 +1,6 @@
 package CommonModel.GameModel.Bonus.Reward;
 
-import CommonModel.GameModel.Bonus.GenericBonusCard;
-import CommonModel.GameModel.Bonus.VictoryPointBonus;
+import CommonModel.GameModel.Bonus.SingleBonus.VictoryPointBonus;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
 import Server.Model.Game;
@@ -10,7 +9,7 @@ import Server.Model.User;
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class RegionBonusCard implements GenericBonusCard {
+public class RegionBonusCard implements RewardBonusCard {
 
     private Region region;
     private VictoryPointBonus victoryPointBonus;

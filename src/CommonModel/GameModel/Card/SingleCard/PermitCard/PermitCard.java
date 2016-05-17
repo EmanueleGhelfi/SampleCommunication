@@ -1,6 +1,6 @@
 package CommonModel.GameModel.Card.SingleCard.PermitCard;
 
-import CommonModel.GameModel.Bonus.Bonus;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Region;
 

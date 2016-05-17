@@ -4,7 +4,7 @@ package CommonModel.GameModel.Path;
  * Created by Giulio on 14/05/2016.
  */
 
-import CommonModel.GameModel.Bonus.Bonus;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
 
 /**
  * Position in nobility path

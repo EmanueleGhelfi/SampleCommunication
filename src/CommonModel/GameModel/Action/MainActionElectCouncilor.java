@@ -7,7 +7,6 @@ import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.io.Serializable;
 
 /**

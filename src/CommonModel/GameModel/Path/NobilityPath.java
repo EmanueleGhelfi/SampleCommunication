@@ -1,8 +1,8 @@
 package CommonModel.GameModel.Path;
 
 import Utilities.Exception.ActionNotPossibleException;
-import CommonModel.GameModel.Bonus.Bonus;
-import CommonModel.GameModel.Bonus.MainBonus;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import Server.Model.User;
 
 /**

@@ -1,7 +1,7 @@
 package CommonModel.GameModel.City;
 
-import CommonModel.GameModel.Bonus.Bonus;
-import CommonModel.GameModel.Bonus.MainBonus;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Bonus.Generic.MainBonus;
 
 /**
  * Created by Giulio on 13/05/2016.

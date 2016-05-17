@@ -1,7 +1,7 @@
 package CommonModel.GameModel.Card.Deck;
 
 import Utilities.Exception.ActionNotPossibleException;
-import CommonModel.GameModel.Bonus.MainBonus;
+import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import CommonModel.GameModel.City.CityFactory;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;

@@ -4,8 +4,7 @@ package CommonModel.GameModel.Bonus.Reward;
  * Created by Giulio on 13/05/2016.
  */
 
-import CommonModel.GameModel.Bonus.GenericBonusCard;
-import CommonModel.GameModel.Bonus.VictoryPointBonus;
+import CommonModel.GameModel.Bonus.SingleBonus.VictoryPointBonus;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Color;
 import Server.Model.Game;
@@ -14,7 +13,7 @@ import Server.Model.User;
 /**
  * Carte nella plancia del re che dicono bonus per ogni colore della città
  */
-public class ColorBonusCard implements GenericBonusCard {
+public class ColorBonusCard implements RewardBonusCard {
 
     private Color color;
     private VictoryPointBonus victoryPointBonus;

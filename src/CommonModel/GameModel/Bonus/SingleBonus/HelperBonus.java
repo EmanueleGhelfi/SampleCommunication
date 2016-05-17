@@ -1,5 +1,6 @@
-package CommonModel.GameModel.Bonus;
+package CommonModel.GameModel.Bonus.SingleBonus;
 
+import CommonModel.GameModel.Bonus.Generic.Bonus;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -9,7 +10,7 @@ import java.util.Random;
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class HelperBonus implements Bonus{
+public class HelperBonus implements Bonus {
 
     private int helperNumber;
 
