@@ -6,6 +6,7 @@ import CommonModel.GameModel.Bonus.ColorBonusCard;
 import CommonModel.GameModel.Bonus.KingBonusCard;
 import CommonModel.GameModel.Bonus.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
+import CommonModel.GameModel.Card.Deck.PoliticDeck;
 import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.Card.PoliticCard;
 import CommonModel.GameModel.Card.PoliticColor;
@@ -66,7 +67,7 @@ public class Game implements GameImmutable{
     private HashMap<Region,PermitDeck> permitDecks;
 
     // POLITIC CARD
-    private ArrayList<PoliticCard> politicCards = new ArrayList<>();
+    private PoliticDeck politicCards;
     private UndirectedGraph<City, DefaultEdge> graph;
 
     private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
@@ -104,13 +105,8 @@ public class Game implements GameImmutable{
 
     private void createPoliticCards() {
         // foreach color create thirteen cards
-        for (PoliticColor politicColor:PoliticColor.values()) {
-
-            for (int i = 0; i< 13; i++){
-                politicCards.add(new PoliticCard(politicColor));
-            }
-
-        }
+        politicCards = new PoliticDeck();
+        politicCards.createRandomDeck();
         //TODO: Add multicolor card
     }
 

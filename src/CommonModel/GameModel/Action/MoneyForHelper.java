@@ -14,7 +14,7 @@ public class MoneyForHelper extends Action {
     }
 
     @Override
-    void doAction(Game game, User user) throws ActionNotPossibleException {
+    public void doAction(Game game, User user) throws ActionNotPossibleException {
         if (user.getVictoryPathPosition()>3){
             user.setVictoryPathPosition(user.getVictoryPathPosition()-3);
             user.setHelpers(user.getHelpers()+1);

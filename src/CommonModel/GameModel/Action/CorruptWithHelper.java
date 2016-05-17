@@ -25,7 +25,7 @@ public class CorruptWithHelper extends Action {
     }
 
     @Override
-    void doAction(Game game, User user) throws ActionNotPossibleException {
+    public void doAction(Game game, User user) throws ActionNotPossibleException {
         Council council;
         if (user.getHelpers()>1){
             user.setHelpers(user.getHelpers()-1);

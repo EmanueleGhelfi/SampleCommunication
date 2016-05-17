@@ -14,7 +14,7 @@ public class ChangePermitCardWithHelper extends Action {
     }
 
     @Override
-    void doAction(Game game, User user) throws ActionNotPossibleException {
+    public void doAction(Game game, User user) throws ActionNotPossibleException {
         if (user.getHelpers()>1){
             user.setHelpers(user.getHelpers()-1);
 
