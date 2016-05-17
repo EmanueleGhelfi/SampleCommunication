@@ -43,7 +43,7 @@ public class BuyPermitCard extends Action {
             newPositionInMoneyPath = 0;
             else throw new ActionNotPossibleException();
         game.getMoneyPath().goAhead(user,newPositionInMoneyPath);
-
+        //TODO: multicolor card
         removeAction(game, user);
     }
 
