@@ -2,9 +2,6 @@ package CommonModel.GameModel.City;
 
 import CommonModel.GameModel.Bonus.Bonus;
 import CommonModel.GameModel.Bonus.MainBonus;
-import Server.UserClasses.User;
-
-import java.util.ArrayList;
 
 /**
  * Created by Giulio on 13/05/2016.

@@ -1,7 +1,7 @@
 package Server.Controller;
 
 import Server.Model.Game;
-import Server.UserClasses.User;
+import Server.Model.User;
 
 import java.util.Timer;
 import java.util.TimerTask;

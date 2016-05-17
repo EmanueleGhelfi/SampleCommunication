@@ -1,12 +1,12 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.ActionNotPossibleException;
+import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.Card.PoliticCard;
 import CommonModel.GameModel.City.Region;
 import Server.Model.Game;
-import Server.UserClasses.User;
+import Server.Model.User;
 
 import java.util.ArrayList;
 

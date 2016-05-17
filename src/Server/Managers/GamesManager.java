@@ -1,10 +1,10 @@
 package Server.Managers;
 
 import Interface.RMIListenerInterface;
-import Server.Listeners.RMIListener;
-import Server.Listeners.SocketListener;
+import Server.NetworkInterface.Listeners.RMIListener;
+import Server.NetworkInterface.Listeners.SocketListener;
 import Server.Model.Game;
-import Server.UserClasses.User;
+import Server.Model.User;
 
 import java.io.IOException;
 import java.rmi.RemoteException;

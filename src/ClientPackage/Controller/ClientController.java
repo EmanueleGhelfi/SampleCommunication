@@ -1,21 +1,15 @@
 package ClientPackage.Controller;
 
-import ClientPackage.Service.ClientService;
-import ClientPackage.Service.FactoryService;
-import ClientPackage.View.BaseView;
-import ClientPackage.View.FactoryView;
-import ClientPackage.View.ViewException;
-import CommonModel.GameModel.Action.BuildWithPermitCard;
+import ClientPackage.NetworkInterface.ClientService;
+import ClientPackage.NetworkInterface.FactoryService;
+import ClientPackage.View.GeneralView.BaseView;
+import ClientPackage.View.GeneralView.FactoryView;
+import Utilities.Exception.ViewException;
 import CommonModel.GameModel.Action.ElectCouncillor;
-import CommonModel.GameModel.ActionNotPossibleException;
-import CommonModel.GameModel.Card.PermitCard;
+import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.PoliticColor;
-import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.CityName;
-import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Councilor;
-import com.sun.deploy.util.SessionState;
 
 import java.io.BufferedReader;
 import java.io.IOException;

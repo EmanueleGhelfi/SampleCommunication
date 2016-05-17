@@ -1,9 +1,8 @@
 package CommonModel.GameModel.Bonus;
 
-import CommonModel.GameModel.ActionNotPossibleException;
-import CommonModel.GameModel.Bonus.Bonus;
+import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
-import Server.UserClasses.User;
+import Server.Model.User;
 
 /**
  * Created by Giulio on 13/05/2016.

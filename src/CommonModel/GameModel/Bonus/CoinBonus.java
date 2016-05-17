@@ -1,8 +1,8 @@
 package CommonModel.GameModel.Bonus;
 
-import CommonModel.GameModel.ActionNotPossibleException;
+import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
-import Server.UserClasses.User;
+import Server.Model.User;
 
 import java.util.Random;
 

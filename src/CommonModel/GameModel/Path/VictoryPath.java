@@ -1,7 +1,7 @@
 package CommonModel.GameModel.Path;
 
-import CommonModel.GameModel.ActionNotPossibleException;
-import Server.UserClasses.User;
+import Utilities.Exception.ActionNotPossibleException;
+import Server.Model.User;
 
 /**
  * Created by Giulio on 14/05/2016.

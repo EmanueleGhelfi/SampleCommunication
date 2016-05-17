@@ -1,12 +1,12 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.ActionNotPossibleException;
+import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council;
 import CommonModel.GameModel.Councilor;
 import CommonModel.GameModel.King;
 import Server.Model.Game;
-import Server.UserClasses.User;
+import Server.Model.User;
 
 /**
  * Created by Giulio on 17/05/2016.

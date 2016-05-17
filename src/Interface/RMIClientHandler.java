@@ -1,8 +1,7 @@
 package Interface;
 
 import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Action.ElectCouncillor;
-import CommonModel.GameModel.ActionNotPossibleException;
+import Utilities.Exception.ActionNotPossibleException;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

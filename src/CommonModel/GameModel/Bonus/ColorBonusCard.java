@@ -4,10 +4,10 @@ package CommonModel.GameModel.Bonus;
  * Created by Giulio on 13/05/2016.
  */
 
-import CommonModel.GameModel.ActionNotPossibleException;
+import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Color;
 import Server.Model.Game;
-import Server.UserClasses.User;
+import Server.Model.User;
 
 /**
  * Carte nella plancia del re che dicono bonus per ogni colore della città

@@ -1,6 +1,6 @@
 package CommonModel.GameModel.City;
 
-import Server.UserClasses.User;
+import Server.Model.User;
 
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.NeighborIndex;

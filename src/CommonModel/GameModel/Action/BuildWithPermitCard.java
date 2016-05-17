@@ -1,18 +1,11 @@
 package CommonModel.GameModel.Action;
 
-import ClientPackage.Service.FactoryService;
-import CommonModel.GameModel.ActionNotPossibleException;
+import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.KingBonusCard;
-import CommonModel.GameModel.Bonus.RegionBonusCard;
 import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.City.*;
 import Server.Model.Game;
-import Server.UserClasses.User;
-import org.jgrapht.UndirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-
-import java.util.ArrayList;
+import Server.Model.User;
 
 /**
  * Created by Giulio on 16/05/2016.
