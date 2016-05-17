@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 /**
  * Manage the JavaFX View and user input
  */
-public class GUIController {
+public class LoginController {
 
     private ClientController clientController;
     @FXML

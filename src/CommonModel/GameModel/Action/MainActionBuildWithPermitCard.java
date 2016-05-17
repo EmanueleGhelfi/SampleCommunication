@@ -1,8 +1,8 @@
 package CommonModel.GameModel.Action;
 
 import Utilities.Exception.ActionNotPossibleException;
-import CommonModel.GameModel.Bonus.KingBonusCard;
-import CommonModel.GameModel.Card.PermitCard;
+import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.*;
 import Server.Model.Game;
 import Server.Model.User;
@@ -10,12 +10,12 @@ import Server.Model.User;
 /**
  * Created by Giulio on 16/05/2016.
  */
-public class BuildWithPermitCard extends Action{
+public class MainActionBuildWithPermitCard extends Action{
 
     private PermitCard permitCard;
     private City city;
 
-    public BuildWithPermitCard(City city, PermitCard permitCard) {
+    public MainActionBuildWithPermitCard(City city, PermitCard permitCard) {
         this.city = city;
         this.permitCard = permitCard;
         this.type = "MAIN_ACTION";

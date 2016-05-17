@@ -1,4 +1,4 @@
-package CommonModel.GameModel.Card;
+package CommonModel.GameModel.Card.SingleCard.PoliticCard;
 
 import java.io.Serializable;
 

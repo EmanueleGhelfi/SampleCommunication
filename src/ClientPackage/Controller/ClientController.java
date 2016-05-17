@@ -1,15 +1,15 @@
 package ClientPackage.Controller;
 
 import ClientPackage.NetworkInterface.ClientService;
-import ClientPackage.NetworkInterface.FactoryService;
+import ClientPackage.NetworkInterface.ClientFactoryService;
 import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
 import Utilities.Exception.ViewException;
-import CommonModel.GameModel.Action.ElectCouncillor;
+import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import Utilities.Exception.ActionNotPossibleException;
-import CommonModel.GameModel.Card.PoliticColor;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.Region;
-import CommonModel.GameModel.Councilor;
+import CommonModel.GameModel.Council.Councilor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class ClientController {
              inKeyboard = new BufferedReader(new InputStreamReader(System.in));
             networkMethod = getChoiceConnection(inKeyboard);
             String serverIP = getServerIP(inKeyboard);
-            clientService = FactoryService.getService(networkMethod,serverIP,this);
+            clientService = ClientFactoryService.getService(networkMethod,serverIP,this);
             if(clientService.Connect()) {
                 uiMethod = getUIMethod(inKeyboard);
                 baseView = FactoryView.getBaseView(uiMethod,this);
@@ -138,10 +138,10 @@ public class ClientController {
     }
 
     public void onTestAction() {
-        ElectCouncillor electCouncillor = new ElectCouncillor(new Councilor(PoliticColor.BLACK), null, Region.COAST);
+        MainActionElectCouncilor electCouncilor = new MainActionElectCouncilor(new Councilor(PoliticColor.BLACK), null, Region.COAST);
         try {
             try {
-                clientService.onTestAction(electCouncillor);
+                clientService.onTestAction(electCouncilor);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

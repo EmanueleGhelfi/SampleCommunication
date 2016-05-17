@@ -17,5 +17,5 @@ public interface RMIClientHandler extends Remote{
 
     boolean tryToSetName(String username) throws RemoteException;
 
-    void test(Action electCouncillor) throws ActionNotPossibleException, RemoteException;
+    void test(Action electCouncilor) throws ActionNotPossibleException, RemoteException;
 }

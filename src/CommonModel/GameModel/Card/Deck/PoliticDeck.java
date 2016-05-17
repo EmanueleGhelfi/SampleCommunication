@@ -2,8 +2,8 @@ package CommonModel.GameModel.Card.Deck;
 
 
 
-import CommonModel.GameModel.Card.PoliticCard;
-import CommonModel.GameModel.Card.PoliticColor;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 
 import java.util.Collections;
 import java.util.Stack;

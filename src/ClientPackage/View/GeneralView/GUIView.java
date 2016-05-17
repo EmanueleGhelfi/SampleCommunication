@@ -1,9 +1,8 @@
 package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.Class.GUIController;
-import ClientPackage.View.GUIResources.Class.TestController;
-import ClientPackage.View.GeneralView.BaseView;
+import ClientPackage.View.GUIResources.Class.LoginController;
+import ClientPackage.View.GUIResources.Class.WaitingController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +16,7 @@ import java.io.IOException;
  */
 public class GUIView extends Application implements BaseView {
 
-    private GUIController guiController;
+    private LoginController loginController;
     private ClientController clientController;
 
     public GUIView(ClientController clientController) {
@@ -30,10 +29,10 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientPackage/View/GUIResources/FXML/sample.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientPackage/View/GUIResources/FXML/LoginFXML.fxml"));
         Parent screen = loader.load();
-        guiController = loader.getController();
-        guiController.setClientController(clientController);
+        loginController = loader.getController();
+        loginController.setClientController(clientController);
         Scene scene = new Scene(screen);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -54,20 +53,20 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void showLoginError() {
-        guiController.showLoginError();
+        loginController.showLoginError();
     }
 
     @Override
     public void showWaitingForStart() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientPackage/View/GUIResources/FXML/Test.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientPackage/View/GUIResources/FXML/WaitingFXML.fxml"));
         Parent screen = null;
         try {
             screen = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        TestController testController = loader.getController();
-        testController.setClientController(clientController);
+        WaitingController waitingController = loader.getController();
+        waitingController.setClientController(clientController);
         Scene scene = new Scene(screen);
         Stage testStage = new Stage();
         testStage.setScene(scene);

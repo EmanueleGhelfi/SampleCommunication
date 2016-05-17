@@ -1,9 +1,11 @@
-package CommonModel.GameModel.Bonus;
+package CommonModel.GameModel.Bonus.Reward;
 
 /**
  * Created by Giulio on 13/05/2016.
  */
 
+import CommonModel.GameModel.Bonus.GenericBonusCard;
+import CommonModel.GameModel.Bonus.VictoryPointBonus;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Color;
 import Server.Model.Game;

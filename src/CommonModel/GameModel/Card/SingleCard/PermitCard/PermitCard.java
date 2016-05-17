@@ -1,4 +1,4 @@
-package CommonModel.GameModel.Card;
+package CommonModel.GameModel.Card.SingleCard.PermitCard;
 
 import CommonModel.GameModel.Bonus.Bonus;
 import CommonModel.GameModel.City.CityName;

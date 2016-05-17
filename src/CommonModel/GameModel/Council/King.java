@@ -1,6 +1,6 @@
-package CommonModel.GameModel;
+package CommonModel.GameModel.Council;
 
-import CommonModel.GameModel.Card.PoliticColor;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Color;

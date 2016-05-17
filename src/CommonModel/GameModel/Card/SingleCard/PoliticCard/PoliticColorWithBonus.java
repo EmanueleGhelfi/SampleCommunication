@@ -1,4 +1,4 @@
-package CommonModel.GameModel.Card;
+package CommonModel.GameModel.Card.SingleCard.PoliticCard;
 
 /**
  * Created by Giulio on 14/05/2016.

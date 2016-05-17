@@ -1,11 +1,11 @@
-package CommonModel.GameModel.Card;
+package CommonModel.GameModel.Card.SingleCard.PermitCard;
 
 import java.util.ArrayList;
 
 /**
  * Created by Giulio on 15/05/2016.
  */
-public enum HillCityPermitCard {
+public enum PermitCardHillCity {
 
     H('H', null, null), GHI('G', 'H', 'I'), F('F', null, null), HI('H', 'I', null), I('I', null, null), FG('F', 'G', null), J('J', null, null),
     HG('H', 'G', null), FGH('F', 'G', 'H'), G('G', null, null), FJ('F', 'J', null), IJ('I', 'J', null), FGJ('F', 'G', 'J'), FIJ('F', 'I', 'J'),
@@ -14,7 +14,7 @@ public enum HillCityPermitCard {
     ArrayList<Character> cities = new ArrayList<>();
 
 
-    private HillCityPermitCard(Character city1, Character city2, Character city3) {
+    private PermitCardHillCity(Character city1, Character city2, Character city3) {
         if (city1 != null) {
             cities.add(city1);
         }
@@ -28,8 +28,8 @@ public enum HillCityPermitCard {
 
     public static  ArrayList<ArrayList<Character>> getCities() {
         ArrayList<ArrayList<Character>> cities = new ArrayList<>();
-        for(HillCityPermitCard hillCityPermitCard : HillCityPermitCard.values()){
-            cities.add(hillCityPermitCard.cities);
+        for(PermitCardHillCity permitCardHillCity : PermitCardHillCity.values()){
+            cities.add(permitCardHillCity.cities);
         }
         return cities;
     }

@@ -7,21 +7,21 @@ import Server.Model.User;
 /**
  * Created by Giulio on 17/05/2016.
  */
-public class MoneyForHelper extends Action {
+public class FastActionChangePermitCardWithHelper extends Action {
 
-    public MoneyForHelper() {
+    public FastActionChangePermitCardWithHelper() {
         this.type = "FAST_ACTION";
     }
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        if (user.getVictoryPathPosition()>3){
-            user.setVictoryPathPosition(user.getVictoryPathPosition()-3);
-            user.setHelpers(user.getHelpers()+1);
-            removeAction(game,user);
+        if (user.getHelpers()>1){
+            user.setHelpers(user.getHelpers()-1);
+
+
+
         } else {
             throw new ActionNotPossibleException();
         }
     }
-
 }

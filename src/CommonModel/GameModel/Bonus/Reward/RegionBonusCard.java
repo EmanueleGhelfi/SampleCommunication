@@ -1,5 +1,7 @@
-package CommonModel.GameModel.Bonus;
+package CommonModel.GameModel.Bonus.Reward;
 
+import CommonModel.GameModel.Bonus.GenericBonusCard;
+import CommonModel.GameModel.Bonus.VictoryPointBonus;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
 import Server.Model.Game;

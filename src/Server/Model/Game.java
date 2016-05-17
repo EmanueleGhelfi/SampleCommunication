@@ -1,19 +1,15 @@
 package Server.Model;
 
 import CommonModel.GameImmutable;
-import CommonModel.GameModel.*;
-import CommonModel.GameModel.Bonus.ColorBonusCard;
-import CommonModel.GameModel.Bonus.KingBonusCard;
-import CommonModel.GameModel.Bonus.RegionBonusCard;
+import CommonModel.GameModel.Bonus.Reward.ColorBonusCard;
+import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
+import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
-import CommonModel.GameModel.Card.PermitCard;
-import CommonModel.GameModel.Card.PoliticCard;
-import CommonModel.GameModel.Card.PoliticColor;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Path.MoneyPath;
 import CommonModel.GameModel.Path.NobilityPath;
 import CommonModel.GameModel.Path.VictoryPath;
@@ -23,7 +19,6 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import java.sql.Statement;
 import java.util.*;
 
 /**

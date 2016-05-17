@@ -4,7 +4,7 @@ import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.MainBonus;
 import CommonModel.GameModel.City.CityFactory;
 import CommonModel.GameModel.City.Region;
-import CommonModel.GameModel.Card.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 
 import java.util.ArrayList;
 import java.util.Stack;

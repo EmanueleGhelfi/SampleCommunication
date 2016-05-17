@@ -1,11 +1,11 @@
-package CommonModel.GameModel.Card;
+package CommonModel.GameModel.Card.SingleCard.PermitCard;
 
 import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 15/05/2016.
  */
-public enum CoastCityPermitCard {
+public enum PermitCardCoastCity {
 
     ABE('A','B','E'),A('A',null,null),CD('C','D',null),B('B',null,null),D('D',null,null),AB('A','B',null),
     CDE('C','D','E'),AE('A','E',null),BCD('B','C','D'),C('C',null,null),DE('D','E',null),BC('B','C',null),ADE('A','D','E'),
@@ -15,7 +15,7 @@ public enum CoastCityPermitCard {
 
 
 
-    CoastCityPermitCard(Character city1,Character city2, Character city3) {
+    PermitCardCoastCity(Character city1, Character city2, Character city3) {
         if(city1!=null){
             cities.add(city1);
         }
@@ -29,8 +29,8 @@ public enum CoastCityPermitCard {
 
     public static  ArrayList<ArrayList<Character>> getCities() {
         ArrayList<ArrayList<Character>> cities = new ArrayList<>();
-        for(CoastCityPermitCard coastCityPermitCard : CoastCityPermitCard.values()){
-            cities.add(coastCityPermitCard.cities);
+        for(PermitCardCoastCity permitCardCoastCity : PermitCardCoastCity.values()){
+            cities.add(permitCardCoastCity.cities);
         }
         return cities;
     }

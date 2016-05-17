@@ -24,7 +24,7 @@ public abstract class Action implements Serializable {
                 user.setFastActionCounter(user.getFastActionCounter()-1);
                 break;
         }
-    };
+    }
 
     String getType(){
         return type;

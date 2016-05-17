@@ -1,8 +1,8 @@
 package Server.Model;
 
-import CommonModel.GameModel.Card.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.Position;
+import CommonModel.GameModel.Path.Position;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.Controller.GamesManager;
 

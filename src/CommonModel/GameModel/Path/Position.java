@@ -1,4 +1,4 @@
-package CommonModel.GameModel;
+package CommonModel.GameModel.Path;
 
 /**
  * Created by Giulio on 14/05/2016.

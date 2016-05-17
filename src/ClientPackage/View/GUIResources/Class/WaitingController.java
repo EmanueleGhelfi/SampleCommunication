@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Giulio on 16/05/2016.
  */
-public class TestController implements Initializable {
+public class WaitingController implements Initializable {
 
     private ClientController clientController;
 

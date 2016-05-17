@@ -3,7 +3,6 @@ package CommonModel.GameModel.Path;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.Bonus;
 import CommonModel.GameModel.Bonus.MainBonus;
-import CommonModel.GameModel.Position;
 import Server.Model.User;
 
 /**

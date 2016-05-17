@@ -60,8 +60,8 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
-    public void test(Action electCouncillor) throws ActionNotPossibleException {
-        electCouncillor.doAction(user.getGame(), user);
+    public void test(Action electCouncilor) throws ActionNotPossibleException {
+        electCouncilor.doAction(user.getGame(), user);
     }
 
 

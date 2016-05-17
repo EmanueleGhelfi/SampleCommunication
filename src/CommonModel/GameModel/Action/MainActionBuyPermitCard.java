@@ -2,8 +2,8 @@ package CommonModel.GameModel.Action;
 
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
-import CommonModel.GameModel.Card.PermitCard;
-import CommonModel.GameModel.Card.PoliticCard;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.Region;
 import Server.Model.Game;
 import Server.Model.User;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 16/05/2016.
  */
-public class BuyPermitCard extends Action {
+public class MainActionBuyPermitCard extends Action {
 
 
     private Region userRegion;
@@ -22,7 +22,7 @@ public class BuyPermitCard extends Action {
 
 
     // TODO: test
-    public BuyPermitCard(ArrayList<PoliticCard> politicCard, Region userRegion, PermitCard permitCard) {
+    public MainActionBuyPermitCard(ArrayList<PoliticCard> politicCard, Region userRegion, PermitCard permitCard) {
         this.politicCard = politicCard;
         this.userRegion = userRegion;
         this.type ="MAIN_ACTION";
