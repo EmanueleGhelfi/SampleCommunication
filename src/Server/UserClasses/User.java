@@ -34,6 +34,10 @@ public class User {
 
     private int helpers;
 
+    private int mainActionCounter=0;
+
+    private int fastActionCounter = 0;
+
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;
         this.username = "DummyId";
@@ -118,6 +122,22 @@ public class User {
 
     public void setHelpers(int helpers) {
         this.helpers = helpers;
+    }
+
+    public int getFastActionCounter() {
+        return fastActionCounter;
+    }
+
+    public void setFastActionCounter(int fastActionCounter) {
+        this.fastActionCounter = fastActionCounter;
+    }
+
+    public int getMainActionCounter() {
+        return mainActionCounter;
+    }
+
+    public void setMainActionCounter(int mainActionCounter) {
+        this.mainActionCounter = mainActionCounter;
     }
 
     @Override

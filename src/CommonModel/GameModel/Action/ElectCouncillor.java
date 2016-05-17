@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * Created by Emanuele on 16/05/2016.
  */
-public class ElectCouncillor implements Action, Serializable {
+public class ElectCouncillor extends Action implements Serializable {
 
     private Councilor councilorToAdd;
     private Region region;
@@ -45,6 +45,7 @@ public class ElectCouncillor implements Action, Serializable {
         // and councilor to councilor to council (and remove the first councillor)
         council.add(councilorToAdd);
         game.getMoneyPath().goAhead(user,4);
+        removeAction(game,user);
     }
 
     @Override

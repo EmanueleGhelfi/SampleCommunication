@@ -9,8 +9,24 @@ import java.io.Serializable;
 /**
  * Created by Emanuele on 16/05/2016.
  */
-public interface Action extends Serializable {
+public abstract class Action implements Serializable {
 
-    void doAction(Game game, User user) throws ActionNotPossibleException;
-    String getType();
+
+    protected String type;
+
+    abstract void doAction(Game game, User user) throws ActionNotPossibleException;
+    void removeAction(Game game,User user){
+        switch (type) {
+            case "MAIN_ACTION":
+                user.setMainActionCounter(user.getMainActionCounter()-1);
+                break;
+            case "FAST_ACTION":
+                user.setFastActionCounter(user.getFastActionCounter()-1);
+                break;
+        }
+    };
+
+    String getType(){
+        return type;
+    }
 }

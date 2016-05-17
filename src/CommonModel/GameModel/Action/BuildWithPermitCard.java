@@ -17,15 +17,15 @@ import java.util.ArrayList;
 /**
  * Created by Giulio on 16/05/2016.
  */
-public class BuildWithPermitCard implements Action{
+public class BuildWithPermitCard extends Action{
 
     private PermitCard permitCard;
     private City city;
-    private final String type = "MAIN_ACTION";
 
     public BuildWithPermitCard(City city, PermitCard permitCard) {
         this.city = city;
         this.permitCard = permitCard;
+        this.type = "MAIN_ACTION";
     }
 
     @Override
@@ -59,6 +59,7 @@ public class BuildWithPermitCard implements Action{
                     kingBonusCard.getBonus(user, game);
                 }
             }
+            removeAction(game,user);
         } else {
             throw new ActionNotPossibleException();
         }
@@ -66,9 +67,5 @@ public class BuildWithPermitCard implements Action{
 //
     }
 
-    @Override
-    public String getType() {
-        return type;
-    }
 
 }
