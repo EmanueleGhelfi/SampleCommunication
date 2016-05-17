@@ -4,7 +4,7 @@ import Interface.RMIClientHandler;
 import Interface.RMIListenerInterface;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.NetworkInterface.Communication.RMICommunication;
-import Server.Managers.GamesManager;
+import Server.Controller.GamesManager;
 import Server.Model.User;
 
 import java.rmi.RemoteException;

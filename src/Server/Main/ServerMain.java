@@ -1,6 +1,6 @@
 package Server.Main;
 
-import Server.Managers.GamesManager;
+import Server.Controller.GamesManager;
 
 /**
  * Created by Emanuele on 09/05/2016.

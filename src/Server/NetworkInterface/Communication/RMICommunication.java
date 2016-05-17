@@ -6,7 +6,7 @@ import Utilities.Exception.ActionNotPossibleException;
 import Interface.RMIClientHandler;
 import Interface.RMIClientInterface;
 import Server.Controller.GameController;
-import Server.Managers.GamesManager;
+import Server.Controller.GamesManager;
 import Server.Model.User;
 
 import java.rmi.NotBoundException;

@@ -1,4 +1,4 @@
-package Server.Managers;
+package Server.Controller;
 
 import Interface.RMIListenerInterface;
 import Server.NetworkInterface.Listeners.RMIListener;

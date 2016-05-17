@@ -1,7 +1,7 @@
 package Server.NetworkInterface.Listeners;
 
 import Server.NetworkInterface.Communication.SocketCommunication;
-import Server.Managers.GamesManager;
+import Server.Controller.GamesManager;
 import Server.Model.User;
 
 import java.io.IOException;

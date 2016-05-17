@@ -4,7 +4,7 @@ import CommonModel.GameModel.Card.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Position;
 import Server.NetworkInterface.Communication.BaseCommunication;
-import Server.Managers.GamesManager;
+import Server.Controller.GamesManager;
 
 import java.util.ArrayList;
 

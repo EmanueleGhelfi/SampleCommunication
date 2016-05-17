@@ -4,7 +4,7 @@ import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import CommonModel.Snapshot.GameImmutable;
 import Server.Controller.GameController;
-import Server.Managers.GamesManager;
+import Server.Controller.GamesManager;
 import Server.Model.User;
 import com.google.gson.Gson;
 
