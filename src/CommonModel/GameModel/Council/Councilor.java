@@ -27,4 +27,8 @@ public class Councilor implements Serializable{
                 "color=" + color +
                 '}';
     }
+
+    public PoliticColor getColor() {
+        return color;
+    }
 }

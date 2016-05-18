@@ -28,7 +28,12 @@ public class Council {
     }
 
     public Queue<Councilor> getCouncil(){
-        return councilorQueue;
+        Queue q2 = new ArrayBlockingQueue<Councilor>(4);
+        for (Councilor councilor: councilorQueue) {
+            q2.add(councilor);
+        }
+        return q2;
+
     }
 
     @Override
