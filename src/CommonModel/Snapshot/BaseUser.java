@@ -83,5 +83,16 @@ public class BaseUser implements Serializable {
     }
 
 
-
+    public BaseUser(User user){
+        this.username = user.getUsername();
+        this.connected = user.isConnected();
+        this.coinPathPosition = user.getCoinPathPosition();
+        this.victoryPathPosition = user.getVictoryPathPosition();
+        this.nobilityPathPosition = user.getNobilityPathPosition();
+        this.usersEmporium = user.getUsersEmporium();
+        this.helpers = user.getHelpers();
+        this.permitCards = user.getPermitCards();
+        this.oldPermitCards = user.getOldPermitCards();
+        this.politicCardNumber = user.getPoliticCardSize();
+    }
 }
