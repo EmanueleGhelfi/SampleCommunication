@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * Created by Emanuele on 11/05/2016.
  */
-public class Game implements GameImmutable{
+public class Game{
 
     /**
      * True if game is full (There game is started and the players are playing)
