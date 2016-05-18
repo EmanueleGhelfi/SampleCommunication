@@ -55,7 +55,7 @@ public class SnapshotToSend implements Serializable{
 
         this.nobilityPathPosition = game.getNobilityPath().getPosition();
 
-        this.currentUser = user;
+        this.currentUser = new CurrentUser(user);
     }
 
     //try try
@@ -65,7 +65,7 @@ public class SnapshotToSend implements Serializable{
 
     private void addUserToSnapshot(Game game) {
         for (User user: game.getUsersInGame().values()) {
-            usersInGame.put(user.getUsername(),user);
+            usersInGame.put(user.getUsername(),new BaseUser(user));
         }
     }
 
