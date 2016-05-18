@@ -11,13 +11,18 @@ import CommonModel.GameModel.City.Color;
 import Server.Model.Game;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Carte nella plancia del re che dicono bonus per ogni colore della città
  */
-public class ColorBonusCard implements RewardBonusCard {
+public class ColorBonusCard implements RewardBonusCard,Serializable {
 
     private Color color;
     private VictoryPointBonus victoryPointBonus;
+
+    public ColorBonusCard() {
+    }
 
     public ColorBonusCard(Color color) {
         this.color = color;
