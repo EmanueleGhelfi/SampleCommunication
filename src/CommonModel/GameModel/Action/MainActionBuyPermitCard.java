@@ -1,11 +1,13 @@
 package CommonModel.GameModel.Action;
 
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
+import CommonModel.GameModel.Card.Deck.PoliticDeck;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import Server.Controller.GamesManager;
 import Server.NetworkInterface.Communication.RMICommunication;
-import Utilities.Class.Constants;
+import Server.NetworkInterface.Communication.SocketCommunication;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
@@ -13,20 +15,25 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.Region;
 import Server.Model.Game;
 import Server.Model.User;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Created by Emanuele on 16/05/2016.
  */
 public class MainActionBuyPermitCard extends Action {
 
+
     private Region userRegion;
     private ArrayList<PoliticCard> politicCards;
     private PermitCard permitCard;
     private int bonusCounter = 0;
+
+
 
     public MainActionBuyPermitCard(ArrayList<PoliticCard> politicCard, Region userRegion, PermitCard permitCard) {
         this.politicCards = politicCard;
@@ -35,28 +42,42 @@ public class MainActionBuyPermitCard extends Action {
         this.permitCard = permitCard;
     }
 
+
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
+
         // count number of correct politic card
         int correctPoliticCard = 0;
         // region of permit card
         Region region = game.getRegion(userRegion.getRegion());
+
         //this is the new position of the user in money path
         int newPositionInMoneyPath =0;
+
         // calculate correct politic card
         correctPoliticCard = countCorrectPoliticCard(region);
+
         // calculate money to spend
         newPositionInMoneyPath = calculateMoney(correctPoliticCard);
+
         // go ahead in money path
         game.getMoneyPath().goAhead(user,newPositionInMoneyPath);
+
         // re-add to game deck
         game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(politicCards));
         // remove cards from user
+        System.out.println("POLITICS CARD" + politicCards.size());
+        System.out.println("USER CARD" + user.getPoliticCards().size());
+        int j =0;
        for(int i = 0; i< politicCards.size();i++){
-           if(politicCards.get(i).equals(user.getPoliticCards().get(i))){
-               user.getPoliticCards().remove(i);
+           if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
+               user.getPoliticCards().remove(j);
+           }
+           else{
+               j++;
            }
        }
+
         // buy permit card, here you can buy permit
         PermitDeck permitDeck = game.getPermitDeck(region);
         PermitCard permitCardToBuy = permitDeck.getPermitCardVisible(permitCard);
@@ -78,6 +99,7 @@ public class MainActionBuyPermitCard extends Action {
         else {
             throw new ActionNotPossibleException();
         }
+        System.out.println("NUOVA POS "+correctPoliticCard);
         return newPositionInMoneyPath;
     }
 
@@ -101,8 +123,10 @@ public class MainActionBuyPermitCard extends Action {
             }
 
         }
+        System.out.println("CARTE CORRETTE "+correctPoliticCard);
         return correctPoliticCard;
     }
+
 
     public static void main(String[] args){
         Game game = new Game();
@@ -112,17 +136,28 @@ public class MainActionBuyPermitCard extends Action {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+        System.out.println(user);
+
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
         politicCardArrayList.add(new PoliticCard(PoliticColor.WHITE,false));
         politicCardArrayList.add(new PoliticCard(PoliticColor.WHITE,false));
         politicCardArrayList.add(new PoliticCard(PoliticColor.ORANGE,false));
+
+        user.getPoliticCards().addAll(politicCardArrayList);
+
         Region region = Region.MOUNTAIN;
+
+
         PermitCard permitCard = new PermitCard(new MainBonus(1,5,9,false),null,Region.MOUNTAIN);
+
         MainActionBuyPermitCard mainActionBuyPermitCard = new MainActionBuyPermitCard(politicCardArrayList,region,permitCard);
+
         try {
             mainActionBuyPermitCard.doAction(game,user);
         } catch (ActionNotPossibleException e) {
             e.printStackTrace();
         }
     }
+
 }
