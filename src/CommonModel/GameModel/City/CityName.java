@@ -1,7 +1,6 @@
 package CommonModel.GameModel.City;
 
 import Utilities.Class.Constants;
-
 import java.io.Serializable;
 
 /**
@@ -17,11 +16,8 @@ public enum CityName implements Serializable {
     CityName() {
     }
 
-    private CityName (String cityName){
+    CityName (String cityName){
         this.cityName = cityName;
     }
 
-    public String getCityName() {
-        return cityName;
-    }
 }

@@ -16,9 +16,9 @@ public class FastActionNewMainAction extends Action {
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        if (user.getHelpers()>3) {
-            user.setHelpers(user.getHelpers() - 3);
-            user.setMainActionCounter(user.getMainActionCounter() + 1);
+        if (user.getHelpers()>Constants.HELPER_LIMITATION_NEW_MAIN_ACTION) {
+            user.setHelpers(user.getHelpers() - Constants.HELPER_LIMITATION_NEW_MAIN_ACTION);
+            user.setMainActionCounter(user.getMainActionCounter() + Constants.MAIN_ACTION_ADDED);
             removeAction(game,user);
         } else {
             throw new ActionNotPossibleException();

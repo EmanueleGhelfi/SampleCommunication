@@ -1,7 +1,6 @@
 package Utilities.Class;
 
 import com.google.gson.Gson;
-
 import java.io.PrintWriter;
 
 /**
@@ -10,28 +9,12 @@ import java.io.PrintWriter;
 public class CommunicationInfo {
 
     //The code of the Request
-    String code;
+    private String code;
     //Information associated to the request
-    String info;
+    private String info;
 
     public CommunicationInfo(String code, String info) {
         this.code = code;
-        this.info = info;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
         this.info = info;
     }
 
@@ -48,4 +31,12 @@ public class CommunicationInfo {
         Gson gson = new Gson();
         return gson.fromJson(communicationInfo,CommunicationInfo.class);
     }
+
+    public String getCode() {
+        return code;
+    }
+    public String getInfo() {
+        return info;
+    }
+
 }

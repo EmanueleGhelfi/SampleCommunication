@@ -1,10 +1,10 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.io.Serializable;
 import java.util.Random;
 
@@ -13,12 +13,14 @@ import java.util.Random;
  */
 public class NobilityBonus implements Bonus,Serializable {
 
-    int nobilityNumber;
+    private int nobilityNumber;
 
     public NobilityBonus() {
         Random randomGenerator = new Random();
-        nobilityNumber = randomGenerator.nextInt(5);
+        nobilityNumber = randomGenerator.nextInt(Constants.RANDOM_NOBILITY_FIRST_PARAMETER)+Constants.RANDOM_NOBILITY_SECOND_PARAMETER;
     }
+
+    //TODO +1 anche qui?
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {

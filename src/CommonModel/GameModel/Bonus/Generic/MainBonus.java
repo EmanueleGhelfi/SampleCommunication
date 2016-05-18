@@ -5,7 +5,6 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -45,46 +44,46 @@ public class MainBonus implements Bonus,Serializable {
         else {
             sequenceLength = randomGenerator.nextInt(maxBonus) + minBonus;
         }
-        for (int idx = 0; idx < sequenceLength; ++idx) {
+        for (int cont = 0; cont < sequenceLength; ++cont) {
             int randomInt = randomGenerator.nextInt(possibleBonus-1);
             switch (randomInt) {
-                case Constants.ZERO:
+                case 0:
                     bonus = new CoinBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.ONE:
+                case 1:
                     bonus = new HelperBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.TWO:
+                case 2:
                     bonus = new NobilityBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.THREE:
+                case 3:
                     bonus = new VictoryPointBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.FOUR:
+                case 4:
                     bonus = new PoliticCardBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.FIVE:
+                case 5:
                     bonus = new NewMainAction();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.SIX:
+                case 6:
                     bonus = new PermitCardBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.SEVEN:
+                case 7:
                     bonus = new OldPermitCardBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.EIGHT:
+                case 8:
                     bonus = new OneOldCityRewardBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case Constants.NINE:
+                case 9:
                     bonus = new TwoOldCityRewardBonus();
                     bonusArrayList.add(bonus);
                     break;

@@ -3,6 +3,7 @@ package Server.NetworkInterface.Listeners;
 import Server.NetworkInterface.Communication.SocketCommunication;
 import Server.Controller.GamesManager;
 import Server.Model.User;
+import Utilities.Class.Constants;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,11 +17,11 @@ import java.util.concurrent.Executors;
 public class SocketListener implements Runnable {
 
     private ServerSocket serverSocket;
-    private static SocketListener socketListener;
     private GamesManager gamesManager;
+    private static SocketListener socketListener;
 
     private SocketListener(GamesManager gamesManager) throws IOException {
-        serverSocket = new ServerSocket(4333);
+        serverSocket = new ServerSocket(Constants.SOCKET_PORT);
         this.gamesManager = gamesManager;
     }
 
@@ -28,17 +29,14 @@ public class SocketListener implements Runnable {
         if(socketListener==null){
             socketListener = new SocketListener(gamesManager);
         }
-
         return socketListener;
     }
 
     @Override
     public void run() {
-
         System.out.println("Socket Listener Started");
         Socket clientSocket;
         ExecutorService executorService = Executors.newCachedThreadPool();
-
         while (true){
             try {
                 clientSocket = serverSocket.accept();
@@ -52,6 +50,5 @@ public class SocketListener implements Runnable {
                 e.printStackTrace();
             }
         }
-
     }
 }

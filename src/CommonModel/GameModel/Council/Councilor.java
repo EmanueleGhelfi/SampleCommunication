@@ -1,7 +1,6 @@
 package CommonModel.GameModel.Council;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-
 import java.io.Serializable;
 
 /**

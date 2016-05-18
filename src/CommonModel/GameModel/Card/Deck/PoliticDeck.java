@@ -2,6 +2,7 @@ package CommonModel.GameModel.Card.Deck;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+import Utilities.Class.Constants;
 
 import java.io.Serializable;
 import java.util.*;
@@ -21,16 +22,13 @@ public class PoliticDeck implements Deck,Serializable {
 
     @Override
     public void createRandomDeck() {
-
         for (PoliticColor politicColor: PoliticColor.values()) {
-
-            for(int i = 0;i<13;i++){
+            for(int cont = 0; cont< Constants.SINGLECOLOR_POLITIC_DECK_SIZE; cont++){
                 politicDeckStack.add(new PoliticCard(politicColor,false));
             }
-
         }
         // create multicolor
-        for (int i = 0; i<12;i++){
+        for (int cont = 0; cont<Constants.MULTICOLOR_POLITIC_DECK_SIZE;cont++){
             politicDeckStack.add(new PoliticCard(null,true));
         }
         Collections.shuffle(politicDeckStack);
@@ -39,20 +37,8 @@ public class PoliticDeck implements Deck,Serializable {
         }
     }
 
-    public void printDeck(){
-        for (PoliticCard politicCard: politicDeckStack) {
-            System.out.println(politicCard);
-        }
-    }
-
     public PoliticCard drawACard(){
         return politicDeckQueue.remove();
-    }
-
-    public static void main(String[] args){
-        PoliticDeck politicDeck = new PoliticDeck();
-        politicDeck.createRandomDeck();
-        politicDeck.printDeck();
     }
 
     public void addToQueue(Set<PoliticCard> politicCardSet){

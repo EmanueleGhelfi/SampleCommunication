@@ -6,7 +6,6 @@ import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import CommonModel.GameModel.City.CityFactory;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Queue;
@@ -25,7 +24,7 @@ public class PermitDeck implements Deck,Serializable {
     }
 
     public PermitDeck(Region region){
-        permitDeck = new ArrayBlockingQueue<>(Constants.FIFTHEEN);
+        permitDeck = new ArrayBlockingQueue<>(Constants.REGION_DECK_SIZE);
         this.region = region;
     }
 
@@ -68,11 +67,5 @@ public class PermitDeck implements Deck,Serializable {
             }
         }
         throw new ActionNotPossibleException();
-    }
-
-    public static void main(String[] args){
-        System.out.println("Start test deck");
-        PermitDeck permitDeckMountain = new PermitDeck(Region.MOUNTAIN);
-        permitDeckMountain.createRandomDeck();
     }
 }

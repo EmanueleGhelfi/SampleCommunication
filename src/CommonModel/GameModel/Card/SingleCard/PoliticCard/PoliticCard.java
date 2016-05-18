@@ -11,7 +11,6 @@ public class PoliticCard implements Serializable {
     // true if card is multicolor
     private boolean isMultiColor;
 
-
     public PoliticCard() {
     }
 
@@ -20,19 +19,18 @@ public class PoliticCard implements Serializable {
         this.isMultiColor=isMultiColor;
     }
 
-    public boolean isMultiColor() {
-        return isMultiColor;
-    }
-
-    public PoliticColor getPoliticColor() {
-        return politicColor;
-    }
-
     @Override
     public String toString() {
         return "PoliticCard{" +
                 "isMultiColor=" + isMultiColor +
                 ", politicColor=" + politicColor +
                 '}';
+    }
+
+    public boolean isMultiColor() {
+        return isMultiColor;
+    }
+    public PoliticColor getPoliticColor() {
+        return politicColor;
     }
 }

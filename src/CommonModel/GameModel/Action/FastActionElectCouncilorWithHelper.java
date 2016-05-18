@@ -31,8 +31,8 @@ public class FastActionElectCouncilorWithHelper extends Action {
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         Council council;
-        if (user.getHelpers()>1){
-            user.setHelpers(user.getHelpers()-1);
+        if (user.getHelpers()>Constants.HELPER_LIMITATION_ELECT_COUNCILOR){
+            user.setHelpers(user.getHelpers()-Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
             if (king == null) {
                 Region councilRegion = game.getRegion(region.getRegion());
                 council = councilRegion.getCouncil();

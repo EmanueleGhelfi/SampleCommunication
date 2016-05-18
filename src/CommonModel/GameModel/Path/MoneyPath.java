@@ -3,7 +3,6 @@ package CommonModel.GameModel.Path;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.User;
-
 import java.io.Serializable;
 
 /**
@@ -29,6 +28,5 @@ public class MoneyPath implements Path, Serializable {
                 user.setCoinPathPosition(user.getCoinPathPosition()+value);
             }
         }
-
     }
 }

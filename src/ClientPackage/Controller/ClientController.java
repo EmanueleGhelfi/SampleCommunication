@@ -73,10 +73,10 @@ public class ClientController {
         int choice = Integer.parseInt(inKeyboard.readLine());
         while(method.equals("")) {
             switch (choice) {
-                case Constants.ONE:
+                case 1:
                     method = Constants.GUI;
                     break;
-                case Constants.TWO:
+                case 2:
                     method = Constants.CLI;
                     break;
                 default:

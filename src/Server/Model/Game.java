@@ -68,13 +68,11 @@ public class Game implements Serializable{
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
     private Stack<KingBonusCard> kingBonusCards = new Stack<>();
 
-
-
     public Game() {
         this.started = false;
         gameController = new GameController(this);
         gameController.startTimer();
-        cities = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
+        cities = new SimpleGraph<>(DefaultEdge.class);
         // create permit card decks
         createDecks();
         // create nobility, victory and moneyPath
@@ -129,7 +127,6 @@ public class Game implements Serializable{
         victoryPath = new VictoryPath();
     }
 
-
     public boolean addUserToGame(User userToAdd) {
         System.out.println("ADDING A USER TO A GAME "+userToAdd);
         if(!usersInGame.containsKey(userToAdd.getUsername())){
@@ -146,81 +143,11 @@ public class Game implements Serializable{
         return false;
     }
 
-    public void setStarted(boolean started) {
-        // inizializzazione partita
-        this.started = started;
-    }
-
     private void createDecks() {
         //create mountainDeck
         permitDecks = new HashMap<Region, PermitDeck>();
         for (Region region : Region.values()) {
             permitDecks.put(region, new PermitDeck(region));
-        }
-    }
-
-    public Collection<User> getUsers() {
-        return usersInGame.values();
-    }
-
-    public MoneyPath getMoneyPath() {
-        return moneyPath;
-    }
-
-    public VictoryPath getVictoryPath() {
-        return victoryPath;
-    }
-
-    public Region getRegion(String region){
-        if(regions.containsKey(region))
-            return regions.get(region);
-        return null;
-    }
-
-    public City getCity(City city) {
-        if(cities.containsVertex(city)){
-            for (City cityToSearch: cities.vertexSet()) {
-                if (cityToSearch.equals(city)){
-                    return cityToSearch;
-                }
-            }
-        }
-        return null;
-    }
-
-    public void setGraph(UndirectedGraph<City, DefaultEdge> graph) {
-        this.graph = graph;
-    }
-
-    public UndirectedGraph<City, DefaultEdge> getGraph() {
-        return graph;
-    }
-
-    public RegionBonusCard getRegionBonusCard(String region) {
-        return regionBonusCard.get(region);
-    }
-
-    public ColorBonusCard getColorBonusCard(String color) {
-        return colorBonusCard.get(color);
-    }
-
-    public King getKing() {
-        return king;
-    }
-
-    public NobilityPath getNobilityPath() {
-        return nobilityPath;
-    }
-
-    public void setNobilityPath(NobilityPath nobilityPath) {
-        this.nobilityPath = nobilityPath;
-    }
-
-    public KingBonusCard getKingBonusCard() {
-        try{
-            return kingBonusCards.peek();
-        } catch (EmptyStackException e){
-            return null;
         }
     }
 
@@ -250,35 +177,77 @@ public class Game implements Serializable{
                 ", kingBonusCards=" + kingBonusCards +
                 '}';
     }
-
+    // inizializzazione partita
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+    public Region getRegion(String region){
+        if(regions.containsKey(region))
+            return regions.get(region);
+        return null;
+    }
+    public City getCity(City city) {
+        if(cities.containsVertex(city)){
+            for (City cityToSearch: cities.vertexSet()) {
+                if (cityToSearch.equals(city)){
+                    return cityToSearch;
+                }
+            }
+        }
+        return null;
+    }
+    public KingBonusCard getKingBonusCard() {
+        try{
+            return kingBonusCards.peek();
+        } catch (EmptyStackException e){
+            return null;
+        }
+    }
+    public Collection<User> getUsers() {
+        return usersInGame.values();
+    }
+    public MoneyPath getMoneyPath() {
+        return moneyPath;
+    }
+    public VictoryPath getVictoryPath() {
+        return victoryPath;
+    }
+    public UndirectedGraph<City, DefaultEdge> getGraph() {
+        return graph;
+    }
+    public RegionBonusCard getRegionBonusCard(String region) {
+        return regionBonusCard.get(region);
+    }
+    public ColorBonusCard getColorBonusCard(String color) {
+        return colorBonusCard.get(color);
+    }
+    public King getKing() {
+        return king;
+    }
+    public NobilityPath getNobilityPath() {
+        return nobilityPath;
+    }
     public PermitDeck getPermitDeck(Region region){
         return permitDecks.get(region);
     }
-
     public HashMap<String, Region> getRegions() {
         return regions;
     }
-
     public HashMap<String, ColorBonusCard> getColorBonusCard() {
         return colorBonusCard;
     }
-
     public HashMap<String, RegionBonusCard> getRegionBonusCard() {
         return regionBonusCard;
     }
-
     public boolean isStarted() {
         return started;
     }
-
     public HashMap<String, User> getUsersInGame() {
         return usersInGame;
     }
-
     public Stack<KingBonusCard> getKingBonusCards() {
         return kingBonusCards;
     }
-
     public GameController getGameController() {
         return gameController;
     }

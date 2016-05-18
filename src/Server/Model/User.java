@@ -7,7 +7,6 @@ import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.CurrentUser;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.Controller.GamesManager;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 public class User extends CurrentUser implements Serializable{
 
     private BaseCommunication baseCommunication;
-
     private Game game;
 
     public User() {
@@ -35,94 +33,12 @@ public class User extends CurrentUser implements Serializable{
         politicCardNumber = politicCards.size();
     }
 
-
-    /**
-     *
-     * @return the BaseCommunication (RMICommunication or SocketCommunication)
-     */
-    public BaseCommunication getBaseCommunication() {
-        return baseCommunication;
-    }
-
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public void notifyGameStart() {
         baseCommunication.notifyGameStart();
     }
 
-
-    public void setConnected(boolean connected) {
-        this.connected = connected;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public void setCoinPathPosition(int coinPathPosition) {
-        this.coinPathPosition = coinPathPosition;
-    }
-
-
-    public void setVictoryPathPosition(int victoryPathPosition) {
-        this.victoryPathPosition = victoryPathPosition;
-    }
-
-    public Position getNobilityPathPosition() {
-        return nobilityPathPosition;
-    }
-
-    public void setNobilityPathPosition(Position nobilityPathPosition) {
-        this.nobilityPathPosition = nobilityPathPosition;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
     public void addEmporium(City cityEmporium) {
         this.usersEmporium.add(cityEmporium);
-    }
-
-    public void setHelpers(int helpers) {
-        this.helpers = helpers;
-    }
-
-    public void setFastActionCounter(int fastActionCounter) {
-        this.fastActionCounter = fastActionCounter;
-        if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
-            game.getGameController().onFinishRound(this);
-        }
-    }
-
-    public void setMainActionCounter(int mainActionCounter) {
-        this.mainActionCounter = mainActionCounter;
-        if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
-            game.getGameController().onFinishRound(this);
-        }
-    }
-
-    public void setPoliticCards(ArrayList<PoliticCard> politicCards) {
-        this.politicCards = politicCards;
-        politicCardNumber = politicCards.size();
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "baseCommunication=" + baseCommunication +
-                ", username='" + username + '\'' +
-                ", game=" + game +
-                ", connected=" + connected +
-                ", coinPathPosition=" + coinPathPosition +
-                ", victoryPathPosition=" + victoryPathPosition +
-                ", nobilityPathPosition=" + nobilityPathPosition +
-                ", usersEmporium=" + usersEmporium +
-                ", helpers=" + helpers +
-                '}';
     }
 
     /**
@@ -152,11 +68,72 @@ public class User extends CurrentUser implements Serializable{
         politicCardNumber++;
     }
 
+    public void decrementPoliticCardNumber() {
+        politicCardNumber--;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "baseCommunication=" + baseCommunication +
+                ", username='" + username + '\'' +
+                ", game=" + game +
+                ", connected=" + connected +
+                ", coinPathPosition=" + coinPathPosition +
+                ", victoryPathPosition=" + victoryPathPosition +
+                ", nobilityPathPosition=" + nobilityPathPosition +
+                ", usersEmporium=" + usersEmporium +
+                ", helpers=" + helpers +
+                '}';
+    }
+
+    public void setHelpers(int helpers) {
+        this.helpers = helpers;
+    }
     public int getPoliticCardSize(){
         return politicCards.size();
     }
-
-    public void decrementPoliticCardNumber() {
-        politicCardNumber--;
+    public void setFastActionCounter(int fastActionCounter) {
+        this.fastActionCounter = fastActionCounter;
+        if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
+            game.getGameController().onFinishRound(this);
+        }
+    }
+    public void setMainActionCounter(int mainActionCounter) {
+        this.mainActionCounter = mainActionCounter;
+        if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
+            game.getGameController().onFinishRound(this);
+        }
+    }
+    public void setPoliticCards(ArrayList<PoliticCard> politicCards) {
+        this.politicCards = politicCards;
+        politicCardNumber = politicCards.size();
+    }
+    public BaseCommunication getBaseCommunication() {
+        return baseCommunication;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+    public void setGame(Game game) {
+        this.game = game;
+    }
+    public void setCoinPathPosition(int coinPathPosition) {
+        this.coinPathPosition = coinPathPosition;
+    }
+    public void setVictoryPathPosition(int victoryPathPosition) {
+        this.victoryPathPosition = victoryPathPosition;
+    }
+    public Position getNobilityPathPosition() {
+        return nobilityPathPosition;
+    }
+    public void setNobilityPathPosition(Position nobilityPathPosition) {
+        this.nobilityPathPosition = nobilityPathPosition;
+    }
+    public Game getGame() {
+        return game;
     }
 }

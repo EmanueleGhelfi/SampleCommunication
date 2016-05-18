@@ -34,7 +34,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         this.clientController = clientController;
         registry = LocateRegistry.getRegistry(serverIP, Constants.RMI_PORT);
         rmiListenerInterface = (RMIListenerInterface) registry.lookup(serverName);
-        UnicastRemoteObject.exportObject(this,Constants.ZERO);
+        UnicastRemoteObject.exportObject(this,0);
     }
 
     @Override

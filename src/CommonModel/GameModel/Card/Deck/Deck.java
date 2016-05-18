@@ -6,4 +6,5 @@ package CommonModel.GameModel.Card.Deck;
 public interface Deck {
 
     void createRandomDeck();
+
 }

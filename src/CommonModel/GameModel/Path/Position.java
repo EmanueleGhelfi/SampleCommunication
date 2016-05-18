@@ -1,12 +1,11 @@
 package CommonModel.GameModel.Path;
 
+import CommonModel.GameModel.Bonus.Generic.Bonus;
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 14/05/2016.
  */
-
-import CommonModel.GameModel.Bonus.Generic.Bonus;
-
-import java.io.Serializable;
 
 /**
  * Position in nobility path
@@ -27,9 +26,7 @@ public class Position implements Serializable{
     public int getPosition() {
         return position;
     }
-
     public Bonus getBonus() {
         return bonus;
     }
-
 }

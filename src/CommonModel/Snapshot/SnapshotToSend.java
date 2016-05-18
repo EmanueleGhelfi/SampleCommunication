@@ -9,7 +9,6 @@ import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Path.Position;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.io.Serializable;
 import java.util.*;
 
@@ -19,23 +18,14 @@ import java.util.*;
 public class SnapshotToSend implements Serializable{
 
     private HashMap<String,BaseUser> usersInGame = new HashMap<>();
-    //TODO: cities
-
     private HashMap<String,Region> regions = new HashMap<>();
-
     private King king;
-
     private HashMap<String,ArrayList<PermitCard>> visiblePermitCards = new HashMap<>();
-
     private HashMap<String,RegionBonusCard> regionBonusCards = new HashMap<>();
-
     private HashMap<String,ColorBonusCard> colorBonusCards = new HashMap<>();
-
     private Stack<KingBonusCard> kingBonusCards = new Stack<>();
-
     //Nobility path position
     private Position[] nobilityPathPosition;
-    
     private CurrentUser currentUser;
 
     public SnapshotToSend() {
@@ -46,19 +36,13 @@ public class SnapshotToSend implements Serializable{
         addRegions(game);
         //add king
         this.king = game.getKing();
-
         this.regionBonusCards = game.getRegionBonusCard();
-
         this.colorBonusCards = game.getColorBonusCard();
-
         this.kingBonusCards = game.getKingBonusCards();
-
         this.nobilityPathPosition = game.getNobilityPath().getPosition();
-
         this.currentUser = new CurrentUser(user);
     }
 
-    //try try
     private void addRegions(Game game) {
         this.regions = game.getRegions();
     }

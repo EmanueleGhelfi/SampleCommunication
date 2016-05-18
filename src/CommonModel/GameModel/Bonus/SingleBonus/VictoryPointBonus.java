@@ -1,10 +1,10 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.io.Serializable;
 import java.util.Random;
 
@@ -19,7 +19,7 @@ public class VictoryPointBonus implements Bonus,Serializable {
      */
     public VictoryPointBonus() {
         Random randomGenerator = new Random();
-        this.victoryPoint = randomGenerator.nextInt(4)+1;
+        this.victoryPoint = randomGenerator.nextInt(Constants.RANDOM_VICTORY_FIRST_PARAMETER)+Constants.RANDOM_VICTORY_SECOND_PARAMETER;
     }
 
     /** Fixed victory point generator
@@ -33,5 +33,4 @@ public class VictoryPointBonus implements Bonus,Serializable {
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         game.getVictoryPath().goAhead(user, victoryPoint);
     }
-
 }

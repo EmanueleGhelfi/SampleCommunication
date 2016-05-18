@@ -16,10 +16,8 @@ import javafx.scene.control.Label;
 public class LoginController {
 
     private ClientController clientController;
-    @FXML
-    private JFXTextField usernameText;
-    @FXML
-    private Label errorText;
+    @FXML private JFXTextField usernameText;
+    @FXML private Label errorText;
 
     public void onButtonLoginPressed(ActionEvent actionEvent) {
         System.out.println("On button login pressed");
@@ -29,9 +27,7 @@ public class LoginController {
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
     }
-
     public void showLoginError() {
         errorText.setText("ERRORE LOGIN");
     }
-
 }

@@ -16,9 +16,9 @@ public class FastActionMoneyForHelper extends Action {
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        if (user.getVictoryPathPosition()>3){
-            game.getVictoryPath().goAhead(user, -3);
-            user.setHelpers(user.getHelpers()+1);
+        if (user.getVictoryPathPosition()>Constants.MONEY_LIMITATION_MONEY_FOR_HELPER){
+            game.getVictoryPath().goAhead(user, -Constants.MONEY_LIMITATION_MONEY_FOR_HELPER);
+            user.setHelpers(user.getHelpers()+Constants.HELPER_ADDED_MONEY_FOR_HELPER);
             removeAction(game,user);
         } else {
             throw new ActionNotPossibleException();

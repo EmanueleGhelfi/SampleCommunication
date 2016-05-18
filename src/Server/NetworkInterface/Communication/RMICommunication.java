@@ -2,13 +2,13 @@ package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
 import RMIInterface.RMIClientInterface;
 import Server.Controller.GameController;
 import Server.Controller.GamesManager;
 import Server.Model.User;
-
 import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -24,21 +24,18 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     private User user;
     private RMIClientInterface rmiClientInterface;
     private GamesManager gamesManager;
-    private GameController gameController;
 
-    //default
     public RMICommunication() {
     }
 
     public RMICommunication(String name) throws RemoteException {
-        //super();
         gamesManager = GamesManager.getInstance();
         UnicastRemoteObject.exportObject(this,0);
     }
 
     @Override
     public boolean sendIP(String ip, String name) throws RemoteException {
-        Registry registry = LocateRegistry.getRegistry(ip,1099);
+        Registry registry = LocateRegistry.getRegistry(ip, Constants.RMI_PORT);
         try {
             // get remote object from client
             rmiClientInterface = (RMIClientInterface) registry.lookup(name);
@@ -64,12 +61,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         electCouncilor.doAction(user.getGame(), user);
     }
 
-
-    @Override
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public void notifyGameStart() {
         //rmiClientInterface.onStart();
@@ -87,5 +78,10 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     @Override
     public void changeRound() {
         //call is your round (with a notification)
+    }
+
+    @Override
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -1,7 +1,6 @@
 package CommonModel.GameModel.Card.SingleCard.PoliticCard;
 
 import Utilities.Class.Constants;
-
 import java.io.Serializable;
 
 /**
@@ -9,15 +8,14 @@ import java.io.Serializable;
  */
 public enum PoliticColor implements Serializable {
 
-    VIOLET(Constants.VIOLET), BLACK(Constants.BLACK), ORANGE(Constants.ORANGE), PINK(Constants.PINK), BLUE(Constants.BLUE), WHITE(Constants.WHITE);
+    VIOLET(Constants.VIOLET), BLACK(Constants.BLACK), ORANGE(Constants.ORANGE), PINK(Constants.PURPLE), BLUE(Constants.BLUE), WHITE(Constants.WHITE);
 
     private String color;
 
     PoliticColor() {
     }
 
-    private PoliticColor (String color){
+    PoliticColor (String color){
         this.color = color;
     }
-
 }

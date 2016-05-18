@@ -6,7 +6,6 @@ import Server.NetworkInterface.Listeners.SocketListener;
 import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Class.Constants;
-
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -26,7 +25,6 @@ public class GamesManager {
      * Created games (and maybe started)
      */
     private ArrayList<Game> games = new ArrayList<>();
-
     private GamesManager(){
         start();
     }
@@ -43,7 +41,7 @@ public class GamesManager {
             RMIListenerInterface rmiListener = new RMIListener(this);
             Registry registry=null;
         try{
-             registry = LocateRegistry.createRegistry(1099);
+             registry = LocateRegistry.createRegistry(Constants.RMI_PORT);
         }
         catch (ExportException e){
             e.printStackTrace();
@@ -73,10 +71,10 @@ public class GamesManager {
         System.out.println("creating a new game");
         Game game = new Game();
         games.add(game);
-        System.out.println(game + " GAMEEEEEEEEEEEEEEEEEEEEEEEEEE PORCA MADDONA");
+        System.out.println(game);
         game.addUserToGame(userToAdd);
         userToAdd.setGame(game);
-        System.out.println(userToAdd + " USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR PORCA MADDONA");
+        System.out.println(userToAdd);
     }
 
 
@@ -93,4 +91,5 @@ public class GamesManager {
     public void AddToUsers(User user) {
         users.add(user);
     }
+
 }

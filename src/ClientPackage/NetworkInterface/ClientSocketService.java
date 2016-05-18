@@ -53,6 +53,7 @@ public class ClientSocketService extends ClientService implements Runnable {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME,name);
     }
 
+    //TODO test?
     @Override
     public void onTestAction(MainActionElectCouncilor electCouncilor) {
         CommunicationInfo.SendCommunicationInfo(out, "PROVA", electCouncilor);

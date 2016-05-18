@@ -3,7 +3,7 @@ package CommonModel.GameModel.City;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
-
+import Utilities.Class.Constants;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public enum Region implements Serializable {
 
-    MOUNTAIN ("mountain", 5), HILL ("hill", 5), COAST ("coast", 5);
+    MOUNTAIN (Constants.MOUNTAIN, Constants.REGION_BONUS), HILL (Constants.HILL, Constants.REGION_BONUS), COAST (Constants.COAST, Constants.REGION_BONUS);
 
     private final String region;
     private int cityNumber;
@@ -48,11 +48,6 @@ public enum Region implements Serializable {
     public String getRegion() {
         return region;
     }
-
-    public void setCouncil(Council council){
-        this.council = council;
-    }
-
     public Council getCouncil(){
         return council;
     }

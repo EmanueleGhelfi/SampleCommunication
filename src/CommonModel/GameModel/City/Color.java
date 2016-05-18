@@ -1,7 +1,6 @@
 package CommonModel.GameModel.City;
 
-import Server.Model.Game;
-
+import Utilities.Class.Constants;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
  */
 public enum Color implements Serializable {
 
-    BLUE("blue", 2), GREY ("grey", 4), ORANGE ("orange", 3), YELLOW ("yellow", 5), PURPLE ("purple", 1);
+    BLUE(Constants.BLUE, Constants.BLUE_COUNTER), GREY (Constants.GREY, Constants.GREY_COUNTER), ORANGE (Constants.ORANGE, Constants.ORANGE_COUNTER), YELLOW (Constants.YELLOW, Constants.YELLOW_COUNTER), PURPLE (Constants.PURPLE, Constants.PURPLE_COUNTER);
 
     private String color;
     private int cityNumber;
@@ -38,10 +37,6 @@ public enum Color implements Serializable {
 
     public String getColor(){
         return color;
-    }
-
-    public int getCityNumber(){
-        return cityNumber;
     }
 
 }

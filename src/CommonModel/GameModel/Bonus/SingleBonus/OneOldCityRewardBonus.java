@@ -4,7 +4,6 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Exception.ActionNotPossibleException;
-
 import java.io.Serializable;
 
 /**

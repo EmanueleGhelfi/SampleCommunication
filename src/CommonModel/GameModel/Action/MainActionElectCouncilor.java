@@ -18,7 +18,6 @@ public class MainActionElectCouncilor extends Action implements Serializable {
     private Councilor councilorToAdd;
     private Region region;
     private King king;
-    private final String type = Constants.MAIN_ACTION;
 
     /**
      * Create MainActionElectCouncilor action
@@ -30,6 +29,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
         this.councilorToAdd = councilorToAdd;
         this.king = king;
         this.region = region;
+        this.type = Constants.MAIN_ACTION;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
         }
         // and councilor to councilor to council (and remove the first councilor)
         council.add(councilorToAdd);
-        game.getMoneyPath().goAhead(user,4);
+        game.getMoneyPath().goAhead(user,Constants.MONEY_EARNED_ELECT_COUNCILOR);
         removeAction(game,user);
     }
 

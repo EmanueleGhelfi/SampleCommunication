@@ -6,7 +6,6 @@ import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.NetworkInterface.Communication.RMICommunication;
 import Server.Controller.GamesManager;
 import Server.Model.User;
-
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -21,7 +20,6 @@ public class RMIListener implements RMIListenerInterface {
     private GamesManager gamesManager;
 
     public RMIListener(GamesManager gamesManager) throws RemoteException {
-        //super();
         UnicastRemoteObject.exportObject(this,0);
         this.gamesManager = gamesManager;
     }
@@ -29,8 +27,7 @@ public class RMIListener implements RMIListenerInterface {
     @Override
     public String Connect() {
         String name = "ClientHandler"+clientNumber;
-
-        System.out.println("ClientPackage connected in rmi");
+        System.out.println("ClientPackage connected in RMI");
         try {
             RMIClientHandler rmiHandler = new RMICommunication(name);
             //RMIClientHandler rmiClientHandler = (RMIClientHandler) UnicastRemoteObject.exportObject(rmiHandler,0);

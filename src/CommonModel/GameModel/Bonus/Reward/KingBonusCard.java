@@ -6,7 +6,6 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.io.Serializable;
 
 /**
@@ -23,20 +22,20 @@ public class KingBonusCard implements Bonus,Serializable {
     public KingBonusCard(int order) {
         this.order = order;
         switch(order){
-            case Constants.ONE:
-                victoryPointBonus = new VictoryPointBonus(Constants.TWENTYFIVE);
+            case 1:
+                victoryPointBonus = new VictoryPointBonus(Constants.FIRST_ARRIVED_KING_BONUS);
                 break;
-            case Constants.TWO:
-                victoryPointBonus = new VictoryPointBonus(Constants.EIGHTEEN);
+            case 2:
+                victoryPointBonus = new VictoryPointBonus(Constants.SECOND_ARRIVED_KING_BONUS);
                 break;
-            case Constants.THREE:
-                victoryPointBonus = new VictoryPointBonus(Constants.TWELVE);
+            case 3:
+                victoryPointBonus = new VictoryPointBonus(Constants.THIRD_ARRIVED_KING_BONUS);
                 break;
-            case Constants.FOUR:
-                victoryPointBonus = new VictoryPointBonus(Constants.SEVEN);
+            case 4:
+                victoryPointBonus = new VictoryPointBonus(Constants.FOURTH_ARRIVED_KING_BONUS);
                 break;
-            case Constants.FIVE:
-                victoryPointBonus = new VictoryPointBonus(Constants.THREE);
+            case 5:
+                victoryPointBonus = new VictoryPointBonus(Constants.FIFTH_ARRIVED_KING_BONUS);
                 break;
         }
     }

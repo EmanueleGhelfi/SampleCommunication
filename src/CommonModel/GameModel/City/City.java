@@ -2,7 +2,6 @@ package CommonModel.GameModel.City;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
-
 import java.io.Serializable;
 
 /**
@@ -26,16 +25,6 @@ public class City implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "City{" +
-                "cityRegion=" + cityRegion +
-                ", cityName=" + cityName +
-                ", cityColor=" + cityColor +
-                ", bonus=" + bonus +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -53,20 +42,24 @@ public class City implements Serializable {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "City{" +
+                "cityRegion=" + cityRegion +
+                ", cityName=" + cityName +
+                ", cityColor=" + cityColor +
+                ", bonus=" + bonus +
+                '}';
+    }
+
     public Bonus getBonus() {
         return bonus;
     }
-
     public Region getRegion() {
         return cityRegion;
     }
-
     public Color getColor() {
         return cityColor;
-    }
-
-    public CityName getCityName() {
-        return cityName;
     }
 
 }

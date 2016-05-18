@@ -7,7 +7,6 @@ import Server.Controller.GameController;
 import Server.Controller.GamesManager;
 import Server.Model.User;
 import com.google.gson.Gson;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,7 +23,6 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     private PrintWriter out;
     private User user;
     private GamesManager gamesManager;
-    private GameController gameController;
 
     public SocketCommunication(Socket socket) throws IOException {
         this.socket = socket;
@@ -34,27 +32,17 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         gamesManager = GamesManager.getInstance();
     }
 
-
-
-    @Override
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public void notifyGameStart() {
-
-
     }
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
-
     }
 
     @Override
     public void changeRound() {
-        CommunicationInfo.SendCommunicationInfo(out, "your turn", null);    //TODO !!!!!!!!!!!!constants
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_YOUR_TURN, null);
     }
 
     @Override
@@ -92,5 +80,8 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         }
     }
 
-
+    @Override
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

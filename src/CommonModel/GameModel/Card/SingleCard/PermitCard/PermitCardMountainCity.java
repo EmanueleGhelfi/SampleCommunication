@@ -17,7 +17,7 @@ public enum PermitCardMountainCity implements Serializable {
     PermitCardMountainCity() {
     }
 
-    private PermitCardMountainCity(Character city1, Character city2, Character city3){
+    PermitCardMountainCity(Character city1, Character city2, Character city3){
         if (city1 != null){
             cities.add(city1);
         }

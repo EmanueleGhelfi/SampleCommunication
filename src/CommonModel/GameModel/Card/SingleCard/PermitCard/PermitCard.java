@@ -3,7 +3,6 @@ package CommonModel.GameModel.Card.SingleCard.PermitCard;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Region;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -25,30 +24,6 @@ public class PermitCard implements Serializable{
     public PermitCard() {
     }
 
-    public Bonus getBonus() {
-        return bonus;
-    }
-
-    public void setBonus(Bonus bonus) {
-        this.bonus = bonus;
-    }
-
-    public ArrayList<Character> getCityAcronimous() {
-        return cityAcronimous;
-    }
-
-    public void setCityAcronimous(ArrayList<Character> cityAcronimous) {
-        this.cityAcronimous = cityAcronimous;
-    }
-
-    public Region getRetroType() {
-        return retroType;
-    }
-
-    public void setRetroType(Region retroType) {
-        this.retroType = retroType;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,5 +39,18 @@ public class PermitCard implements Serializable{
         int result = cityAcronimous != null ? cityAcronimous.hashCode() : 0;
         result = 31 * result + retroType.hashCode();
         return result;
+    }
+
+    public Bonus getBonus() {
+        return bonus;
+    }
+    public void setBonus(Bonus bonus) {
+        this.bonus = bonus;
+    }
+    public void setCityAcronimous(ArrayList<Character> cityAcronimous) {
+        this.cityAcronimous = cityAcronimous;
+    }
+    public void setRetroType(Region retroType) {
+        this.retroType = retroType;
     }
 }

@@ -5,7 +5,6 @@ import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import Server.Model.User;
-
 import java.io.Serializable;
 
 /**
@@ -16,8 +15,6 @@ public class NobilityPath implements Path, Serializable {
     private Position[] position;
     private final int length = Constants.NOBILITY_PATH_ELEMENT;
 
-
-
     public NobilityPath() {
         position = new Position[length+1];
         for (int i = 0 ; i<length; i++){
@@ -25,7 +22,6 @@ public class NobilityPath implements Path, Serializable {
             position[i] = new Position(i,bonus);
         }
     }
-
 
     @Override
     public void goAhead(User user, int value) throws ActionNotPossibleException {

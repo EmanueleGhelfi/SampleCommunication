@@ -10,4 +10,5 @@ public interface BaseView {
     void showLoginError();
 
     void showWaitingForStart();
+    
 }

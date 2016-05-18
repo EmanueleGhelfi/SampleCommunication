@@ -3,7 +3,6 @@ package CommonModel.GameModel.City;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCardCoastCity;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCardHillCity;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCardMountainCity;
-
 import java.util.ArrayList;
 
 /**

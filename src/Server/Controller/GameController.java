@@ -4,7 +4,6 @@ import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Class.Constants;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -81,11 +80,10 @@ public class GameController implements Serializable{
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         for(int cont = 0; cont < game.getUsers().size(); cont++){
             if(user.equals(userArrayList.get(cont))){
-                userArrayList.get((cont+1)%game.getUsers().size()).setMainActionCounter(1);
-                userArrayList.get((cont+1)%game.getUsers().size()).setFastActionCounter(1);
+                userArrayList.get((cont+1)%game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
+                userArrayList.get((cont+1)%game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
                 userArrayList.get((cont+1)%game.getUsers().size()).getBaseCommunication().changeRound();
             }
         }
-        //TODO shop
     }
 }
