@@ -52,13 +52,10 @@ public class PermitCard {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         PermitCard that = (PermitCard) o;
-
         if (cityAcronimous != null ? !cityAcronimous.equals(that.cityAcronimous) : that.cityAcronimous != null)
             return false;
         return retroType == that.retroType;
-
     }
 
     @Override

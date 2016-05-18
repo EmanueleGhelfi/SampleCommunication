@@ -2,7 +2,6 @@ package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
 import javafx.fxml.Initializable;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 

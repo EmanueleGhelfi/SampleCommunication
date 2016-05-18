@@ -2,7 +2,6 @@ package ClientPackage.NetworkInterface;
 
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import Utilities.Exception.ActionNotPossibleException;
-
 import java.rmi.RemoteException;
 
 /**

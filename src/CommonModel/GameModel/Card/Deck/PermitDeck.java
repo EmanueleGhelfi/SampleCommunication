@@ -1,14 +1,13 @@
 package CommonModel.GameModel.Card.Deck;
 
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import CommonModel.GameModel.City.CityFactory;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
-
 import java.util.ArrayList;
 import java.util.Queue;
-import java.util.Stack;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
@@ -21,7 +20,7 @@ public class PermitDeck implements Deck {
     private ArrayList<PermitCard> permitCardsVisible;
 
     public PermitDeck(Region region){
-        permitDeck = new ArrayBlockingQueue<PermitCard>(15);
+        permitDeck = new ArrayBlockingQueue<>(Constants.FIFTHEEN);
         this.region = region;
     }
 
@@ -44,7 +43,6 @@ public class PermitDeck implements Deck {
         else{
             System.out.println("Cities permit card null");
         }
-
     }
 
     public void changePermitCardVisibile (){
@@ -64,7 +62,6 @@ public class PermitDeck implements Deck {
 
             }
         }
-
         throw new ActionNotPossibleException();
     }
 
@@ -72,10 +69,5 @@ public class PermitDeck implements Deck {
         System.out.println("Start test deck");
         PermitDeck permitDeckMountain = new PermitDeck(Region.MOUNTAIN);
         permitDeckMountain.createRandomDeck();
-
-
-
     }
-
-
 }

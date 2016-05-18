@@ -2,7 +2,6 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import Utilities.Class.Constants;
-
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 

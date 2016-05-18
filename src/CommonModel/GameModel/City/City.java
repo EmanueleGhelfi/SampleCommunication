@@ -20,10 +20,6 @@ public class City {
         bonus = new MainBonus(1,2,5,false);
     }
 
-    public CityName getCityName() {
-        return cityName;
-    }
-
     @Override
     public String toString() {
         return "City{" +
@@ -36,16 +32,12 @@ public class City {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         City city = (City) o;
-
         if (cityName != city.cityName) return false;
         if (cityColor != city.cityColor) return false;
         return cityRegion == city.cityRegion;
-
     }
 
     @Override
@@ -67,4 +59,9 @@ public class City {
     public Color getColor() {
         return cityColor;
     }
+
+    public CityName getCityName() {
+        return cityName;
+    }
+
 }

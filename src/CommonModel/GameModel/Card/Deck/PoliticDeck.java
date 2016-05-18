@@ -1,10 +1,7 @@
 package CommonModel.GameModel.Card.Deck;
 
-
-
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -30,24 +27,19 @@ public class PoliticDeck implements Deck {
             }
 
         }
-
         // create multicolor
         for (int i = 0; i<12;i++){
             politicDeckStack.add(new PoliticCard(null,true));
         }
-
         Collections.shuffle(politicDeckStack);
-
         for(PoliticCard politicCard: politicDeckStack){
             politicDeckQueue.add(politicCard);
         }
-
     }
 
     public void printDeck(){
         for (PoliticCard politicCard: politicDeckStack) {
             System.out.println(politicCard);
-
         }
     }
 

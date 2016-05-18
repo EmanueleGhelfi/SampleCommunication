@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Action;
 
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Council;
@@ -17,7 +18,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
     private Councilor councilorToAdd;
     private Region region;
     private King king;
-    private final String type = "MAIN_ACTION";
+    private final String type = Constants.MAIN_ACTION;
 
     /**
      * Create MainActionElectCouncilor action

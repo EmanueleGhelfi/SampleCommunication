@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Action;
 
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
@@ -18,7 +19,7 @@ public class MainActionBuildWithPermitCard extends Action{
     public MainActionBuildWithPermitCard(City city, PermitCard permitCard) {
         this.city = city;
         this.permitCard = permitCard;
-        this.type = "MAIN_ACTION";
+        this.type = Constants.MAIN_ACTION;
     }
 
     @Override
@@ -59,17 +60,11 @@ public class MainActionBuildWithPermitCard extends Action{
                     kingBonusCard.getBonus(user, game);
                 }
             }
-
             // add to old permit card
             user.removePermitCard(permitCard);
             removeAction(game,user);
-
         } else {
             throw new ActionNotPossibleException();
         }
-
-
     }
-
-
 }

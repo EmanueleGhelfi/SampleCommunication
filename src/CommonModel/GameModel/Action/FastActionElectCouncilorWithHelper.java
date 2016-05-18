@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Action;
 
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Council;
@@ -21,7 +22,7 @@ public class FastActionElectCouncilorWithHelper extends Action {
     private Councilor councilor;
 
     public FastActionElectCouncilorWithHelper(Region region, King king, Councilor councilor) {
-        this.type = "FAST_ACTION";
+        this.type = Constants.FAST_ACTION;
         this.region = region;
         this.king = king;
         this.councilor = councilor;

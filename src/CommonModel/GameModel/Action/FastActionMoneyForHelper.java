@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Action;
 
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -10,7 +11,7 @@ import Server.Model.User;
 public class FastActionMoneyForHelper extends Action {
 
     public FastActionMoneyForHelper() {
-        this.type = "FAST_ACTION";
+        this.type = Constants.FAST_ACTION;
     }
 
     @Override
@@ -23,5 +24,4 @@ public class FastActionMoneyForHelper extends Action {
             throw new ActionNotPossibleException();
         }
     }
-
 }

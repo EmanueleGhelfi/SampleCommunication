@@ -1,12 +1,9 @@
 package CommonModel.GameModel.City;
 
-import Server.Model.User;
-
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.NeighborIndex;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,13 +13,8 @@ import java.util.HashMap;
 public class CityVisitor{
 
     private UndirectedGraph<City,DefaultEdge> cities = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
-
-    private User user;
-
     private HashMap<City,Boolean> alreadyVisited = new HashMap<>();
-
     private ArrayList<City> usersEmporium;
-
     private NeighborIndex neighborIndex;
 
     public CityVisitor(UndirectedGraph<City, DefaultEdge> cities,ArrayList<City> usersEmporium) {
@@ -32,14 +24,11 @@ public class CityVisitor{
         neighborIndex = new NeighborIndex(cities);
     }
 
-
-
     public ArrayList<City> visit(City city){
         System.out.println("Visiting "+city.toString());
         ArrayList<City> visitedCity = new ArrayList<>();
         alreadyVisited.put(city,true);
         for (Object city1: neighborIndex.neighborListOf(city)) {
-
             City realCity = (City)city1;
             System.out.println("FOR" + city1);
             if(!alreadyVisited.containsKey(realCity) && usersEmporium.contains(realCity) && !realCity.equals(city)){
@@ -100,8 +89,5 @@ public class CityVisitor{
         CityVisitor cityVisitor = new CityVisitor(graph, usersEmporium);
         ArrayList<City> cities = cityVisitor.visit(framek);
         System.out.println(cities);
-
-
     }
-
 }

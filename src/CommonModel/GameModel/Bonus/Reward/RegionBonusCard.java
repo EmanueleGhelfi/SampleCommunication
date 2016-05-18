@@ -1,6 +1,7 @@
 package CommonModel.GameModel.Bonus.Reward;
 
 import CommonModel.GameModel.Bonus.SingleBonus.VictoryPointBonus;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
 import Server.Model.Game;
@@ -16,7 +17,7 @@ public class RegionBonusCard implements RewardBonusCard {
 
     public RegionBonusCard(Region region) {
         this.region = region;
-        victoryPointBonus = new VictoryPointBonus(5);
+        victoryPointBonus = new VictoryPointBonus(Constants.FIVE);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Path;
 
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.User;
 
@@ -8,7 +9,7 @@ import Server.Model.User;
  */
 public class VictoryPath implements Path {
 
-    private final int length = 100;
+    private final int length = Constants.VICTORY_PATH_LENGTH;
 
     public VictoryPath() {
     }
@@ -26,6 +27,5 @@ public class VictoryPath implements Path {
                 user.setVictoryPathPosition(user.getVictoryPathPosition()+value);
             }
         }
-
     }
 }

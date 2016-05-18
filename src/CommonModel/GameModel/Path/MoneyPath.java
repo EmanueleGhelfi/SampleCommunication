@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Path;
 
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.User;
 
@@ -8,7 +9,7 @@ import Server.Model.User;
  */
 public class MoneyPath implements Path {
 
-    private final int length = 21;
+    private final int length = Constants.MONEY_PATH_LENGTH;
 
     @Override
     public void goAhead(User user, int value) throws ActionNotPossibleException {

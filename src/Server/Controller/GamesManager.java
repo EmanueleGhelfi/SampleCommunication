@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class GamesManager {
 
     private ArrayList<User> users = new ArrayList<>();
-
     private static GamesManager gamesManager;
 
     /**
@@ -36,9 +35,7 @@ public class GamesManager {
         if(gamesManager ==null){
             gamesManager = new GamesManager();
         }
-
         return gamesManager;
-
     }
 
     public void start(){
@@ -51,15 +48,12 @@ public class GamesManager {
         catch (ExportException e){
             e.printStackTrace();
             registry = LocateRegistry.getRegistry();
-
         }
         registry.rebind(Constants.SERVER,rmiListener);
 
             SocketListener socketListener = SocketListener.getInstance(this);
             Thread thread = new Thread(socketListener);
             thread.start();
-
-
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -76,7 +70,6 @@ public class GamesManager {
                 return;
             }
         }
-
         System.out.println("creating a new game");
         Game game = new Game();
         games.add(game);
@@ -84,7 +77,6 @@ public class GamesManager {
         game.addUserToGame(userToAdd);
         userToAdd.setGame(game);
         System.out.println(userToAdd + " USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR PORCA MADDONA");
-
     }
 
 
@@ -94,9 +86,7 @@ public class GamesManager {
             if(user.getUsername().equals(username)){
                 return true;
             }
-
         }
-
         return false;
     }
 

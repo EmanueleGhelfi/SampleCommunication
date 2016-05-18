@@ -1,13 +1,10 @@
 package CommonModel.GameModel.Bonus.Generic;
 
-
-
 import CommonModel.GameModel.Bonus.SingleBonus.*;
-import CommonModel.GameModel.City.Region;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,8 +14,6 @@ import java.util.Random;
 public class MainBonus implements Bonus {
 
     private ArrayList<Bonus> bonusArrayList = new ArrayList<>();
-
-
 
     public MainBonus(int minBonus,int maxBonus, int possibleBonus, boolean ponderation){
          createRandomBonus(minBonus,maxBonus,possibleBonus,ponderation);
@@ -48,43 +43,43 @@ public class MainBonus implements Bonus {
         for (int idx = 0; idx < sequenceLength; ++idx) {
             int randomInt = randomGenerator.nextInt(possibleBonus-1);
             switch (randomInt) {
-                case 0:
+                case Constants.ZERO:
                     bonus = new CoinBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case 1:
+                case Constants.ONE:
                     bonus = new HelperBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case 2:
+                case Constants.TWO:
                     bonus = new NobilityBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case 3:
+                case Constants.THREE:
                     bonus = new VictoryPointBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case 4:
+                case Constants.FOUR:
                     bonus = new PoliticCardBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case 5:
+                case Constants.FIVE:
                     bonus = new NewMainAction();
                     bonusArrayList.add(bonus);
                     break;
-                case 6:
+                case Constants.SIX:
                     //TODO bonus = new PermitCardBonus();
                     //bonusArrayList.add(bonus);
                     break;
-                case 7:
+                case Constants.SEVEN:
                     bonus = new OldPermitCardBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case 8:
+                case Constants.EIGHT:
                     bonus = new OneOldCityRewardBonus();
                     bonusArrayList.add(bonus);
                     break;
-                case 9:
+                case Constants.NINE:
                     bonus = new TwoOldCityRewardBonus();
                     bonusArrayList.add(bonus);
                     break;
@@ -102,7 +97,6 @@ public class MainBonus implements Bonus {
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         for (Bonus bonus: bonusArrayList) {
             bonus.getBonus(user,game);
-
         }
     }
 }

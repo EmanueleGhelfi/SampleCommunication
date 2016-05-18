@@ -11,10 +11,7 @@ public enum PermitCardMountainCity {
     HG('H', 'G', null), FGH('F', 'G', 'H'), G('G', null, null), FJ('F', 'J', null), IJ('I', 'J', null), FGJ('F', 'G', 'J'), FIJ('F','I','J'),
     IJH('I', 'J', 'H');
 
-
     ArrayList<Character> cities = new ArrayList<>();
-
-
 
     private PermitCardMountainCity(Character city1, Character city2, Character city3){
         if (city1 != null){
@@ -35,6 +32,4 @@ public enum PermitCardMountainCity {
         }
         return cities;
     }
-
-
 }

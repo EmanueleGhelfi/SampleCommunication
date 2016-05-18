@@ -4,7 +4,6 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.util.Random;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Random;
  */
 public class VictoryPointBonus implements Bonus {
 
-    int victoryPoint;
+    private int victoryPoint;
 
     /** Random victory point generator
      */

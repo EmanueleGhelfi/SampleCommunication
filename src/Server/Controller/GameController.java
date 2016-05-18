@@ -2,6 +2,7 @@ package Server.Controller;
 
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,7 +15,7 @@ public class GameController {
     private Game game;
     private TimerTask timerTask;
     private Timer timer;
-    private int duration = 20000;
+    private int duration = Constants.GAME_TIMEOUT;
 
     public GameController(Game game) {
         this.game = game;
@@ -32,7 +33,6 @@ public class GameController {
 
     public void notifyStarted() {
         game.setStarted(true);
-
         for (User user: game.getUsers()) {
             System.out.println("Sending to "+user.getUsername());
             user.notifyGameStart();
@@ -48,7 +48,6 @@ public class GameController {
         if(timer==null){
             System.out.println("Started timeout for the first time");
             timer = new Timer();
-
         }
         else{
             System.out.println("Restarted timeout");
@@ -61,7 +60,6 @@ public class GameController {
             };
             timer = new Timer();
         }
-
         timer.schedule(timerTask,duration);
     }
 }

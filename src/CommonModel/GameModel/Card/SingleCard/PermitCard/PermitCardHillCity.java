@@ -13,7 +13,6 @@ public enum PermitCardHillCity {
 
     ArrayList<Character> cities = new ArrayList<>();
 
-
     private PermitCardHillCity(Character city1, Character city2, Character city3) {
         if (city1 != null) {
             cities.add(city1);

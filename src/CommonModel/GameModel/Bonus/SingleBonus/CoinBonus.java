@@ -4,7 +4,6 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.util.Random;
 
 /**
@@ -21,8 +20,6 @@ public class CoinBonus implements Bonus {
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-
         game.getMoneyPath().goAhead(user,coinNumber);
-
     }
 }

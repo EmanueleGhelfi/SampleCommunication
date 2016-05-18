@@ -1,7 +1,6 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
-import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.Region;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;

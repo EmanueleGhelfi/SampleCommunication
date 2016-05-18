@@ -31,7 +31,6 @@ public class Game implements GameImmutable{
      */
     private boolean started;
 
-
     /**
      * All users in the game with their name
      */
@@ -41,7 +40,6 @@ public class Game implements GameImmutable{
      * All cities in undirectedgraph
      */
     private UndirectedGraph<City,DefaultEdge> cities;
-
     private HashMap<String,Region> regions = new HashMap<>();
 
     /**
@@ -51,20 +49,15 @@ public class Game implements GameImmutable{
 
     // PATHS
     private VictoryPath victoryPath;
-
     private NobilityPath nobilityPath;
-
     private MoneyPath moneyPath;
-
     private GameController gameController;
 
     // PERMIT DECK
     private HashMap<Region,PermitDeck> permitDecks;
-
     public PoliticDeck getPoliticCards() {
         return politicCards;
     }
-
     public void setPoliticCards(PoliticDeck politicCards) {
         this.politicCards = politicCards;
     }
@@ -72,11 +65,9 @@ public class Game implements GameImmutable{
     // POLITIC CARD
     private PoliticDeck politicCards;
     private UndirectedGraph<City, DefaultEdge> graph;
-
     private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
     private Stack<KingBonusCard> kingBonusCard = new Stack<>();
-
 
     public Game() {
         this.started = false;
@@ -118,18 +109,14 @@ public class Game implements GameImmutable{
         for (Region region:Region.values()) {
             regionBonusCard.put(region.getRegion(),new RegionBonusCard(region));
         }
-
         // color bonus
         for (Color color:Color.values()) {
             colorBonusCard.put(color.getColor(),new ColorBonusCard(color));
         }
-
         //king bonus
         for (int i= 1; i<6;i++){
             kingBonusCard.add(new KingBonusCard(i));
         }
-
-
     }
 
     private void createCityGraph() {
@@ -165,13 +152,8 @@ public class Game implements GameImmutable{
         return false;
     }
 
-
-
-
-
     public void setStarted(boolean started) {
         // inizializzazione partita
-        
         this.started = started;
     }
 
@@ -194,7 +176,6 @@ public class Game implements GameImmutable{
     public VictoryPath getVictoryPath() {
         return victoryPath;
     }
-
 
     public Region getRegion(String region){
         if(regions.containsKey(region))
@@ -279,7 +260,5 @@ public class Game implements GameImmutable{
     public PermitDeck getPermitDeck(Region region){
         return permitDecks.get(region);
     }
-
-
 
 }

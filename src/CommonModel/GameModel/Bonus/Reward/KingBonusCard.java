@@ -2,6 +2,7 @@ package CommonModel.GameModel.Bonus.Reward;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.SingleBonus.VictoryPointBonus;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -17,20 +18,20 @@ public class KingBonusCard implements Bonus {
     public KingBonusCard(int order) {
         this.order = order;
         switch(order){
-            case 1:
-                victoryPointBonus = new VictoryPointBonus(25);
+            case Constants.ONE:
+                victoryPointBonus = new VictoryPointBonus(Constants.TWENTYFIVE);
                 break;
-            case 2:
-                victoryPointBonus = new VictoryPointBonus(18);
+            case Constants.TWO:
+                victoryPointBonus = new VictoryPointBonus(Constants.EIGHTEEN);
                 break;
-            case 3:
-                victoryPointBonus = new VictoryPointBonus(12);
+            case Constants.THREE:
+                victoryPointBonus = new VictoryPointBonus(Constants.TWELVE);
                 break;
-            case 4:
-                victoryPointBonus = new VictoryPointBonus(7);
+            case Constants.FOUR:
+                victoryPointBonus = new VictoryPointBonus(Constants.SEVEN);
                 break;
-            case 5:
-                victoryPointBonus = new VictoryPointBonus(3);
+            case Constants.FIVE:
+                victoryPointBonus = new VictoryPointBonus(Constants.THREE);
                 break;
         }
     }

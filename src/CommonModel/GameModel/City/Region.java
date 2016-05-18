@@ -3,7 +3,6 @@ package CommonModel.GameModel.City;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
-
 import java.util.ArrayList;
 
 /**

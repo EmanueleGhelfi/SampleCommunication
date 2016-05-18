@@ -4,7 +4,6 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
-
 import java.util.Random;
 
 /**

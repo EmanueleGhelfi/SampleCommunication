@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Path;
 
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
@@ -11,7 +12,7 @@ import Server.Model.User;
 public class NobilityPath implements Path {
 
     private Position[] position;
-    private final int length = 21;
+    private final int length = Constants.NOBILITY_PATH_ELEMENT;
 
     public NobilityPath() {
         position = new Position[length+1];
@@ -37,6 +38,5 @@ public class NobilityPath implements Path {
                 position[user.getNobilityPathPosition().getPosition()+value].getBonus().getBonus(user,user.getGame());
             }
         }
-
     }
 }

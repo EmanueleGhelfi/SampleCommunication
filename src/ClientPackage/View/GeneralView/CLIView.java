@@ -1,7 +1,6 @@
 package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GeneralView.BaseView;
 
 /**
  * Created by Emanuele on 13/05/2016.

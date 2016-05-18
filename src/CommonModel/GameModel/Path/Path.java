@@ -9,7 +9,6 @@ import Server.Model.User;
 public interface Path {
 
     /**
-     *
      * @param user
      * @param value
      */

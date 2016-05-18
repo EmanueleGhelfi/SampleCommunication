@@ -5,7 +5,6 @@ import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import com.google.gson.Gson;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

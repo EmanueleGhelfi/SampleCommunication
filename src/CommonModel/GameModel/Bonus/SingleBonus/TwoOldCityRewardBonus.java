@@ -10,10 +10,8 @@ import Server.Model.User;
  */
 public class TwoOldCityRewardBonus implements Bonus {
 
-
-
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-
     }
+
 }
