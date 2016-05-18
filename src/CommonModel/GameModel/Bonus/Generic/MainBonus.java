@@ -3,6 +3,7 @@ package CommonModel.GameModel.Bonus.Generic;
 
 
 import CommonModel.GameModel.Bonus.SingleBonus.*;
+import CommonModel.GameModel.City.Region;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -72,8 +73,8 @@ public class MainBonus implements Bonus {
                     bonusArrayList.add(bonus);
                     break;
                 case 6:
-                    bonus = new PermitCardBonus();
-                    bonusArrayList.add(bonus);
+                    //TODO bonus = new PermitCardBonus();
+                    //bonusArrayList.add(bonus);
                     break;
                 case 7:
                     bonus = new OldPermitCardBonus();

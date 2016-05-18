@@ -130,9 +130,9 @@ public class MainActionBuyPermitCard extends Action {
         }
 
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-        politicCardArrayList.add(new PoliticCard(PoliticColor.BLACK,false));
-        politicCardArrayList.add(new PoliticCard(PoliticColor.ORANGE,false));
         politicCardArrayList.add(new PoliticCard(PoliticColor.WHITE,false));
+        politicCardArrayList.add(new PoliticCard(PoliticColor.WHITE,false));
+        politicCardArrayList.add(new PoliticCard(PoliticColor.ORANGE,false));
 
         Region region = Region.MOUNTAIN;
 

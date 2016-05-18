@@ -63,8 +63,7 @@ public class PoliticDeck implements Deck {
 
     public void addToQueue(Set<PoliticCard> politicCardSet){
         for (PoliticCard politicCard: politicCardSet){
-            politicDeckQueue.add(politicCard);
+            System.out.println(politicDeckQueue.offer(politicCard) + " SONO DENTRO ADDTOQUEUE");
+            }
         }
-    }
-
 }
