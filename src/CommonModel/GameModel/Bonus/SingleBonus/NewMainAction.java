@@ -10,6 +10,9 @@ import Server.Model.User;
  */
 public class NewMainAction implements Bonus {
 
+    public NewMainAction() {
+    }
+
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         user.setMainActionCounter(user.getMainActionCounter()+1);

@@ -10,14 +10,17 @@ import Server.Model.User;
 
 /**
  * Created by Giulio on 17/05/2016.
+ *
+ * Elect a councilor spending one helper (fast move)
+ *
  */
-public class FastActionCorruptWithHelper extends Action {
+public class FastActionElectCouncilorWithHelper extends Action {
 
     private Region region;
     private King king;
     private Councilor councilor;
 
-    public FastActionCorruptWithHelper(Region region, King king, Councilor councilor) {
+    public FastActionElectCouncilorWithHelper(Region region, King king, Councilor councilor) {
         this.type = "FAST_ACTION";
         this.region = region;
         this.king = king;
@@ -33,7 +36,7 @@ public class FastActionCorruptWithHelper extends Action {
                 Region councilRegion = game.getRegion(region.getRegion());
                 council = councilRegion.getCouncil();
             } else {
-                council = king.getCouncil();
+                council = game.getKing().getCouncil();
             }
             council.add(councilor);
             removeAction(game,user);

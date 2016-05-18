@@ -17,7 +17,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
     private Councilor councilorToAdd;
     private Region region;
     private King king;
-    private final String type = "MAIN_ACTION"; // todo: create constants
+    private final String type = "MAIN_ACTION";
 
     /**
      * Create MainActionElectCouncilor action

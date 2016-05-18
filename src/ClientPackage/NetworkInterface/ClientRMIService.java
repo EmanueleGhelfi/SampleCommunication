@@ -3,9 +3,9 @@ package ClientPackage.NetworkInterface;
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import Utilities.Exception.ActionNotPossibleException;
-import Interface.RMIClientHandler;
-import Interface.RMIClientInterface;
-import Interface.RMIListenerInterface;
+import RMIInterface.RMIClientHandler;
+import RMIInterface.RMIClientInterface;
+import RMIInterface.RMIListenerInterface;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

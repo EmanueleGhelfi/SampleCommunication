@@ -6,12 +6,12 @@ import Server.Model.Game;
 import Server.Model.User;
 
 /**
- * Created by Giulio on 13/05/2016.
+ * Created by Giulio on 14/05/2016.
  */
-public class PoliticCardBonus implements Bonus {
+public class TwoOldCityRewardBonus implements Bonus {
 
 
-    //TODO
+
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
 

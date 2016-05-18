@@ -29,6 +29,8 @@ public class MainActionBuyPermitCard extends Action {
         this.permitCard = permitCard;
     }
 
+
+    //TODO
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         Region region = game.getRegion(userRegion.getRegion());

@@ -1,7 +1,7 @@
 package Server.NetworkInterface.Listeners;
 
-import Interface.RMIClientHandler;
-import Interface.RMIListenerInterface;
+import RMIInterface.RMIClientHandler;
+import RMIInterface.RMIListenerInterface;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.NetworkInterface.Communication.RMICommunication;
 import Server.Controller.GamesManager;

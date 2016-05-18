@@ -20,7 +20,7 @@ public class MainBonus implements Bonus {
 
 
     public MainBonus(int minBonus,int maxBonus, int possibleBonus, boolean ponderation){
-         createRandomPermitBonus(minBonus,maxBonus,possibleBonus,ponderation);
+         createRandomBonus(minBonus,maxBonus,possibleBonus,ponderation);
     }
 
     /**
@@ -30,7 +30,7 @@ public class MainBonus implements Bonus {
      * @param possibleBonus is the number of possible bonus
      * @param ponderation set a different distribution of probability of zero bonus
      */
-    private void createRandomPermitBonus(int minBonus, int maxBonus, int possibleBonus,boolean ponderation){
+    private void createRandomBonus(int minBonus, int maxBonus, int possibleBonus, boolean ponderation){
         // generate random between 1 and 3
         Random randomGenerator = new Random();
         Bonus bonus;
@@ -80,10 +80,13 @@ public class MainBonus implements Bonus {
                     bonusArrayList.add(bonus);
                     break;
                 case 8:
-                    bonus = new TwoOldPermitCardBonus();
+                    bonus = new OneOldCityRewardBonus();
                     bonusArrayList.add(bonus);
                     break;
-
+                case 9:
+                    bonus = new TwoOldCityRewardBonus();
+                    bonusArrayList.add(bonus);
+                    break;
             }
         }
     }

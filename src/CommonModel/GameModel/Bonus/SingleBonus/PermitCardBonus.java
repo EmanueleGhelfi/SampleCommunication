@@ -6,11 +6,12 @@ import Server.Model.Game;
 import Server.Model.User;
 
 /**
+ * Draw a permit card from the table
  * Created by Giulio on 13/05/2016.
  */
 public class PermitCardBonus implements Bonus {
 
-
+    //TODO
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
 

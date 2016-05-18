@@ -1,4 +1,4 @@
-package Interface;
+package RMIInterface;
 
 import CommonModel.GameModel.Action.Action;
 import Utilities.Exception.ActionNotPossibleException;

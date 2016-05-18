@@ -6,10 +6,12 @@ import Server.Model.Game;
 import Server.Model.User;
 
 /**
+ * Get two city bonus (also the ones used) but not the ones with nobility bonus
  * Created by Giulio on 13/05/2016.
  */
 public class OldPermitCardBonus implements Bonus {
 
+    //TODO
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
 

@@ -13,13 +13,11 @@ public class FastActionChangePermitCardWithHelper extends Action {
         this.type = "FAST_ACTION";
     }
 
+    //TODO
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         if (user.getHelpers()>1){
             user.setHelpers(user.getHelpers()-1);
-
-
-
         } else {
             throw new ActionNotPossibleException();
         }

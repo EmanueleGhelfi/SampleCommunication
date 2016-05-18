@@ -21,6 +21,7 @@ public class MainActionBuildWithPermitCard extends Action{
         this.type = "MAIN_ACTION";
     }
 
+    //TODO
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         City gameCity = game.getCity(city);
@@ -57,7 +58,7 @@ public class MainActionBuildWithPermitCard extends Action{
             throw new ActionNotPossibleException();
         }
 
-//
+
     }
 
 

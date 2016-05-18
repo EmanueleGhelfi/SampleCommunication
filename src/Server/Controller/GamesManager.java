@@ -1,6 +1,6 @@
 package Server.Controller;
 
-import Interface.RMIListenerInterface;
+import RMIInterface.RMIListenerInterface;
 import Server.NetworkInterface.Listeners.RMIListener;
 import Server.NetworkInterface.Listeners.SocketListener;
 import Server.Model.Game;

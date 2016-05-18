@@ -1,7 +1,6 @@
-package Interface;
+package RMIInterface;
 
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 
 
 /**
