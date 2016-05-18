@@ -3,18 +3,24 @@ package CommonModel.GameModel.City;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Giulio on 13/05/2016.
  */
-public enum Region {
+public enum Region implements Serializable {
 
     MOUNTAIN ("mountain", 5), HILL ("hill", 5), COAST ("coast", 5);
 
     private final String region;
     private int cityNumber;
     private Council council;
+
+    Region() {
+        region = "";
+    }
 
     private Region (String region, int cityNumber){
         this.region = region;

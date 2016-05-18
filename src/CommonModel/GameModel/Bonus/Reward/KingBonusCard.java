@@ -7,13 +7,18 @@ import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class KingBonusCard implements Bonus {
+public class KingBonusCard implements Bonus,Serializable {
 
     private VictoryPointBonus victoryPointBonus;
     private int order; //from 1 to 5
+
+    public KingBonusCard() {
+    }
 
     public KingBonusCard(int order) {
         this.order = order;

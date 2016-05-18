@@ -5,11 +5,13 @@ import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Exception.ActionNotPossibleException;
 
+import java.io.Serializable;
+
 /**
  * Get one city bonus (also the ones used) but not the ones with nobility bonus
  * Created by Giulio on 18/05/2016.
  */
-public class OneOldCityRewardBonus implements Bonus {
+public class OneOldCityRewardBonus implements Bonus,Serializable {
 
     //TODO
     @Override

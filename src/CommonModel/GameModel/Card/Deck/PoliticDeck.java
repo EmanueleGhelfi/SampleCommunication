@@ -2,13 +2,15 @@ package CommonModel.GameModel.Card.Deck;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by Emanuele on 14/05/2016.
  */
-public class PoliticDeck implements Deck {
+public class PoliticDeck implements Deck,Serializable {
 
     private Stack<PoliticCard> politicDeckStack;
     private Queue<PoliticCard> politicDeckQueue = new ArrayBlockingQueue<>(90);

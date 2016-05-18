@@ -6,6 +6,8 @@ import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import CommonModel.GameModel.City.CityFactory;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -13,11 +15,14 @@ import java.util.concurrent.ArrayBlockingQueue;
 /**
  * Created by Emanuele on 14/05/2016.
  */
-public class PermitDeck implements Deck {
+public class PermitDeck implements Deck,Serializable {
 
     private Queue<PermitCard> permitDeck;
     private Region region;
     private ArrayList<PermitCard> permitCardsVisible;
+
+    public PermitDeck() {
+    }
 
     public PermitDeck(Region region){
         permitDeck = new ArrayBlockingQueue<>(Constants.FIFTHEEN);

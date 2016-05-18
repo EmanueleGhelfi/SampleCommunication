@@ -13,6 +13,9 @@ public enum PoliticColor implements Serializable {
 
     private String color;
 
+    PoliticColor() {
+    }
+
     private PoliticColor (String color){
         this.color = color;
     }

@@ -6,11 +6,13 @@ import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Draw a permit card from the table
  * Created by Giulio on 13/05/2016.
  */
-public class PermitCardBonus implements Bonus {
+public class PermitCardBonus implements Bonus, Serializable {
 
     private Region region;
 

@@ -5,10 +5,12 @@ import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class NewMainAction implements Bonus {
+public class NewMainAction implements Bonus,Serializable {
 
     public NewMainAction() {
     }

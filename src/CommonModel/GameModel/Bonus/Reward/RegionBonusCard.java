@@ -7,13 +7,18 @@ import CommonModel.GameModel.City.Region;
 import Server.Model.Game;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class RegionBonusCard implements RewardBonusCard {
+public class RegionBonusCard implements RewardBonusCard, Serializable {
 
     private Region region;
     private VictoryPointBonus victoryPointBonus;
+
+    public RegionBonusCard() {
+    }
 
     public RegionBonusCard(Region region) {
         this.region = region;

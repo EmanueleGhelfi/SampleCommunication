@@ -1,15 +1,21 @@
 package CommonModel.GameModel.Card.SingleCard.PoliticCard;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class PoliticCard {
+public class PoliticCard implements Serializable {
 
     private PoliticColor politicColor;
     // true if card is multicolor
     private boolean isMultiColor;
 
-    public PoliticCard(PoliticColor politicColor,boolean isMultiColor) {
+
+    public PoliticCard() {
+    }
+
+    public PoliticCard(PoliticColor politicColor, boolean isMultiColor) {
         this.politicColor = politicColor;
         this.isMultiColor=isMultiColor;
     }

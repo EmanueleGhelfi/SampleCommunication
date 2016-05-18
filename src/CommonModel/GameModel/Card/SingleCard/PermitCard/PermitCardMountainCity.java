@@ -1,17 +1,21 @@
 package CommonModel.GameModel.Card.SingleCard.PermitCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Giulio on 15/05/2016.
  */
-public enum PermitCardMountainCity {
+public enum PermitCardMountainCity implements Serializable {
 
     H('H', null, null), GHI('G', 'H', 'I'), F('F', null, null), HI('H', 'I', null), I('I', null, null), FG('F', 'G', null), J('J', null, null),
     HG('H', 'G', null), FGH('F', 'G', 'H'), G('G', null, null), FJ('F', 'J', null), IJ('I', 'J', null), FGJ('F', 'G', 'J'), FIJ('F','I','J'),
     IJH('I', 'J', 'H');
 
     ArrayList<Character> cities = new ArrayList<>();
+
+    PermitCardMountainCity() {
+    }
 
     private PermitCardMountainCity(Character city1, Character city2, Character city3){
         if (city1 != null){

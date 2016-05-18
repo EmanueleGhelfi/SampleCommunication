@@ -4,12 +4,14 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
+
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class NobilityBonus implements Bonus {
+public class NobilityBonus implements Bonus,Serializable {
 
     int nobilityNumber;
 

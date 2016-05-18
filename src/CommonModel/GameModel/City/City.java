@@ -3,15 +3,20 @@ package CommonModel.GameModel.City;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class City {
+public class City implements Serializable {
 
     private CityName cityName;
     private Color cityColor;
     private Region cityRegion;
     private Bonus bonus;
+
+    public City() {
+    }
 
     public City(Color cityColor, CityName cityName, Region cityRegion) {
         this.cityColor = cityColor;

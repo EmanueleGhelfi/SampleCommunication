@@ -1,13 +1,15 @@
 package CommonModel.GameModel.Council;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+
+import java.io.Serializable;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class Council {
+public class Council implements Serializable {
 
     private Queue<Councilor> councilorQueue;
     public Council() {
