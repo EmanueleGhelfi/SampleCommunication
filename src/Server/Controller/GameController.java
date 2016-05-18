@@ -36,6 +36,7 @@ public class GameController {
         for (User user: game.getUsers()) {
             System.out.println("Sending to "+user.getUsername());
             user.notifyGameStart();
+            initializeGame();
         }
     }
 
@@ -62,4 +63,11 @@ public class GameController {
         }
         timer.schedule(timerTask,duration);
     }
+
+    public void initializeGame(){
+        for(User user : game.getUsers()){
+            new Snapshot ()
+        }
+    }
+
 }

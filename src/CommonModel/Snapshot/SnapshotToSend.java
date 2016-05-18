@@ -18,7 +18,7 @@ import java.util.Stack;
 /**
  * Created by Emanuele on 18/05/2016.
  */
-public class Snapshot {
+public class SnapshotToSend {
 
     private HashMap<String,BaseUser> usersInGame = new HashMap<>();
     //TODO: cities
@@ -40,7 +40,7 @@ public class Snapshot {
     
     private CurrentUser currentUser;
 
-    public Snapshot(Game game, User user) {
+    public SnapshotToSend(Game game, User user) {
         addUserToSnapshot(game);
         addRegions(game);
 
@@ -58,4 +58,5 @@ public class Snapshot {
             this.usersInGame.put(user.getUsername(), new BaseUser(user));
         }
     }
+
 }

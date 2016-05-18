@@ -142,4 +142,9 @@ public class User extends CurrentUser {
     public void addPoliticCard(PoliticCard politicCard){
         politicCards.add(politicCard);
     }
+
+    public int getPoliticCardSize(){
+        return politicCards.size();
+    }
+
 }
