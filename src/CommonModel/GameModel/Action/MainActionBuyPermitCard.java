@@ -66,9 +66,15 @@ public class MainActionBuyPermitCard extends Action {
         // re-add to game deck
         game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(politicCards));
         // remove cards from user
+        System.out.println("POLITICS CARD" + politicCards.size());
+        System.out.println("USER CARD" + user.getPoliticCards().size());
+        int j =0;
        for(int i = 0; i< politicCards.size();i++){
-           if(politicCards.get(i).equals(user.getPoliticCards().get(i))){
-               user.getPoliticCards().remove(i);
+           if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
+               user.getPoliticCards().remove(j);
+           }
+           else{
+               j++;
            }
        }
 
@@ -93,6 +99,7 @@ public class MainActionBuyPermitCard extends Action {
         else {
             throw new ActionNotPossibleException();
         }
+        System.out.println("NUOVA POS "+correctPoliticCard);
         return newPositionInMoneyPath;
     }
 
@@ -116,6 +123,7 @@ public class MainActionBuyPermitCard extends Action {
             }
 
         }
+        System.out.println("CARTE CORRETTE "+correctPoliticCard);
         return correctPoliticCard;
     }
 
@@ -128,6 +136,8 @@ public class MainActionBuyPermitCard extends Action {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+        System.out.println(user);
 
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
         politicCardArrayList.add(new PoliticCard(PoliticColor.WHITE,false));
