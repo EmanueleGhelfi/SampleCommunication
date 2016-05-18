@@ -4,13 +4,13 @@ import ClientPackage.NetworkInterface.ClientService;
 import ClientPackage.NetworkInterface.ClientFactoryService;
 import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
+import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Councilor;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,7 +32,6 @@ public class ClientController {
     private static ClientController clientController;
 
     private ClientController(){
-
     }
 
     public static ClientController getInstance(){
@@ -43,10 +42,9 @@ public class ClientController {
 
     public void init(){
         try {
-            String networkMethod = "";
-            String uiMethod = "";
-
-             inKeyboard = new BufferedReader(new InputStreamReader(System.in));
+            String networkMethod;
+            String uiMethod;
+            inKeyboard = new BufferedReader(new InputStreamReader(System.in));
             networkMethod = getChoiceConnection(inKeyboard);
             String serverIP = getServerIP(inKeyboard);
             clientService = ClientFactoryService.getService(networkMethod,serverIP,this);
@@ -58,7 +56,6 @@ public class ClientController {
             else{
                 System.out.println("not connected, sorry");
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NotBoundException e) {
@@ -66,21 +63,19 @@ public class ClientController {
         } catch (ViewException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private String getUIMethod(BufferedReader inKeyboard) throws IOException {
         String method = "";
         System.out.println("Quale UI vuoi utilizzare? \n 1. GUI \n 2. CLI");
-        String choice = inKeyboard.readLine();
+        int choice = Integer.parseInt(inKeyboard.readLine());
         while(method.equals("")) {
             switch (choice) {
-                case "1":
-                    method = "GUI";
+                case Constants.ONE:
+                    method = Constants.GUI;
                     break;
-                case "2":
-                    method = "CLI";
+                case Constants.TWO:
+                    method = Constants.CLI;
                     break;
                 default:
                     System.out.println("Scelta non valida");
@@ -90,21 +85,17 @@ public class ClientController {
     }
 
     private void ReadName() throws IOException {
-
         baseView.showLoginError();
-
-
     }
-
 
     public String getChoiceConnection (BufferedReader inKeyboard) throws IOException {
         String method;
         System.out.println("Inserisci metodo comunicazione\n 1. RMI \n 2. Socket \n (So che non sai cosa sono ma metti una cosa a caso)");
         String scelta = inKeyboard.readLine();
         if (scelta.equals("1")) {
-            method = "RMI";
+            method = Constants.RMI;
         } else {
-            method = "SOCKET";
+            method = Constants.SOCKET;
         }
         return method;
     }
@@ -129,9 +120,7 @@ public class ClientController {
        }catch (Exception e ){
            e.printStackTrace();
        }
-
     }
-
 
     public void onSendLogin(String userName) {
         clientService.sendName(userName);
@@ -149,5 +138,4 @@ public class ClientController {
             e.printStackTrace();
         }
     }
-    //test
 }

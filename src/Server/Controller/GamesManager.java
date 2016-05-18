@@ -5,6 +5,7 @@ import Server.NetworkInterface.Listeners.RMIListener;
 import Server.NetworkInterface.Listeners.SocketListener;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -52,7 +53,7 @@ public class GamesManager {
             registry = LocateRegistry.getRegistry();
 
         }
-        registry.rebind("server",rmiListener);
+        registry.rebind(Constants.SERVER,rmiListener);
 
             SocketListener socketListener = SocketListener.getInstance(this);
             Thread thread = new Thread(socketListener);

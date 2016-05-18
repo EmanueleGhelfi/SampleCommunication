@@ -1,6 +1,7 @@
 package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
+import Utilities.Class.Constants;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -11,14 +12,11 @@ import java.rmi.RemoteException;
 public class ClientFactoryService {
 
     public static ClientService getService(String method, String serverIP, ClientController clientController) throws RemoteException, NotBoundException {
-        if(method.equals("RMI")) {
-
-            return new ClientRMIService("server", serverIP, clientController);
+        if(method.equals(Constants.RMI)) {
+            return new ClientRMIService(Constants.SERVER, serverIP, clientController);
         }
         else{
             return new ClientSocketService(serverIP, clientController);
         }
-
-
     }
 }

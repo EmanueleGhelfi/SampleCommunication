@@ -8,7 +8,6 @@ import ClientPackage.View.GeneralView.BaseView;
  */
 public class CLIView implements BaseView {
 
-
     public CLIView(ClientController clientController) {
         // to implement
     }
@@ -16,16 +15,13 @@ public class CLIView implements BaseView {
     @Override
     public void initView() {
         System.out.println("CLI Started correctly");
-
     }
 
     @Override
     public void showLoginError() {
-
     }
 
     @Override
     public void showWaitingForStart() {
-
     }
 }

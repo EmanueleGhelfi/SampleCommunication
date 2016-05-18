@@ -18,17 +18,13 @@ public class LoginController {
     private ClientController clientController;
     @FXML
     private JFXTextField usernameText;
-
     @FXML
     private Label errorText;
 
     public void onButtonLoginPressed(ActionEvent actionEvent) {
-
         System.out.println("On button login pressed");
         clientController.onSendLogin(usernameText.getText());
     }
-
-
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;

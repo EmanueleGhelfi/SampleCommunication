@@ -10,11 +10,10 @@ import java.rmi.RemoteException;
  */
  public abstract class ClientService {
 
-
-
     public abstract boolean Connect();
 
     public abstract void sendName(String name);
 
     public abstract void onTestAction(MainActionElectCouncilor electCouncilor) throws ActionNotPossibleException, RemoteException;
+
 }

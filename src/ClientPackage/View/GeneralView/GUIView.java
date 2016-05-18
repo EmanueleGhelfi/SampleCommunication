@@ -3,6 +3,7 @@ package ClientPackage.View.GeneralView;
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.LoginController;
 import ClientPackage.View.GUIResources.Class.WaitingController;
+import Utilities.Class.Constants;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,14 +30,13 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientPackage/View/GUIResources/FXML/LoginFXML.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.LOGIN_FXML));
         Parent screen = loader.load();
         loginController = loader.getController();
         loginController.setClientController(clientController);
         Scene scene = new Scene(screen);
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     @Override
@@ -48,7 +48,6 @@ public class GUIView extends Application implements BaseView {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -58,7 +57,7 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void showWaitingForStart() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientPackage/View/GUIResources/FXML/WaitingFXML.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.WAITING_FXML));
         Parent screen = null;
         try {
             screen = loader.load();

@@ -2,6 +2,7 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
 import RMIInterface.RMIClientInterface;
@@ -22,32 +23,28 @@ import java.util.Random;
 public class ClientRMIService extends ClientService implements RMIClientInterface {
 
     private String serverName;
-    RMIListenerInterface rmiListenerInterface;
-    Registry registry;
+    private RMIListenerInterface rmiListenerInterface;
+    private Registry registry;
     private String rmiHandlerName;
-    RMIClientHandler rmiClientHandler;
+    private RMIClientHandler rmiClientHandler;
     private ClientController clientController;
 
     ClientRMIService(String serverName, String serverIP, ClientController clientController) throws RemoteException, NotBoundException {
         this.serverName = serverName;
         this.clientController = clientController;
-        registry = LocateRegistry.getRegistry(serverIP, 1099);
+        registry = LocateRegistry.getRegistry(serverIP, Constants.RMI_PORT);
         rmiListenerInterface = (RMIListenerInterface) registry.lookup(serverName);
-        UnicastRemoteObject.exportObject(this,0);
+        UnicastRemoteObject.exportObject(this,Constants.ZERO);
     }
-
-
 
     @Override
     public boolean Connect() {
         try {
         rmiHandlerName = rmiListenerInterface.Connect();
-
             rmiClientHandler = (RMIClientHandler) registry.lookup(rmiHandlerName);
             System.out.println("Connected to server");
             // get ip address and sends it to server with the name of remote object
             String ip = getIP();
-
             String name = generateName();
             registry.rebind(name,this);
             rmiClientHandler.sendIP(ip,name);
@@ -59,7 +56,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -71,7 +67,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -89,10 +84,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             randomSequence = randomSequence + randomInt;
         }
         return randomSequence;
-
     }
-
-
 
     public String getIP() throws UnknownHostException {
         InetAddress IP=InetAddress.getLocalHost();

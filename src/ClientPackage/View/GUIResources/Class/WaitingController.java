@@ -18,9 +18,7 @@ public class WaitingController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;

@@ -5,7 +5,7 @@ import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import com.google.gson.Gson;
-
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,8 +19,8 @@ import java.util.concurrent.Executors;
  */
 public class ClientSocketService extends ClientService implements Runnable {
 
-    private String hostname = "localhost";
-    private int port = 4333;
+    private String hostname = Constants.SOCKET_IP;
+    private int port = Constants.SOCKET_PORT;
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
@@ -32,9 +32,6 @@ public class ClientSocketService extends ClientService implements Runnable {
         this.clientController = clientController;
         executorService = Executors.newCachedThreadPool();
     }
-
-
-
 
     @Override
     public boolean Connect() {
@@ -49,9 +46,7 @@ public class ClientSocketService extends ClientService implements Runnable {
             e.printStackTrace();
             return false;
         }
-
         return true;
-
     }
 
     @Override
@@ -64,38 +59,29 @@ public class ClientSocketService extends ClientService implements Runnable {
         CommunicationInfo.SendCommunicationInfo(out, "PROVA", electCouncilor);
     }
 
-
     @Override
     public void run() {
         System.out.println("ClientSocketService Started");
-        String line = null;
+        String line;
         try {
-            while ( (line = in.readLine())!=null){
-
+            while ((line = in.readLine())!=null){
                 // create a new runnable and use a executor service in order to execute this task
                 class DecoderTask implements Runnable{
-
                     String lineToDecode;
                     public DecoderTask(String line) {
-
                         this.lineToDecode = line;
                     }
-
                     @Override
                     public void run() {
                         decodeInfo(lineToDecode);
                     }
                 }
-
                 DecoderTask decoderTask = new DecoderTask(line);
                 executorService.execute(decoderTask);
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void decodeInfo(String line){
