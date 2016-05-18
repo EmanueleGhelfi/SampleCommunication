@@ -2,7 +2,6 @@ package Server.NetworkInterface.Communication;
 
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
-import CommonModel.Snapshot.GameImmutable;
 import Server.Controller.GameController;
 import Server.Controller.GamesManager;
 import Server.Model.User;

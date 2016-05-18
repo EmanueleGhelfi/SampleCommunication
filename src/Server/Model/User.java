@@ -4,6 +4,7 @@ import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Path.Position;
+import CommonModel.Snapshot.CurrentUser;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.Controller.GamesManager;
 
@@ -12,37 +13,13 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 11/05/2016.
  */
-public class User {
+public class User extends CurrentUser {
 
     private BaseCommunication baseCommunication;
-
-    private String username;
 
     private GamesManager gamesManager;
 
     private Game game;
-
-    private boolean connected;
-
-    private int coinPathPosition;
-
-    private int victoryPathPosition;
-
-    private Position nobilityPathPosition;
-
-    private ArrayList<City> usersEmporium;
-
-    private int helpers;
-
-    private int mainActionCounter=0;
-
-    private int fastActionCounter = 0;
-
-    private ArrayList<PermitCard> permitCards;
-
-    private ArrayList<PermitCard> oldPermitCards;
-
-    private ArrayList<PoliticCard> politicCards;
 
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;
@@ -65,9 +42,6 @@ public class User {
         return baseCommunication;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -77,9 +51,6 @@ public class User {
         baseCommunication.notifyGameStart();
     }
 
-    public boolean isConnected() {
-        return connected;
-    }
 
     public void setConnected(boolean connected) {
         this.connected = connected;
@@ -93,13 +64,6 @@ public class User {
         this.coinPathPosition = coinPathPosition;
     }
 
-    public int getCoinPathPosition() {
-        return coinPathPosition;
-    }
-
-    public int getVictoryPathPosition() {
-        return victoryPathPosition;
-    }
 
     public void setVictoryPathPosition(int victoryPathPosition) {
         this.victoryPathPosition = victoryPathPosition;
@@ -117,40 +81,20 @@ public class User {
         return game;
     }
 
-    public ArrayList<City> getUsersEmporium() {
-        return usersEmporium;
-    }
-
     public void addEmporium(City cityEmporium) {
         this.usersEmporium.add(cityEmporium);
-    }
-
-    public int getHelpers() {
-        return helpers;
     }
 
     public void setHelpers(int helpers) {
         this.helpers = helpers;
     }
 
-    public int getFastActionCounter() {
-        return fastActionCounter;
-    }
-
     public void setFastActionCounter(int fastActionCounter) {
         this.fastActionCounter = fastActionCounter;
     }
 
-    public int getMainActionCounter() {
-        return mainActionCounter;
-    }
-
     public void setMainActionCounter(int mainActionCounter) {
         this.mainActionCounter = mainActionCounter;
-    }
-
-    public ArrayList<PoliticCard> getPoliticCards() {
-        return politicCards;
     }
 
     public void setPoliticCards(ArrayList<PoliticCard> politicCards) {

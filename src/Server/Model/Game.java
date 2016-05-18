@@ -1,6 +1,5 @@
 package Server.Model;
 
-import CommonModel.Snapshot.GameImmutable;
 import CommonModel.GameModel.Bonus.Reward.ColorBonusCard;
 import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
@@ -14,7 +13,6 @@ import CommonModel.GameModel.Path.MoneyPath;
 import CommonModel.GameModel.Path.NobilityPath;
 import CommonModel.GameModel.Path.VictoryPath;
 import Server.Controller.GameController;
-import Server.Model.User;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;

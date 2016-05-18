@@ -1,6 +1,5 @@
 package Server.NetworkInterface.Communication;
 
-import CommonModel.Snapshot.GameImmutable;
 import CommonModel.GameModel.Action.Action;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
