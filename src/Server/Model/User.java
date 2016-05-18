@@ -1,6 +1,7 @@
 package Server.Model;
 
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Path.Position;
 import Server.NetworkInterface.Communication.BaseCommunication;
@@ -41,6 +42,8 @@ public class User {
 
     private ArrayList<PermitCard> oldPermitCards;
 
+    private ArrayList<PoliticCard> politicCards;
+
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;
         this.username = "DummyId";
@@ -50,6 +53,7 @@ public class User {
         usersEmporium = new ArrayList<>();
         permitCards = new ArrayList<>();
         oldPermitCards = new ArrayList<>();
+        politicCards = new ArrayList<>();
     }
 
 
@@ -145,6 +149,14 @@ public class User {
         this.mainActionCounter = mainActionCounter;
     }
 
+    public ArrayList<PoliticCard> getPoliticCards() {
+        return politicCards;
+    }
+
+    public void setPoliticCards(ArrayList<PoliticCard> politicCards) {
+        this.politicCards = politicCards;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -181,5 +193,9 @@ public class User {
             }
 
         }
+    }
+
+    public void addPoliticCard(PoliticCard politicCard){
+        politicCards.add(politicCard);
     }
 }

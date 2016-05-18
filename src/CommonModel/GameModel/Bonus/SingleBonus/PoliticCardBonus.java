@@ -14,6 +14,6 @@ public class PoliticCardBonus implements Bonus {
     //TODO
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-
+        user.addPoliticCard(game.getPoliticCards().drawACard());
     }
 }

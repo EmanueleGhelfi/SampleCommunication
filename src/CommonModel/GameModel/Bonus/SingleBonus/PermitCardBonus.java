@@ -1,6 +1,8 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.Region;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -10,6 +12,12 @@ import Server.Model.User;
  * Created by Giulio on 13/05/2016.
  */
 public class PermitCardBonus implements Bonus {
+
+    private Region region;
+
+    public PermitCardBonus(Region region) {
+        this.region = region;
+    }
 
     //TODO
     @Override

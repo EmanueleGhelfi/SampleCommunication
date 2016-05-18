@@ -5,18 +5,19 @@ package CommonModel.GameModel.Card.Deck;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 
-import java.util.Collections;
-import java.util.Stack;
+import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by Emanuele on 14/05/2016.
  */
 public class PoliticDeck implements Deck {
 
-    private Stack<PoliticCard> politicDeck;
+    private Stack<PoliticCard> politicDeckStack;
+    private Queue<PoliticCard> politicDeckQueue = new ArrayBlockingQueue<>(90);
 
     public PoliticDeck() {
-        politicDeck = new Stack<>();
+        politicDeckStack = new Stack<>();
     }
 
     @Override
@@ -25,32 +26,45 @@ public class PoliticDeck implements Deck {
         for (PoliticColor politicColor: PoliticColor.values()) {
 
             for(int i = 0;i<13;i++){
-                politicDeck.add(new PoliticCard(politicColor,false));
+                politicDeckStack.add(new PoliticCard(politicColor,false));
             }
 
         }
 
         // create multicolor
         for (int i = 0; i<12;i++){
-            politicDeck.add(new PoliticCard(null,true));
+            politicDeckStack.add(new PoliticCard(null,true));
         }
 
-        Collections.shuffle(politicDeck);
+        Collections.shuffle(politicDeckStack);
+
+        for(PoliticCard politicCard: politicDeckStack){
+            politicDeckQueue.add(politicCard);
+        }
 
     }
 
     public void printDeck(){
-        for (PoliticCard politicCard: politicDeck) {
+        for (PoliticCard politicCard: politicDeckStack) {
             System.out.println(politicCard);
 
         }
+    }
+
+    public PoliticCard drawACard(){
+        return politicDeckQueue.remove();
     }
 
     public static void main(String[] args){
         PoliticDeck politicDeck = new PoliticDeck();
         politicDeck.createRandomDeck();
         politicDeck.printDeck();
-
-
     }
+
+    public void addToQueue(Set<PoliticCard> politicCardSet){
+        for (PoliticCard politicCard: politicCardSet){
+            politicDeckQueue.add(politicCard);
+        }
+    }
+
 }

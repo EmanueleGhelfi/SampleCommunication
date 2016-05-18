@@ -61,6 +61,14 @@ public class Game implements GameImmutable{
     // PERMIT DECK
     private HashMap<Region,PermitDeck> permitDecks;
 
+    public PoliticDeck getPoliticCards() {
+        return politicCards;
+    }
+
+    public void setPoliticCards(PoliticDeck politicCards) {
+        this.politicCards = politicCards;
+    }
+
     // POLITIC CARD
     private PoliticDeck politicCards;
     private UndirectedGraph<City, DefaultEdge> graph;
@@ -271,4 +279,7 @@ public class Game implements GameImmutable{
     public PermitDeck getPermitDeck(Region region){
         return permitDecks.get(region);
     }
+
+
+
 }
