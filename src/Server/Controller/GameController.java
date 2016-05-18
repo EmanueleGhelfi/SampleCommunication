@@ -5,18 +5,22 @@ import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Class.Constants;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * Created by Emanuele on 13/05/2016.
  */
-public class GameController {
+public class GameController implements Serializable{
 
     private Game game;
     private TimerTask timerTask;
     private Timer timer;
     private int duration = Constants.GAME_TIMEOUT;
+
+    public GameController() {
+    }
 
     public GameController(Game game) {
         this.game = game;

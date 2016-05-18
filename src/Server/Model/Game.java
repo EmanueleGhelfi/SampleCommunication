@@ -17,12 +17,13 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by Emanuele on 11/05/2016.
  */
-public class Game{
+public class Game implements Serializable{
 
     /**
      * True if game is full (There game is started and the players are playing)
@@ -66,6 +67,8 @@ public class Game{
     private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
     private Stack<KingBonusCard> kingBonusCards = new Stack<>();
+
+
 
     public Game() {
         this.started = false;

@@ -9,6 +9,7 @@ import Server.Controller.GameController;
 import Server.Controller.GamesManager;
 import Server.Model.User;
 
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -18,12 +19,15 @@ import java.rmi.server.UnicastRemoteObject;
 /**
  * Created by Emanuele on 09/05/2016.
  */
-public class RMICommunication extends BaseCommunication implements RMIClientHandler {
+public class RMICommunication extends BaseCommunication implements RMIClientHandler, Serializable {
 
     private User user;
     private RMIClientInterface rmiClientInterface;
     private GamesManager gamesManager;
     private GameController gameController;
+
+    public RMICommunication() {
+    }
 
     public RMICommunication(String name) throws RemoteException {
         //super();
