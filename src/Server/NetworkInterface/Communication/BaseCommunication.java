@@ -3,6 +3,8 @@ package Server.NetworkInterface.Communication;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.User;
 
+import java.rmi.RemoteException;
+
 /**
  * Created by Emanuele on 09/05/2016.
  */

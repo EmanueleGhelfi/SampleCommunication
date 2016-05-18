@@ -8,18 +8,22 @@ import CommonModel.Snapshot.CurrentUser;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.Controller.GamesManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 11/05/2016.
  */
-public class User extends CurrentUser {
+public class User extends CurrentUser implements Serializable{
 
     private BaseCommunication baseCommunication;
 
     private GamesManager gamesManager;
 
     private Game game;
+
+    public User() {
+    }
 
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;

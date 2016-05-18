@@ -72,6 +72,10 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
-        rmiClientInterface.sendSnapshot(snapshotToSend);
+        try {
+            rmiClientInterface.sendSnapshot(snapshotToSend);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

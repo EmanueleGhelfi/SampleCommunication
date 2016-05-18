@@ -10,12 +10,13 @@ import CommonModel.GameModel.Path.Position;
 import Server.Model.Game;
 import Server.Model.User;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by Emanuele on 18/05/2016.
  */
-public class SnapshotToSend {
+public class SnapshotToSend implements Serializable{
 
     private HashMap<String,BaseUser> usersInGame = new HashMap<>();
     //TODO: cities
@@ -36,6 +37,9 @@ public class SnapshotToSend {
     private Position[] nobilityPathPosition;
     
     private CurrentUser currentUser;
+
+    public SnapshotToSend() {
+    }
 
     public SnapshotToSend(Game game, User user) {
         addUserToSnapshot(game);

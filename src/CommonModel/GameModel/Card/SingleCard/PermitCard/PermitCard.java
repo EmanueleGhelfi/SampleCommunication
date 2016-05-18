@@ -4,12 +4,13 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Region;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class PermitCard {
+public class PermitCard implements Serializable{
 
     private Bonus bonus;
     private ArrayList<Character> cityAcronimous;

@@ -5,12 +5,13 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Path.Position;
 import Server.Model.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 18/05/2016.
  */
-public class BaseUser {
+public class BaseUser implements Serializable {
 
     protected String username;
 
