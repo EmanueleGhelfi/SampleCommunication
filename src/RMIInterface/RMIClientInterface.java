@@ -1,6 +1,9 @@
 package RMIInterface;
 
+import CommonModel.Snapshot.SnapshotToSend;
+
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 
 /**
@@ -8,6 +11,5 @@ import java.rmi.Remote;
  */
 public interface RMIClientInterface extends Remote {
 
-
-
+    void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException;
 }

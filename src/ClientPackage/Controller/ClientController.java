@@ -4,6 +4,7 @@ import ClientPackage.NetworkInterface.ClientService;
 import ClientPackage.NetworkInterface.ClientFactoryService;
 import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
+import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
@@ -30,6 +31,7 @@ public class ClientController {
     private BufferedReader inKeyboard;
     private BaseView baseView;
     private static ClientController clientController;
+    private SnapshotToSend snapshot;
 
     private ClientController(){
     }
@@ -137,5 +139,10 @@ public class ClientController {
         } catch (ActionNotPossibleException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setSnapshot(SnapshotToSend snapshot) {
+        this.snapshot = snapshot;
+        System.out.println(snapshot);
     }
 }

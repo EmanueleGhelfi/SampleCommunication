@@ -1,6 +1,7 @@
 package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
 import RMIInterface.RMIClientInterface;
@@ -23,16 +24,12 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     private RMIClientInterface rmiClientInterface;
     private GamesManager gamesManager;
     private GameController gameController;
-    private GameImmutable gameImmutable;
 
     public RMICommunication(String name) throws RemoteException {
         //super();
         gamesManager = GamesManager.getInstance();
         UnicastRemoteObject.exportObject(this,0);
     }
-
-
-
 
     @Override
     public boolean sendIP(String ip, String name) throws RemoteException {
@@ -54,7 +51,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             gamesManager.addToGame(user);
             return true;
         }
-
         return false;
     }
 
@@ -71,6 +67,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void notifyGameStart() {
+        //rmiClientInterface.onStart();
+    }
 
+    @Override
+    public void sendSnapshot(SnapshotToSend snapshotToSend) {
+        rmiClientInterface.sendSnapshot(snapshotToSend);
     }
 }

@@ -10,10 +10,7 @@ import CommonModel.GameModel.Path.Position;
 import Server.Model.Game;
 import Server.Model.User;
 
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.HashMap;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by Emanuele on 18/05/2016.
@@ -68,4 +65,18 @@ public class SnapshotToSend {
         }
     }
 
+    @Override
+    public String toString() {
+        return "SnapshotToSend{" +
+                "currentUser=" + currentUser +
+                ", usersInGame=" + usersInGame +
+                ", regions=" + regions +
+                ", king=" + king +
+                ", visiblePermitCards=" + visiblePermitCards +
+                ", regionBonusCards=" + regionBonusCards +
+                ", colorBonusCards=" + colorBonusCards +
+                ", kingBonusCards=" + kingBonusCards +
+                ", nobilityPathPosition=" + Arrays.toString(nobilityPathPosition) +
+                '}';
+    }
 }

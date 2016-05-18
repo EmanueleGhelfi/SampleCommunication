@@ -1,5 +1,6 @@
 package Server.Controller;
 
+import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Class.Constants;
@@ -66,7 +67,8 @@ public class GameController {
 
     public void initializeGame(){
         for(User user : game.getUsers()){
-            new Snapshot ()
+            SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
+            user.getBaseCommunication().sendSnapshot(snapshotToSend);
         }
     }
 

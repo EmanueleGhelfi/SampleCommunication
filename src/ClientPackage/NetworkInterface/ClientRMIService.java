@@ -2,6 +2,7 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
+import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
@@ -89,5 +90,10 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         InetAddress IP=InetAddress.getLocalHost();
         System.out.println("IP of my system is := "+IP.getHostAddress());
         return IP.getHostAddress();
+    }
+
+    @Override
+    public void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException {
+        clientController.setSnapshot(snapshotToSend);
     }
 }

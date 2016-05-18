@@ -9,5 +9,4 @@ package ClientPackage.View.CLIResources;
  */
 public class CLIController {
 
-    private GameImmutable game;
 }

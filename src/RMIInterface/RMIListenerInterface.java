@@ -9,4 +9,5 @@ import java.rmi.RemoteException;
 public interface RMIListenerInterface extends Remote {
 
     String Connect() throws RemoteException;
+
 }

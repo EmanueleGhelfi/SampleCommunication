@@ -1,5 +1,6 @@
 package Server.NetworkInterface.Communication;
 
+import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import Server.Controller.GameController;
@@ -24,7 +25,6 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     private User user;
     private GamesManager gamesManager;
     private GameController gameController;
-    private GameImmutable gameImmutable;
 
     public SocketCommunication(Socket socket) throws IOException {
         this.socket = socket;
@@ -44,6 +44,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     @Override
     public void notifyGameStart() {
 
+
+    }
+
+    @Override
+    public void sendSnapshot(SnapshotToSend snapshotToSend) {
 
     }
 
