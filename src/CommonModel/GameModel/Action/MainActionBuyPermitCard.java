@@ -73,6 +73,7 @@ public class MainActionBuyPermitCard extends Action {
        for(int i = 0; i< politicCards.size();i++){
            if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
                user.getPoliticCards().remove(j);
+               user.decrementPoliticCardNumber();
            }
            else{
                j++;

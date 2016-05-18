@@ -43,19 +43,28 @@ public class SnapshotToSend {
     public SnapshotToSend(Game game, User user) {
         addUserToSnapshot(game);
         addRegions(game);
+        //add king
+        this.king = game.getKing();
 
+        this.regionBonusCards = game.getRegionBonusCard();
+
+        this.colorBonusCards = game.getColorBonusCard();
+
+        this.kingBonusCards = game.getKingBonusCards();
+
+        this.nobilityPathPosition = game.getNobilityPath().getPosition();
+
+        this.currentUser = user;
     }
 
     //try try
     private void addRegions(Game game) {
-        for (Region region: game.getRegions().values()) {
-
-        }
+        this.regions = game.getRegions();
     }
 
     private void addUserToSnapshot(Game game) {
-        for (User user : game.getUsers()) {
-            this.usersInGame.put(user.getUsername(), new BaseUser(user));
+        for (User user: game.getUsersInGame().values()) {
+            usersInGame.put(user.getUsername(),user);
         }
     }
 

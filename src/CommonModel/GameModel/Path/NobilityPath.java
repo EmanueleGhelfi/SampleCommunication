@@ -39,4 +39,8 @@ public class NobilityPath implements Path {
             }
         }
     }
+
+    public Position[] getPosition() {
+        return position;
+    }
 }

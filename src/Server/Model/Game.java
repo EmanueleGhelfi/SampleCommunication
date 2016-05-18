@@ -65,7 +65,7 @@ public class Game{
     private UndirectedGraph<City, DefaultEdge> graph;
     private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
-    private Stack<KingBonusCard> kingBonusCard = new Stack<>();
+    private Stack<KingBonusCard> kingBonusCards = new Stack<>();
 
     public Game() {
         this.started = false;
@@ -78,7 +78,7 @@ public class Game{
         createPaths();
         // create city Graph
         createCityGraph();
-        //create regionBonusCard, kingBonusCard, colorBonusCard
+        //create regionBonusCard, kingBonusCards, colorBonusCard
         createBonusDeck();
         //create Politic Card Deck
         createPoliticCards();
@@ -113,7 +113,7 @@ public class Game{
         }
         //king bonus
         for (int i= 1; i<6;i++){
-            kingBonusCard.add(new KingBonusCard(i));
+            kingBonusCards.add(new KingBonusCard(i));
         }
     }
 
@@ -216,7 +216,7 @@ public class Game{
 
     public KingBonusCard getKingBonusCard() {
         try{
-            return kingBonusCard.peek();
+            return kingBonusCards.peek();
         } catch (EmptyStackException e){
             return null;
         }
@@ -224,7 +224,7 @@ public class Game{
 
     public void popKingBonusCard(){
         try {
-            kingBonusCard.pop();
+            kingBonusCards.pop();
         } catch (EmptyStackException e){
         }
     }
@@ -245,7 +245,7 @@ public class Game{
                 ", graph=" + graph +
                 ", regionBonusCard=" + regionBonusCard +
                 ", colorBonusCard=" + colorBonusCard +
-                ", kingBonusCard=" + kingBonusCard +
+                ", kingBonusCards=" + kingBonusCards +
                 '}';
     }
 
@@ -255,5 +255,25 @@ public class Game{
 
     public HashMap<String, Region> getRegions() {
         return regions;
+    }
+
+    public HashMap<String, ColorBonusCard> getColorBonusCard() {
+        return colorBonusCard;
+    }
+
+    public HashMap<String, RegionBonusCard> getRegionBonusCard() {
+        return regionBonusCard;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public HashMap<String, User> getUsersInGame() {
+        return usersInGame;
+    }
+
+    public Stack<KingBonusCard> getKingBonusCards() {
+        return kingBonusCards;
     }
 }

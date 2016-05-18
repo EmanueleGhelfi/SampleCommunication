@@ -12,19 +12,6 @@ import java.util.ArrayList;
  */
 public class BaseUser {
 
-    public BaseUser(User user) {
-        this.username = user.getUsername();
-        this.connected = user.isConnected();
-        this.coinPathPosition = user.getCoinPathPosition();
-        this.victoryPathPosition = user.getVictoryPathPosition();
-        this.usersEmporium = (ArrayList<City>) user.getUsersEmporium().clone();
-        this.helpers = user.getHelpers();
-        this.oldPermitCards = (ArrayList<PermitCard>) user.getOldPermitCards().clone();
-        this.permitCards = (ArrayList<PermitCard>) user.getPermitCards().clone();
-        this.politicCardNumber = user.getPoliticCardNumber();
-
-    }
-
     protected String username;
 
     protected boolean connected;
@@ -44,6 +31,11 @@ public class BaseUser {
     protected ArrayList<PermitCard> oldPermitCards;
 
     protected int politicCardNumber;
+
+    // default constructor for inheritance. Obligatory! Do not cancel!
+    public BaseUser() {
+    }
+
 
     public int getCoinPathPoistion() {
         return coinPathPosition;

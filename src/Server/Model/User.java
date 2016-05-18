@@ -31,6 +31,7 @@ public class User extends CurrentUser {
         permitCards = new ArrayList<>();
         oldPermitCards = new ArrayList<>();
         politicCards = new ArrayList<>();
+        politicCardNumber = politicCards.size();
     }
 
 
@@ -99,6 +100,7 @@ public class User extends CurrentUser {
 
     public void setPoliticCards(ArrayList<PoliticCard> politicCards) {
         this.politicCards = politicCards;
+        politicCardNumber = politicCards.size();
     }
 
     @Override
@@ -141,10 +143,14 @@ public class User extends CurrentUser {
 
     public void addPoliticCard(PoliticCard politicCard){
         politicCards.add(politicCard);
+        politicCardNumber++;
     }
 
     public int getPoliticCardSize(){
         return politicCards.size();
     }
 
+    public void decrementPoliticCardNumber() {
+        politicCardNumber--;
+    }
 }

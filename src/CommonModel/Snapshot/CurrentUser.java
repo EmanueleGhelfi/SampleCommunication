@@ -1,6 +1,7 @@
 package CommonModel.Snapshot;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import Server.Model.User;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,10 @@ public class CurrentUser extends BaseUser {
     protected int mainActionCounter=0;
 
     protected int fastActionCounter = 0;
+
+
+    public CurrentUser() {
+    }
 
     public ArrayList<PoliticCard> getPoliticCards() {
         return politicCards;
