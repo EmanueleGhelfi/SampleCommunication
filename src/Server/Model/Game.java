@@ -102,7 +102,6 @@ public class Game implements Serializable{
         // foreach color create thirteen cards
         politicCards = new PoliticDeck();
         politicCards.createRandomDeck();
-        //TODO: Add multicolor card
     }
 
     private void createBonusDeck() {
@@ -278,5 +277,9 @@ public class Game implements Serializable{
 
     public Stack<KingBonusCard> getKingBonusCards() {
         return kingBonusCards;
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }

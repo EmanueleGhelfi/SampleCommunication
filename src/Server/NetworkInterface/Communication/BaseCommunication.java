@@ -16,4 +16,5 @@ public abstract class BaseCommunication {
 
     public abstract void sendSnapshot(SnapshotToSend snapshotToSend);
 
+    public abstract void changeRound();
 }

@@ -83,4 +83,9 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void changeRound() {
+        //call is your round (with a notification)
+    }
 }

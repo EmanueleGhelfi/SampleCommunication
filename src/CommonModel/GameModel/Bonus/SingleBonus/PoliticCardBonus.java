@@ -12,8 +12,6 @@ import java.io.Serializable;
  */
 public class PoliticCardBonus implements Bonus, Serializable {
 
-
-    //TODO
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         user.addPoliticCard(game.getPoliticCards().drawACard());

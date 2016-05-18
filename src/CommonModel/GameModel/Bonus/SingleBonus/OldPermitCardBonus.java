@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class OldPermitCardBonus implements Bonus,Serializable {
 
-    //TODO
+    //TODO teso
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
 

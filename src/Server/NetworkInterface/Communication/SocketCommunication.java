@@ -53,6 +53,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void changeRound() {
+        CommunicationInfo.SendCommunicationInfo(out, "your turn", null);    //TODO !!!!!!!!!!!!constants
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new Gson();

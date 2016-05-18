@@ -14,13 +14,12 @@ import java.io.Serializable;
  */
 public class PermitCardBonus implements Bonus, Serializable {
 
-    private Region region;
 
-    public PermitCardBonus(Region region) {
-        this.region = region;
+    public PermitCardBonus() {
+
     }
 
-    //TODO
+    //TODO teso
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
 

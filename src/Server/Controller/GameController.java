@@ -6,6 +6,7 @@ import Server.Model.User;
 import Utilities.Class.Constants;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -76,4 +77,15 @@ public class GameController implements Serializable{
         }
     }
 
+    public void onFinishRound(User user) {
+        ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
+        for(int cont = 0; cont < game.getUsers().size(); cont++){
+            if(user.equals(userArrayList.get(cont))){
+                userArrayList.get((cont+1)%game.getUsers().size()).setMainActionCounter(1);
+                userArrayList.get((cont+1)%game.getUsers().size()).setFastActionCounter(1);
+                userArrayList.get((cont+1)%game.getUsers().size()).getBaseCommunication().changeRound();
+            }
+        }
+        //TODO shop
+    }
 }

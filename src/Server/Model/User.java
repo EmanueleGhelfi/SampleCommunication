@@ -18,8 +18,6 @@ public class User extends CurrentUser implements Serializable{
 
     private BaseCommunication baseCommunication;
 
-    private GamesManager gamesManager;
-
     private Game game;
 
     public User() {
@@ -28,7 +26,6 @@ public class User extends CurrentUser implements Serializable{
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;
         this.username = "DummyId";
-        this.gamesManager = gamesManager;
         this.game = null;
         this.connected=true;
         usersEmporium = new ArrayList<>();
@@ -96,10 +93,16 @@ public class User extends CurrentUser implements Serializable{
 
     public void setFastActionCounter(int fastActionCounter) {
         this.fastActionCounter = fastActionCounter;
+        if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
+            game.getGameController().onFinishRound(this);
+        }
     }
 
     public void setMainActionCounter(int mainActionCounter) {
         this.mainActionCounter = mainActionCounter;
+        if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
+            game.getGameController().onFinishRound(this);
+        }
     }
 
     public void setPoliticCards(ArrayList<PoliticCard> politicCards) {
@@ -112,7 +115,6 @@ public class User extends CurrentUser implements Serializable{
         return "User{" +
                 "baseCommunication=" + baseCommunication +
                 ", username='" + username + '\'' +
-                ", gamesManager=" + gamesManager +
                 ", game=" + game +
                 ", connected=" + connected +
                 ", coinPathPosition=" + coinPathPosition +

@@ -39,4 +39,13 @@ public class CurrentUser extends BaseUser implements Serializable{
     public int getFastActionCounter() {
         return fastActionCounter;
     }
+
+    @Override
+    public String toString() {
+        return "CurrentUser{" +
+                "politicCards=" + politicCards +
+                ", mainActionCounter=" + mainActionCounter +
+                ", fastActionCounter=" + fastActionCounter +
+                '}';
+    }
 }

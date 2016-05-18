@@ -73,8 +73,8 @@ public class MainBonus implements Bonus,Serializable {
                     bonusArrayList.add(bonus);
                     break;
                 case Constants.SIX:
-                    //TODO bonus = new PermitCardBonus();
-                    //bonusArrayList.add(bonus);
+                    bonus = new PermitCardBonus();
+                    bonusArrayList.add(bonus);
                     break;
                 case Constants.SEVEN:
                     bonus = new OldPermitCardBonus();

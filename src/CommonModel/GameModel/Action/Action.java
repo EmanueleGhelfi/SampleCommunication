@@ -11,7 +11,6 @@ import java.io.Serializable;
  */
 public abstract class Action implements Serializable {
 
-
     protected String type;
 
     public abstract void doAction(Game game, User user) throws ActionNotPossibleException;

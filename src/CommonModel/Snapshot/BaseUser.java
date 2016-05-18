@@ -95,4 +95,20 @@ public class BaseUser implements Serializable {
         this.oldPermitCards = user.getOldPermitCards();
         this.politicCardNumber = user.getPoliticCardSize();
     }
+
+    @Override
+    public String toString() {
+        return "BaseUser{" +
+                "username='" + username + '\'' +
+                ", connected=" + connected +
+                ", coinPathPosition=" + coinPathPosition +
+                ", victoryPathPosition=" + victoryPathPosition +
+                ", nobilityPathPosition=" + nobilityPathPosition +
+                ", usersEmporium=" + usersEmporium +
+                ", helpers=" + helpers +
+                ", permitCards=" + permitCards +
+                ", oldPermitCards=" + oldPermitCards +
+                ", politicCardNumber=" + politicCardNumber +
+                '}';
+    }
 }
