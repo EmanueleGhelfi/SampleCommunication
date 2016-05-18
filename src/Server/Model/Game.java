@@ -128,12 +128,6 @@ public class Game{
     }
 
 
-    @Override
-    public boolean isStarted() {
-        return started;
-    }
-
-
     public boolean addUserToGame(User userToAdd) {
         System.out.println("ADDING A USER TO A GAME "+userToAdd);
         if(!usersInGame.containsKey(userToAdd.getUsername())){
@@ -259,4 +253,7 @@ public class Game{
         return permitDecks.get(region);
     }
 
+    public HashMap<String, Region> getRegions() {
+        return regions;
+    }
 }
