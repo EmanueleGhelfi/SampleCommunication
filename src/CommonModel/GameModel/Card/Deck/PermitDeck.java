@@ -7,19 +7,21 @@ import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Stack;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by Emanuele on 14/05/2016.
  */
 public class PermitDeck implements Deck {
 
-    private Stack<PermitCard> permitDeck;
+    private Queue<PermitCard> permitDeck;
     private Region region;
     private ArrayList<PermitCard> permitCardsVisible;
 
     public PermitDeck(Region region){
-        permitDeck = new Stack<>();
+        permitDeck = new ArrayBlockingQueue<PermitCard>(15);
         this.region = region;
     }
 
@@ -36,13 +38,22 @@ public class PermitDeck implements Deck {
                 permitDeck.add(permitCard);
             }
             permitCardsVisible = new ArrayList<>();
-            permitCardsVisible.add(permitDeck.pop());
-            permitCardsVisible.add(permitDeck.pop());
+            permitCardsVisible.add(permitDeck.remove());
+            permitCardsVisible.add(permitDeck.remove());
         }
         else{
             System.out.println("Cities permit card null");
         }
 
+    }
+
+    public void changePermitCardVisibile (){
+        for (PermitCard permitCard: permitCardsVisible){
+            permitDeck.add(permitCard);
+        }
+        permitCardsVisible.clear();
+        permitCardsVisible.add(permitDeck.remove());
+        permitCardsVisible.add(permitDeck.remove());
     }
 
     public PermitCard getPermitCardVisible(PermitCard permitCard) throws ActionNotPossibleException{
