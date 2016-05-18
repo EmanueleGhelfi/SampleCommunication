@@ -4,10 +4,12 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class VictoryPath implements Path {
+public class VictoryPath implements Path, Serializable {
 
     private final int length = Constants.VICTORY_PATH_LENGTH;
 

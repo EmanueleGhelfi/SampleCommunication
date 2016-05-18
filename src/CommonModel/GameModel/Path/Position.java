@@ -6,13 +6,18 @@ package CommonModel.GameModel.Path;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 
+import java.io.Serializable;
+
 /**
  * Position in nobility path
  */
-public class Position {
+public class Position implements Serializable{
 
     private int position;
     private Bonus bonus;
+
+    public Position() {
+    }
 
     public Position(int position, Bonus bonus) {
         this.position = position;

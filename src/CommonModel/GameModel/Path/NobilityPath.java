@@ -6,13 +6,17 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class NobilityPath implements Path {
+public class NobilityPath implements Path, Serializable {
 
     private Position[] position;
     private final int length = Constants.NOBILITY_PATH_ELEMENT;
+
+
 
     public NobilityPath() {
         position = new Position[length+1];
