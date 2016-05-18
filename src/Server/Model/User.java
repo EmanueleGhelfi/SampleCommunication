@@ -39,6 +39,8 @@ public class User {
 
     private ArrayList<PermitCard> permitCards;
 
+    private ArrayList<PermitCard> oldPermitCards;
+
     public User(BaseCommunication baseCommunication, GamesManager gamesManager) {
         this.baseCommunication = baseCommunication;
         this.username = "DummyId";
@@ -46,6 +48,8 @@ public class User {
         this.game = null;
         this.connected=true;
         usersEmporium = new ArrayList<>();
+        permitCards = new ArrayList<>();
+        oldPermitCards = new ArrayList<>();
     }
 
 
@@ -157,7 +161,25 @@ public class User {
                 '}';
     }
 
+    /**
+     * Add permit card to user permit cards
+     * @param permitCard permit card to add
+     */
     public void addPermitCard(PermitCard permitCard){
         permitCards.add(permitCard);
+    }
+
+    /**
+     * Removes permit card in user permit card and it to old user permit cards
+     * @param permitCardToRemove the permit card to remove
+     */
+    public void removePermitCard(PermitCard permitCardToRemove){
+        for (PermitCard permitCard: permitCards) {
+            if (permitCard.equals(permitCardToRemove)){
+                permitCards.remove(permitCard);
+                oldPermitCards.add(permitCardToRemove);
+            }
+
+        }
     }
 }
