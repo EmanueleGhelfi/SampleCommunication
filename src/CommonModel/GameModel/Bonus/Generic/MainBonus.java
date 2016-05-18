@@ -5,18 +5,23 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class MainBonus implements Bonus {
+public class MainBonus implements Bonus,Serializable {
 
     private ArrayList<Bonus> bonusArrayList = new ArrayList<>();
 
     public MainBonus(int minBonus,int maxBonus, int possibleBonus, boolean ponderation){
          createRandomBonus(minBonus,maxBonus,possibleBonus,ponderation);
+    }
+
+    public MainBonus() {
     }
 
     /**
