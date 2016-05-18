@@ -8,6 +8,7 @@ import CommonModel.GameModel.Council.Councilor;
 import Server.Controller.GamesManager;
 import Server.NetworkInterface.Communication.RMICommunication;
 import Server.NetworkInterface.Communication.SocketCommunication;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
