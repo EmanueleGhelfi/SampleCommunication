@@ -4,12 +4,17 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class MoneyPath implements Path {
+public class MoneyPath implements Path, Serializable {
 
     private final int length = Constants.MONEY_PATH_LENGTH;
+
+    public MoneyPath() {
+    }
 
     @Override
     public void goAhead(User user, int value) throws ActionNotPossibleException {

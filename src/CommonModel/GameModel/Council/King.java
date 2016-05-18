@@ -6,10 +6,12 @@ import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.City.Region;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class King {
+public class King implements Serializable {
 
     private City currentCity;
     private Council council;
