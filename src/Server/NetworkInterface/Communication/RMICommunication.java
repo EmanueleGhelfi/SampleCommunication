@@ -26,6 +26,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     private GamesManager gamesManager;
     private GameController gameController;
 
+    //default
     public RMICommunication() {
     }
 
