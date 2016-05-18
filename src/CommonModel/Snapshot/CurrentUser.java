@@ -21,6 +21,13 @@ public class CurrentUser extends BaseUser implements Serializable{
     public CurrentUser() {
     }
 
+    public CurrentUser(User user){
+        super(user);
+        this.politicCards = user.getPoliticCards();
+        this.mainActionCounter = user.getMainActionCounter();
+        this.fastActionCounter = user.getFastActionCounter();
+    }
+
     public ArrayList<PoliticCard> getPoliticCards() {
         return politicCards;
     }
