@@ -1,6 +1,6 @@
 package ClientPackage.NetworkInterface;
 
-import CommonModel.GameModel.Action.MainActionElectCouncilor;
+import CommonModel.GameModel.Action.Action;
 import Utilities.Exception.ActionNotPossibleException;
 import java.rmi.RemoteException;
 
@@ -13,6 +13,6 @@ import java.rmi.RemoteException;
 
     public abstract void sendName(String name);
 
-    public abstract void onTestAction(MainActionElectCouncilor electCouncilor) throws ActionNotPossibleException, RemoteException;
+    public abstract void onTestAction(Action electCouncilor) throws ActionNotPossibleException, RemoteException;
 
 }

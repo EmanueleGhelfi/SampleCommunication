@@ -1,6 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,5 +22,13 @@ public class WaitingController implements Initializable {
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
+    }
+
+    public void firstMainAction(ActionEvent actionEvent) {
+        clientController.createAction();
+    }
+
+    public void secondMainAction(ActionEvent actionEvent) {
+
     }
 }

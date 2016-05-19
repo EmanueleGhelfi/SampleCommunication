@@ -1,7 +1,7 @@
 package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
-import CommonModel.GameModel.Action.MainActionElectCouncilor;
+import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
@@ -70,7 +70,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     }
 
     @Override
-    public void onTestAction(MainActionElectCouncilor electCouncilor) throws ActionNotPossibleException, RemoteException {
+    public void onTestAction(Action electCouncilor) throws ActionNotPossibleException, RemoteException {
         rmiClientHandler.test(electCouncilor);
     }
 

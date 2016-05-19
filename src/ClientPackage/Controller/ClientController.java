@@ -4,6 +4,7 @@ import ClientPackage.NetworkInterface.ClientService;
 import ClientPackage.NetworkInterface.ClientFactoryService;
 import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
+import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
@@ -128,21 +129,19 @@ public class ClientController {
         clientService.sendName(userName);
     }
 
-    public void onTestAction() {
-        MainActionElectCouncilor electCouncilor = new MainActionElectCouncilor(new Councilor(PoliticColor.BLACK), null, Region.COAST);
-        try {
-            try {
-                clientService.onTestAction(electCouncilor);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        } catch (ActionNotPossibleException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void setSnapshot(SnapshotToSend snapshot) {
         this.snapshot = snapshot;
         System.out.println(snapshot);
+    }
+
+    public void createAction() {
+        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.BLACK), null, Region.COAST);
+        try {
+            clientService.onTestAction(action);
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

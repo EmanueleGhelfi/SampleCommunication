@@ -5,6 +5,7 @@ import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.City.Region;
@@ -54,12 +55,6 @@ public class Game implements Serializable{
 
     // PERMIT DECK
     private HashMap<Region,PermitDeck> permitDecks;
-    public PoliticDeck getPoliticCards() {
-        return politicCards;
-    }
-    public void setPoliticCards(PoliticDeck politicCards) {
-        this.politicCards = politicCards;
-    }
 
     // POLITIC CARD
     private PoliticDeck politicCards;
@@ -145,9 +140,11 @@ public class Game implements Serializable{
 
     private void createDecks() {
         //create mountainDeck
-        permitDecks = new HashMap<Region, PermitDeck>();
+        permitDecks = new HashMap<>();
         for (Region region : Region.values()) {
-            permitDecks.put(region, new PermitDeck(region));
+            PermitDeck permitDeck = new PermitDeck(region);
+            permitDeck.createRandomDeck();
+            permitDecks.put(region, permitDeck);
         }
     }
 
@@ -254,5 +251,11 @@ public class Game implements Serializable{
     }
     public GameController getGameController() {
         return gameController;
+    }
+    public PoliticDeck getPoliticCards() {
+        return politicCards;
+    }
+    public void setPoliticCards(PoliticDeck politicCards) {
+        this.politicCards = politicCards;
     }
 }

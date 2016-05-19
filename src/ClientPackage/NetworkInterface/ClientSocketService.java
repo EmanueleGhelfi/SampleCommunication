@@ -1,9 +1,9 @@
 package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
+import CommonModel.GameModel.Action.Action;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
-import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class ClientSocketService extends ClientService implements Runnable {
 
     //TODO test?
     @Override
-    public void onTestAction(MainActionElectCouncilor electCouncilor) {
+    public void onTestAction(Action electCouncilor) {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_ACTION, electCouncilor);
     }
 
