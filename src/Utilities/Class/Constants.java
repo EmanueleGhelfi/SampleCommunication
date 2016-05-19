@@ -124,5 +124,12 @@ public class Constants {
     public static final int KING_PRICE = 2;
     public static final int EMPORIUMS_BUILDABLE = 10;
     public static final int KING_CARDS = 6;
+    public static final int INITIAL_POSITION_ON_NOBILITY_PATH = 0;
+    public static final int INITIAL_POSITION_ON_VICTORY_PATH = 0;
+    public static final int FIRST_INITIAL_POSITION_ON_MONEY_PATH = 10;
+    public static final int DEFAULT_MAIN_ACTION_COUNTER = 0;
+    public static final int DEFAULT_FAST_ACTION_COUNTER = 0;
+    public static final int DEFAULT_HELPER_COUNTER = 1;
+    public static final int DEFAULT_POLITIC_CARD_HAND = 6;
 
 }

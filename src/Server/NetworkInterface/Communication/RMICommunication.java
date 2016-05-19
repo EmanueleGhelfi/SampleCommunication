@@ -62,11 +62,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
-    public void notifyGameStart() {
-        //rmiClientInterface.onStart();
-    }
-
-    @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
         try {
             rmiClientInterface.sendSnapshot(snapshotToSend);

@@ -148,7 +148,7 @@ public class Game implements Serializable{
             if(usersInGame.size()>=2 && usersInGame.size()<4){
                 gameController.setTimeout();
             }
-            else if(usersInGame.size()>=2){
+            else if(usersInGame.size()==4){
                 gameController.cancelTimeout();
                 gameController.notifyStarted();
             }

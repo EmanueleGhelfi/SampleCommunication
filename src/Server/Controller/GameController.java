@@ -3,8 +3,6 @@ package Server.Controller;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-import CommonModel.GameModel.City.Color;
-import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.User;
@@ -44,19 +42,25 @@ public class GameController implements Serializable{
     }
 
     public void notifyStarted() {
+        int userCounter = 0;
         game.setStarted(true);
         for (User user: game.getUsers()){
-            user.setHelpers(5);
-            user.setCoinPathPosition(10);
-            user.setMainActionCounter(0);
-            user.setFastActionCounter(0);
-            user.setNobilityPathPosition(game.getNobilityPath().getPosition()[10]);
+            user.setMainActionCounter(Constants.DEFAULT_MAIN_ACTION_COUNTER);
+            user.setFastActionCounter(Constants.DEFAULT_FAST_ACTION_COUNTER);
+            user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
+            user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
+            user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
+            user.setVictoryPathPosition(Constants.INITIAL_POSITION_ON_VICTORY_PATH);
+
             ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-            for(PoliticColor color: PoliticColor.values()){
-                politicCardArrayList.add(new PoliticCard(color, false));
+            for(int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++){
+                politicCardArrayList.add(game.getPoliticCards().drawACard());
+                System.out.println("GameController notify game started <- " + cont + " "
+                        + politicCardArrayList.get(cont));
             }
             user.setPoliticCards(politicCardArrayList);
-            user.setVictoryPathPosition(10);
+
+            userCounter++;
         }
         for (User user: game.getUsers()) {
             System.out.println("Sending to "+user.getUsername());

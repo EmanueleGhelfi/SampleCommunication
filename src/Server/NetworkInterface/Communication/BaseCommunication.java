@@ -10,8 +10,6 @@ public abstract class BaseCommunication {
 
     public abstract void setUser (User user);
 
-    public abstract void notifyGameStart();
-
     public abstract void sendSnapshot(SnapshotToSend snapshotToSend);
 
     public abstract void changeRound();
