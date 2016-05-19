@@ -33,4 +33,11 @@ public class FastActionChangePermitCardWithHelper extends Action {
             throw new ActionNotPossibleException();
         }
     }
+
+    @Override
+    public String toString() {
+        return "FastActionChangePermitCardWithHelper{" +
+                "region=" + region +
+                '}';
+    }
 }
