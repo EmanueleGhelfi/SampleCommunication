@@ -20,8 +20,6 @@ public class HelperBonus implements Bonus,Serializable {
         helperNumber = randomGenerator.nextInt(Constants.RANDOM_HELPER_FIRST_PARAMETER)+ Constants.RANDOM_HELPER_SECOND_PARAMETER;
     }
 
-    //TODO second parameter?
-
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         user.setHelpers(user.getHelpers()+helperNumber);

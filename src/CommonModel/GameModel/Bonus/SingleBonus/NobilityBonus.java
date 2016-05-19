@@ -20,8 +20,6 @@ public class NobilityBonus implements Bonus,Serializable {
         nobilityNumber = randomGenerator.nextInt(Constants.RANDOM_NOBILITY_FIRST_PARAMETER)+Constants.RANDOM_NOBILITY_SECOND_PARAMETER;
     }
 
-    //TODO +1 anche qui?
-
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         game.getNobilityPath().goAhead(user, nobilityNumber);
