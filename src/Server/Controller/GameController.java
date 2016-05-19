@@ -91,14 +91,22 @@ public class GameController implements Serializable{
 
     public void initializeGame(){
         for(User user : game.getUsers()){
+            System.out.println("GAMECONTROLLER -> Initializing Game, sending snapshot to: "+user.getUsername());
             SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
         }
     }
 
+    /**
+     * create snapshot and change round
+     * @param user user that has finished round
+     */
     public void onFinishRound(User user) {
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         for(int cont = 0; cont < game.getUsers().size(); cont++){
+            System.out.println("GAMECONTROLLER <- Sending Snapshot to :" + userArrayList.get(cont).getUsername());
+            SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
+            user.getBaseCommunication().sendSnapshot(snapshotToSend);
             if(user.equals(userArrayList.get(cont))){
                 userArrayList.get((cont+1)%game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
                 userArrayList.get((cont+1)%game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);

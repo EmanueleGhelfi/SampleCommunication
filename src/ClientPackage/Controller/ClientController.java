@@ -5,6 +5,7 @@ import ClientPackage.NetworkInterface.ClientFactoryService;
 import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
@@ -134,8 +135,26 @@ public class ClientController {
         System.out.println("CLIENTCONTROLLER <- "+snapshot);
     }
 
+    /**
+     * debug
+     */
     public void createAction() {
         Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.BLACK), null, Region.COAST);
+        try {
+            clientService.onTestAction(action);
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * debug
+     */
+    public void createSecondAction() {
+
+        Action action = new FastActionChangePermitCardWithHelper(Region.HILL);
         try {
             clientService.onTestAction(action);
         } catch (ActionNotPossibleException e) {

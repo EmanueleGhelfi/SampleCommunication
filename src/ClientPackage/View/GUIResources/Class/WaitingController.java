@@ -25,6 +25,7 @@ public class WaitingController implements Initializable {
     }
 
     public void secondMainAction(ActionEvent actionEvent) {
+        clientController.createSecondAction();
 
     }
 }
