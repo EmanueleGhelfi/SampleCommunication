@@ -58,7 +58,7 @@ public class ClientController {
                 baseView.initView();
             }
             else{
-                System.out.println("not connected, sorry");
+                System.out.println("Not connected, sorry");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,7 +153,6 @@ public class ClientController {
      * debug
      */
     public void createSecondAction() {
-
         Action action = new FastActionChangePermitCardWithHelper(Region.HILL);
         try {
             clientService.onTestAction(action);
