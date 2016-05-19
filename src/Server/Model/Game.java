@@ -196,9 +196,13 @@ public class Game implements Serializable{
         }
         return null;
     }
+
+    /** get king bonus card if there are
+     * @return null if there are not, king bonus cardelse
+     */
     public KingBonusCard getKingBonusCard() {
         try{
-            return kingBonusCards.peek();
+            return kingBonusCards.pop();
         } catch (EmptyStackException e){
             return null;
         }

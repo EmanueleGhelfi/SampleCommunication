@@ -108,6 +108,16 @@ public abstract class Action implements Serializable {
         return correctPoliticCard;
     }
 
+    /** check if an user has placed more than 10 emporiums
+     *
+     */
+    protected boolean checkEmporiums(User user) throws ActionNotPossibleException {
+        if (user.getUsersEmporium().size()>=Constants.EMPORIUMS_BUILDABLE){
+            throw new ActionNotPossibleException();
+        }
+        return true;
+    }
+
     String getType(){
         return type;
     }

@@ -109,7 +109,7 @@ public class Constants {
     public static final int MULTICOLOR_POLITIC_DECK_SIZE = 12;
     public static final int REGION_DECK_SIZE = 15;
 
-    //GAME DECISION
+    //GAME RULES
     public static final int HELPER_LIMITATION_CHANGE_PERMIT_CARD = 1;
     public static final int HELPER_LIMITATION_ELECT_COUNCILOR = 1;
     public static final int MONEY_LIMITATION_MONEY_FOR_HELPER = 3;
@@ -121,5 +121,6 @@ public class Constants {
     public static final int ONE_PARAMETER_BUY_PERMIT_CARD = 1;
     public static final int MONEY_EARNED_ELECT_COUNCILOR = 4;
     public static final int KING_PRICE = 2;
+    public static final int EMPORIUMS_BUILDABLE = 10;
 
 }
