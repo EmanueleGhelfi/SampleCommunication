@@ -10,6 +10,7 @@ public class Constants {
     public static final String CODE_CHAT ="CODE_CHAT";
     public static final String CODE_YOUR_TURN = "CODE_YOUR_TURN";
     public static final String CODE_ACTION= "CODE_ACTION";
+    public static final String CODE_SNAPSHOT= "CODE_SNAPSHOT";
 
     //GENERAL STRING
     public static final String GUI = "GUI";

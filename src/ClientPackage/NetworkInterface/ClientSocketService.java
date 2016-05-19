@@ -2,9 +2,12 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import com.google.gson.Gson;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.LocatorEx;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -97,6 +100,10 @@ public class ClientSocketService extends ClientService implements Runnable {
                 String message = gson.fromJson(communicationInfo.getInfo(),String.class);
                 System.out.println(message);
                 break;
+            }
+            case Constants.CODE_SNAPSHOT:{
+                SnapshotToSend snapshotToSend = gson.fromJson(communicationInfo.getInfo(),SnapshotToSend.class);
+                clientController.setSnapshot(snapshotToSend);
             }
         }
     }

@@ -131,7 +131,7 @@ public class ClientController {
 
     public void setSnapshot(SnapshotToSend snapshot) {
         this.snapshot = snapshot;
-        System.out.println(snapshot);
+        System.out.println("CLIENTCONTROLLER <- "+snapshot);
     }
 
     public void createAction() {

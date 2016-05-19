@@ -41,6 +41,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_SNAPSHOT,snapshotToSend);
     }
 
     @Override
