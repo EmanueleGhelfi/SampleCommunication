@@ -130,15 +130,9 @@ public class Game implements Serializable{
         graph.addEdge(city2,city4);
         graph.addEdge(city3,city4);
         graph.addEdge(city4,city5);
-        ArrayList<City> usersEmporium = new ArrayList<>();
-        usersEmporium.add(city2);
-        usersEmporium.add(city3);
-        usersEmporium.add(city4);
-        System.out.println("MAIN: " +usersEmporium.contains(city2));
-        System.out.println("EMPORIUMS");
-        CityVisitor cityVisitor = new CityVisitor(graph, usersEmporium);
-        ArrayList<City> cities = cityVisitor.visit(city2);
-        System.out.println(cities);
+        for (City cityToVisit : graph.vertexSet()) {
+            System.out.println(cityToVisit);
+        }
     }
 
     private void createPaths() {
