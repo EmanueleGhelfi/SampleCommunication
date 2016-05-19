@@ -1,11 +1,13 @@
 package Server.NetworkInterface.Communication;
 
+import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import Server.Controller.GameController;
 import Server.Controller.GamesManager;
 import Server.Model.User;
+import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +25,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     private PrintWriter out;
     private User user;
     private GamesManager gamesManager;
+    private GameController gameController;
 
     public SocketCommunication(Socket socket) throws IOException {
         this.socket = socket;
@@ -71,6 +74,16 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                         System.out.println(message);
                        // user.OnMessage(message);
                         break;
+                    }
+                    case Constants.CODE_ACTION:{
+                        Action action = CommunicationInfo.getAction(communicationInfo.getInfo());
+                        System.out.println("Received action from user: "+action);
+                        try {
+                            user.getGameController().doAction(action,user);
+                        } catch (ActionNotPossibleException e) {
+                            e.printStackTrace();
+                            //TODO: manage exception
+                        }
                     }
                 }
             }

@@ -5,6 +5,7 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.CurrentUser;
+import Server.Controller.GameController;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.Controller.GamesManager;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class User extends CurrentUser implements Serializable{
 
     private BaseCommunication baseCommunication;
     private Game game;
+    private GameController gameController;
 
     public User() {
     }
@@ -135,5 +137,13 @@ public class User extends CurrentUser implements Serializable{
     }
     public Game getGame() {
         return game;
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }

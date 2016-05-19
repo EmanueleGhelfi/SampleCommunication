@@ -65,6 +65,7 @@ public class GamesManager {
                 System.out.println("adding user to a game");
                 game.addUserToGame(userToAdd);
                 userToAdd.setGame(game);
+                userToAdd.setGameController(game.getGameController());
                 return;
             }
         }

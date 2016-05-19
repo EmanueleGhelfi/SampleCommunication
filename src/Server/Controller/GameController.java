@@ -1,9 +1,12 @@
 package Server.Controller;
 
+import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -85,5 +88,9 @@ public class GameController implements Serializable{
                 userArrayList.get((cont+1)%game.getUsers().size()).getBaseCommunication().changeRound();
             }
         }
+    }
+
+    public void doAction(Action action, User user) throws ActionNotPossibleException {
+        action.doAction(game,user);
     }
 }
