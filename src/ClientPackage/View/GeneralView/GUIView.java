@@ -5,6 +5,7 @@ import ClientPackage.View.GUIResources.Class.LoginController;
 import ClientPackage.View.GUIResources.Class.WaitingController;
 import Utilities.Class.Constants;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -56,18 +57,23 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void showWaitingForStart() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.WAITING_FXML));
-        Parent screen = null;
-        try {
-            screen = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        WaitingController waitingController = loader.getController();
-        waitingController.setClientController(clientController);
-        Scene scene = new Scene(screen);
-        Stage testStage = new Stage();
-        testStage.setScene(scene);
-        testStage.show();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.WAITING_FXML));
+                Parent screen = null;
+                try {
+                    screen = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                WaitingController waitingController = loader.getController();
+                waitingController.setClientController(clientController);
+                Scene scene = new Scene(screen);
+                Stage testStage = new Stage();
+                testStage.setScene(scene);
+                testStage.show();
+            }
+        });
     }
 }

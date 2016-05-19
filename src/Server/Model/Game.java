@@ -12,6 +12,7 @@ import CommonModel.GameModel.Path.MoneyPath;
 import CommonModel.GameModel.Path.NobilityPath;
 import CommonModel.GameModel.Path.VictoryPath;
 import Server.Controller.GameController;
+import Utilities.Class.Constants;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
@@ -105,27 +106,26 @@ public class Game implements Serializable{
             colorBonusCard.put(color.getColor(),new ColorBonusCard(color));
         }
         //king bonus
-        for (int i= 1; i<6;i++){
+        for (int i = 1; i< Constants.KING_CARDS; i++){
             kingBonusCards.add(new KingBonusCard(i));
         }
     }
 
     private void createCityGraph() {
-        //TODO: create graph and connection between city
-        City city = new City(Color.BLUE, CityName.ARKON,Region.COAST);
+        City city1 = new City(Color.BLUE, CityName.ARKON,Region.COAST);
         City city2 = new City(Color.GREY,CityName.BURGEN,Region.COAST);
         City city3 = new City(Color.BLUE,CityName.KULTOS,Region.COAST);
         City city4 = new City(Color.GREY,CityName.NARIS,Region.COAST);
         City city5 = new City(Color.BLUE,CityName.OSIUM,Region.COAST);
         City city6 = new City(Color.GREY,CityName.GRADEN,Region.COAST);
-        UndirectedGraph<City,DefaultEdge> graph = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
-        graph.addVertex(city);
+        graph = new SimpleGraph<>(DefaultEdge.class);
+        graph.addVertex(city1);
         graph.addVertex(city2);
         graph.addVertex(city3);
         graph.addVertex(city4);
         graph.addVertex(city5);
         graph.addVertex(city6);
-        graph.addEdge(city,city2);
+        graph.addEdge(city1,city2);
         graph.addEdge(city2,city5);
         graph.addEdge(city2,city4);
         graph.addEdge(city3,city4);

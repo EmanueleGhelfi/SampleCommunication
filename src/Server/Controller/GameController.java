@@ -1,6 +1,10 @@
 package Server.Controller;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+import CommonModel.GameModel.City.Color;
+import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.User;
@@ -41,6 +45,19 @@ public class GameController implements Serializable{
 
     public void notifyStarted() {
         game.setStarted(true);
+        for (User user: game.getUsers()){
+            user.setHelpers(5);
+            user.setCoinPathPosition(10);
+            user.setMainActionCounter(0);
+            user.setFastActionCounter(0);
+            user.setNobilityPathPosition(game.getNobilityPath().getPosition()[10]);
+            ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
+            for(PoliticColor color: PoliticColor.values()){
+                politicCardArrayList.add(new PoliticCard(color, false));
+            }
+            user.setPoliticCards(politicCardArrayList);
+            user.setVictoryPathPosition(10);
+        }
         for (User user: game.getUsers()) {
             System.out.println("Sending to "+user.getUsername());
             user.notifyGameStart();

@@ -13,10 +13,6 @@ public class WaitingController implements Initializable {
 
     private ClientController clientController;
 
-    public void testAction(){
-        clientController.onTestAction();
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {}
 
