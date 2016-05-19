@@ -52,4 +52,14 @@ public class MainActionElectCouncilor extends Action implements Serializable {
     public String getType() {
         return type;
     }
+
+
+    @Override
+    public String toString() {
+        return "MainActionElectCouncilor{" +
+                "councilorToAdd=" + councilorToAdd +
+                ", region=" + region +
+                ", king=" + king +
+                '}';
+    }
 }

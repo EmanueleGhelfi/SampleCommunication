@@ -14,6 +14,7 @@ public abstract class Action implements Serializable {
     protected String type;
 
     public abstract void doAction(Game game, User user) throws ActionNotPossibleException;
+
     void removeAction(Game game,User user){
         switch (type) {
             case Constants.MAIN_ACTION:
