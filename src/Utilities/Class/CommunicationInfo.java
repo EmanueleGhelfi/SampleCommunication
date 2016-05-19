@@ -44,6 +44,7 @@ public class CommunicationInfo {
              gson = new Gson();
             toSendString= gson.toJson(toSend);
         }
+        System.out.println(toSendString);
         communicationInfo = new CommunicationInfo(code, toSendString);
         communicationToSend = gson.toJson(communicationInfo);
         out.println(communicationToSend);

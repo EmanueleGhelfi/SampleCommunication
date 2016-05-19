@@ -61,7 +61,7 @@ public class GameController implements Serializable{
         for (User user: game.getUsers()) {
             System.out.println("Sending to "+user.getUsername());
             user.notifyGameStart();
-            initializeGame();
+            initializeGame(user);
         }
     }
 
@@ -89,12 +89,10 @@ public class GameController implements Serializable{
         timer.schedule(timerTask,duration);
     }
 
-    public void initializeGame(){
-        for(User user : game.getUsers()){
+    public void initializeGame(User user){
             System.out.println("GAMECONTROLLER -> Initializing Game, sending snapshot to: "+user.getUsername());
             SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
-        }
     }
 
     /**
