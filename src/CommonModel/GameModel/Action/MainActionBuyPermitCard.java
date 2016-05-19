@@ -37,7 +37,6 @@ public class MainActionBuyPermitCard extends Action {
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-
         // count number of correct politic card
         int correctPoliticCard = 0;
         // region of permit card
@@ -45,9 +44,9 @@ public class MainActionBuyPermitCard extends Action {
         //this is the new position of the user in money path
         int newPositionInMoneyPath = 0;
         // calculate correct politic card
-        correctPoliticCard = countCorrectPoliticCard(region);
+        correctPoliticCard = countCorrectPoliticCard(region, politicCards, bonusCounter);
         // calculate money to spend
-        newPositionInMoneyPath = calculateMoney(correctPoliticCard);
+        newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
         // go ahead in money path
         game.getMoneyPath().goAhead(user,newPositionInMoneyPath);
         // re-add to game deck
@@ -56,61 +55,13 @@ public class MainActionBuyPermitCard extends Action {
         System.out.println("POLITICS CARD" + politicCards.size());
         System.out.println("USER CARD" + user.getPoliticCards().size());
         int cont2 =0;
-        for(int cont1 = 0; cont1< politicCards.size();cont1++){
-           if(politicCards.get(cont1).equals(user.getPoliticCards().get(cont2))){
-               user.getPoliticCards().remove(cont2);
-               user.decrementPoliticCardNumber();
-           }
-           else{
-               cont2++;
-           }
-        }
+        getPoliticCard(politicCards, user);
         // buy permit card, here you can buy permit
         PermitDeck permitDeck = game.getPermitDeck(region);
         PermitCard permitCardToBuy = permitDeck.getPermitCardVisible(permitCard);
         permitCardToBuy.getBonus().getBonus(user,game);
         user.addPermitCard(permitCardToBuy);
         removeAction(game, user);
-    }
-
-    private int calculateMoney(int correctPoliticCard) throws ActionNotPossibleException {
-        // calculate money
-        int newPositionInMoneyPath = 0;
-        if(correctPoliticCard == politicCards.size()){
-            if(correctPoliticCard<Constants.FOUR_PARAMETER_BUY_PERMIT_CARD && correctPoliticCard>0)
-                newPositionInMoneyPath=Constants.TEN_PARAMETER_BUY_PERMIT_CARD -(correctPoliticCard-Constants.ONE_PARAMETER_BUY_PERMIT_CARD);
-            else if(correctPoliticCard==Constants.FOUR_PARAMETER_BUY_PERMIT_CARD)
-                newPositionInMoneyPath = 0;
-            newPositionInMoneyPath+=bonusCounter;
-        }
-        else {
-            throw new ActionNotPossibleException();
-        }
-        System.out.println("NUOVA POS "+correctPoliticCard);
-        return newPositionInMoneyPath;
-    }
-
-    private int countCorrectPoliticCard(Region region) {
-        int correctPoliticCard =0;
-        // count all correct and bonus card
-        Queue<Councilor> council = region.getCouncil().getCouncil();
-        for (PoliticCard politicCard: politicCards) {
-            if(politicCard.isMultiColor()){
-                bonusCounter ++;
-                correctPoliticCard++;
-            }
-            else{
-                for (Councilor councilor: council) {
-                    if(councilor.getColor().equals(politicCard.getPoliticColor())){
-                        correctPoliticCard++;
-                        council.remove(councilor);
-                        break;
-                    }
-                }
-            }
-        }
-        System.out.println("CARTE CORRETTE "+correctPoliticCard);
-        return correctPoliticCard;
     }
 
     //TODO MAIN-TEST

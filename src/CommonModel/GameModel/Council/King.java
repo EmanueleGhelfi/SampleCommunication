@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class King implements Serializable {
+public class King implements Serializable, GotCouncil {
 
     private City currentCity;
     private Council council;
@@ -33,7 +33,12 @@ public class King implements Serializable {
         this.currentCity = currentCity;
     }
 
+    @Override
     public Council getCouncil() {
         return council;
+    }
+
+    public void setCurrentCity(City currentCity) {
+        this.currentCity = currentCity;
     }
 }

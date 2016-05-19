@@ -42,24 +42,8 @@ public class MainActionBuildWithPermitCard extends Action{
             for (City cityToVisit : cityVisitor.visit(gameCity)) {
                 cityToVisit.getBonus().getBonus(user, game);
             }
-            // check region bonus
-            if (gameCity.getRegion().checkRegion(user.getUsersEmporium())){
-                game.getRegionBonusCard(gameCity.getRegion().getRegion()).getBonus(user, game);
-                // check king bonus and get it
-                KingBonusCard kingBonusCard = game.getKingBonusCard();
-                if (kingBonusCard != null){
-                    kingBonusCard.getBonus(user, game);
-                }
-            }
-            // check color bonus
-            if (gameCity.getColor().checkColor(user.getUsersEmporium())){
-                game.getColorBonusCard(gameCity.getColor().getColor()).getBonus(user, game);
-                // check king bonus and get it
-                KingBonusCard kingBonusCard = game.getKingBonusCard();
-                if (kingBonusCard != null){
-                    kingBonusCard.getBonus(user, game);
-                }
-            }
+            checkRegionBonus(gameCity, user, game);
+            checkColorBonus(gameCity, user, game);
             // add to old permit card
             user.removePermitCard(permitCard);
             removeAction(game,user);
