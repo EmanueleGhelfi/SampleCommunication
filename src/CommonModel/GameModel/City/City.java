@@ -2,6 +2,8 @@ package CommonModel.GameModel.City;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 /**
@@ -9,10 +11,17 @@ import java.io.Serializable;
  */
 public class City implements Serializable {
 
+
     private CityName cityName;
+
     private Color cityColor;
+
     private Region cityRegion;
-    private Bonus bonus;
+
+    private String urlCity;
+
+
+    private volatile Bonus bonus;
 
     public City() {
     }
