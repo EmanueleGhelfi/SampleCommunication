@@ -111,9 +111,17 @@ public abstract class Action implements Serializable {
     /** check if an user has placed more than 10 emporiums
      *
      */
-    protected boolean checkEmporiums(User user) throws ActionNotPossibleException {
+    protected boolean checkEmporiumsAreNotTen(User user) throws ActionNotPossibleException {
         if (user.getUsersEmporium().size()>=Constants.EMPORIUMS_BUILDABLE){
             throw new ActionNotPossibleException();
+        }
+        return true;
+    }
+
+    protected boolean checkEmporiumsIsAlreadyPresent(User user, City cityWantToBuildIn) throws  ActionNotPossibleException{
+        for(City city: user.getUsersEmporium()){
+            if (cityWantToBuildIn.equals(city))
+                throw new ActionNotPossibleException();
         }
         return true;
     }
