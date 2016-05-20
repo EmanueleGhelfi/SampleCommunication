@@ -35,6 +35,12 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
 
+    /** Overriding RMIClientHandler
+     *
+     * @param username
+     * @return
+     * @throws RemoteException
+     */
     @Override
     public boolean tryToSetName(String username) throws RemoteException {
         if(!gamesManager.userAlreadyPresent(username)){
@@ -45,17 +51,30 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         return false;
     }
 
+    /** Overriding RMIClientHandler
+     *
+     * @param electCouncilor
+     * @throws ActionNotPossibleException
+     */
     @Override
     public void test(Action electCouncilor) throws ActionNotPossibleException {
         electCouncilor.doAction(user.getGame(), user);
     }
 
+    /** Overriding RMIClientHandler
+     * Called by client when the remote object is exported
+     * @param clientRMIService
+     * @throws RemoteException
+     */
     @Override
     public void sendRemoteClientObject(RMIClientInterface clientRMIService) throws RemoteException {
-
         rmiClientInterface = clientRMIService;
     }
 
+    /** Overriding BaseCommunication
+     *
+     * @param snapshotToSend
+     */
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
         try {
@@ -65,6 +84,9 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
+    /** Overriding BaseCommunication
+     *
+     */
     //TODO: change round
     @Override
     public void changeRound() {
