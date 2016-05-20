@@ -35,10 +35,6 @@ public class User extends CurrentUser implements Serializable{
         politicCardNumber = politicCards.size();
     }
 
-    public void notifyGameStart() {
-        baseCommunication.notifyGameStart();
-    }
-
     public void addEmporium(City cityEmporium) {
         this.usersEmporium.add(cityEmporium);
     }
