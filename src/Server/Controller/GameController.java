@@ -64,7 +64,7 @@ public class GameController implements Serializable{
         }
         for (User user: game.getUsers()) {
             System.out.println("Sending to "+user.getUsername());
-            user.notifyGameStart();
+            //user.notifyGameStart();
             initializeGame(user);
         }
     }

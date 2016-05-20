@@ -40,20 +40,18 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     @Override
     public boolean Connect() {
         try {
-        rmiHandlerName = rmiListenerInterface.Connect();
+            rmiHandlerName = rmiListenerInterface.Connect();
             rmiClientHandler = (RMIClientHandler) registry.lookup(rmiHandlerName);
             System.out.println("Connected to server");
             // get ip address and sends it to server with the name of remote object
-            String ip = getIP();
-            String name = generateName();
-            registry.rebind(name,this);
-            rmiClientHandler.sendIP(ip,name);
+            //String ip = getIP();
+            //String name = generateName();
+            //registry.rebind(name,this);
+            rmiClientHandler.sendRemoteClientObject(this);
             return true;
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         return false;
@@ -94,6 +92,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException {
+        System.out.println("CLIENTRMISERVICE sendSnapshot");
         clientController.setSnapshot(snapshotToSend);
     }
 }

@@ -41,7 +41,7 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void initView() {
-        // This initialize JavaFx application
+        // This initializes JavaFx application
         Application.launch();
         try {
             start(new Stage());

@@ -102,7 +102,8 @@ public class ClientSocketService extends ClientService implements Runnable {
                 break;
             }
             case Constants.CODE_SNAPSHOT:{
-                SnapshotToSend snapshotToSend = gson.fromJson(communicationInfo.getInfo(),SnapshotToSend.class);
+                SnapshotToSend snapshotToSend = CommunicationInfo.getSnapshot(communicationInfo.getInfo());
+                //SnapshotToSend snapshotToSend = gson.fromJson(communicationInfo.getInfo(),SnapshotToSend.class);
                 clientController.setSnapshot(snapshotToSend);
                 break;
             }

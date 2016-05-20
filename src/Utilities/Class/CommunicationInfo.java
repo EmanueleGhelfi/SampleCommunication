@@ -1,6 +1,8 @@
 package Utilities.Class;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.Snapshot.SnapshotToSend;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,18 +33,23 @@ public class CommunicationInfo {
      */
     public static void SendCommunicationInfo(PrintWriter out, String code, Object toSend ) {
 
-        String toSendString;
+        String toSendString="";
         CommunicationInfo communicationInfo;
         String communicationToSend;
         Gson gson = null;
-        if(code.equals(Constants.CODE_ACTION)){
-             gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
-                    .create();
-             toSendString = gson.toJson(toSend,Action.class);
-        }
-        else {
-             gson = new Gson();
-            toSendString= gson.toJson(toSend);
+        gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .create();
+        switch (code){
+            case Constants.CODE_ACTION:
+                toSendString = gson.toJson(toSend,Action.class);
+                break;
+            case Constants.CODE_SNAPSHOT:
+                toSendString= gson.toJson(toSend,toSend.getClass());
+                break;
+            default:
+                toSendString= gson.toJson(toSend);
+                break;
         }
         System.out.println(toSendString);
         communicationInfo = new CommunicationInfo(code, toSendString);
@@ -72,6 +79,13 @@ public class CommunicationInfo {
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .create();
          return gson.fromJson(action,Action.class);
+    }
+
+    public static SnapshotToSend getSnapshot(String snapshot){
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .create();
+        return gson.fromJson(snapshot,SnapshotToSend.class);
     }
 
 }

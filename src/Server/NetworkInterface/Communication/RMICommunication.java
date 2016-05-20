@@ -1,5 +1,6 @@
 package Server.NetworkInterface.Communication;
 
+import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
@@ -33,18 +34,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         UnicastRemoteObject.exportObject(this,0);
     }
 
-    @Override
-    public boolean sendIP(String ip, String name) throws RemoteException {
-        Registry registry = LocateRegistry.getRegistry(ip, Constants.RMI_PORT);
-        try {
-            // get remote object from client
-            rmiClientInterface = (RMIClientInterface) registry.lookup(name);
-            return true;
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     @Override
     public boolean tryToSetName(String username) throws RemoteException {
@@ -62,6 +51,12 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
+    public void sendRemoteClientObject(RMIClientInterface clientRMIService) throws RemoteException {
+
+        rmiClientInterface = clientRMIService;
+    }
+
+    @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
         try {
             rmiClientInterface.sendSnapshot(snapshotToSend);
@@ -70,6 +65,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
+    //TODO: change round
     @Override
     public void changeRound() {
         //call is your round (with a notification)
