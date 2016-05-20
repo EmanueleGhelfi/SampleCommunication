@@ -78,7 +78,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                         try {
                             user.getGame().getGameController().doAction(action,user);
                         } catch (ActionNotPossibleException e) {
-                            e.printStackTrace();
+                            System.out.println(e);
                             //TODO: manage exception
                         }
                     }
