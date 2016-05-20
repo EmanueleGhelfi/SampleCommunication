@@ -2,7 +2,6 @@ package CommonModel.GameModel.Action;
 
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
-import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.*;
 import Server.Model.Game;
@@ -27,7 +26,7 @@ public class MainActionBuildWithPermitCard extends Action{
         City gameCity = game.getCity(city);
         int helperToSpend = 0;
         // find helpers to spend (if there are emporiums of other players
-        if (checkEmporiums(user)) {
+        if (checkEmporiumsAreNotTen(user) && checkEmporiumsIsAlreadyPresent(user, gameCity)) {
             for (User userToFind : game.getUsers()) {
                 if (userToFind.getUsersEmporium().contains(gameCity)) {
                     helperToSpend++;

@@ -34,7 +34,8 @@ public class MainActionBuildWithKingHelp extends Action {
         King king = game.getKing();
         //this is the new position of the user in money path
         int newPositionInMoneyPath = 0;
-        if (checkEmporiums(user)) {
+        //true if the emporiums are not ten and i haven't build in that city
+        if (checkEmporiumsAreNotTen(user) && checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size()-1))) {
             // city where king goes
             City kingCity = kingPath.get(kingPath.size() - 1);
             // calculate correct politic card
