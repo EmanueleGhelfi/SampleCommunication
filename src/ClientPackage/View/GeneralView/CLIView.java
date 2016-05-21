@@ -1,6 +1,9 @@
 package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
+import Server.Model.Map;
+
+import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 13/05/2016.
@@ -22,6 +25,11 @@ public class CLIView implements BaseView {
 
     @Override
     public void showWaitingForStart() {
+    }
+
+    @Override
+    public void showMap(ArrayList<Map> mapArrayList) {
+
     }
 
 }

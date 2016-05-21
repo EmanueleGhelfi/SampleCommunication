@@ -147,7 +147,7 @@ public class Game implements Serializable{
         if(!usersInGame.containsKey(userToAdd.getUsername())){
             usersInGame.put(userToAdd.getUsername(),userToAdd);
             if(usersInGame.size()==1){
-                gameController.sendAvailableM(userToAdd);
+                gameController.sendAvailableMap(userToAdd);
             }
             if(usersInGame.size()>=2 && usersInGame.size()<4){
                 gameController.setTimeout();
@@ -181,7 +181,6 @@ public class Game implements Serializable{
     @Override
     public String toString() {
         return "Game{" +
-                "cities=" + map.getCity() +
                 ", started=" + started +
                 ", regions=" + regions +
                 ", king=" + king +
@@ -191,7 +190,6 @@ public class Game implements Serializable{
                 ", gameController=" + gameController +
                 ", permitDecks=" + permitDecks +
                 ", politicCards=" + politicCards +
-                ", graph=" + map.getMapGraph() +
                 ", regionBonusCard=" + regionBonusCard +
                 ", colorBonusCard=" + colorBonusCard +
                 ", kingBonusCards=" + kingBonusCards +

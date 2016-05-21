@@ -13,6 +13,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class PoliticDeck implements Deck,Serializable {
 
+    // stack for shuffle
     private Stack<PoliticCard> politicDeckStack;
     private Queue<PoliticCard> politicDeckQueue = new ArrayBlockingQueue<>(90);
 

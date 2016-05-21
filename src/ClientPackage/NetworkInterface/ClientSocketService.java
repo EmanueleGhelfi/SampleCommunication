@@ -2,11 +2,14 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
+import Utilities.Class.InterfaceAdapter;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.LocatorEx;
 
@@ -14,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Modifier;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -91,7 +95,10 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     public void decodeInfo(String line){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .excludeFieldsWithModifiers(Modifier.TRANSIENT)
+                .create();
         CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
         switch (communicationInfo.getCode()){
             case Constants.CODE_NAME:{
@@ -112,6 +119,7 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_JSON_TEST:{
                 ArrayList<Map> mapArrayList = gson.fromJson(communicationInfo.getInfo(), new TypeToken<ArrayList<Map>>(){}.getType());
+                System.out.println("EILA");
                 clientController.showMap(mapArrayList);
                 break;
             }

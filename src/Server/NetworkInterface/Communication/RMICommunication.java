@@ -97,7 +97,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void sendAvailableMap(ArrayList<Map> availableMaps) {
-        rmiClientInterface.sendMap(availableMaps);
+        try {
+            rmiClientInterface.sendMap(availableMaps);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
