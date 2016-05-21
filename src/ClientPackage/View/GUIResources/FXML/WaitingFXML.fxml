@@ -23,24 +23,22 @@
          </children></Pane>
    </top>
    <center>
-      <GridPane fx:id="gridPane" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="174.0" minHeight="10.0" prefHeight="164.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXListView />
-            <JFXListView GridPane.columnIndex="1" />
-            <JFXListView GridPane.columnIndex="2" />
-            <ImageView fx:id="coastImage" fitHeight="150.0" fitWidth="200.0" preserveRatio="true" GridPane.rowIndex="1" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ImageView fx:id="thisImageView" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="nextImageView" fitHeight="110.0" fitWidth="140.0" layoutX="330.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="prevImageView" fitHeight="110.0" fitWidth="140.0" layoutX="130.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="70.0" fitWidth="66.0" layoutX="538.0" layoutY="83.0" onMouseClicked="#nextVisibleMap" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/ArrowRight.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="70.0" fitWidth="66.0" layoutY="83.0" onMouseClicked="#prevVisibleMap" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/ArrowLeft.png" />
+               </image>
+            </ImageView>
          </children>
-      </GridPane>
+      </AnchorPane>
    </center>
 </BorderPane>

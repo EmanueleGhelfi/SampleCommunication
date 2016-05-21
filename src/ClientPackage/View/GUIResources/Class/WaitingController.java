@@ -2,10 +2,11 @@ package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
 import Server.Model.Map;
+import Utilities.Class.CircularArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -20,15 +21,25 @@ import java.util.ResourceBundle;
 public class WaitingController implements Initializable {
 
     private ClientController clientController;
+    private CircularArrayList<Map> mapArrayList;
+    private int mapCounter;
+
     @FXML private Text jsonTest;
     @FXML private ImageView coastImage;
     @FXML private GridPane gridPane;
+    @FXML private ImageView prevImageView;
+    @FXML private ImageView thisImageView;
+    @FXML private ImageView nextImageView;
+    @FXML private Image prevImage;
+    @FXML private Image thisImage;
+    @FXML private Image nextImage;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        coastImage.fitHeightProperty();
-        coastImage.fitWidthProperty();
+        prevImageView.setImage(prevImage);
+        thisImageView.setImage(thisImage);
+        nextImageView.setImage(nextImage);
     }
 
     public void setClientController(ClientController clientController) {
@@ -44,14 +55,30 @@ public class WaitingController implements Initializable {
     }
 
     public void showMap(ArrayList<Map> mapArrayList) {
-        int cont = 0;
-        for (Map map: mapArrayList) {
-            String string;
-            string = map.getCity() + " -> CITY\n" + map.getCity() + " -> CITY\n" + map.getMapName() + " -> MAP NAME\n" + map.getMapPreview() + " -> MAP PREVIEW\n";
-            jsonTest.setText(string);
-            System.out.println(string);
-            cont++;
-        }
+        this.mapArrayList = (CircularArrayList<Map>) mapArrayList;
+        prevImage = new Image(mapArrayList.get(mapArrayList.size() - 1).getMapPreview());
+        thisImage = new Image(mapArrayList.get(0).getMapPreview());
+        thisImage = new Image(mapArrayList.get(1).getMapPreview());
+    }
+
+    public void nextVisibleMap(){
+        mapCounter++;
+        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
+        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
+        thisImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
+        System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
+        System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
+        System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
+    }
+
+    public void prevVisibleMap(){
+        mapCounter--;
+        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
+        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
+        thisImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
+        System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
+        System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
+        System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
     }
 
 }
