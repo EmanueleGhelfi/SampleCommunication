@@ -111,6 +111,7 @@ public class Game implements Serializable{
         }
     }
 
+    // to remove
     private void createCityGraph() {
         City city1 = new City(Color.BLUE, CityName.ARKON,Region.COAST);
         City city2 = new City(Color.GREY,CityName.BURGEN,Region.COAST);
