@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 public class WaitingController implements Initializable {
 
     private ClientController clientController;
+
     @FXML
     private Text jsonTest;
 
@@ -44,6 +45,8 @@ public class WaitingController implements Initializable {
             string = map.getCity() + " -> CITY\n" + map.getCity() + " -> CITY\n" + map.getMapName() + " -> MAP NAME\n" + map.getMapPreview() + " -> MAP PREVIEW\n";
             jsonTest.setText(string);
             cont++;
+            System.out.println(map);
+            System.out.println(map.getMapGraph());
         }
     }
 

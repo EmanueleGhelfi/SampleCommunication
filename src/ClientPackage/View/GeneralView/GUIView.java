@@ -64,6 +64,7 @@ public class GUIView extends Application implements BaseView {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                System.out.println("show waiting for start");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.WAITING_FXML));
                 Parent screen = null;
                 try {
@@ -86,5 +87,8 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void showMap(ArrayList<Map> mapArrayList) {
         maps = mapArrayList;
+        if(waitingController!=null){
+            waitingController.showMap(maps);
+        }
     }
 }

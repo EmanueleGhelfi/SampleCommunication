@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Modifier;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -96,6 +97,7 @@ public class ClientSocketService extends ClientService implements Runnable {
     public void decodeInfo(String line){
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                 .create();
         CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
         switch (communicationInfo.getCode()){
@@ -117,6 +119,7 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_JSON_TEST:{
                 ArrayList<Map> mapArrayList = gson.fromJson(communicationInfo.getInfo(), new TypeToken<ArrayList<Map>>(){}.getType());
+                System.out.println("EILA");
                 clientController.showMap(mapArrayList);
                 break;
             }

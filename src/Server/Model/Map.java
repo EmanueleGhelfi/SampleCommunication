@@ -1,13 +1,17 @@
 package Server.Model;
 
+import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.City.Region;
+import Utilities.Class.InterfaceAdapter;
 import Utilities.Exception.MapsNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -31,20 +35,26 @@ public class Map implements Serializable {
     @Expose
     private ArrayList<Link> links;
 
+    @Expose
     private ArrayList<City> city;
 
+    @Expose
     private String mapName;
 
+    @Expose
     private String mapPreview;
 
+    @Expose
     private String imageMapLeft;
 
+    @Expose
     private String imageMapRight;
 
+    @Expose
     private String imageMapCenter;
 
     @Expose(serialize = false,deserialize = false)
-    private SimpleGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
+    private transient SimpleGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
 
 
 
@@ -208,6 +218,13 @@ public class Map implements Serializable {
     public static void main(String[] args){
         try {
             ArrayList<Map> maps = readAllMap();
+            Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                    .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                    .excludeFieldsWithModifiers(Modifier.TRANSIENT)
+                    .create();
+            String json = gson.toJson(maps,new TypeToken<ArrayList<Map>>(){}.getType());
+            System.out.println(json);
+            ArrayList<Map> maps2 = gson.fromJson(json,new TypeToken<ArrayList<Map>>(){}.getType());
         } catch (MapsNotFoundException e) {
             e.printStackTrace();
         }

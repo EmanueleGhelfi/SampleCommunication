@@ -35,4 +35,12 @@ public class Link implements Serializable {
     public void setCity2(City city2) {
         this.city2 = city2;
     }
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "city1=" + city1 +
+                ", city2=" + city2 +
+                '}';
+    }
 }
