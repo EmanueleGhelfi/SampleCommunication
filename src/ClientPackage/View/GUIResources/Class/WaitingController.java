@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -18,11 +20,16 @@ import java.util.ResourceBundle;
 public class WaitingController implements Initializable {
 
     private ClientController clientController;
-    @FXML
-    private Text jsonTest;
+    @FXML private Text jsonTest;
+    @FXML private ImageView coastImage;
+    @FXML private GridPane gridPane;
+
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        coastImage.fitHeightProperty();
+        coastImage.fitWidthProperty();
+    }
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
