@@ -4,10 +4,14 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.City.Region;
+import Utilities.Exception.MapsNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -37,6 +41,8 @@ public class Map {
     private String imageMapRight;
 
     private String imageMapCenter;
+
+    private UndirectedGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
 
 
 
@@ -98,6 +104,14 @@ public class Map {
 
     public void setMapPreview(String mapPreview) {
         this.mapPreview = mapPreview;
+    }
+
+    public UndirectedGraph<City, DefaultEdge> getMapGraph() {
+        return mapGraph;
+    }
+
+    public void setMapGraph(UndirectedGraph<City, DefaultEdge> mapGraph) {
+        this.mapGraph = mapGraph;
     }
 
     @Override
@@ -208,6 +222,35 @@ public class Map {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Map> readAllMap() throws MapsNotFoundException {
+        File file = new File("src/Utilities/ConfigurationFile/");
+        ArrayList<Map> maps = new ArrayList<>();
+        Gson gson = new Gson();
+        if(file.exists()) {
+            for (File fileMap : file.listFiles()) {
+                try {
+                    String text = new String(Files.readAllBytes(fileMap.toPath()), StandardCharsets.UTF_8);
+                    Map map = gson.fromJson(text,Map.class);
+                    UndirectedGraph graph = map.getMapGraph();
+                    for (City city: map.getCity()) {
+                        city.createRandomBonus();
+                        graph.addVertex(city);
+                    }
+                    for(Link links: map.getLinks())
+                    {
+                        graph.addEdge(links.getCity1(),links.getCity2());
+                    }
+                    maps.add(map);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return maps;
+        }
+        throw new MapsNotFoundException();
     }
 
 }

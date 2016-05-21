@@ -3,6 +3,7 @@ package Server.NetworkInterface.Communication;
 import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.Map;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
@@ -16,6 +17,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -91,6 +93,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     @Override
     public void changeRound() {
         //call is your round (with a notification)
+    }
+
+    @Override
+    public void sendAvailableMap(ArrayList<Map> availableMaps) {
+        rmiClientInterface.sendMap(availableMaps);
     }
 
     @Override

@@ -38,7 +38,7 @@ public class Game implements Serializable{
     /**
      * All cities in undirectedgraph
      */
-    private UndirectedGraph<City,DefaultEdge> cities;
+    private Map map;
     private HashMap<String,Region> regions = new HashMap<>();
 
     /**
@@ -57,7 +57,6 @@ public class Game implements Serializable{
 
     // POLITIC CARD
     private PoliticDeck politicCards;
-    private UndirectedGraph<City, DefaultEdge> graph;
     private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
     private Stack<KingBonusCard> kingBonusCards = new Stack<>();
@@ -66,7 +65,6 @@ public class Game implements Serializable{
         this.started = false;
         gameController = new GameController(this);
         gameController.startTimer();
-        cities = new SimpleGraph<>(DefaultEdge.class);
         // create permit card decks
         createDecks();
         // create nobility, victory and moneyPath
@@ -113,6 +111,7 @@ public class Game implements Serializable{
 
     // to remove
     private void createCityGraph() {
+        /*
         City city1 = new City(Color.BLUE, CityName.ARKON,Region.COAST);
         City city2 = new City(Color.GREY,CityName.BURGEN,Region.COAST);
         City city3 = new City(Color.BLUE,CityName.KULTOS,Region.COAST);
@@ -134,6 +133,7 @@ public class Game implements Serializable{
         for (City cityToVisit : graph.vertexSet()) {
             System.out.println(cityToVisit);
         }
+        */
     }
 
     private void createPaths() {
@@ -146,6 +146,9 @@ public class Game implements Serializable{
         System.out.println("ADDING A USER TO A GAME "+userToAdd);
         if(!usersInGame.containsKey(userToAdd.getUsername())){
             usersInGame.put(userToAdd.getUsername(),userToAdd);
+            if(usersInGame.size()==1){
+                gameController.sendAvailableM(userToAdd);
+            }
             if(usersInGame.size()>=2 && usersInGame.size()<4){
                 gameController.setTimeout();
             }
@@ -178,7 +181,7 @@ public class Game implements Serializable{
     @Override
     public String toString() {
         return "Game{" +
-                "cities=" + cities +
+                "cities=" + map.getCity() +
                 ", started=" + started +
                 ", regions=" + regions +
                 ", king=" + king +
@@ -188,7 +191,7 @@ public class Game implements Serializable{
                 ", gameController=" + gameController +
                 ", permitDecks=" + permitDecks +
                 ", politicCards=" + politicCards +
-                ", graph=" + graph +
+                ", graph=" + map.getMapGraph() +
                 ", regionBonusCard=" + regionBonusCard +
                 ", colorBonusCard=" + colorBonusCard +
                 ", kingBonusCards=" + kingBonusCards +
@@ -204,8 +207,8 @@ public class Game implements Serializable{
         return null;
     }
     public City getCity(City city) {
-        if(cities.containsVertex(city)){
-            for (City cityToSearch: cities.vertexSet()) {
+        if(map.getMapGraph().containsVertex(city)){
+            for (City cityToSearch: map.getMapGraph().vertexSet()) {
                 if (cityToSearch.equals(city)){
                     return cityToSearch;
                 }
@@ -234,7 +237,7 @@ public class Game implements Serializable{
         return victoryPath;
     }
     public UndirectedGraph<City, DefaultEdge> getGraph() {
-        return graph;
+        return map.getMapGraph();
     }
     public RegionBonusCard getRegionBonusCard(String region) {
         return regionBonusCard.get(region);

@@ -5,9 +5,11 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
+import Server.Model.Map;
 import Server.Model.User;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
+import Utilities.Exception.MapsNotFoundException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class GameController implements Serializable{
     private TimerTask timerTask;
     private Timer timer;
     private int duration = Constants.GAME_TIMEOUT;
+    private ArrayList<Map> availableMaps = new ArrayList<>();
 
     public GameController() {
     }
@@ -30,6 +33,11 @@ public class GameController implements Serializable{
     public GameController(Game game) {
         this.game = game;
         this.timer = new Timer();
+        try {
+            availableMaps = Map.readAllMap();
+        } catch (MapsNotFoundException e) {
+            System.out.println(e);
+        }
     }
 
     public void startTimer() {
@@ -119,5 +127,9 @@ public class GameController implements Serializable{
 
     public void doAction(Action action, User user) throws ActionNotPossibleException {
         action.doAction(game,user);
+    }
+
+    public void sendAvailableMap(User userToAdd) {
+        userToAdd.getBaseCommunication().sendAvailableMap(availableMaps);
     }
 }

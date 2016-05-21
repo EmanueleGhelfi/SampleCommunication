@@ -1,7 +1,9 @@
 package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.City.Color;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import Server.Controller.GameController;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -43,6 +46,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     @Override
     public void changeRound() {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_YOUR_TURN, null);
+    }
+
+    @Override
+    public void sendAvailableMap(ArrayList<Map> availableMaps) {
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_JSON_TEST,availableMaps);
     }
 
     @Override
