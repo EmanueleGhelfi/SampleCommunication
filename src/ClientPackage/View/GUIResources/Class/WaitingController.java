@@ -21,6 +21,7 @@ public class WaitingController implements Initializable {
     @FXML
     private Text jsonTest;
 
+    //
     @Override
     public void initialize(URL location, ResourceBundle resources) {}
 
