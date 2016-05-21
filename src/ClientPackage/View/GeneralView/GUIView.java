@@ -3,6 +3,7 @@ package ClientPackage.View.GeneralView;
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.LoginController;
 import ClientPackage.View.GUIResources.Class.WaitingController;
+import Server.Model.Map;
 import Utilities.Class.Constants;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 13/05/2016.
@@ -18,6 +20,7 @@ import java.io.IOException;
 public class GUIView extends Application implements BaseView {
 
     private LoginController loginController;
+    private WaitingController waitingController;
     private ClientController clientController;
 
     public GUIView(ClientController clientController) {
@@ -75,5 +78,10 @@ public class GUIView extends Application implements BaseView {
                 testStage.show();
             }
         });
+    }
+
+    @Override
+    public void showMap(ArrayList<Map> mapArrayList) {
+        loginController.showMap(mapArrayList);
     }
 }

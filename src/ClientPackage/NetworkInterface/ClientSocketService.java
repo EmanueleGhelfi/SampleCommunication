@@ -3,9 +3,11 @@ package ClientPackage.NetworkInterface;
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.LocatorEx;
 
 import java.io.BufferedReader;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -105,6 +108,11 @@ public class ClientSocketService extends ClientService implements Runnable {
                 SnapshotToSend snapshotToSend = CommunicationInfo.getSnapshot(communicationInfo.getInfo());
                 //SnapshotToSend snapshotToSend = gson.fromJson(communicationInfo.getInfo(),SnapshotToSend.class);
                 clientController.setSnapshot(snapshotToSend);
+                break;
+            }
+            case Constants.CODE_JSON_TEST:{
+                ArrayList<Map> mapArrayList = gson.fromJson(communicationInfo.getInfo(), new TypeToken<ArrayList<Map>>(){}.getType());
+                clientController.showMap(mapArrayList);
                 break;
             }
         }

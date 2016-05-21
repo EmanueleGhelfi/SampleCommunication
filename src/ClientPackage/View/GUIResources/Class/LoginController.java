@@ -5,10 +5,14 @@ package ClientPackage.View.GUIResources.Class;
  */
 
 import ClientPackage.Controller.ClientController;
+import Server.Model.Map;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+
+import java.util.ArrayList;
 
 /**
  * Manage the JavaFX View and user input
@@ -30,4 +34,5 @@ public class LoginController {
     public void showLoginError() {
         errorText.setText("ERRORE LOGIN");
     }
+
 }

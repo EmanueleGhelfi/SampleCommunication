@@ -7,6 +7,7 @@ import ClientPackage.View.GeneralView.FactoryView;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.Map;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -161,5 +163,9 @@ public class ClientController {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showMap(ArrayList<Map> mapArrayList) {
+        baseView.showMap(mapArrayList);
     }
 }

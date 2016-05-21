@@ -3,6 +3,7 @@ package ClientPackage.NetworkInterface;
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.Map;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
@@ -15,6 +16,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -94,5 +96,10 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     public void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException {
         System.out.println("CLIENTRMISERVICE sendSnapshot");
         clientController.setSnapshot(snapshotToSend);
+    }
+
+    @Override
+    public void sendMap(ArrayList<Map> mapArrayList) {
+        clientController.showMap(mapArrayList);
     }
 }
