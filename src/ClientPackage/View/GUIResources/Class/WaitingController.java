@@ -42,6 +42,7 @@ public class WaitingController implements Initializable {
             String string;
             string = map.getCity() + " -> CITY\n" + map.getCity() + " -> CITY\n" + map.getMapName() + " -> MAP NAME\n" + map.getMapPreview() + " -> MAP PREVIEW\n";
             jsonTest.setText(string);
+            System.out.println(string);
             cont++;
         }
     }
