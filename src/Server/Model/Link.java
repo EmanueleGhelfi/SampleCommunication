@@ -2,10 +2,12 @@ package Server.Model;
 
 import CommonModel.GameModel.City.City;
 
+import java.io.Serializable;
+
 /**
  * Created by Emanuele on 20/05/2016.
  */
-public class Link {
+public class Link implements Serializable {
 
     private City city1;
     private City city2;

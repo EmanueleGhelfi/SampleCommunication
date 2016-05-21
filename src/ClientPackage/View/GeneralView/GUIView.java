@@ -22,6 +22,7 @@ public class GUIView extends Application implements BaseView {
     private LoginController loginController;
     private WaitingController waitingController;
     private ClientController clientController;
+    private ArrayList<Map> maps;
 
     public GUIView(ClientController clientController) {
         this.clientController = clientController;
@@ -70,8 +71,10 @@ public class GUIView extends Application implements BaseView {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                WaitingController waitingController = loader.getController();
+                waitingController = loader.getController();
                 waitingController.setClientController(clientController);
+                if(maps!=null)
+                    waitingController.showMap(maps);
                 Scene scene = new Scene(screen);
                 Stage testStage = new Stage();
                 testStage.setScene(scene);
@@ -82,6 +85,6 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void showMap(ArrayList<Map> mapArrayList) {
-        loginController.showMap(mapArrayList);
+        maps = mapArrayList;
     }
 }

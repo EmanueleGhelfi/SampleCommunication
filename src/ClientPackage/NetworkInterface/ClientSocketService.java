@@ -2,11 +2,14 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
+import Utilities.Class.InterfaceAdapter;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.LocatorEx;
 
@@ -91,7 +94,9 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     public void decodeInfo(String line){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .create();
         CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
         switch (communicationInfo.getCode()){
             case Constants.CODE_NAME:{

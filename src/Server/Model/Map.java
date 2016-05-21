@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 20/05/2016.
  */
-public class Map {
+public class Map implements Serializable {
 
     private ArrayList<Link> links;
 

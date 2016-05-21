@@ -14,6 +14,6 @@ public interface RMIClientInterface extends Remote {
 
     void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException;
 
-    void sendMap(ArrayList<Map> mapArrayList);
+    void sendMap(ArrayList<Map> mapArrayList) throws RemoteException;
 
 }
