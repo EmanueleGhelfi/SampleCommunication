@@ -28,6 +28,7 @@ import java.util.ArrayList;
  */
 public class Map implements Serializable {
 
+    @Expose
     private ArrayList<Link> links;
 
     private ArrayList<City> city;
@@ -42,7 +43,7 @@ public class Map implements Serializable {
 
     private String imageMapCenter;
 
-
+    @Expose(serialize = false,deserialize = false)
     private SimpleGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
 
 
