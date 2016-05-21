@@ -20,8 +20,7 @@ public class City implements Serializable {
 
     private String urlCity;
 
-
-    private volatile Bonus bonus;
+    private Bonus bonus;
 
     public City() {
     }
@@ -30,6 +29,10 @@ public class City implements Serializable {
         this.cityColor = cityColor;
         this.cityName = cityName;
         this.cityRegion = cityRegion;
+        bonus=null;
+    }
+
+    public void createRandomBonus(){
         bonus = new MainBonus(1,2,5,false);
     }
 

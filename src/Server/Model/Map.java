@@ -24,7 +24,6 @@ import java.util.ArrayList;
  */
 public class Map {
 
-    @Expose
     private ArrayList<Link> links;
 
     private ArrayList<City> city;
@@ -38,6 +37,8 @@ public class Map {
     private String imageMapRight;
 
     private String imageMapCenter;
+
+
 
 
     public Map() {
@@ -176,7 +177,7 @@ public class Map {
         map.setMapPreview("map preview");
 
         System.out.println(map);
-        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.VOLATILE).create();
+        Gson gson = new Gson();
         String gsonString = gson.toJson(map);
         System.out.println(gsonString);
         try {
@@ -189,14 +190,15 @@ public class Map {
     }
 
     public static void main(String[] args){
+        //write();
         read();
     }
 
     public static void read(){
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader("mapConfig.json"));
+            //BufferedReader fileReader = new BufferedReader(new FileReader("/Utilities/ConfigurationFile/mapConfig.json"));
             String s="";
-            String text = new String(Files.readAllBytes(Paths.get("mapConfig.json")), StandardCharsets.UTF_8);
+            String text = new String(Files.readAllBytes(Paths.get("src/Utilities/ConfigurationFile/mapConfig.json")), StandardCharsets.UTF_8);
             System.out.println(text);
             Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.VOLATILE).create();
             Map map =gson.fromJson(text,Map.class);
