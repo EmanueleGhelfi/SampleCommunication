@@ -39,11 +39,9 @@ public class WaitingController implements Initializable {
     public void showMap(ArrayList<Map> mapArrayList) {
         int cont = 0;
         for (Map map: mapArrayList) {
-            System.out.println("MAP NUMBER " + cont + "\n");
-            jsonTest.setText(map.getCity() + " -> CITY\n");
-            jsonTest.setText(map.getMapName() + " -> MAP NAME\n");
-            jsonTest.setText(map.getMapPreview() + " -> MAP PREVIEW\n");
-            jsonTest.setText(map.getLinks() + " -> LINKS\n");
+            String string;
+            string = map.getCity() + " -> CITY\n" + map.getCity() + " -> CITY\n" + map.getMapName() + " -> MAP NAME\n" + map.getMapPreview() + " -> MAP PREVIEW\n";
+            jsonTest.setText(string);
             cont++;
         }
     }
