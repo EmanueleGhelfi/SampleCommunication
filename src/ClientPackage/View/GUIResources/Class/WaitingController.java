@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class WaitingController implements Initializable {
 
     private ClientController clientController;
     @FXML
-    private TextArea jsonTest;
+    private Text jsonTest;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {}

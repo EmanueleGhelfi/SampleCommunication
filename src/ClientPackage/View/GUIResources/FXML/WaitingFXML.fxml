@@ -27,7 +27,7 @@
             <Button layoutX="329.0" layoutY="290.0" mnemonicParsing="false" text="4 FAST" />
             <Text layoutX="158.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
             <Label layoutX="146.0" layoutY="102.0" text="EMPORI" />
-            <TextArea fx:id="jsonTest" layoutX="21.0" layoutY="190.0" prefHeight="200.0" prefWidth="200.0" />
+            <Text fx:id="jsonTest" layoutX="88.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
          </children>
       </Pane>
    </center>
