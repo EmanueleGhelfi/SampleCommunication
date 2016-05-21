@@ -42,7 +42,8 @@ public class Map implements Serializable {
 
     private String imageMapCenter;
 
-    private UndirectedGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
+
+    private SimpleGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
 
 
 
@@ -110,7 +111,7 @@ public class Map implements Serializable {
         return mapGraph;
     }
 
-    public void setMapGraph(UndirectedGraph<City, DefaultEdge> mapGraph) {
+    public void setMapGraph(SimpleGraph<City, DefaultEdge> mapGraph) {
         this.mapGraph = mapGraph;
     }
 
@@ -204,8 +205,11 @@ public class Map implements Serializable {
     }
 
     public static void main(String[] args){
-        //write();
-        read();
+        try {
+            ArrayList<Map> maps = readAllMap();
+        } catch (MapsNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void read(){
