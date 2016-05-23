@@ -58,6 +58,10 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_JSON_TEST,availableMaps);
     }
 
+    /**
+     * when user select a map
+     * @param snapshotToSend
+     */
     @Override
     public void sendSelectedMap(SnapshotToSend snapshotToSend) {
         CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_INITIALIZE_GAME,snapshotToSend);
