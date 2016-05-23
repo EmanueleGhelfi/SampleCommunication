@@ -7,8 +7,9 @@ import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Path.Position;
-import Server.Model.Game;
-import Server.Model.User;
+import Server.Model.*;
+import Server.Model.Map;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -28,6 +29,8 @@ public class SnapshotToSend implements Serializable{
     private Position[] nobilityPathPosition;
     private CurrentUser currentUser;
 
+    private Map map;
+
     public SnapshotToSend() {
     }
 
@@ -41,6 +44,7 @@ public class SnapshotToSend implements Serializable{
         this.kingBonusCards = game.getKingBonusCards();
         this.nobilityPathPosition = game.getNobilityPath().getPosition();
         this.currentUser = new CurrentUser(user);
+        this.map = game.getMap();
     }
 
     private void addRegions(Game game) {
@@ -56,15 +60,15 @@ public class SnapshotToSend implements Serializable{
     @Override
     public String toString() {
         return "SnapshotToSend{" +
-                "currentUser=" + currentUser +
-                ", usersInGame=" + usersInGame +
+                "visiblePermitCards=" + visiblePermitCards +
                 ", regions=" + regions +
-                ", king=" + king +
-                ", visiblePermitCards=" + visiblePermitCards +
                 ", regionBonusCards=" + regionBonusCards +
-                ", colorBonusCards=" + colorBonusCards +
-                ", kingBonusCards=" + kingBonusCards +
                 ", nobilityPathPosition=" + Arrays.toString(nobilityPathPosition) +
+                ", map=" + map +
+                ", kingBonusCards=" + kingBonusCards +
+                ", currentUser=" + currentUser +
+                ", king=" + king +
+                ", colorBonusCards=" + colorBonusCards +
                 '}';
     }
 }

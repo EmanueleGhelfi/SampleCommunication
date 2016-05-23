@@ -9,7 +9,7 @@ import Server.Controller.GameController;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.Controller.GamesManager;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by Emanuele on 11/05/2016.
@@ -142,4 +142,6 @@ public class User extends CurrentUser implements Serializable{
     public GameController getGameController() {
         return gameController;
     }
+
+
 }

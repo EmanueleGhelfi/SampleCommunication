@@ -283,4 +283,8 @@ public class Game implements Serializable{
     public void setMap(Map map) {
         this.map = map;
     }
+
+    public Map getMap() {
+        return map;
+    }
 }
