@@ -143,8 +143,6 @@ public class Map implements Serializable {
 
         Map map = (Map) o;
 
-        if (links != null ? !links.equals(map.links) : map.links != null) return false;
-        if (city != null ? !city.equals(map.city) : map.city != null) return false;
         if (mapName != null ? !mapName.equals(map.mapName) : map.mapName != null) return false;
         if (mapPreview != null ? !mapPreview.equals(map.mapPreview) : map.mapPreview != null) return false;
         if (imageMapLeft != null ? !imageMapLeft.equals(map.imageMapLeft) : map.imageMapLeft != null) return false;

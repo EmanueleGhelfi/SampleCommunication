@@ -132,7 +132,10 @@ public class GameController implements Serializable{
     }
 
     public void setMap(Map map) {
+        System.out.println(map);
+        System.out.println(availableMaps);
         if(availableMaps.contains(map)){
+            System.out.println("MAP PRESENT");
             for (Map mapToSelect : availableMaps) {
                 if(mapToSelect.equals(map)){
                     game.setMap(map);
@@ -144,6 +147,9 @@ public class GameController implements Serializable{
                     break;
                 }
             }
+        }
+        else{
+            System.out.println("MAP NOT PRESENT");
         }
     }
 
