@@ -15,7 +15,7 @@ public final class InterfaceAdapter<T> implements JsonSerializer<T>,JsonDeserial
      */
     @Override
     public T deserialize(JsonElement elem, Type type, JsonDeserializationContext context) throws JsonParseException {
-        System.out.println("Deserialize "+elem);
+        //System.out.println("Deserialize "+elem);
         final JsonObject wrapper = (JsonObject) elem;
         final JsonElement typeName = get(wrapper, "type");
         final JsonElement data = get(wrapper, "data");
@@ -28,7 +28,7 @@ public final class InterfaceAdapter<T> implements JsonSerializer<T>,JsonDeserial
      */
     @Override
     public JsonElement serialize(T object, Type type, JsonSerializationContext context) {
-        System.out.println("Serialize "+object.toString());
+        //System.out.println("Serialize "+object.toString());
         final JsonObject wrapper = new JsonObject();
         wrapper.addProperty("type", object.getClass().getName());
         wrapper.add("data", context.serialize(object));

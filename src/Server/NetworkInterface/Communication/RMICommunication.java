@@ -103,6 +103,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     public void changeRound() {
         //call is your round (with a notification)
         try {
+            System.out.println("user "+user.getUsername()+" is his turn");
             rmiClientInterface.isYourTurn();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -131,6 +132,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     @Override
     public void finishTurn() {
         try {
+            System.out.println("user "+user.getUsername()+" has finished turn");
             rmiClientInterface.finishTurn();
         } catch (RemoteException e) {
             e.printStackTrace();

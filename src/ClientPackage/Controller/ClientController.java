@@ -6,6 +6,7 @@ import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
+import CommonModel.GameModel.Action.FastActionElectCouncilorWithHelper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -197,5 +198,16 @@ public class ClientController {
 
     public void turnFinished() {
         baseView.turnFinished();
+    }
+
+    public void fast1() {
+        Action action = new FastActionElectCouncilorWithHelper(Region.HILL,null,new Councilor(PoliticColor.BLACK));
+        try {
+            clientService.onTestAction(action);
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

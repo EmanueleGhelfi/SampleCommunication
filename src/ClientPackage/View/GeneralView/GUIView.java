@@ -26,6 +26,7 @@ public class GUIView extends Application implements BaseView {
     private MatchController matchController;
     private ClientController clientController;
     private ArrayList<Map> maps;
+    private boolean myTurn = false;
 
     public GUIView(ClientController clientController) {
         this.clientController = clientController;
@@ -109,6 +110,8 @@ public class GUIView extends Application implements BaseView {
                 }
                 matchController = loader.getController();
                 matchController.setClientController(clientController);
+                System.out.println("called my turn "+myTurn);
+                matchController.setMyTurn(myTurn);
                 Scene scene = new Scene(screen);
                 Stage testStage = new Stage();
                 testStage.setScene(scene);
@@ -119,11 +122,19 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void turnFinished() {
-        matchController.setMyTurn(false);
+        if(matchController!=null) {
+            matchController.setMyTurn(false);
+        }
+        myTurn=false;
+        System.out.println("turn finished");
     }
 
     @Override
     public void isMyTurn() {
-        matchController.setMyTurn(true);
+        if(matchController!=null) {
+            matchController.setMyTurn(true);
+        }
+        myTurn=true;
+        System.out.println("turn initialized");
     }
 }

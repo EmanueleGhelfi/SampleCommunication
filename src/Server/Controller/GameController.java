@@ -51,8 +51,8 @@ public class GameController implements Serializable{
         int userCounter = 0;
         game.setStarted(true);
         for (User user: game.getUsers()){
-            user.setMainActionCounter(Constants.DEFAULT_MAIN_ACTION_COUNTER);
-            user.setFastActionCounter(Constants.DEFAULT_FAST_ACTION_COUNTER);
+            //user.setMainActionCounter(Constants.DEFAULT_MAIN_ACTION_COUNTER);
+            //user.setFastActionCounter(Constants.DEFAULT_FAST_ACTION_COUNTER);
             user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
             user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
             user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
@@ -110,6 +110,7 @@ public class GameController implements Serializable{
      * @param user user that has finished round
      */
     public void onFinishRound(User user) {
+        System.out.println("on finish round called");
         user.getBaseCommunication().finishTurn();
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         for(int cont = 0; cont < game.getUsers().size(); cont++){
@@ -161,7 +162,8 @@ public class GameController implements Serializable{
         users.get(0).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
         users.get(0).getBaseCommunication().changeRound();
 
-
-
+        for(int i = 1;i< users.size();i++){
+            users.get(i).getBaseCommunication().finishTurn();
+        }
     }
 }

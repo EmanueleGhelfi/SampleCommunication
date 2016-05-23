@@ -32,7 +32,8 @@ public class FastActionElectCouncilorWithHelper extends Action {
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         Council council;
         if(super.checkActionCounter(user)) {
-            if (user.getHelpers() > Constants.HELPER_LIMITATION_ELECT_COUNCILOR) {
+            System.out.println("ELECT COUNCILOR "+user.getHelpers());
+            if (user.getHelpers() >= Constants.HELPER_LIMITATION_ELECT_COUNCILOR) {
                 user.setHelpers(user.getHelpers() - Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
                 if (king == null) {
                     Region councilRegion = game.getRegion(region.getRegion());

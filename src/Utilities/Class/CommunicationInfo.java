@@ -37,9 +37,11 @@ public class CommunicationInfo {
         CommunicationInfo communicationInfo;
         String communicationToSend;
         Gson gson = null;
+
         gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
                 .create();
+
         if(toSend!=null) {
             toSendString = gson.toJson(toSend, toSend.getClass());
         }

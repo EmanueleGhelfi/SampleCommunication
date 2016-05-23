@@ -23,6 +23,7 @@ public class MatchController {
 
     public void main2(){
 
+
     }
 
     public void main3(){
@@ -34,7 +35,7 @@ public class MatchController {
     }
 
     public void fast1(){
-
+        clientController.fast1();
     }
 
     public void fast2(){
@@ -55,6 +56,7 @@ public class MatchController {
     }
 
     public void turnFinished(boolean thisTurn) {
-        buttonMain1.setDisable(thisTurn);
+        boolean myTurnValue= !thisTurn;
+        buttonMain1.setDisable(myTurnValue);
     }
 }
