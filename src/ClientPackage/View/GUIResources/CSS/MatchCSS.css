@@ -1,3 +1,6 @@
 .matchBackground{
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/Mappa1.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+    -fx-background-size: 100%;
 }
