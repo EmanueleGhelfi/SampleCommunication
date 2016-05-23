@@ -76,7 +76,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendMap(Map map) {
-        rmiClientHandler.sendMap(map);
+        try {
+            rmiClientHandler.sendMap(map);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private String generateName() {

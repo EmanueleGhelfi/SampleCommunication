@@ -12,6 +12,7 @@ public class Constants {
     public static final String CODE_ACTION= "CODE_ACTION";
     public static final String CODE_SNAPSHOT= "CODE_SNAPSHOT";
     public static final String CODE_JSON_TEST = "CODE_JSON_TEST";
+    public static final String CODE_MAP = "CODE_MAP";
 
     //GENERAL STRING
     public static final String GUI = "GUI";

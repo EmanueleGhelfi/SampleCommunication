@@ -70,6 +70,11 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     @Override
+    public void sendMap(Map map) {
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_MAP, map);
+    }
+
+    @Override
     public void run() {
         System.out.println("ClientSocketService Started");
         String line;
