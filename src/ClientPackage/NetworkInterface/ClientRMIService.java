@@ -74,6 +74,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         rmiClientHandler.test(electCouncilor);
     }
 
+    @Override
+    public void sendMap(Map map) {
+        rmiClientHandler.sendMap(map);
+    }
+
     private String generateName() {
         String randomSequence="";
         Random randomGenerator = new Random();

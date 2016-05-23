@@ -10,7 +10,10 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.WaitingController">
    <bottom>
-      <Pane prefHeight="64.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="64.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="takeImage" layoutX="268.0" layoutY="17.0" mnemonicParsing="false" text="Button" />
+         </children></Pane>
    </bottom>
    <top>
       <Pane prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER">

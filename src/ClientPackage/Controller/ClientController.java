@@ -168,4 +168,8 @@ public class ClientController {
     public void showMap(ArrayList<Map> mapArrayList) {
         baseView.showMap(mapArrayList);
     }
+
+    public void sendMap(Map map) {
+        clientService.sendMap(map);
+    }
 }

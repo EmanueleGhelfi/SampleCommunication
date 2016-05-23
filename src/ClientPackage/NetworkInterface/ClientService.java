@@ -1,6 +1,7 @@
 package ClientPackage.NetworkInterface;
 
 import CommonModel.GameModel.Action.Action;
+import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
 import java.rmi.RemoteException;
 
@@ -15,4 +16,5 @@ import java.rmi.RemoteException;
 
     public abstract void onTestAction(Action electCouncilor) throws ActionNotPossibleException, RemoteException;
 
+    public abstract void sendMap(Map map);
 }

@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class WaitingController implements Initializable {
 
     private ClientController clientController;
-    private CircularArrayList<Map> mapArrayList;
+    private CircularArrayList<Map> mapArrayList = new CircularArrayList<>();
     private int mapCounter;
 
     @FXML private Text jsonTest;
@@ -55,17 +55,19 @@ public class WaitingController implements Initializable {
     }
 
     public void showMap(ArrayList<Map> mapArrayList) {
-        this.mapArrayList = (CircularArrayList<Map>) mapArrayList;
-        prevImage = new Image(mapArrayList.get(mapArrayList.size() - 1).getMapPreview());
-        thisImage = new Image(mapArrayList.get(0).getMapPreview());
-        thisImage = new Image(mapArrayList.get(1).getMapPreview());
+        for (Map map : mapArrayList) {
+            this.mapArrayList.add(map);
+        }
+        //prevImage = new Image(mapArrayList.get(mapArrayList.size() - 1).getMapPreview());
+        //thisImage = new Image(mapArrayList.get(0).getMapPreview());
+        //thisImage = new Image(mapArrayList.get(1).getMapPreview());
     }
 
     public void nextVisibleMap(){
         mapCounter++;
-        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
-        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
-        thisImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
+        //prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
+        //thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
+        //thisImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
         System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
         System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
         System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
@@ -73,12 +75,16 @@ public class WaitingController implements Initializable {
 
     public void prevVisibleMap(){
         mapCounter--;
-        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
-        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
-        thisImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
+        //prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
+        //thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
+        //thisImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
         System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
         System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
         System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
+    }
+
+    public void takeImage(){
+        clientController.sendMap(mapArrayList.get(mapCounter));
     }
 
 }
