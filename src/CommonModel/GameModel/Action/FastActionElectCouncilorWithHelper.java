@@ -31,18 +31,20 @@ public class FastActionElectCouncilorWithHelper extends Action {
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         Council council;
-        if (user.getHelpers()>Constants.HELPER_LIMITATION_ELECT_COUNCILOR){
-            user.setHelpers(user.getHelpers()-Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
-            if (king == null) {
-                Region councilRegion = game.getRegion(region.getRegion());
-                council = councilRegion.getCouncil();
+        if(super.checkActionCounter(user)) {
+            if (user.getHelpers() > Constants.HELPER_LIMITATION_ELECT_COUNCILOR) {
+                user.setHelpers(user.getHelpers() - Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
+                if (king == null) {
+                    Region councilRegion = game.getRegion(region.getRegion());
+                    council = councilRegion.getCouncil();
+                } else {
+                    council = game.getKing().getCouncil();
+                }
+                council.add(councilor);
+                removeAction(game, user);
             } else {
-                council = game.getKing().getCouncil();
+                throw new ActionNotPossibleException();
             }
-            council.add(councilor);
-            removeAction(game,user);
-        } else {
-            throw new ActionNotPossibleException();
         }
     }
 }

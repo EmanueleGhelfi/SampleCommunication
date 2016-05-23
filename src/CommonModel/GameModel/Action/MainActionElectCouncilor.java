@@ -35,17 +35,18 @@ public class MainActionElectCouncilor extends Action implements Serializable {
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         Council council = null;
-        if(king==null) {
-            Region councilRegion = game.getRegion(region.getRegion());
-            council = councilRegion.getCouncil();
+        if(super.checkActionCounter(user)) {
+            if (king == null) {
+                Region councilRegion = game.getRegion(region.getRegion());
+                council = councilRegion.getCouncil();
+            } else {
+                council = game.getKing().getCouncil();
+            }
+            // and councilor to councilor to council (and remove the first councilor)
+            council.add(councilorToAdd);
+            game.getMoneyPath().goAhead(user, Constants.MONEY_EARNED_ELECT_COUNCILOR);
+            removeAction(game, user);
         }
-        else{
-            council = game.getKing().getCouncil();
-        }
-        // and councilor to councilor to council (and remove the first councilor)
-        council.add(councilorToAdd);
-        game.getMoneyPath().goAhead(user,Constants.MONEY_EARNED_ELECT_COUNCILOR);
-        removeAction(game,user);
     }
 
     @Override

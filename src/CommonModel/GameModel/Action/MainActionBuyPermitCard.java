@@ -37,31 +37,33 @@ public class MainActionBuyPermitCard extends Action {
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        // count number of correct politic card
-        int correctPoliticCard = 0;
-        // region of permit card
-        Region region = game.getRegion(userRegion.getRegion());
-        //this is the new position of the user in money path
-        int newPositionInMoneyPath = 0;
-        // calculate correct politic card
-        correctPoliticCard = countCorrectPoliticCard(region, politicCards, bonusCounter);
-        // calculate money to spend
-        newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
-        // go ahead in money path
-        game.getMoneyPath().goAhead(user,newPositionInMoneyPath);
-        // re-add to game deck
-        game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(politicCards));
-        // remove cards from user
-        System.out.println("POLITICS CARD" + politicCards.size());
-        System.out.println("USER CARD" + user.getPoliticCards().size());
-        int cont2 =0;
-        getPoliticCard(politicCards, user);
-        // buy permit card, here you can buy permit
-        PermitDeck permitDeck = game.getPermitDeck(region);
-        PermitCard permitCardToBuy = permitDeck.getPermitCardVisible(permitCard);
-        permitCardToBuy.getBonus().getBonus(user,game);
-        user.addPermitCard(permitCardToBuy);
-        removeAction(game, user);
+        if(super.checkActionCounter(user)) {
+            // count number of correct politic card
+            int correctPoliticCard = 0;
+            // region of permit card
+            Region region = game.getRegion(userRegion.getRegion());
+            //this is the new position of the user in money path
+            int newPositionInMoneyPath = 0;
+            // calculate correct politic card
+            correctPoliticCard = countCorrectPoliticCard(region, politicCards, bonusCounter);
+            // calculate money to spend
+            newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
+            // go ahead in money path
+            game.getMoneyPath().goAhead(user, newPositionInMoneyPath);
+            // re-add to game deck
+            game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(politicCards));
+            // remove cards from user
+            System.out.println("POLITICS CARD" + politicCards.size());
+            System.out.println("USER CARD" + user.getPoliticCards().size());
+            int cont2 = 0;
+            getPoliticCard(politicCards, user);
+            // buy permit card, here you can buy permit
+            PermitDeck permitDeck = game.getPermitDeck(region);
+            PermitCard permitCardToBuy = permitDeck.getPermitCardVisible(permitCard);
+            permitCardToBuy.getBonus().getBonus(user, game);
+            user.addPermitCard(permitCardToBuy);
+            removeAction(game, user);
+        }
     }
 
     //TODO MAIN-TEST

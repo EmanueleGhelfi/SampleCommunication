@@ -121,4 +121,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     public void isYourTurn() throws RemoteException {
         clientController.isMyTurn();
     }
+
+    @Override
+    public void finishTurn() throws RemoteException {
+        clientController.turnFinished();
+    }
 }

@@ -129,6 +129,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
+    public void finishTurn() {
+        try {
+            rmiClientInterface.finishTurn();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void setUser(User user) {
         this.user = user;
     }
