@@ -21,4 +21,6 @@ public interface BaseView {
     void gameInitialization(SnapshotToSend snapshotToSend);
 
     void turnFinished();
+
+    void isMyTurn();
 }

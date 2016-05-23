@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 public class MatchController {
 
     private ClientController clientController;
-
+    private boolean myTurn;
     @FXML Button buttonMain1;
 
     public void setClientController(ClientController clientController) {
@@ -49,7 +49,12 @@ public class MatchController {
 
     }
 
-    public void turnFinished() {
-        buttonMain1.setDisable(true);
+    public void setMyTurn(boolean value) {
+        myTurn = value;
+        turnFinished(myTurn);
+    }
+
+    public void turnFinished(boolean thisTurn) {
+        buttonMain1.setDisable(thisTurn);
     }
 }
