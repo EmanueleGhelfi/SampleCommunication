@@ -1,5 +1,6 @@
 package ClientPackage.View.GeneralView;
 
+import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 
 import java.util.ArrayList;
@@ -16,4 +17,6 @@ public interface BaseView {
     void showWaitingForStart();
 
     void showMap(ArrayList<Map> mapArrayList);
+
+    void gameInitialization(SnapshotToSend snapshotToSend);
 }

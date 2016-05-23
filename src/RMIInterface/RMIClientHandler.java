@@ -2,6 +2,7 @@ package RMIInterface;
 
 import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
 import java.rmi.Remote;
@@ -19,4 +20,5 @@ public interface RMIClientHandler extends Remote{
     void sendRemoteClientObject(RMIClientInterface clientRMIService) throws RemoteException;
 
     void sendMap(Map map) throws RemoteException;
+
 }

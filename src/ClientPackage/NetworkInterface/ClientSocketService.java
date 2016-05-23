@@ -128,6 +128,11 @@ public class ClientSocketService extends ClientService implements Runnable {
                 clientController.showMap(mapArrayList);
                 break;
             }
+            case Constants.CODE_INITIALIZE_GAME:{
+                SnapshotToSend snapshotToSend = gson.fromJson(communicationInfo.getInfo(), SnapshotToSend.class);
+                clientController.gameInitialization(snapshotToSend);
+                break;
+            }
         }
     }
 }

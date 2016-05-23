@@ -16,4 +16,6 @@ public interface RMIClientInterface extends Remote {
 
     void sendMap(ArrayList<Map> mapArrayList) throws RemoteException;
 
+    void gameInitialization(SnapshotToSend snapshotToSend) throws  RemoteException;
+
 }

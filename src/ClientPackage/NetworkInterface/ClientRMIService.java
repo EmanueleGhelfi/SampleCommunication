@@ -111,4 +111,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     public void sendMap(ArrayList<Map> mapArrayList) {
         clientController.showMap(mapArrayList);
     }
+
+    @Override
+    public void gameInitialization(SnapshotToSend snapshotToSend) throws RemoteException {
+        clientController.gameInitialization(snapshotToSend);
+    }
 }

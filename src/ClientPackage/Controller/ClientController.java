@@ -172,4 +172,9 @@ public class ClientController {
     public void sendMap(Map map) {
         clientService.sendMap(map);
     }
+
+    public void gameInitialization(SnapshotToSend snapshotToSend) {
+        snapshot = snapshotToSend;
+        baseView.gameInitialization(snapshotToSend);
+    }
 }
