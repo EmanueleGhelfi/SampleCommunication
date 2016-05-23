@@ -76,6 +76,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     //sending map
     @Override
     public void sendMap(Map map) throws RemoteException {
+        user.getGame().getGameController().setMap(map);
 
     }
 
@@ -106,6 +107,16 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     public void sendAvailableMap(ArrayList<Map> availableMaps) {
         try {
             rmiClientInterface.sendMap(availableMaps);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendSelectedMap(SnapshotToSend snapshotToSend) {
+        try {
+            rmiClientInterface.gameInitialization(snapshotToSend);
+            System.out.println("Sending map to: "+user.getUsername());
         } catch (RemoteException e) {
             e.printStackTrace();
         }

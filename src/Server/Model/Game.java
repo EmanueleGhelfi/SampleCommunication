@@ -279,4 +279,8 @@ public class Game implements Serializable{
     public void setPoliticCards(PoliticDeck politicCards) {
         this.politicCards = politicCards;
     }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
 }

@@ -12,9 +12,7 @@ import Utilities.Exception.ActionNotPossibleException;
 import Utilities.Exception.MapsNotFoundException;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Created by Emanuele on 13/05/2016.
@@ -131,5 +129,27 @@ public class GameController implements Serializable{
 
     public void sendAvailableMap(User userToAdd) {
         userToAdd.getBaseCommunication().sendAvailableMap(availableMaps);
+    }
+
+    public void setMap(Map map) {
+        if(availableMaps.contains(map)){
+            for (Map mapToSelect : availableMaps) {
+                if(mapToSelect.equals(map)){
+                    game.setMap(map);
+                    for (User user: game.getUsers()) {
+                        SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
+                        user.getBaseCommunication().sendSelectedMap(snapshotToSend);
+                    }
+                    selectFirstPlayer();
+                    break;
+                }
+            }
+        }
+    }
+
+    private void selectFirstPlayer() {
+        ArrayList<User> users = new ArrayList<>(game.getUsers());
+       // users.get(0).getBaseCommunication().send
+
     }
 }

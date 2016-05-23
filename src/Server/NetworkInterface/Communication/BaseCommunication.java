@@ -18,4 +18,6 @@ public abstract class BaseCommunication {
     public abstract void changeRound();
 
     public abstract void sendAvailableMap(ArrayList<Map> availableMaps);
+
+    public abstract void sendSelectedMap(SnapshotToSend snapshotToSend);
 }

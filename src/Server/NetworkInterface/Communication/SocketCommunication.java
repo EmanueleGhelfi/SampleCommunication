@@ -1,6 +1,7 @@
 package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.Color;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -9,12 +10,16 @@ import Utilities.Class.Constants;
 import Server.Controller.GameController;
 import Server.Controller.GamesManager;
 import Server.Model.User;
+import Utilities.Class.InterfaceAdapter;
 import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Modifier;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -54,9 +59,17 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void sendSelectedMap(SnapshotToSend snapshotToSend) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_INITIALIZE_GAME,snapshotToSend);
+    }
+
+    @Override
     public void run() {
         String line;
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .excludeFieldsWithModifiers(Modifier.TRANSIENT)
+                .create();
         System.out.println("Socket communication started");
         try {
             while ((line = in.readLine()) != null) {
@@ -90,6 +103,13 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                             System.out.println(e);
                             //TODO: manage exception
                         }
+                        break;
+                    }
+                    case Constants.CODE_MAP:{
+                        Map map = gson.fromJson(communicationInfo.getInfo(),Map.class);
+                        user.getGame().getGameController().setMap(map);
+                        System.out.println("Map arrived in socket communication");
+                        break;
                     }
                 }
             }
