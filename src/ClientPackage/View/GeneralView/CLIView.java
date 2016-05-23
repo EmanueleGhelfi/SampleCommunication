@@ -1,6 +1,7 @@
 package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
+import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ public class CLIView implements BaseView {
 
     @Override
     public void showMap(ArrayList<Map> mapArrayList) {
+
+    }
+
+    @Override
+    public void gameInitialization(SnapshotToSend snapshotToSend) {
 
     }
 

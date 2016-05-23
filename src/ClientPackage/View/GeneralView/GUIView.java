@@ -1,8 +1,10 @@
 package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
+import ClientPackage.View.GUIResources.Class.MatchController;
 import ClientPackage.View.GUIResources.Class.LoginController;
 import ClientPackage.View.GUIResources.Class.WaitingController;
+import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
 import javafx.application.Application;
@@ -21,6 +23,7 @@ public class GUIView extends Application implements BaseView {
 
     private LoginController loginController;
     private WaitingController waitingController;
+    private MatchController matchController;
     private ClientController clientController;
     private ArrayList<Map> maps;
 
@@ -90,5 +93,27 @@ public class GUIView extends Application implements BaseView {
         if(waitingController!=null){
             waitingController.showMap(maps);
         }
+    }
+
+    @Override
+    public void gameInitialization(SnapshotToSend snapshotToSend) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MATCH_FXML));
+                Parent screen = null;
+                try {
+                    screen = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                matchController = loader.getController();
+                matchController.setClientController(clientController);
+                Scene scene = new Scene(screen);
+                Stage testStage = new Stage();
+                testStage.setScene(scene);
+                testStage.show();
+            }
+        });
     }
 }

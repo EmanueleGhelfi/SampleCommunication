@@ -27,6 +27,7 @@ public class Constants {
     //VIEW
     public static final String LOGIN_FXML = "/ClientPackage/View/GUIResources/FXML/LoginFXML.fxml";
     public static final String WAITING_FXML = "/ClientPackage/View/GUIResources/FXML/WaitingFXML.fxml";
+    public static final String MATCH_FXML = "/ClientPackage/View/GUIResources/FXML/MatchFXML.fxml";
 
     //NETWORK
     public static int RMI_PORT = 1099;
