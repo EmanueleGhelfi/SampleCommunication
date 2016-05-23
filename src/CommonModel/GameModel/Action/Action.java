@@ -22,8 +22,21 @@ public abstract class Action implements Serializable {
 
     public abstract void doAction(Game game, User user) throws ActionNotPossibleException;
 
-    boolean checkActionCounter(User user){
-
+    boolean checkActionCounter(User user) throws ActionNotPossibleException{
+        switch (type){
+            case Constants.FAST_ACTION:
+                if(user.getFastActionCounter()<=0){
+                    throw new ActionNotPossibleException();
+                }
+                else return true;
+            case Constants.MAIN_ACTION:
+                if(user.getMainActionCounter()<=0){
+                    throw new ActionNotPossibleException();
+                }
+                else return true;
+            default:
+                throw new ActionNotPossibleException();
+        }
 
     }
 
