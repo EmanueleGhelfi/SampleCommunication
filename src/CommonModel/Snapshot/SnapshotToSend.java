@@ -28,7 +28,6 @@ public class SnapshotToSend implements Serializable{
     //Nobility path position
     private Position[] nobilityPathPosition;
     private CurrentUser currentUser;
-
     private Map map;
 
     public SnapshotToSend() {

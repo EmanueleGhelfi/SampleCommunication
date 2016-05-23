@@ -116,4 +116,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     public void gameInitialization(SnapshotToSend snapshotToSend) throws RemoteException {
         clientController.gameInitialization(snapshotToSend);
     }
+
+    @Override
+    public void isYourTurn() throws RemoteException {
+        clientController.isMyTurn();
+    }
 }

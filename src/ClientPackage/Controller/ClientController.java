@@ -179,6 +179,10 @@ public class ClientController {
         baseView.gameInitialization(snapshotToSend);
     }
 
+    public void isMyTurn() {
+        System.out.println("Client Controller: is my turn");
+    }
+
     public void main1() {
         Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.ORANGE), snapshot.getKing(), null);
         try {

@@ -14,6 +14,7 @@ public class Constants {
     public static final String CODE_JSON_TEST = "CODE_JSON_TEST";
     public static final String CODE_MAP = "CODE_MAP";
     public static final String CODE_INITIALIZE_GAME = "CODE_INITIALIZE_GAME";
+    public static final String CODE_TURN_FINISHED = "CODE_TURN_FINISHED";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -28,6 +29,7 @@ public class Constants {
     public static final String LOGIN_FXML = "/ClientPackage/View/GUIResources/FXML/LoginFXML.fxml";
     public static final String WAITING_FXML = "/ClientPackage/View/GUIResources/FXML/WaitingFXML.fxml";
     public static final String MATCH_FXML = "/ClientPackage/View/GUIResources/FXML/MatchFXML.fxml";
+
 
     //NETWORK
     public static int RMI_PORT = 1099;
@@ -135,5 +137,6 @@ public class Constants {
     public static final int DEFAULT_FAST_ACTION_COUNTER = 0;
     public static final int DEFAULT_HELPER_COUNTER = 1;
     public static final int DEFAULT_POLITIC_CARD_HAND = 6;
+    public static final int MAX_CLIENT_NUMBER = 10;
 
 }

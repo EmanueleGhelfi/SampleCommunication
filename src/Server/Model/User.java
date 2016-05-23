@@ -33,6 +33,8 @@ public class User extends CurrentUser implements Serializable{
         oldPermitCards = new ArrayList<>();
         politicCards = new ArrayList<>();
         politicCardNumber = politicCards.size();
+        mainActionCounter = 0;
+        fastActionCounter = 0;
     }
 
     public void addEmporium(City cityEmporium) {
@@ -91,18 +93,23 @@ public class User extends CurrentUser implements Serializable{
     public int getPoliticCardSize(){
         return politicCards.size();
     }
+
     public void setFastActionCounter(int fastActionCounter) {
+        System.out.println("Set fast action counter called");
         this.fastActionCounter = fastActionCounter;
         if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
             game.getGameController().onFinishRound(this);
         }
     }
+
     public void setMainActionCounter(int mainActionCounter) {
+        System.out.println("Set main action counter called");
         this.mainActionCounter = mainActionCounter;
         if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
             game.getGameController().onFinishRound(this);
         }
     }
+
     public void setPoliticCards(ArrayList<PoliticCard> politicCards) {
         this.politicCards = politicCards;
         politicCardNumber = politicCards.size();

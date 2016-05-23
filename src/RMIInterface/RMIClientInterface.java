@@ -18,4 +18,5 @@ public interface RMIClientInterface extends Remote {
 
     void gameInitialization(SnapshotToSend snapshotToSend) throws  RemoteException;
 
+    void isYourTurn() throws RemoteException;
 }

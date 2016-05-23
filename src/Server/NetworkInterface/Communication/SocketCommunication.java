@@ -68,6 +68,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void finishTurn() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_TURN_FINISHED,null);
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())

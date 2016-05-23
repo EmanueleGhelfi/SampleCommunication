@@ -102,6 +102,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     @Override
     public void changeRound() {
         //call is your round (with a notification)
+        try {
+            rmiClientInterface.isYourTurn();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

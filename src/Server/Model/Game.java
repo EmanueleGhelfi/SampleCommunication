@@ -149,10 +149,10 @@ public class Game implements Serializable{
             if(usersInGame.size()==1){
                 gameController.sendAvailableMap(userToAdd);
             }
-            if(usersInGame.size()>=2 && usersInGame.size()<4){
+            if(usersInGame.size()>=2 && usersInGame.size()<Constants.MAX_CLIENT_NUMBER){
                 gameController.setTimeout();
             }
-            else if(usersInGame.size()==4){
+            else if(usersInGame.size()==Constants.MAX_CLIENT_NUMBER){
                 gameController.cancelTimeout();
                 gameController.notifyStarted();
             }

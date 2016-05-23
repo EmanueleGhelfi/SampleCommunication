@@ -110,6 +110,7 @@ public class GameController implements Serializable{
      * @param user user that has finished round
      */
     public void onFinishRound(User user) {
+        user.getBaseCommunication().finishTurn();
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         for(int cont = 0; cont < game.getUsers().size(); cont++){
             System.out.println("GAMECONTROLLER <- Sending Snapshot to :" + userArrayList.get(cont).getUsername());
@@ -156,6 +157,11 @@ public class GameController implements Serializable{
     private void selectFirstPlayer() {
         ArrayList<User> users = new ArrayList<>(game.getUsers());
        // users.get(0).getBaseCommunication().send
+        users.get(0).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
+        users.get(0).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
+        users.get(0).getBaseCommunication().changeRound();
+
+
 
     }
 }
