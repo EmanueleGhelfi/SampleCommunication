@@ -129,7 +129,7 @@ public class ClientSocketService extends ClientService implements Runnable {
                 break;
             }
             case Constants.CODE_INITIALIZE_GAME:{
-                SnapshotToSend snapshotToSend = gson.fromJson(communicationInfo.getInfo(), SnapshotToSend.class);
+                SnapshotToSend snapshotToSend = CommunicationInfo.getSnapshot(communicationInfo.getInfo());
                 clientController.gameInitialization(snapshotToSend);
                 break;
             }

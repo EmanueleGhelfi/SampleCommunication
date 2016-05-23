@@ -63,7 +63,7 @@ public class GameController implements Serializable{
             ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
             for(int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++){
                 politicCardArrayList.add(game.getPoliticCards().drawACard());
-                System.out.println("GameController notify game started <- " + cont + " "
+                System.out.println("MatchController notify game started <- " + cont + " "
                         + politicCardArrayList.get(cont));
             }
             user.setPoliticCards(politicCardArrayList);
