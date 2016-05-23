@@ -19,4 +19,6 @@ public interface BaseView {
     void showMap(ArrayList<Map> mapArrayList);
 
     void gameInitialization(SnapshotToSend snapshotToSend);
+
+    void turnFinished();
 }

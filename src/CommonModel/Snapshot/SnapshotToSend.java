@@ -71,4 +71,8 @@ public class SnapshotToSend implements Serializable{
                 ", colorBonusCards=" + colorBonusCards +
                 '}';
     }
+
+    public King getKing() {
+        return king;
+    }
 }

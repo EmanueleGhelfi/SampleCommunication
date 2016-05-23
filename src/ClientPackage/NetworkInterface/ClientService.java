@@ -18,5 +18,4 @@ import java.rmi.RemoteException;
 
     public abstract void sendMap(Map map);
 
-
 }

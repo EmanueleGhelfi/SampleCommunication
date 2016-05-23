@@ -133,6 +133,10 @@ public class ClientSocketService extends ClientService implements Runnable {
                 clientController.gameInitialization(snapshotToSend);
                 break;
             }
+            case Constants.CODE_TURN_FINISHED:{
+                clientController.turnFinished();
+                break;
+            }
         }
     }
 }

@@ -178,4 +178,19 @@ public class ClientController {
         System.out.println(snapshot + " <- SNAP");
         baseView.gameInitialization(snapshotToSend);
     }
+
+    public void main1() {
+        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.ORANGE), snapshot.getKing(), null);
+        try {
+            clientService.onTestAction(action);
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void turnFinished() {
+        baseView.turnFinished();
+    }
 }
