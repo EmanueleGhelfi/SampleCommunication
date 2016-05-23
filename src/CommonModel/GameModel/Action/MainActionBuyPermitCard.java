@@ -2,7 +2,6 @@ package CommonModel.GameModel.Action;
 
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-import CommonModel.GameModel.Council.Councilor;
 import Server.Controller.GamesManager;
 import Server.NetworkInterface.Communication.RMICommunication;
 import Utilities.Class.Constants;
@@ -16,7 +15,6 @@ import Server.Model.User;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Queue;
 
 /**
  * Created by Emanuele on 16/05/2016.
@@ -31,7 +29,7 @@ public class MainActionBuyPermitCard extends Action {
     public MainActionBuyPermitCard(ArrayList<PoliticCard> politicCard, Region userRegion, PermitCard permitCard) {
         this.politicCards = politicCard;
         this.userRegion = userRegion;
-        this.type = Constants.MAIN_ACTION;
+        this.actionType = Constants.MAIN_ACTION;
         this.permitCard = permitCard;
     }
 

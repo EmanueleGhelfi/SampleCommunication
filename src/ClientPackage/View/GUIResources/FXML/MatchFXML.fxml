@@ -1,24 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MatchController">
-   <center>
-      <Pane BorderPane.alignment="CENTER">
-         <children>
-            <Text layoutX="265.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto" />
-            <Button fx:id="buttonMain1" layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#main1" text="MAIN 1" />
-            <Button layoutX="194.0" layoutY="89.0" mnemonicParsing="false" onAction="#main2" text="MAIN 2" />
-            <Button layoutX="330.0" layoutY="89.0" mnemonicParsing="false" onAction="#main3" text="MAIN 3" />
-            <Button layoutX="472.0" layoutY="89.0" mnemonicParsing="false" onAction="#main4" text="MAIN 4" />
-            <Button layoutX="71.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast1" text="FAST 1" />
-            <Button layoutX="194.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast2" text="FAST 2" />
-            <Button layoutX="330.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast3" text="FAST 3" />
-            <Button layoutX="472.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast4" text="FAST 4" />
-         </children>
-      </Pane>
-   </center>
-</BorderPane>
+<TabPane stylesheets="@../CSS/MatchCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MatchController">
+   <tabs>
+      <Tab text="Game">
+         <content>
+            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+               <center>
+                  <Pane styleClass="matchBackground" BorderPane.alignment="CENTER">
+                     <children>
+                        <Text layoutX="265.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto" />
+                        <Button fx:id="buttonMain1" layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#main1" text="MAIN 1" />
+                        <Button layoutX="194.0" layoutY="89.0" mnemonicParsing="false" onAction="#main2" text="MAIN 2" />
+                        <Button layoutX="330.0" layoutY="89.0" mnemonicParsing="false" onAction="#main3" text="MAIN 3" />
+                        <Button layoutX="472.0" layoutY="89.0" mnemonicParsing="false" onAction="#main4" text="MAIN 4" />
+                        <Button layoutX="71.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast1" text="FAST 1" />
+                        <Button layoutX="194.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast2" text="FAST 2" />
+                        <Button layoutX="330.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast3" text="FAST 3" />
+                        <Button layoutX="472.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast4" text="FAST 4" />
+                     </children>
+                  </Pane>
+               </center>
+            </BorderPane>
+         </content>
+      </Tab>
+      <Tab text="Paths">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TabPane layoutX="41.0" layoutY="73.0" prefHeight="300.0" prefWidth="500.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="User1">
+                        <content>
+                           <fx:include source="UserTabFXML.fxml" />
+                        </content>
+                      </Tab>
+                      <Tab text="User2">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Shop" />
+   </tabs>
+</TabPane>

@@ -1,47 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.WaitingController">
-   <bottom>
-      <Pane prefHeight="64.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button layoutX="268.0" layoutY="17.0" mnemonicParsing="false" onAction="#takeImage" text="Button" />
-         </children></Pane>
-   </bottom>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <Pane prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="73.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="169.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCEGLI LA MAPPA CON CUI GIOCARE">
-               <font>
-                  <Font name="System Bold Italic" size="15.0" />
-               </font>
-            </Text>
-         </children></Pane>
+            <Text layoutX="116.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME TO THE COUNCIL OF FOUR!" wrappingWidth="373.13671875" />
+         </children>
+      </Pane>
    </top>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="thisImageView" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="nextImageView" fitHeight="110.0" fitWidth="140.0" layoutX="330.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="prevImageView" fitHeight="110.0" fitWidth="140.0" layoutX="130.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="70.0" fitWidth="66.0" layoutX="538.0" layoutY="83.0" onMouseClicked="#nextVisibleMap" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Image/ArrowRight.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="70.0" fitWidth="66.0" layoutY="83.0" onMouseClicked="#prevVisibleMap" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Image/ArrowLeft.png" />
-               </image>
-            </ImageView>
+            <JFXSpinner layoutX="284.0" layoutY="117.0" scaleX="2.0" scaleY="2.0" />
          </children>
-      </AnchorPane>
+      </Pane>
    </center>
 </BorderPane>

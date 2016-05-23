@@ -74,4 +74,12 @@ public class SnapshotToSend implements Serializable{
     public King getKing() {
         return king;
     }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public HashMap<String, ArrayList<PermitCard>> getVisiblePermitCards() {
+        return visiblePermitCards;
+    }
 }

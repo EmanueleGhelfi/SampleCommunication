@@ -18,7 +18,7 @@ public class MainActionBuildWithPermitCard extends Action{
     public MainActionBuildWithPermitCard(City city, PermitCard permitCard) {
         this.city = city;
         this.permitCard = permitCard;
-        this.type = Constants.MAIN_ACTION;
+        this.actionType = Constants.MAIN_ACTION;
     }
 
     @Override

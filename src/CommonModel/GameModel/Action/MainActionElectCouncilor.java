@@ -29,7 +29,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
         this.councilorToAdd = councilorToAdd;
         this.king = king;
         this.region = region;
-        this.type = Constants.MAIN_ACTION;
+        this.actionType = Constants.MAIN_ACTION;
     }
 
     @Override
@@ -47,11 +47,6 @@ public class MainActionElectCouncilor extends Action implements Serializable {
             game.getMoneyPath().goAhead(user, Constants.MONEY_EARNED_ELECT_COUNCILOR);
             removeAction(game, user);
         }
-    }
-
-    @Override
-    public String getType() {
-        return type;
     }
 
 

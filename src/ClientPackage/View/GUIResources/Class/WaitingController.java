@@ -46,13 +46,6 @@ public class WaitingController implements Initializable {
         this.clientController = clientController;
     }
 
-    public void firstMainAction(ActionEvent actionEvent) {
-        clientController.createAction();
-    }
-
-    public void secondMainAction(ActionEvent actionEvent) {
-        clientController.createSecondAction();
-    }
 
     public void showMap(ArrayList<Map> mapArrayList) {
         for (Map map : mapArrayList) {

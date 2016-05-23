@@ -14,7 +14,7 @@ public class FastActionChangePermitCardWithHelper extends Action {
     private Region region;
 
     public FastActionChangePermitCardWithHelper(Region region) {
-        this.type = Constants.FAST_ACTION;
+        this.actionType = Constants.FAST_ACTION;
         this.region = region;
     }
 

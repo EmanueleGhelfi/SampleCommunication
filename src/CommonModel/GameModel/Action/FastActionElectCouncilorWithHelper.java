@@ -9,37 +9,47 @@ import CommonModel.GameModel.Council.King;
 import Server.Model.Game;
 import Server.Model.User;
 
+import java.io.Serializable;
+
 /**
  * Created by Giulio on 17/05/2016.
  *
  * Elect a councilor spending one helper (fast move)
  *
  */
-public class FastActionElectCouncilorWithHelper extends Action {
+public class FastActionElectCouncilorWithHelper extends Action implements Serializable {
 
     private Region region;
     private King king;
     private Councilor councilor;
+    private String councilType;
 
-    public FastActionElectCouncilorWithHelper(Region region, King king, Councilor councilor) {
-        this.type = Constants.FAST_ACTION;
+    public FastActionElectCouncilorWithHelper(Region region, King king, Councilor councilor,String councilType) {
+        this.actionType = Constants.FAST_ACTION;
         this.region = region;
         this.king = king;
         this.councilor = councilor;
+        this.councilType = councilType;
+    }
+
+    public FastActionElectCouncilorWithHelper() {
     }
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        Council council;
+        Council council = null;
         if(super.checkActionCounter(user)) {
             System.out.println("ELECT COUNCILOR "+user.getHelpers());
             if (user.getHelpers() >= Constants.HELPER_LIMITATION_ELECT_COUNCILOR) {
                 user.setHelpers(user.getHelpers() - Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
-                if (king == null) {
+                if (councilType.equals(Constants.REGION_COUNCIL)) {
                     Region councilRegion = game.getRegion(region.getRegion());
                     council = councilRegion.getCouncil();
                 } else {
-                    council = game.getKing().getCouncil();
+                    if (councilType.equals(Constants.KING_COUNCIL)) {
+                        council = game.getKing().getCouncil();
+                    } else throw new ActionNotPossibleException();
+                    }
                 }
                 council.add(councilor);
                 removeAction(game, user);
@@ -47,5 +57,4 @@ public class FastActionElectCouncilorWithHelper extends Action {
                 throw new ActionNotPossibleException();
             }
         }
-    }
 }

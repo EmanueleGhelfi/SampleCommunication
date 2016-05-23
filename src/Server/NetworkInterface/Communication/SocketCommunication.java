@@ -103,6 +103,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                         break;
                     }
                     case Constants.CODE_ACTION:{
+                        System.out.println("CODE ACTION"+communicationInfo.getInfo());
                         Action action = CommunicationInfo.getAction(communicationInfo.getInfo());
                         System.out.println("Received action from user: "+action);
                         try {

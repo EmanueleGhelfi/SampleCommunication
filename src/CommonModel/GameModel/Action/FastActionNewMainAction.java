@@ -11,7 +11,7 @@ import Server.Model.User;
 public class FastActionNewMainAction extends Action {
 
     public FastActionNewMainAction() {
-        this.type = Constants.FAST_ACTION;
+        this.actionType = Constants.FAST_ACTION;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class FastActionNewMainAction extends Action {
     }
 
     @Override
-    public String getType() {
-        return type;
+    public String getActionType() {
+        return actionType;
     }
 }

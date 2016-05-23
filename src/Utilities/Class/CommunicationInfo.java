@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.PrintWriter;
+import java.lang.reflect.Modifier;
 
 /**
  * Sends and decode communicationInfo
@@ -31,7 +32,7 @@ public class CommunicationInfo {
      * @param code code of the action
      * @param toSend object to send
      */
-    public static void SendCommunicationInfo(PrintWriter out, String code, Object toSend ) {
+    public static void SendCommunicationInfo(PrintWriter out, String code, Object toSend) {
 
         String toSendString="";
         CommunicationInfo communicationInfo;
@@ -43,23 +44,17 @@ public class CommunicationInfo {
                 .create();
 
         if(toSend!=null) {
-            toSendString = gson.toJson(toSend, toSend.getClass());
+            if(code.equals(Constants.CODE_ACTION)){
+                toSendString = gson.toJson(toSend, Action.class);
+            }
+            else {
+                toSendString = gson.toJson(toSend, toSend.getClass());
+            }
+            System.out.println("AAAAAAAAAAAAAAAA"+toSend.getClass());
         }
         else{
             toSendString="";
         }
-        /*switch (code){
-            case Constants.CODE_ACTION:
-                toSendString = gson.toJson(toSend,Action.class);
-                break;
-            case Constants.CODE_SNAPSHOT:
-
-                break;
-            default:
-                toSendString= gson.toJson(toSend);
-                break;
-        }
-        */
         System.out.println(toSendString);
         communicationInfo = new CommunicationInfo(code, toSendString);
         communicationToSend = gson.toJson(communicationInfo);
@@ -86,6 +81,7 @@ public class CommunicationInfo {
      */
     public static Action getAction(String action){
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
                 .create();
          return gson.fromJson(action,Action.class);
     }

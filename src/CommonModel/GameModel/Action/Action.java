@@ -18,12 +18,12 @@ import java.util.Queue;
  */
 public abstract class Action implements Serializable {
 
-    protected String type;
+    protected String actionType;
 
     public abstract void doAction(Game game, User user) throws ActionNotPossibleException;
 
     boolean checkActionCounter(User user) throws ActionNotPossibleException{
-        switch (type){
+        switch (actionType){
             case Constants.FAST_ACTION:
                 if(user.getFastActionCounter()<=0){
                     throw new ActionNotPossibleException();
@@ -41,7 +41,7 @@ public abstract class Action implements Serializable {
     }
 
     void removeAction(Game game,User user){
-        switch (type) {
+        switch (actionType) {
             case Constants.MAIN_ACTION:
                 user.setMainActionCounter(user.getMainActionCounter()-1);
                 break;
@@ -144,7 +144,7 @@ public abstract class Action implements Serializable {
         return true;
     }
 
-    String getType(){
-        return type;
+    String getActionType(){
+        return actionType;
     }
 }

@@ -24,11 +24,14 @@ public class Constants {
     public static final String SERVER = "SERVER";
     public static final String MAIN_ACTION = "MAIN_ACTION";
     public static final String FAST_ACTION = "FAST_ACTION";
+    public static final String REGION_COUNCIL = "REGION_COUNCIL" ;
+    public static final String KING_COUNCIL = "KING_COUNCIL";
 
     //VIEW
     public static final String LOGIN_FXML = "/ClientPackage/View/GUIResources/FXML/LoginFXML.fxml";
-    public static final String WAITING_FXML = "/ClientPackage/View/GUIResources/FXML/WaitingFXML.fxml";
+    public static final String WAITING_FXML = "/ClientPackage/View/GUIResources/FXML/MapSelectionFXML.fxml";
     public static final String MATCH_FXML = "/ClientPackage/View/GUIResources/FXML/MatchFXML.fxml";
+
 
 
     //NETWORK

@@ -4,14 +4,12 @@ import ClientPackage.NetworkInterface.ClientService;
 import ClientPackage.NetworkInterface.ClientFactoryService;
 import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
-import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
-import CommonModel.GameModel.Action.FastActionElectCouncilorWithHelper;
+import ClientPackage.View.GeneralView.GUIView;
+import CommonModel.GameModel.Action.*;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
-import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.Region;
@@ -138,33 +136,7 @@ public class ClientController {
         System.out.println("CLIENTCONTROLLER <- "+snapshot);
     }
 
-    /**
-     * debug
-     */
-    public void createAction() {
-        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.BLACK), null, Region.COAST);
-        try {
-            clientService.onTestAction(action);
-        } catch (ActionNotPossibleException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * debug
-     */
-    public void createSecondAction() {
-        Action action = new FastActionChangePermitCardWithHelper(Region.HILL);
-        try {
-            clientService.onTestAction(action);
-        } catch (ActionNotPossibleException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void showMap(ArrayList<Map> mapArrayList) {
         baseView.showMap(mapArrayList);
@@ -186,7 +158,7 @@ public class ClientController {
     }
 
     public void main1() {
-        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.ORANGE), snapshot.getKing(), null);
+        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.ORANGE), snapshot.getKing(), Region.HILL);
         try {
             clientService.onTestAction(action);
         } catch (ActionNotPossibleException e) {
@@ -201,7 +173,7 @@ public class ClientController {
     }
 
     public void fast1() {
-        Action action = new FastActionElectCouncilorWithHelper(Region.HILL,null,new Councilor(PoliticColor.BLACK));
+        Action action = new FastActionElectCouncilorWithHelper(Region.HILL,snapshot.getKing(),new Councilor(PoliticColor.BLACK),Constants.REGION_COUNCIL);
         try {
             clientService.onTestAction(action);
         } catch (ActionNotPossibleException e) {
@@ -209,5 +181,9 @@ public class ClientController {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setBaseView(GUIView baseView) {
+        this.baseView = baseView;
     }
 }

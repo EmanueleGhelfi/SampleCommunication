@@ -27,6 +27,8 @@ public class GUIView extends Application implements BaseView {
     private ClientController clientController;
     private ArrayList<Map> maps;
     private boolean myTurn = false;
+    private Stage stage;
+    private Scene scene;
 
     public GUIView(ClientController clientController) {
         this.clientController = clientController;
@@ -37,25 +39,28 @@ public class GUIView extends Application implements BaseView {
     }
 
     @Override
+    public void init() throws Exception {
+        super.init();
+        System.out.println("EHIIIIII");
+        this.clientController.setBaseView(this);
+    }
+
+    @Override
     public void start(Stage primaryStage) throws Exception {
+        this.stage = primaryStage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.LOGIN_FXML));
         Parent screen = loader.load();
         loginController = loader.getController();
         loginController.setClientController(clientController);
-        Scene scene = new Scene(screen);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        scene = new Scene(screen);
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 
     @Override
     public void initView() {
         // This initializes JavaFx application
         Application.launch();
-        try {
-            start(new Stage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -68,24 +73,27 @@ public class GUIView extends Application implements BaseView {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                System.out.println("show waiting for start");
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.WAITING_FXML));
-                Parent screen = null;
-                try {
-                    screen = loader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                waitingController = loader.getController();
-                waitingController.setClientController(clientController);
-                if(maps!=null)
-                    waitingController.showMap(maps);
-                Scene scene = new Scene(screen);
-                Stage testStage = new Stage();
-                testStage.setScene(scene);
-                testStage.show();
+                changeStage();
             }
         });
+    }
+
+    private void changeStage() {
+        System.out.println("show waiting for start");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.WAITING_FXML));
+        Parent screen = null;
+        try {
+            screen = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        waitingController = loader.getController();
+        waitingController.setClientController(clientController);
+        if(maps!=null)
+            waitingController.showMap(maps);
+        scene = new Scene(screen);
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 
     @Override
@@ -113,9 +121,9 @@ public class GUIView extends Application implements BaseView {
                 System.out.println("called my turn "+myTurn);
                 matchController.setMyTurn(myTurn);
                 Scene scene = new Scene(screen);
-                Stage testStage = new Stage();
-                testStage.setScene(scene);
-                testStage.show();
+                //stage= new Stage();
+                stage.setScene(scene);
+                stage.show();
             }
         });
     }

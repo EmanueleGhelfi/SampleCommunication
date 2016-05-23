@@ -14,7 +14,7 @@ import java.rmi.RemoteException;
 
     public abstract void sendName(String name);
 
-    public abstract void onTestAction(Action electCouncilor) throws ActionNotPossibleException, RemoteException;
+    public abstract void onTestAction(Action action) throws ActionNotPossibleException, RemoteException;
 
     public abstract void sendMap(Map map);
 

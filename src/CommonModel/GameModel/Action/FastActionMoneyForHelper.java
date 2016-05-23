@@ -11,7 +11,7 @@ import Server.Model.User;
 public class FastActionMoneyForHelper extends Action {
 
     public FastActionMoneyForHelper() {
-        this.type = Constants.FAST_ACTION;
+        this.actionType = Constants.FAST_ACTION;
     }
 
     @Override
