@@ -175,6 +175,7 @@ public class ClientController {
 
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         snapshot = snapshotToSend;
+        System.out.println(snapshot + " <- SNAP");
         baseView.gameInitialization(snapshotToSend);
     }
 }
