@@ -85,6 +85,7 @@ public class WaitingController implements Initializable {
 
     public void takeImage(){
         clientController.sendMap(mapArrayList.get(mapCounter));
+        System.out.println("BUTTON PRESSED");
     }
 
 }
