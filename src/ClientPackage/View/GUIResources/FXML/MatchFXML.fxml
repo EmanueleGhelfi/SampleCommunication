@@ -10,7 +10,7 @@
       <Pane BorderPane.alignment="CENTER">
          <children>
             <Text layoutX="265.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto" />
-            <Button layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#main1" text="MAIN 1" />
+            <Button fx:id="buttonMain1" layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#main1" text="MAIN 1" />
             <Button layoutX="194.0" layoutY="89.0" mnemonicParsing="false" onAction="#main2" text="MAIN 2" />
             <Button layoutX="330.0" layoutY="89.0" mnemonicParsing="false" onAction="#main3" text="MAIN 3" />
             <Button layoutX="472.0" layoutY="89.0" mnemonicParsing="false" onAction="#main4" text="MAIN 4" />

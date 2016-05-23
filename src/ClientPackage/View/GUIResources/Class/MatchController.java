@@ -1,6 +1,8 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 /**
  * Created by Giulio on 17/05/2016.
@@ -8,6 +10,8 @@ import ClientPackage.Controller.ClientController;
 public class MatchController {
 
     private ClientController clientController;
+    private boolean myTurn;
+    @FXML Button buttonMain1;
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
@@ -45,4 +49,12 @@ public class MatchController {
 
     }
 
+    public void setMyTurn(boolean value) {
+        myTurn = value;
+        turnFinished(myTurn);
+    }
+
+    public void turnFinished(boolean thisTurn) {
+        buttonMain1.setDisable(thisTurn);
+    }
 }

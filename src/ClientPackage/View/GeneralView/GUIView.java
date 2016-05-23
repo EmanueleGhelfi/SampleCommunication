@@ -116,4 +116,14 @@ public class GUIView extends Application implements BaseView {
             }
         });
     }
+
+    @Override
+    public void turnFinished() {
+        matchController.setMyTurn(false);
+    }
+
+    @Override
+    public void isMyTurn() {
+        matchController.setMyTurn(true);
+    }
 }

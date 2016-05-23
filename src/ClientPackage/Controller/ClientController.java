@@ -180,6 +180,7 @@ public class ClientController {
     }
 
     public void isMyTurn() {
+        baseView.isMyTurn();
         System.out.println("Client Controller: is my turn");
     }
 
