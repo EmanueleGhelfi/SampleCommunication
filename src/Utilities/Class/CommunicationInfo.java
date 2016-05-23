@@ -40,7 +40,12 @@ public class CommunicationInfo {
         gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
                 .create();
-        toSendString= gson.toJson(toSend,toSend.getClass());
+        if(toSend!=null) {
+            toSendString = gson.toJson(toSend, toSend.getClass());
+        }
+        else{
+            toSendString="";
+        }
         /*switch (code){
             case Constants.CODE_ACTION:
                 toSendString = gson.toJson(toSend,Action.class);
