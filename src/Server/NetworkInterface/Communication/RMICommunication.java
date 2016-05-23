@@ -73,10 +73,14 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         rmiClientInterface = clientRMIService;
     }
 
-    //sending map
+    /** Overriding RMIClientHandler
+     * Called when a user selects the Map
+     * @param map map selected
+     * @throws RemoteException
+     */
     @Override
     public void sendMap(Map map) throws RemoteException {
-        System.out.println("DIOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        //System.out.println("DIOOOOOOOOOOOOOOOOOOOOOOOOOO");
         user.getGame().getGameController().setMap(map);
 
     }
@@ -96,7 +100,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     /** Overriding BaseCommunication
-     *
+     *  called when is the turn of the user
      */
     //TODO: change round
     @Override
@@ -110,6 +114,10 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
+    /** Overriding BaseCommunication
+     * Called when sending all maps to user
+     * @param availableMaps all maps available
+     */
     @Override
     public void sendAvailableMap(ArrayList<Map> availableMaps) {
         try {
