@@ -73,10 +73,12 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         rmiClientInterface = clientRMIService;
     }
 
+    //sending map
     @Override
     public void sendMap(Map map) throws RemoteException {
 
     }
+
 
     /** Overriding BaseCommunication
      *
