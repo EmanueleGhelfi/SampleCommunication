@@ -101,6 +101,7 @@ public class Map implements Serializable {
                 '}';
     }
 
+    //added equals
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
