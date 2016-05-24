@@ -29,8 +29,9 @@ public class Constants {
 
     //VIEW
     public static final String LOGIN_FXML = "/ClientPackage/View/GUIResources/FXML/LoginFXML.fxml";
-    public static final String WAITING_FXML = "/ClientPackage/View/GUIResources/FXML/MapSelectionFXML.fxml";
+    public static final String WAITING_FXML = "/ClientPackage/View/GUIResources/FXML/WaitingFXML.fxml";
     public static final String MATCH_FXML = "/ClientPackage/View/GUIResources/FXML/MatchFXML.fxml";
+    public static final String MAP_SELECTION_FXML = "/ClientPackage/View/GUIResources/FXML/MapSelectionFXML.fxml";
 
 
 

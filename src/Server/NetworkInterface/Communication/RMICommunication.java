@@ -81,7 +81,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     @Override
     public void sendMap(Map map) throws RemoteException {
         user.getGame().getGameController().setMap(map);
-
     }
 
 
