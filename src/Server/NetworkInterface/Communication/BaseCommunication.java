@@ -22,4 +22,5 @@ public abstract class BaseCommunication {
     public abstract void sendSelectedMap(SnapshotToSend snapshotToSend);
 
     public abstract void finishTurn();
+
 }

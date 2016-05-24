@@ -11,6 +11,7 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Utilities.Exception.MapsNotFoundException;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.Serializable;
 import java.util.*;
 
@@ -47,12 +48,13 @@ public class GameController implements Serializable{
         };
     }
 
+    /**
+     * Called when init game
+     */
     public void notifyStarted() {
         int userCounter = 0;
         game.setStarted(true);
         for (User user: game.getUsers()){
-            //user.setMainActionCounter(Constants.DEFAULT_MAIN_ACTION_COUNTER);
-            //user.setFastActionCounter(Constants.DEFAULT_FAST_ACTION_COUNTER);
             user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
             user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
             user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
@@ -68,11 +70,19 @@ public class GameController implements Serializable{
 
             userCounter++;
         }
+
+        /*
         for (User user: game.getUsers()) {
             System.out.println("Sending to "+user.getUsername());
             //user.notifyGameStart();
             initializeGame(user);
         }
+        */
+
+        // send map to first user
+        ArrayList<User> users = new ArrayList<>(game.getUsers());
+        sendAvailableMap(users.get(0));
+
     }
 
     public void cancelTimeout() {
@@ -99,11 +109,13 @@ public class GameController implements Serializable{
         timer.schedule(timerTask,duration);
     }
 
+    /*
     public void initializeGame(User user){
             System.out.println("GAMECONTROLLER -> Initializing Game, sending snapshot to: "+user.getUsername());
             SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
     }
+    */
 
     /**
      * create snapshot and change round
@@ -129,7 +141,7 @@ public class GameController implements Serializable{
         action.doAction(game,user);
     }
 
-    public void sendAvailableMap(User userToAdd) {
+    private void sendAvailableMap(User userToAdd) {
         userToAdd.getBaseCommunication().sendAvailableMap(availableMaps);
     }
 
@@ -143,6 +155,7 @@ public class GameController implements Serializable{
                     game.setMap(map);
                     for (User user: game.getUsers()) {
                         SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
+                        // init game
                         user.getBaseCommunication().sendSelectedMap(snapshotToSend);
                     }
                     selectFirstPlayer();

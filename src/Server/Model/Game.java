@@ -146,9 +146,6 @@ public class Game implements Serializable{
         System.out.println("ADDING A USER TO A GAME "+userToAdd);
         if(!usersInGame.containsKey(userToAdd.getUsername())){
             usersInGame.put(userToAdd.getUsername(),userToAdd);
-            if(usersInGame.size()==1){
-                gameController.sendAvailableMap(userToAdd);
-            }
             if(usersInGame.size()>=2 && usersInGame.size()<Constants.MAX_CLIENT_NUMBER){
                 gameController.setTimeout();
             }
@@ -204,6 +201,7 @@ public class Game implements Serializable{
             return regions.get(region);
         return null;
     }
+
     public City getCity(City city) {
         if(map.getMapGraph().containsVertex(city)){
             for (City cityToSearch: map.getMapGraph().vertexSet()) {

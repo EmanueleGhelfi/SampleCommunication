@@ -295,8 +295,5 @@
     }
   ],
   "mapName": "TERZA mappa",
-  "mapPreview": "map preview",
-  "imageMapLeft": "image left",
-  "imageMapRight": "Image right",
-  "imageMapCenter": "image left"
+  "mapPreview": "/ClientPackage/View/GUIResources/Image/Mappa1.jpg"
 }

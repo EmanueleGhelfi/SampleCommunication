@@ -42,15 +42,6 @@ public class Map implements Serializable {
     private String mapPreview;
 
 
-    private String imageMapLeft;
-
-
-    private String imageMapRight;
-
-
-    private String imageMapCenter;
-
-
     private transient SimpleGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
 
 
@@ -67,29 +58,6 @@ public class Map implements Serializable {
         this.city = city;
     }
 
-    public String getImageMapCenter() {
-        return imageMapCenter;
-    }
-
-    public void setImageMapCenter(String imageMapCenter) {
-        this.imageMapCenter = imageMapCenter;
-    }
-
-    public String getImageMapLeft() {
-        return imageMapLeft;
-    }
-
-    public void setImageMapLeft(String imageMapLeft) {
-        this.imageMapLeft = imageMapLeft;
-    }
-
-    public String getImageMapRight() {
-        return imageMapRight;
-    }
-
-    public void setImageMapRight(String imageMapRight) {
-        this.imageMapRight = imageMapRight;
-    }
 
     public ArrayList<Link> getLinks() {
         return links;
@@ -130,38 +98,12 @@ public class Map implements Serializable {
                 ", links=" + links +
                 ", mapName='" + mapName + '\'' +
                 ", mapPreview='" + mapPreview + '\'' +
-                ", imageMapLeft='" + imageMapLeft + '\'' +
-                ", imageMapRight='" + imageMapRight + '\'' +
-                ", imageMapCenter='" + imageMapCenter + '\'' +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Map map = (Map) o;
 
-        if (mapName != null ? !mapName.equals(map.mapName) : map.mapName != null) return false;
-        if (mapPreview != null ? !mapPreview.equals(map.mapPreview) : map.mapPreview != null) return false;
-        if (imageMapLeft != null ? !imageMapLeft.equals(map.imageMapLeft) : map.imageMapLeft != null) return false;
-        if (imageMapRight != null ? !imageMapRight.equals(map.imageMapRight) : map.imageMapRight != null) return false;
-        return imageMapCenter != null ? imageMapCenter.equals(map.imageMapCenter) : map.imageMapCenter == null;
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = links != null ? links.hashCode() : 0;
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (mapName != null ? mapName.hashCode() : 0);
-        result = 31 * result + (mapPreview != null ? mapPreview.hashCode() : 0);
-        result = 31 * result + (imageMapLeft != null ? imageMapLeft.hashCode() : 0);
-        result = 31 * result + (imageMapRight != null ? imageMapRight.hashCode() : 0);
-        result = 31 * result + (imageMapCenter != null ? imageMapCenter.hashCode() : 0);
-        return result;
-    }
 
     public static void write(){
         City arkon = new City(Color.BLUE, CityName.ARKON, Region.COAST);
@@ -220,11 +162,8 @@ public class Map implements Serializable {
         Map map = new Map();
         map.setCity(cities);
         map.setLinks(links);
-        map.setImageMapCenter("image left");
-        map.setImageMapRight("Image right");
-        map.setImageMapLeft("image left");
         map.setMapName("prima mappa");
-        map.setMapPreview("map preview");
+        map.setMapPreview("/ClientPackage/View/GUIResources/Image/Mappa1.jpg");
 
         System.out.println(map);
         Gson gson = new Gson();
