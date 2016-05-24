@@ -109,11 +109,13 @@ public class GameController implements Serializable{
         timer.schedule(timerTask,duration);
     }
 
+    /*
     public void initializeGame(User user){
             System.out.println("GAMECONTROLLER -> Initializing Game, sending snapshot to: "+user.getUsername());
             SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
     }
+    */
 
     /**
      * create snapshot and change round
@@ -139,7 +141,7 @@ public class GameController implements Serializable{
         action.doAction(game,user);
     }
 
-    public void sendAvailableMap(User userToAdd) {
+    private void sendAvailableMap(User userToAdd) {
         userToAdd.getBaseCommunication().sendAvailableMap(availableMaps);
     }
 

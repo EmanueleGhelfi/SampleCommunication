@@ -201,6 +201,7 @@ public class Game implements Serializable{
             return regions.get(region);
         return null;
     }
+
     public City getCity(City city) {
         if(map.getMapGraph().containsVertex(city)){
             for (City cityToSearch: map.getMapGraph().vertexSet()) {
