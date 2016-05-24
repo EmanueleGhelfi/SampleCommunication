@@ -28,9 +28,9 @@ public class MapSelectionController implements Initializable {
     @FXML private ImageView prevImageView;
     @FXML private ImageView thisImageView;
     @FXML private ImageView nextImageView;
-    @FXML private Image prevImage;
-    @FXML private Image thisImage;
-    @FXML private Image nextImage;
+    private Image prevImage;
+    private Image thisImage;
+    private Image nextImage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,16 +43,12 @@ public class MapSelectionController implements Initializable {
         for (Map map : mapArrayList) {
             this.mapArrayList.add(map);
         }
-        //prevImage = new Image(mapArrayList.get(mapArrayList.size() - 1).getMapPreview());
-        //thisImage = new Image(mapArrayList.get(0).getMapPreview());
-        //thisImage = new Image(mapArrayList.get(1).getMapPreview());
+        thisImage = new Image(mapArrayList.get(0).getMapPreview());
+        thisImageView.setImage(thisImage);
     }
 
     public void nextVisibleMap(){
         mapCounter++;
-        //prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
-        //thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
-        //thisImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
         System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
         System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
         System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
@@ -60,9 +56,6 @@ public class MapSelectionController implements Initializable {
 
     public void prevVisibleMap(){
         mapCounter--;
-        //prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
-        //thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
-        //thisImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
         System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
         System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
         System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
@@ -72,7 +65,6 @@ public class MapSelectionController implements Initializable {
         clientController.sendMap(mapArrayList.get(mapCounter));
         System.out.println("BUTTON PRESSED");
     }
-
 
     public void setClientController(ClientController clientController){
         this.clientController = clientController;

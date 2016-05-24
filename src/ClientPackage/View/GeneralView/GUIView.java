@@ -101,25 +101,30 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void showMap(ArrayList<Map> mapArrayList) {
-        System.out.println("show map page");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MAP_SELECTION_FXML));
-        Parent screen = null;
-        try {
-            screen = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mapSelectionController = loader.getController();
-        mapSelectionController.setClientController(clientController);
-        if(maps!=null)
-            mapSelectionController.showMap(maps);
-        scene = new Scene(screen);
-        this.stage.setScene(scene);
-        this.stage.show();
-        maps = mapArrayList;
-        if(waitingController!=null){
-            mapSelectionController.showMap(maps);
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("show map page");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MAP_SELECTION_FXML));
+                Parent screen = null;
+                try {
+                    screen = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mapSelectionController = loader.getController();
+                mapSelectionController.setClientController(clientController);
+                if(maps!=null)
+                    mapSelectionController.showMap(maps);
+                scene = new Scene(screen);
+                stage.setScene(scene);
+                stage.show();
+                maps = mapArrayList;
+                if(waitingController!=null){
+                    mapSelectionController.showMap(maps);
+                }
+            }
+        });
     }
 
     @Override
