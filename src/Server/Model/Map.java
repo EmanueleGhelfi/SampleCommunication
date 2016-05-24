@@ -101,9 +101,28 @@ public class Map implements Serializable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Map map = (Map) o;
 
+        if (links != null ? !links.equals(map.links) : map.links != null) return false;
+        if (city != null ? !city.equals(map.city) : map.city != null) return false;
+        if (mapName != null ? !mapName.equals(map.mapName) : map.mapName != null) return false;
+        return mapPreview != null ? mapPreview.equals(map.mapPreview) : map.mapPreview == null;
 
+    }
+
+    @Override
+    public int hashCode() {
+        int result = links != null ? links.hashCode() : 0;
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (mapName != null ? mapName.hashCode() : 0);
+        result = 31 * result + (mapPreview != null ? mapPreview.hashCode() : 0);
+        return result;
+    }
 
     public static void write(){
         City arkon = new City(Color.BLUE, CityName.ARKON, Region.COAST);

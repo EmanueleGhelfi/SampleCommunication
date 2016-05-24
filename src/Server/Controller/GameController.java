@@ -156,6 +156,7 @@ public class GameController implements Serializable{
                     for (User user: game.getUsers()) {
                         SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
                         // init game
+
                         user.getBaseCommunication().sendSelectedMap(snapshotToSend);
                     }
                     selectFirstPlayer();

@@ -26,7 +26,7 @@
          </children></Pane>
    </top>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="thisImageView" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="nextImageView" fitHeight="110.0" fitWidth="140.0" layoutX="330.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
@@ -42,6 +42,6 @@
                </image>
             </ImageView>
          </children>
-      </AnchorPane>
+      </Pane>
    </center>
 </BorderPane>
