@@ -146,6 +146,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
+
     @Override
     public void setUser(User user) {
         this.user = user;

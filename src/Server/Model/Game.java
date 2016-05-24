@@ -146,9 +146,6 @@ public class Game implements Serializable{
         System.out.println("ADDING A USER TO A GAME "+userToAdd);
         if(!usersInGame.containsKey(userToAdd.getUsername())){
             usersInGame.put(userToAdd.getUsername(),userToAdd);
-            if(usersInGame.size()==1){
-                gameController.sendAvailableMap(userToAdd);
-            }
             if(usersInGame.size()>=2 && usersInGame.size()<Constants.MAX_CLIENT_NUMBER){
                 gameController.setTimeout();
             }
