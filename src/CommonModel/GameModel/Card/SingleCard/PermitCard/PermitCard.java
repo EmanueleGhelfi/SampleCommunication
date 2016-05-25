@@ -50,6 +50,11 @@ public class PermitCard implements Serializable{
     public void setCityAcronimous(ArrayList<Character> cityAcronimous) {
         this.cityAcronimous = cityAcronimous;
     }
+
+    public ArrayList<Character> getCityAcronimous() {
+        return cityAcronimous;
+    }
+
     public void setRetroType(Region retroType) {
         this.retroType = retroType;
     }

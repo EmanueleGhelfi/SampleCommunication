@@ -20,4 +20,7 @@ public enum CityName implements Serializable {
         this.cityName = cityName;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
 }

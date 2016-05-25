@@ -1,10 +1,14 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import ClientPackage.View.GUIResources.customComponent.CityButton;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Exception.CouncilNotFoundException;
+import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
@@ -27,11 +31,13 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
 import java.net.URL;
@@ -43,16 +49,16 @@ import java.util.ResourceBundle;
  * Created by Giulio on 17/05/2016.
  */
 public class MatchController implements Initializable {
-public class MatchController implements Initializable{
 
     private ClientController clientController;
     private boolean myTurn;
-    @FXML Button buttonMain1;
-    @FXML AnchorPane background;
+    //@FXML Button buttonMain1;
+    //@FXML AnchorPane background;
     private SnapshotToSend currentSnapshot;
     private PopOver popOver = new PopOver();
     private Pane paneOfPopup = new Pane();
     private JFXComboBox<String> councilorColorToChoose = new JFXComboBox<>();
+    private String city;
     @FXML private ImageView imageTest;
     @FXML Button buttonMain1;
     @FXML Button buttonMain2;
@@ -168,12 +174,34 @@ public class MatchController implements Initializable{
 
     public void mainActionBuildWithPermitCard(){
         popOver = new PopOver();
-        clientController.getSnapshot();
-        ArrayList<String>
-        for (:) {
+        ArrayList<PermitCard> permit = clientController.getSnapshot().getCurrentUser().getPermitCards();
+        ArrayList<Node> nodeArray = new ArrayList<>();
 
+        for (City city: clientController.getSnapshot().getMap().getCity()){
+            Pane cityPane = (Pane) background.lookup(city.getCityName().name());
+            CityButton cityButton = new CityButton(city, this);
+            cityPane.getChildren().add(cityButton);
+            cityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    popOver = new PopOver();
+                    popOver.show(cityPane);
+                    paneOfPopup.getChildren().add(new Text("TESTING.."));
+                    JFXListView<String> list = new JFXListView<String>();
+                    ArrayList<String> ehehe = new ArrayList<String>();
+                    for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()) {
+                        String temporaryChar = null;
+                        for (Character character : permitCard.getCityAcronimous()){
+                            if (character.equals(city.getCityName().getCityName().charAt(0))){
+                                temporaryChar = temporaryChar + permitCard.getCityAcronimous().toString();
+                            }
+                        }
+                    }
+                    list.setItems(FXCollections.observableArrayList(ehehe));
+                    paneOfPopup.getChildren().add(list);
+                }
+            });
         }
-
 
     }
 
@@ -242,13 +270,5 @@ public class MatchController implements Initializable{
             System.out.println(council.get(i).getColor().name());
             circles.get(i).fillProperty().setValue(Paint.valueOf(council.get(i).getColor().name()));
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
-
-
     }
 }
