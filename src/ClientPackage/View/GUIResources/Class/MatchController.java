@@ -3,17 +3,20 @@ package ClientPackage.View.GUIResources.Class;
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.CityButton;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Exception.CouncilNotFoundException;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,9 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
@@ -36,7 +37,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.layout.Pane;
+
 import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
@@ -63,24 +64,10 @@ public class MatchController implements Initializable {
     @FXML Button buttonMain1;
     @FXML Button buttonMain2;
     @FXML AnchorPane background;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        popOver.setContentNode(paneOfPopup);
-    }
-
-    @FXML
-    Label nobilityPathText;
-
-    @FXML
-    Label richPathText;
-
-    @FXML
-    Label helperText;
-
-    @FXML
-    Label victoryPathText;
-
+    @FXML Label nobilityPathText;
+    @FXML Label richPathText;
+    @FXML Label helperText;
+    @FXML Label victoryPathText;
     @FXML private HBox regionCoast;
     @FXML private HBox regionHill;
     @FXML private HBox regionMountain;
@@ -96,8 +83,10 @@ public class MatchController implements Initializable {
     private ArrayList<Councilor> mountainCouncil = new ArrayList<>();
     private ArrayList<Councilor> kingCouncil = new ArrayList<>();
 
-
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        popOver.setContentNode(paneOfPopup);
+    }
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
@@ -107,6 +96,7 @@ public class MatchController implements Initializable {
                 clientController.mainActionElectCouncilor(councilorColorToChoose.getSelectionModel().getSelectedItem());
             }
         });
+        mainActionBuildWithPermitCard();
         currentSnapshot = clientController.getSnapshot();
         System.out.println("setting image");
         background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
@@ -167,40 +157,42 @@ public class MatchController implements Initializable {
         */
     }
 
-    public void mainActionBuyPermitCard(){
-        popOver = new PopOver();
-        popOver.show(buttonMain2);
-    }
+
 
     public void mainActionBuildWithPermitCard(){
-        popOver = new PopOver();
-        ArrayList<PermitCard> permit = clientController.getSnapshot().getCurrentUser().getPermitCards();
-        ArrayList<Node> nodeArray = new ArrayList<>();
 
-        for (City city: clientController.getSnapshot().getMap().getCity()){
-            Pane cityPane = (Pane) background.lookup(city.getCityName().name());
-            CityButton cityButton = new CityButton(city, this);
-            cityPane.getChildren().add(cityButton);
-            cityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    popOver = new PopOver();
-                    popOver.show(cityPane);
-                    paneOfPopup.getChildren().add(new Text("TESTING.."));
-                    JFXListView<String> list = new JFXListView<String>();
-                    ArrayList<String> ehehe = new ArrayList<String>();
-                    for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()) {
-                        String temporaryChar = null;
-                        for (Character character : permitCard.getCityAcronimous()){
-                            if (character.equals(city.getCityName().getCityName().charAt(0))){
-                                temporaryChar = temporaryChar + permitCard.getCityAcronimous().toString();
+
+        for (City city: clientController.getSnapshot().getMap().getCity()) {
+            Pane cityPane = (Pane) background.lookup("#"+city.getCityName().getCityName());
+            System.out.println(city.getCityName().getCityName());
+            if (cityPane != null) {
+                System.out.println("DIO PORCONE");
+                CityButton cityButton = new CityButton(city, this);
+                cityPane.getChildren().add(cityButton);
+                cityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        System.out.println("EHILAAAAAAAAAAAAAAAAAAAAA");
+
+                        popOver = new PopOver();
+                        paneOfPopup.getChildren().add(new Text("TESTING.."));
+                        JFXListView<String> list = new JFXListView<String>();
+                        ArrayList<String> ehehe = new ArrayList<String>();
+                        for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()) {
+                            String temporaryChar = null;
+                            for (Character character : permitCard.getCityAcronimous()) {
+                                if (character.equals(city.getCityName().getCityName().charAt(0))) {
+                                    temporaryChar = temporaryChar + permitCard.getCityAcronimous().toString();
+                                }
                             }
                         }
+                        list.setItems(FXCollections.observableArrayList(ehehe));
+                        paneOfPopup.getChildren().add(list);
+                        popOver.setContentNode(paneOfPopup);
+                        popOver.show(cityPane);
                     }
-                    list.setItems(FXCollections.observableArrayList(ehehe));
-                    paneOfPopup.getChildren().add(list);
-                }
-            });
+                });
+            }
         }
 
     }
@@ -270,5 +262,21 @@ public class MatchController implements Initializable {
             System.out.println(council.get(i).getColor().name());
             circles.get(i).fillProperty().setValue(Paint.valueOf(council.get(i).getColor().name()));
         }
+    }
+
+    public void mainActionBuyPermitCard(Event event) {
+        popOver.setContentNode(paneOfPopup);
+        Pane pane = (Pane) event.getTarget();
+        Label cityLabel = (Label) pane.lookup("#label");
+        clientController.mainActionBuyPermitCard(cityLabel.getText());
+        JFXCheckBox politicCardsCheckBox;
+        VBox vBox = new VBox();
+        for (PoliticCard politicCard: clientController.getSnapshot().getCurrentUser().getPoliticCards()){
+            politicCardsCheckBox = new JFXCheckBox();
+            politicCardsCheckBox.setText(politicCard.getPoliticColor().name());
+            vBox.getChildren().add(politicCardsCheckBox);
+        }
+        paneOfPopup.getChildren().add(vBox);
+        popOver.show(cityLabel);
     }
 }

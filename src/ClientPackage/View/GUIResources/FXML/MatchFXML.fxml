@@ -35,8 +35,13 @@
                         <Button layoutX="194.0" layoutY="233.0" mnemonicParsing="false" text="FAST 2" />
                         <Button layoutX="330.0" layoutY="233.0" mnemonicParsing="false" text="FAST 3" />
                         <Button layoutX="472.0" layoutY="233.0" mnemonicParsing="false" text="FAST 4" />
-                        <Pane fx:id="Arkhon" layoutX="94.0" layoutY="349.0" prefHeight="200.0" prefWidth="200.0" />
-                        <Pane fx:id="Burgen" layoutX="519.0" layoutY="349.0" prefHeight="200.0" prefWidth="200.0" />
+                        <Pane id="Arkon" layoutX="94.0" layoutY="349.0" prefHeight="200.0" prefWidth="200.0" />
+                        <Pane id="Burgen" layoutX="519.0" layoutY="349.0" prefHeight="200.0" prefWidth="200.0" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="230.0" layoutY="493.0" onMouseClicked="#mainActionBuyPermitCard" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Image/pic2673432.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </center>

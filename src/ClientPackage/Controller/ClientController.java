@@ -6,6 +6,7 @@ import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -195,5 +196,9 @@ public class ClientController {
 
     public SnapshotToSend getSnapshot() {
         return snapshot;
+    }
+
+    public void mainActionBuyPermitCard(String text) {
+        Action action = new MainActionBuyPermitCard(snapshot.getVisiblePermitCards().get(text));
     }
 }
