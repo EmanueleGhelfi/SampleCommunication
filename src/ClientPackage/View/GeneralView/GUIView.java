@@ -10,9 +10,6 @@ import Server.Model.Map;
 import Utilities.Class.Constants;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -142,7 +139,7 @@ public class GUIView extends Application implements BaseView {
                 matchController = loader.getController();
                 matchController.setClientController(clientController);
                 System.out.println("called my turn "+myTurn);
-                matchController.setMyTurn(myTurn);
+                matchController.setMyTurn(myTurn, clientController.getSnapshot());
                 Scene scene = new Scene(screen);
                 //stage= new Stage();
                 stage.setScene(scene);
@@ -154,20 +151,23 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void turnFinished() {
         if(matchController!=null) {
-            matchController.setMyTurn(false);
+            matchController.setMyTurn(false, clientController.getSnapshot());
         }
         myTurn=false;
         System.out.println("turn finished");
     }
 
     @Override
-    public void isMyTurn() {
+    public void isMyTurn(SnapshotToSend snapshot) {
         if(matchController!=null) {
-            matchController.setMyTurn(true);
+            matchController.setMyTurn(true,clientController.getSnapshot());
         }
         myTurn=true;
         System.out.println("turn initialized");
     }
 
-
+    @Override
+    public void updateSnapshot() {
+        matchController.updateSnapshot(clientController.getSnapshot());
+    }
 }

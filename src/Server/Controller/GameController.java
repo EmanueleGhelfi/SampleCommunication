@@ -179,4 +179,11 @@ public class GameController implements Serializable{
             users.get(i).getBaseCommunication().finishTurn();
         }
     }
+
+    public void sendSnapshotToAll() {
+        for (User user : game.getUsers()) {
+            SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
+            user.getBaseCommunication().sendSnapshot(snapshotToSend);
+        }
+    }
 }

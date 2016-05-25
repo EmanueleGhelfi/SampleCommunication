@@ -5,10 +5,12 @@ import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Path.Position;
 import Server.Model.*;
 import Server.Model.Map;
+import Utilities.Exception.CouncilNotFoundException;
 
 import java.io.Serializable;
 import java.util.*;
@@ -81,5 +83,20 @@ public class SnapshotToSend implements Serializable{
 
     public HashMap<String, ArrayList<PermitCard>> getVisiblePermitCards() {
         return visiblePermitCards;
+    }
+
+    public CurrentUser getCurrentUser() {
+        return currentUser;
+    }
+
+    public HashMap<String, Region> getRegions() {
+        return regions;
+    }
+
+    public ArrayList<Councilor> getCouncil(Region region) throws CouncilNotFoundException {
+        if(regions.get(region.getRegion())!=null){
+            return new ArrayList<Councilor>(regions.get(region.getRegion()).getCouncil().getCouncil());
+        }
+        else throw new CouncilNotFoundException();
     }
 }

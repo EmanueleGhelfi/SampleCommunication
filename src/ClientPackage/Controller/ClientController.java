@@ -134,6 +134,7 @@ public class ClientController {
     public void setSnapshot(SnapshotToSend snapshot) {
         this.snapshot = snapshot;
         System.out.println("CLIENTCONTROLLER <- "+snapshot);
+        baseView.updateSnapshot();
     }
 
 
@@ -153,7 +154,7 @@ public class ClientController {
     }
 
     public void isMyTurn() {
-        baseView.isMyTurn();
+        baseView.isMyTurn(snapshot);
         System.out.println("Client Controller: is my turn");
     }
 

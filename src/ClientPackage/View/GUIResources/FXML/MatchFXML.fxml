@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -8,38 +15,162 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<TabPane stylesheets="@../CSS/MatchCSS.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MatchController">
+<TabPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@../CSS/MatchCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MatchController">
    <tabs>
       <Tab text="Game">
          <content>
-            <AnchorPane fx:id="background" styleClass="matchBackground">
-               <children>
-                  <Text layoutX="265.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto" />
-                  <Button fx:id="buttonMain1" layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#mainActionElectCouncilor" text="MAIN 1" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="472.0" />
-                  <Button fx:id="buttonMain2" layoutX="194.0" layoutY="89.0" mnemonicParsing="false" onAction="#mainActionBuyPermitCard" text="MAIN 2" />
-                  <Button layoutX="330.0" layoutY="89.0" mnemonicParsing="false" onAction="#mainActionBuildWithPermitCard" text="MAIN 3" />
-                  <Button layoutX="472.0" layoutY="89.0" mnemonicParsing="false" onAction="#mainActionBuildWithKingHelp" text="MAIN 4" AnchorPane.rightAnchor="71.0" />
-                  <Button layoutX="71.0" layoutY="233.0" mnemonicParsing="false" onAction="#fastActionChangePermitCardWithHelper" text="FAST 1" />
-                  <Button layoutX="194.0" layoutY="233.0" mnemonicParsing="false" onAction="#fastActionElectCouncilorWithHelper" text="FAST 2" />
-                  <Button layoutX="330.0" layoutY="233.0" mnemonicParsing="false" onAction="#fastActionMoneyForHelper" text="FAST 3" />
-                  <Button layoutX="472.0" layoutY="233.0" mnemonicParsing="false" onAction="#fastActionNewMainAction" text="FAST 4" />
-                  <ImageView fx:id="imageTest" fitHeight="45.0" fitWidth="50.0" layoutX="14.0" onMouseClicked="#mainActionElectCouncilor" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Image/ArrowLeft.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="50.0" layoutX="64.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Image/ArrowLeft.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="50.0" layoutX="116.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Image/ArrowLeft.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </AnchorPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <AnchorPane fx:id="background" prefHeight="622.0" prefWidth="1200.0" styleClass="matchBackground" BorderPane.alignment="CENTER">
+                     <children>
+                        <Text layoutX="265.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto" />
+                        <Button fx:id="buttonMain1" layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#main1" text="MAIN 1" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="472.0" />
+                        <Button layoutX="194.0" layoutY="89.0" mnemonicParsing="false" onAction="#main2" text="MAIN 2" />
+                        <Button layoutX="330.0" layoutY="89.0" mnemonicParsing="false" onAction="#main3" text="MAIN 3" />
+                        <Button layoutX="472.0" layoutY="89.0" mnemonicParsing="false" onAction="#main4" text="MAIN 4" AnchorPane.rightAnchor="71.0" />
+                        <Button layoutX="71.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast1" text="FAST 1" />
+                        <Button layoutX="194.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast2" text="FAST 2" />
+                        <Button layoutX="330.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast3" text="FAST 3" />
+                        <Button layoutX="472.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast4" text="FAST 4" />
+                     </children>
+                  </AnchorPane>
+               </center>
+               <bottom>
+                  <VBox prefHeight="162.0" prefWidth="1200.0" spacing="30.0">
+                     <children>
+                        <HBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox fx:id="regionCoast" spacing="10.0">
+                                 <children>
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </HBox.margin>
+                              </HBox>
+                              <HBox fx:id="regionHill" layoutX="10.0" layoutY="10.0" spacing="10.0">
+                                 <children>
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </HBox.margin>
+                              </HBox>
+                              <HBox fx:id="regionMountain" layoutX="250.0" layoutY="10.0" spacing="10.0">
+                                 <children>
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </HBox.margin>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox  alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <HBox spacing="10.0" fx:id="regionKing">
+                                 <children>
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </HBox.margin>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </bottom>
+               <top>
+                  <HBox prefHeight="87.0" prefWidth="1200.0" spacing="40.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+                     <children>
+                        <GridPane alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/Servente.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="helperText" text="Numero aiutanti" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                        <GridPane alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                           <children>
+                              <Label fx:id="victoryPathText" text="Percorso vittoria" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/Shield.jpg" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane alignment="CENTER" layoutX="131.0" layoutY="10.0">
+                           <children>
+                              <Label fx:id="richPathText" text="Percorso ricchezza" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/coin.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <GridPane alignment="CENTER" layoutX="266.0" layoutY="10.0">
+                           <children>
+                              <Label fx:id="nobilityPathText" text="Percorso Nobiltà" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Image/nobilityPath.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                     <padding>
+                        <Insets left="40.0" />
+                     </padding>
+                  </HBox>
+               </top>
+            </BorderPane>
          </content>
       </Tab>
       <Tab text="Paths">

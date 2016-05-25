@@ -5,7 +5,10 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.City.Region;
+import Utilities.Class.Constants;
+
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Created by Giulio on 14/05/2016.
@@ -17,10 +20,13 @@ public class King implements Serializable, GotCouncil {
 
     public King() {
         this.council = new Council();
-        council.add(new Councilor(PoliticColor.BLACK));
-        council.add(new Councilor(PoliticColor.ORANGE));
-        council.add(new Councilor(PoliticColor.PINK));
-        council.add(new Councilor(PoliticColor.WHITE));
+        Random random = new Random();
+        for(int i = 0; i< Constants.COUNCILOR_DIMENSION; i++){
+            PoliticColor[] politicColors = PoliticColor.values();
+            int value = random.nextInt(5);
+            System.out.println("Random color"+politicColors[value]);
+            council.add(new Councilor(politicColors[value]));
+        }
         this.currentCity = new City(Color.BLUE, CityName.ARKON, Region.COAST);
     }
 
