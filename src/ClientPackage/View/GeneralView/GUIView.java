@@ -168,4 +168,6 @@ public class GUIView extends Application implements BaseView {
         myTurn=true;
         System.out.println("turn initialized");
     }
+
+
 }
