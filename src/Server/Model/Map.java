@@ -121,6 +121,7 @@ public class Map implements Serializable {
     }
 
     public static void write(){
+        //
         City arkon = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
         City burgen = new City(Color.YELLOW,CityName.BURGEN,RegionName.COAST);
         City castrum = new City(Color.GREY,CityName.CASTRUM,RegionName.COAST);
