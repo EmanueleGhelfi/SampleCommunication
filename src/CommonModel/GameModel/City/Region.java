@@ -21,6 +21,7 @@ public enum Region implements Serializable, GotCouncil {
     private int cityNumber;
     private Council council;
 
+    //default
     Region() {
         region = "";
     }
