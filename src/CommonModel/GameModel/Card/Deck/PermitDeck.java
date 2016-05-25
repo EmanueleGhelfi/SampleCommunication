@@ -69,4 +69,13 @@ public class PermitDeck implements Deck,Serializable {
         }
         throw new ActionNotPossibleException();
     }
+
+    public PermitCard getPermitCardVisible(int num){
+        if(num>=2 || num<0){
+            return null;
+        }
+        else{
+            return permitCardsVisible.get(num);
+        }
+    }
 }

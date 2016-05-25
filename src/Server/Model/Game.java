@@ -5,7 +5,6 @@ import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
-import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Path.MoneyPath;
@@ -15,7 +14,6 @@ import Server.Controller.GameController;
 import Utilities.Class.Constants;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 
 import java.io.Serializable;
 import java.util.*;
@@ -249,7 +247,7 @@ public class Game implements Serializable{
     public NobilityPath getNobilityPath() {
         return nobilityPath;
     }
-    public PermitDeck getPermitDeck(Region region){
+    public PermitDeck getPermitDeck(RegionName region){
         return permitDecks.get(region);
     }
     public HashMap<RegionName, Region> getRegions() {
