@@ -7,6 +7,7 @@ import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
 import Utilities.Class.Constants;
+import Utilities.Class.EnumAdapterFactory;
 import Utilities.Class.InterfaceAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,25 +19,26 @@ import java.util.Random;
 /**
  * Created by Giulio on 13/05/2016.
  */
-public enum Region implements Serializable, GotCouncil {
+public class Region implements Serializable, GotCouncil {
 
-    MOUNTAIN (Constants.MOUNTAIN, Constants.REGION_BONUS), HILL (Constants.HILL, Constants.REGION_BONUS), COAST (Constants.COAST, Constants.REGION_BONUS);
 
-    private final String region;
+
+    private RegionName region;
     private int cityNumber;
     private Council council;
 
     //default
-    Region() {
-        region = "";
+    public Region() {
+
     }
 
-    private Region (String region, int cityNumber){
+    public Region (RegionName region, int cityNumber){
         this.region = region;
         this.cityNumber = cityNumber;
+        createRandomCouncil();
     }
 
-    public void createRandomCouncil(){
+    private void createRandomCouncil(){
         if(council==null) {
             council = new Council();
             Random random = new Random();
@@ -52,7 +54,7 @@ public enum Region implements Serializable, GotCouncil {
     public boolean checkRegion(ArrayList<City> userEmporiums){
         int cityCounter = 0;
         for (City city: userEmporiums) {
-            if (city.getRegion() == this) {
+            if (city.getRegion() == this.region) {
                 cityCounter++;
             }
         }
@@ -62,9 +64,10 @@ public enum Region implements Serializable, GotCouncil {
         return false;
     }
 
-    public String getRegion() {
+    public RegionName getRegion() {
         return region;
     }
+
     @Override
     public Council getCouncil(){
         return council;
@@ -80,12 +83,12 @@ public enum Region implements Serializable, GotCouncil {
     }
 
     public static void main(String[] args){
-        System.out.println(Region.COAST);
+        //System.out.println(Region.COAST);
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
-                .registerTypeAdapter(Region.class, new InterfaceAdapter<>())
+                .registerTypeAdapterFactory(new EnumAdapterFactory())
                 .create();
-        String region = gson.toJson(Region.COAST);
-        System.out.println(region);
+        //String region = gson.toJson(Region.COAST);
+        //System.out.println(region);
     }
 
 

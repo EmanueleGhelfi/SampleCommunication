@@ -2,6 +2,7 @@ package CommonModel.GameModel.Action;
 
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+import CommonModel.GameModel.City.RegionName;
 import Server.Controller.GamesManager;
 import Server.NetworkInterface.Communication.RMICommunication;
 import Utilities.Class.Constants;
@@ -21,12 +22,12 @@ import java.util.HashSet;
  */
 public class MainActionBuyPermitCard extends Action {
 
-    private Region userRegion;
+    private RegionName userRegion;
     private ArrayList<PoliticCard> politicCards;
     private PermitCard permitCard;
     private int bonusCounter = 0;
 
-    public MainActionBuyPermitCard(ArrayList<PoliticCard> politicCard, Region userRegion, PermitCard permitCard) {
+    public MainActionBuyPermitCard(ArrayList<PoliticCard> politicCard, RegionName userRegion, PermitCard permitCard) {
         this.politicCards = politicCard;
         this.userRegion = userRegion;
         this.actionType = Constants.MAIN_ACTION;
@@ -39,7 +40,7 @@ public class MainActionBuyPermitCard extends Action {
             // count number of correct politic card
             int correctPoliticCard = 0;
             // region of permit card
-            Region region = game.getRegion(userRegion.getRegion());
+            Region region = game.getRegion(userRegion);
             //this is the new position of the user in money path
             int newPositionInMoneyPath = 0;
             // calculate correct politic card
@@ -79,8 +80,8 @@ public class MainActionBuyPermitCard extends Action {
         politicCardArrayList.add(new PoliticCard(PoliticColor.WHITE,false));
         politicCardArrayList.add(new PoliticCard(PoliticColor.ORANGE,false));
         user.getPoliticCards().addAll(politicCardArrayList);
-        Region region = Region.MOUNTAIN;
-        PermitCard permitCard = new PermitCard(new MainBonus(1,5,9,false),null,Region.MOUNTAIN);
+        RegionName region = RegionName.MOUNTAIN;
+        PermitCard permitCard = new PermitCard(new MainBonus(1,5,9,false),null,region);
         MainActionBuyPermitCard mainActionBuyPermitCard = new MainActionBuyPermitCard(politicCardArrayList,region,permitCard);
         try {
             mainActionBuyPermitCard.doAction(game,user);

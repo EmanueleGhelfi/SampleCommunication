@@ -16,7 +16,7 @@ public class City implements Serializable {
 
     private Color cityColor;
 
-    private Region cityRegion;
+    private RegionName cityRegion;
 
     private String urlCity;
 
@@ -25,7 +25,7 @@ public class City implements Serializable {
     public City() {
     }
 
-    public City(Color cityColor, CityName cityName, Region cityRegion) {
+    public City(Color cityColor, CityName cityName, RegionName cityRegion) {
         this.cityColor = cityColor;
         this.cityName = cityName;
         this.cityRegion = cityRegion;
@@ -67,7 +67,7 @@ public class City implements Serializable {
     public Bonus getBonus() {
         return bonus;
     }
-    public Region getRegion() {
+    public RegionName getRegion() {
         return cityRegion;
     }
     public Color getColor() {

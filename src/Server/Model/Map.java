@@ -2,10 +2,7 @@ package Server.Model;
 
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
-import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.CityName;
-import CommonModel.GameModel.City.Color;
-import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.*;
 import Utilities.Class.InterfaceAdapter;
 import Utilities.Exception.MapsNotFoundException;
 import com.google.gson.Gson;
@@ -124,21 +121,21 @@ public class Map implements Serializable {
     }
 
     public static void write(){
-        City arkon = new City(Color.BLUE, CityName.ARKON, Region.COAST);
-        City burgen = new City(Color.YELLOW,CityName.BURGEN,Region.COAST);
-        City castrum = new City(Color.GREY,CityName.CASTRUM,Region.COAST);
-        City dorful = new City(Color.BLUE,CityName.DORFUL,Region.COAST);
-        City esti = new City(Color.GREY,CityName.ESTI,Region.COAST);
-        City framek = new City(Color.YELLOW,CityName.FRAMEK,Region.HILL);
-        City indur = new City(Color.ORANGE,CityName.INDUR,Region.HILL);
-        City graden = new City(Color.GREY,CityName.GRADEN,Region.HILL);
-        City juvelar = new City(Color.PURPLE,CityName.JUVELAR,Region.HILL);
-        City hellar = new City(Color.YELLOW,CityName.HELLAR,Region.HILL);
-        City kultos = new City(Color.YELLOW,CityName.KULTOS,Region.MOUNTAIN);
-        City lyram = new City(Color.BLUE,CityName.LYRAM,Region.MOUNTAIN);
-        City merkatim = new City(Color.GREY,CityName.MERKATIM,Region.MOUNTAIN);
-        City naris = new City(Color.ORANGE,CityName.NARIS,Region.MOUNTAIN);
-        City osium = new City(Color.YELLOW,CityName.OSIUM,Region.MOUNTAIN);
+        City arkon = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
+        City burgen = new City(Color.YELLOW,CityName.BURGEN,RegionName.COAST);
+        City castrum = new City(Color.GREY,CityName.CASTRUM,RegionName.COAST);
+        City dorful = new City(Color.BLUE,CityName.DORFUL,RegionName.COAST);
+        City esti = new City(Color.GREY,CityName.ESTI,RegionName.COAST);
+        City framek = new City(Color.YELLOW,CityName.FRAMEK,RegionName.HILL);
+        City indur = new City(Color.ORANGE,CityName.INDUR,RegionName.HILL);
+        City graden = new City(Color.GREY,CityName.GRADEN,RegionName.HILL);
+        City juvelar = new City(Color.PURPLE,CityName.JUVELAR,RegionName.HILL);
+        City hellar = new City(Color.YELLOW,CityName.HELLAR,RegionName.HILL);
+        City kultos = new City(Color.YELLOW,CityName.KULTOS,RegionName.MOUNTAIN);
+        City lyram = new City(Color.BLUE,CityName.LYRAM,RegionName.MOUNTAIN);
+        City merkatim = new City(Color.GREY,CityName.MERKATIM,RegionName.MOUNTAIN);
+        City naris = new City(Color.ORANGE,CityName.NARIS,RegionName.MOUNTAIN);
+        City osium = new City(Color.YELLOW,CityName.OSIUM,RegionName.MOUNTAIN);
 
         ArrayList<Link> links = new ArrayList<>();
         links.add(new Link(arkon,castrum));
@@ -188,7 +185,7 @@ public class Map implements Serializable {
         String gsonString = gson.toJson(map);
         System.out.println(gsonString);
         try {
-            PrintWriter out = new PrintWriter("mapConfig.json");
+            PrintWriter out = new PrintWriter("src/Utilities/ConfigurationFile/mapConfig.json");
             out.write(gsonString);
             out.flush();
         } catch (FileNotFoundException e) {
@@ -197,6 +194,7 @@ public class Map implements Serializable {
     }
 
     public static void main(String[] args){
+        write();
         try {
             ArrayList<Map> maps = readAllMap();
             Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())

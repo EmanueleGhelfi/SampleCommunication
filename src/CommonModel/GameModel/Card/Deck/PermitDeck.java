@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Card.Deck;
 
+import CommonModel.GameModel.City.RegionName;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
@@ -17,13 +18,13 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class PermitDeck implements Deck,Serializable {
 
     private Queue<PermitCard> permitDeck;
-    private Region region;
+    private RegionName region;
     private ArrayList<PermitCard> permitCardsVisible;
 
     public PermitDeck() {
     }
 
-    public PermitDeck(Region region){
+    public PermitDeck(RegionName region){
         permitDeck = new ArrayBlockingQueue<>(Constants.REGION_DECK_SIZE);
         this.region = region;
     }

@@ -1,10 +1,7 @@
 package CommonModel.GameModel.Council;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.CityName;
-import CommonModel.GameModel.City.Color;
-import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.*;
 import Utilities.Class.Constants;
 
 import java.io.Serializable;
@@ -27,7 +24,7 @@ public class King implements Serializable, GotCouncil {
             System.out.println("Random color king called"+politicColors[value]);
             council.add(new Councilor(politicColors[value]));
         }
-        this.currentCity = new City(Color.BLUE, CityName.ARKON, Region.COAST);
+        this.currentCity = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
     }
 
     public King(City currentCity) {

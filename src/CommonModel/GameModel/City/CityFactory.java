@@ -10,12 +10,12 @@ import java.util.ArrayList;
  */
 public class CityFactory {
 
-    public static ArrayList<ArrayList<Character>> getCity(Region region){
-        if (region.equals(Region.MOUNTAIN))
+    public static ArrayList<ArrayList<Character>> getCity(RegionName region){
+        if (region.equals(RegionName.MOUNTAIN))
             return PermitCardMountainCity.getCities();
-        if (region.equals(Region.COAST))
+        if (region.equals(RegionName.COAST))
             return PermitCardCoastCity.getCities();
-        if (region.equals(Region.HILL))
+        if (region.equals(RegionName.HILL))
             return PermitCardHillCity.getCities();
         return null;
     }

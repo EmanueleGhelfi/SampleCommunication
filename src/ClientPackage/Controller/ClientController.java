@@ -6,6 +6,7 @@ import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
+import CommonModel.GameModel.City.RegionName;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -164,7 +165,7 @@ public class ClientController {
             temp = PoliticColor.WHITE;
         else
             temp = PoliticColor.BLACK;
-        Action action = new MainActionElectCouncilor(new Councilor(temp), snapshot.getKing(), Region.HILL);
+        Action action = new MainActionElectCouncilor(new Councilor(temp), snapshot.getKing(), RegionName.HILL);
         try {
             clientService.onAction(action);
         } catch (ActionNotPossibleException e) {
@@ -179,7 +180,7 @@ public class ClientController {
     }
 
     public void fastActionElectCouncilorWithHelper() {
-        Action action = new FastActionElectCouncilorWithHelper(Region.HILL,snapshot.getKing(),new Councilor(PoliticColor.BLACK),Constants.REGION_COUNCIL);
+        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL,snapshot.getKing(),new Councilor(PoliticColor.BLACK),Constants.REGION_COUNCIL);
         try {
             clientService.onAction(action);
         } catch (ActionNotPossibleException e) {

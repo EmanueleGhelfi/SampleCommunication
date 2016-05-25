@@ -67,8 +67,8 @@ public abstract class Action implements Serializable {
     }
 
     protected void checkRegionBonus (City city, User user, Game game) throws ActionNotPossibleException {
-        if (city.getRegion().checkRegion(user.getUsersEmporium())){
-            game.getRegionBonusCard(city.getRegion().getRegion()).getBonus(user, game);
+        if (game.getRegion(city.getRegion()).checkRegion(user.getUsersEmporium())){
+            game.getRegionBonusCard(city.getRegion()).getBonus(user, game);
             // check king bonus and get it
             KingBonusCard kingBonusCard = game.getKingBonusCard();
             if (kingBonusCard != null){

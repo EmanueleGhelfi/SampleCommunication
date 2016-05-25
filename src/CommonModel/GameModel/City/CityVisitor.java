@@ -45,12 +45,12 @@ public class CityVisitor{
 
 
     public static void main(String[] args){
-        City city = new City(Color.BLUE,CityName.ARKON,Region.COAST);
-        City city2 = new City(Color.GREY,CityName.BURGEN,Region.COAST);
-        City city3 = new City(Color.BLUE,CityName.KULTOS,Region.COAST);
-        City city4 = new City(Color.GREY,CityName.NARIS,Region.COAST);
-        City city5 = new City(Color.BLUE,CityName.OSIUM,Region.COAST);
-        City city6 = new City(Color.GREY,CityName.GRADEN,Region.COAST);
+        City city = new City(Color.BLUE,CityName.ARKON,RegionName.COAST);
+        City city2 = new City(Color.GREY,CityName.BURGEN,RegionName.COAST);
+        City city3 = new City(Color.BLUE,CityName.KULTOS,RegionName.COAST);
+        City city4 = new City(Color.GREY,CityName.NARIS,RegionName.COAST);
+        City city5 = new City(Color.BLUE,CityName.OSIUM,RegionName.COAST);
+        City city6 = new City(Color.GREY,CityName.GRADEN,RegionName.COAST);
         UndirectedGraph<City,DefaultEdge> graph = new SimpleGraph<City, DefaultEdge>(DefaultEdge.class);
         graph.addVertex(city);
         graph.addVertex(city2);
