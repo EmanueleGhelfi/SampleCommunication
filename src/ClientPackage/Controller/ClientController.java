@@ -158,10 +158,15 @@ public class ClientController {
         System.out.println("Client Controller: is my turn");
     }
 
-    public void main1() {
-        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.ORANGE), null, Region.HILL);
+    public void mainActionElectCouncilor(String parameter) {
+        PoliticColor temp;
+        if (parameter == "WHITE")
+            temp = PoliticColor.WHITE;
+        else
+            temp = PoliticColor.BLACK;
+        Action action = new MainActionElectCouncilor(new Councilor(temp), snapshot.getKing(), Region.HILL);
         try {
-            clientService.onTestAction(action);
+            clientService.onAction(action);
         } catch (ActionNotPossibleException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
@@ -173,10 +178,10 @@ public class ClientController {
         baseView.turnFinished();
     }
 
-    public void fast1() {
+    public void fastActionElectCouncilorWithHelper() {
         Action action = new FastActionElectCouncilorWithHelper(Region.HILL,snapshot.getKing(),new Councilor(PoliticColor.BLACK),Constants.REGION_COUNCIL);
         try {
-            clientService.onTestAction(action);
+            clientService.onAction(action);
         } catch (ActionNotPossibleException e) {
             e.printStackTrace();
         } catch (RemoteException e) {

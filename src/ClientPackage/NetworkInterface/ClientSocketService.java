@@ -65,7 +65,7 @@ public class ClientSocketService extends ClientService implements Runnable {
 
     //TODO test?
     @Override
-    public void onTestAction(Action action) {
+    public void onAction(Action action) {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_ACTION, action);
     }
 
