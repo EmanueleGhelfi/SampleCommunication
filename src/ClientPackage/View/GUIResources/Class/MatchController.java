@@ -9,6 +9,7 @@ import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Exception.CouncilNotFoundException;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;
@@ -34,16 +35,13 @@ import javafx.scene.shape.Circle;
 
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -264,10 +262,10 @@ public class MatchController implements Initializable {
         }
     }
 
-    public void mainActionBuyPermitCard(Event event) {
+    public void mainActionBuyPermitCardFirst(Event event) {
         popOver.setContentNode(paneOfPopup);
         Pane pane = (Pane) event.getTarget();
-        Label cityLabel = (Label) pane.lookup("#label");
+        Label cityLabel = (Label) pane.lookup(".Label");
         clientController.mainActionBuyPermitCard(cityLabel.getText());
         JFXCheckBox politicCardsCheckBox;
         VBox vBox = new VBox();
@@ -276,7 +274,22 @@ public class MatchController implements Initializable {
             politicCardsCheckBox.setText(politicCard.getPoliticColor().name());
             vBox.getChildren().add(politicCardsCheckBox);
         }
+        JFXButton jfxButton = new JFXButton();
+        jfxButton.setText("OK MAN");
+        jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ArrayList<String> politicCard = new ArrayList<String>();
+                Set<Node> jfxCheckBoxArrayList = (Set<Node>) vBox.lookupAll(".JFXCheckBox");
+                for (Node node : jfxCheckBoxArrayList) {
+                    JFXCheckBox jfxCheckBoxTempTemp = (JFXCheckBox) node;
+                    if (jfxCheckBoxTempTemp.isArmed())
+                        politicCard.add(jfxCheckBoxTempTemp.getText());
+                }
+            }
+        });
         paneOfPopup.getChildren().add(vBox);
         popOver.show(cityLabel);
     }
+
 }
