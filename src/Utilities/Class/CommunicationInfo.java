@@ -50,19 +50,16 @@ public class CommunicationInfo {
             else {
                 toSendString = gson.toJson(toSend, toSend.getClass());
             }
-            System.out.println("AAAAAAAAAAAAAAAA"+toSend.getClass());
         }
         else{
             toSendString="";
         }
-        System.out.println(toSendString);
         communicationInfo = new CommunicationInfo(code, toSendString);
         communicationToSend = gson.toJson(communicationInfo);
         out.println(communicationToSend);
     }
 
     public static CommunicationInfo decodeCommunicationInfo(String communicationInfo){
-        System.out.println(communicationInfo);
         Gson gson = new Gson();
         return gson.fromJson(communicationInfo,CommunicationInfo.class);
     }

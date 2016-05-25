@@ -83,6 +83,7 @@ public class Game implements Serializable{
 
     private void createRegion() {
         for (Region region:Region.values()) {
+            region.createRandomCouncil();
             regions.put(region.getRegion(),region);
             System.out.println(region);
         }
