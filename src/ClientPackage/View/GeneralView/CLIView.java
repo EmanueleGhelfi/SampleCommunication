@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 13/05/2016.
  */
+//TODO
 public class CLIView implements BaseView {
 
     public CLIView(ClientController clientController) {
@@ -44,7 +45,12 @@ public class CLIView implements BaseView {
     }
 
     @Override
-    public void isMyTurn() {
+    public void isMyTurn(SnapshotToSend snapshot) {
+
+    }
+
+    @Override
+    public void updateSnapshot() {
 
     }
 

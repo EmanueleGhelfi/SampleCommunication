@@ -22,5 +22,7 @@ public interface BaseView {
 
     void turnFinished();
 
-    void isMyTurn();
+    void isMyTurn(SnapshotToSend snapshot);
+
+    void updateSnapshot();
 }

@@ -50,9 +50,13 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
                         council = game.getKing().getCouncil();
                     } else throw new ActionNotPossibleException();
                     }
-                }
                 council.add(councilor);
                 removeAction(game, user);
+                }
+            else{
+                throw new ActionNotPossibleException();
+            }
+
             } else {
                 throw new ActionNotPossibleException();
             }

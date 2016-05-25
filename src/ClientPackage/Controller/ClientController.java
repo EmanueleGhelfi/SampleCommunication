@@ -134,6 +134,7 @@ public class ClientController {
     public void setSnapshot(SnapshotToSend snapshot) {
         this.snapshot = snapshot;
         System.out.println("CLIENTCONTROLLER <- "+snapshot);
+        baseView.updateSnapshot();
     }
 
 
@@ -153,12 +154,12 @@ public class ClientController {
     }
 
     public void isMyTurn() {
-        baseView.isMyTurn();
+        baseView.isMyTurn(snapshot);
         System.out.println("Client Controller: is my turn");
     }
 
     public void main1() {
-        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.ORANGE), snapshot.getKing(), Region.HILL);
+        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.ORANGE), null, Region.HILL);
         try {
             clientService.onTestAction(action);
         } catch (ActionNotPossibleException e) {
