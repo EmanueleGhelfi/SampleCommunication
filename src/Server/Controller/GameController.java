@@ -3,6 +3,7 @@ package Server.Controller;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+import CommonModel.GameModel.Council.King;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.Map;
@@ -153,6 +154,7 @@ public class GameController implements Serializable{
             for (Map mapToSelect : availableMaps) {
                 if(mapToSelect.equals(map)){
                     game.setMap(map);
+                    game.setKing(new King(map.getCity().get(0)));
                     for (User user: game.getUsers()) {
                         SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
                         // init game

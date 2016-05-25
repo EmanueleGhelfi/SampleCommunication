@@ -78,7 +78,7 @@ public class Game implements Serializable{
         //create Region
         createRegion();
         //create king
-        king = new King();
+        //king = new King();
     }
 
     private void createRegion() {
@@ -284,5 +284,9 @@ public class Game implements Serializable{
 
     public Map getMap() {
         return map;
+    }
+
+    public void setKing(King king) {
+        this.king = king;
     }
 }

@@ -34,7 +34,7 @@ public enum Region implements Serializable, GotCouncil {
         for(int i = 0; i<Constants.COUNCILOR_DIMENSION; i++){
             PoliticColor[] politicColors = PoliticColor.values();
             int value = random.nextInt(5);
-            System.out.println("Random color "+politicColors[value]);
+            System.out.println("Random color in region called "+politicColors[value]);
             council.add(new Councilor(politicColors[value]));
 
         }
