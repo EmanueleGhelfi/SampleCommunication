@@ -186,4 +186,8 @@ public class ClientController {
     public void setBaseView(GUIView baseView) {
         this.baseView = baseView;
     }
+
+    public SnapshotToSend getSnapshot() {
+        return snapshot;
+    }
 }

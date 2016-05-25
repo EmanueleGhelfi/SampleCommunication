@@ -146,8 +146,8 @@ public class GameController implements Serializable{
     }
 
     public void setMap(Map map) {
-        System.out.println(map);
-        System.out.println(availableMaps);
+        System.out.println("selected map"+map.getMapName());
+        System.out.println("available map"+availableMaps);
         if(availableMaps.contains(map)){
             System.out.println("MAP PRESENT");
             for (Map mapToSelect : availableMaps) {
@@ -156,7 +156,6 @@ public class GameController implements Serializable{
                     for (User user: game.getUsers()) {
                         SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
                         // init game
-
                         user.getBaseCommunication().sendSelectedMap(snapshotToSend);
                     }
                     selectFirstPlayer();
