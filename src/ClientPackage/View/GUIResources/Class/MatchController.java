@@ -1,8 +1,10 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import CommonModel.Snapshot.SnapshotToSend;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Created by Giulio on 17/05/2016.
@@ -12,9 +14,15 @@ public class MatchController {
     private ClientController clientController;
     private boolean myTurn;
     @FXML Button buttonMain1;
+    @FXML
+    AnchorPane background;
+    private SnapshotToSend currentSnapshot;
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
+        currentSnapshot = clientController.getSnapshot();
+        System.out.println("setting image");
+        background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
     }
 
     public void main1(){

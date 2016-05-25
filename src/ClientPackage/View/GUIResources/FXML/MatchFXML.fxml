@@ -10,7 +10,7 @@
    <tabs>
       <Tab text="Game">
          <content>
-            <AnchorPane styleClass="matchBackground">
+            <AnchorPane styleClass="matchBackground" fx:id="background">
                <children>
                   <Text layoutX="265.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto" />
                   <Button fx:id="buttonMain1" layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#main1" text="MAIN 1" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="472.0" />
