@@ -3,8 +3,12 @@ package ClientPackage.View.GUIResources.Class;
 import ClientPackage.Controller.ClientController;
 import CommonModel.Snapshot.SnapshotToSend;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
+
+import java.util.Optional;
 
 /**
  * Created by Giulio on 17/05/2016.
@@ -25,36 +29,52 @@ public class MatchController {
         background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
     }
 
-    public void main1(){
-        clientController.main1();
-    }
-
-    public void main2(){
-
-
-    }
-
-    public void main3(){
-
-    }
-
-    public void main4(){
-
-    }
-
-    public void fast1(){
-        clientController.fast1();
-    }
-
-    public void fast2(){
+    public void mainActionElectCouncilor(){
+        String parameter = null;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("ELEGGI IL CONSIGLIERE");
+        alert.setHeaderText(null);
+        alert.setContentText("Dai");
+        ButtonType buttonBlack = new ButtonType("BLACK");
+        ButtonType buttonWhite = new ButtonType("WHITE");
+        alert.getButtonTypes().setAll(buttonBlack, buttonWhite);
+        Optional<ButtonType> result = alert.showAndWait();
+        switch (result.get().getText()){
+            case "BLACK":
+                parameter = "BLACK";
+                break;
+            case "WHITE":
+                parameter = "WHITE";
+                break;
+        }
+        clientController.mainActionElectCouncilor(parameter);
 
     }
 
-    public void fast3(){
+    public void mainActionBuyPermitCard(){
 
     }
 
-    public void fast4(){
+    public void mainActionBuildWithPermitCard(){
+
+    }
+
+    public void mainActionBuildWithKingHelp(){
+
+    }
+
+    public void fastActionChangePermitCardWithHelper(){
+    }
+
+    public void fastActionElectCouncilorWithHelper(){
+        clientController.fastActionElectCouncilorWithHelper();
+    }
+
+    public void fastActionMoneyForHelper(){
+
+    }
+
+    public void fastActionNewMainAction(){
 
     }
 

@@ -70,7 +70,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     }
 
     @Override
-    public void onTestAction(Action action) throws ActionNotPossibleException, RemoteException {
+    public void onAction(Action action) throws ActionNotPossibleException, RemoteException {
         rmiClientHandler.test(action);
     }
 

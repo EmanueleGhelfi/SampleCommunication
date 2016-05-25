@@ -15,14 +15,14 @@
             <AnchorPane styleClass="matchBackground" fx:id="background">
                <children>
                   <Text layoutX="265.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto" />
-                  <Button fx:id="buttonMain1" layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#main1" text="MAIN 1" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="472.0" />
-                  <Button layoutX="194.0" layoutY="89.0" mnemonicParsing="false" onAction="#main2" text="MAIN 2" />
-                  <Button layoutX="330.0" layoutY="89.0" mnemonicParsing="false" onAction="#main3" text="MAIN 3" />
-                  <Button layoutX="472.0" layoutY="89.0" mnemonicParsing="false" onAction="#main4" text="MAIN 4" AnchorPane.rightAnchor="71.0" />
-                  <Button layoutX="71.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast1" text="FAST 1" />
-                  <Button layoutX="194.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast2" text="FAST 2" />
-                  <Button layoutX="330.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast3" text="FAST 3" />
-                  <Button layoutX="472.0" layoutY="233.0" mnemonicParsing="false" onAction="#fast4" text="FAST 4" />
+                  <Button fx:id="buttonMain1" layoutX="71.0" layoutY="89.0" mnemonicParsing="false" onAction="#mainActionElectCouncilor" text="MAIN 1" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="472.0" />
+                  <Button layoutX="194.0" layoutY="89.0" mnemonicParsing="false" onAction="#mainActionBuyPermitCard" text="MAIN 2" />
+                  <Button layoutX="330.0" layoutY="89.0" mnemonicParsing="false" onAction="#mainActionBuildWithPermitCard" text="MAIN 3" />
+                  <Button layoutX="472.0" layoutY="89.0" mnemonicParsing="false" onAction="#mainActionBuildWithKingHelp" text="MAIN 4" AnchorPane.rightAnchor="71.0" />
+                  <Button layoutX="71.0" layoutY="233.0" mnemonicParsing="false" onAction="#fastActionChangePermitCardWithHelper" text="FAST 1" />
+                  <Button layoutX="194.0" layoutY="233.0" mnemonicParsing="false" onAction="#fastActionElectCouncilorWithHelper" text="FAST 2" />
+                  <Button layoutX="330.0" layoutY="233.0" mnemonicParsing="false" onAction="#fastActionMoneyForHelper" text="FAST 3" />
+                  <Button layoutX="472.0" layoutY="233.0" mnemonicParsing="false" onAction="#fastActionNewMainAction" text="FAST 4" />
                   <ImageView fitHeight="45.0" fitWidth="50.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Image/ArrowLeft.png" />
