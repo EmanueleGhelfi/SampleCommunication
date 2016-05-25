@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Action;
 
+import CommonModel.GameModel.City.RegionName;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 public class MainActionElectCouncilor extends Action implements Serializable {
 
     private Councilor councilorToAdd;
-    private Region region;
+    private RegionName region;
     private King king;
 
     /**
@@ -25,7 +26,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
      * @param king null if you want to add councilor to region's council
      * @param region null if you want to add councilor to king's council
      */
-    public MainActionElectCouncilor(Councilor councilorToAdd, King king, Region region) {
+    public MainActionElectCouncilor(Councilor councilorToAdd, King king, RegionName region) {
         this.councilorToAdd = councilorToAdd;
         this.king = king;
         this.region = region;
@@ -37,7 +38,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
         Council council = null;
         if(super.checkActionCounter(user)) {
             if (king == null) {
-                Region councilRegion = game.getRegion(region.getRegion());
+                Region councilRegion = game.getRegion(region);
                 council = councilRegion.getCouncil();
             } else {
                 council = game.getKing().getCouncil();

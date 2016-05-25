@@ -1,8 +1,11 @@
 package Server.Controller;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.King;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
@@ -68,6 +71,11 @@ public class GameController implements Serializable{
                         + politicCardArrayList.get(cont));
             }
             user.setPoliticCards(politicCardArrayList);
+
+            for (int i = 0; i<2;i++){
+                user.addPermitCard(game.getPermitDeck(RegionName.HILL).getPermitCardVisible(i));
+            }
+
 
             userCounter++;
         }

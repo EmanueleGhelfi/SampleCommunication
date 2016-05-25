@@ -4,6 +4,7 @@ import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Councilor;
 import Utilities.Class.InterfaceAdapter;
 import com.google.gson.Gson;
@@ -15,7 +16,7 @@ import com.google.gson.GsonBuilder;
 public class Serialization {
 
     public static void main(String[] args){
-        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.BLACK),null, Region.HILL);
+        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.BLACK),null, RegionName.HILL);
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .create();
         String json = gson.toJson(action,Action.class);

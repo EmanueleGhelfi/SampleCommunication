@@ -236,11 +236,11 @@ public class MatchController implements Initializable {
                 victoryPathText.setText(snapshot.getCurrentUser().getVictoryPathPosition()+"");
 
                 try {
-                    coastCouncil = snapshot.getCouncil(CommonModel.GameModel.City.Region.COAST);
+                    coastCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.COAST);
                     fillCircle(circlesCoast,coastCouncil);
-                    hillCouncil = snapshot.getCouncil(CommonModel.GameModel.City.Region.HILL);
+                    hillCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.HILL);
                     fillCircle(circlesHill,hillCouncil);
-                    mountainCouncil = snapshot.getCouncil(CommonModel.GameModel.City.Region.MOUNTAIN);
+                    mountainCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.MOUNTAIN);
                     fillCircle(circlesMountain,mountainCouncil);
                     kingCouncil = new ArrayList<Councilor>(snapshot.getKing().getCouncil().getCouncil());
                     fillCircle(circlesKing,kingCouncil);

@@ -5,7 +5,6 @@ import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
-import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Path.MoneyPath;
@@ -15,7 +14,6 @@ import Server.Controller.GameController;
 import Utilities.Class.Constants;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 
 import java.io.Serializable;
 import java.util.*;
@@ -39,7 +37,7 @@ public class Game implements Serializable{
      * All cities in undirectedgraph
      */
     private Map map;
-    private HashMap<String,Region> regions = new HashMap<>();
+    private HashMap<RegionName,Region> regions = new HashMap<>();
 
     /**
      * King with his cities
@@ -53,11 +51,11 @@ public class Game implements Serializable{
     private GameController gameController;
 
     // PERMIT DECK
-    private HashMap<Region,PermitDeck> permitDecks;
+    private HashMap<RegionName,PermitDeck> permitDecks;
 
     // POLITIC CARD
     private PoliticDeck politicCards;
-    private HashMap<String,RegionBonusCard> regionBonusCard = new HashMap<>();
+    private HashMap<RegionName,RegionBonusCard> regionBonusCard = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
     private Stack<KingBonusCard> kingBonusCards = new Stack<>();
 
@@ -65,6 +63,8 @@ public class Game implements Serializable{
         this.started = false;
         gameController = new GameController(this);
         gameController.startTimer();
+        //create Region
+        createRegion();
         // create permit card decks
         createDecks();
         // create nobility, victory and moneyPath
@@ -75,15 +75,14 @@ public class Game implements Serializable{
         createBonusDeck();
         //create Politic Card Deck
         createPoliticCards();
-        //create Region
-        createRegion();
+
         //create king
         //king = new King();
     }
 
     private void createRegion() {
-        for (Region region:Region.values()) {
-            region.createRandomCouncil();
+        for (RegionName regionName:RegionName.values()) {
+            Region region = new Region(regionName,5);
             regions.put(region.getRegion(),region);
             System.out.println(region);
         }
@@ -97,8 +96,8 @@ public class Game implements Serializable{
 
     private void createBonusDeck() {
         //region bonus
-        for (Region region:Region.values()) {
-            regionBonusCard.put(region.getRegion(),new RegionBonusCard(region));
+        for (RegionName region:RegionName.values()) {
+            regionBonusCard.put(region,new RegionBonusCard(regions.get(region)));
         }
         // color bonus
         for (Color color:Color.values()) {
@@ -162,8 +161,8 @@ public class Game implements Serializable{
     private void createDecks() {
         //create mountainDeck
         permitDecks = new HashMap<>();
-        for (Region region : Region.values()) {
-            PermitDeck permitDeck = new PermitDeck(region);
+        for (RegionName region : RegionName.values()) {
+            PermitDeck permitDeck = new PermitDeck(regions.get(region).getRegion());
             permitDeck.createRandomDeck();
             permitDecks.put(region, permitDeck);
         }
@@ -197,7 +196,7 @@ public class Game implements Serializable{
     public void setStarted(boolean started) {
         this.started = started;
     }
-    public Region getRegion(String region){
+    public Region getRegion(RegionName region){
         if(regions.containsKey(region))
             return regions.get(region);
         return null;
@@ -236,7 +235,7 @@ public class Game implements Serializable{
     public UndirectedGraph<City, DefaultEdge> getGraph() {
         return map.getMapGraph();
     }
-    public RegionBonusCard getRegionBonusCard(String region) {
+    public RegionBonusCard getRegionBonusCard(RegionName region) {
         return regionBonusCard.get(region);
     }
     public ColorBonusCard getColorBonusCard(String color) {
@@ -248,16 +247,16 @@ public class Game implements Serializable{
     public NobilityPath getNobilityPath() {
         return nobilityPath;
     }
-    public PermitDeck getPermitDeck(Region region){
+    public PermitDeck getPermitDeck(RegionName region){
         return permitDecks.get(region);
     }
-    public HashMap<String, Region> getRegions() {
+    public HashMap<RegionName, Region> getRegions() {
         return regions;
     }
     public HashMap<String, ColorBonusCard> getColorBonusCard() {
         return colorBonusCard;
     }
-    public HashMap<String, RegionBonusCard> getRegionBonusCard() {
+    public HashMap<RegionName, RegionBonusCard> getRegionBonusCard() {
         return regionBonusCard;
     }
     public boolean isStarted() {

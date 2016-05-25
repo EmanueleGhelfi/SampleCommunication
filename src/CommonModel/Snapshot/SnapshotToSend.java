@@ -5,6 +5,7 @@ import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Path.Position;
@@ -21,10 +22,10 @@ import java.util.*;
 public class SnapshotToSend implements Serializable{
 
     private HashMap<String,BaseUser> usersInGame = new HashMap<>();
-    private HashMap<String,Region> regions = new HashMap<>();
+    private HashMap<RegionName,Region> regions = new HashMap<>();
     private King king;
     private HashMap<String,ArrayList<PermitCard>> visiblePermitCards = new HashMap<>();
-    private HashMap<String,RegionBonusCard> regionBonusCards = new HashMap<>();
+    private HashMap<RegionName,RegionBonusCard> regionBonusCards = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCards = new HashMap<>();
     private Stack<KingBonusCard> kingBonusCards = new Stack<>();
     //Nobility path position
@@ -89,13 +90,13 @@ public class SnapshotToSend implements Serializable{
         return currentUser;
     }
 
-    public HashMap<String, Region> getRegions() {
+    public HashMap<RegionName, Region> getRegions() {
         return regions;
     }
 
-    public ArrayList<Councilor> getCouncil(Region region) throws CouncilNotFoundException {
-        if(regions.get(region.getRegion())!=null){
-            return new ArrayList<Councilor>(regions.get(region.getRegion()).getCouncil().getCouncil());
+    public ArrayList<Councilor> getCouncil(RegionName region) throws CouncilNotFoundException {
+        if(regions.get(region)!=null){
+            return new ArrayList<Councilor>(regions.get(region).getCouncil().getCouncil());
         }
         else throw new CouncilNotFoundException();
     }

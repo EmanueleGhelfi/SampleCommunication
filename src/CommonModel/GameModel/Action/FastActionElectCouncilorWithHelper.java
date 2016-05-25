@@ -1,5 +1,6 @@
 package CommonModel.GameModel.Action;
 
+import CommonModel.GameModel.City.RegionName;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
@@ -19,12 +20,12 @@ import java.io.Serializable;
  */
 public class FastActionElectCouncilorWithHelper extends Action implements Serializable {
 
-    private Region region;
+    private RegionName region;
     private King king;
     private Councilor councilor;
     private String councilType;
 
-    public FastActionElectCouncilorWithHelper(Region region, King king, Councilor councilor,String councilType) {
+    public FastActionElectCouncilorWithHelper(RegionName region, King king, Councilor councilor, String councilType) {
         this.actionType = Constants.FAST_ACTION;
         this.region = region;
         this.king = king;
@@ -43,7 +44,7 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
             if (user.getHelpers() >= Constants.HELPER_LIMITATION_ELECT_COUNCILOR) {
                 user.setHelpers(user.getHelpers() - Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
                 if (councilType.equals(Constants.REGION_COUNCIL)) {
-                    Region councilRegion = game.getRegion(region.getRegion());
+                    Region councilRegion = game.getRegion(region);
                     council = councilRegion.getCouncil();
                 } else {
                     if (councilType.equals(Constants.KING_COUNCIL)) {
