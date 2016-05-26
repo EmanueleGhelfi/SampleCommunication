@@ -64,7 +64,7 @@ public class MatchController implements Initializable {
     @FXML private ImageView imageTest;
     @FXML Button buttonMain1;
     @FXML Button buttonMain2;
-    @FXML AnchorPane background;
+    @FXML Pane background;
     @FXML Label nobilityPathText;
     @FXML Label richPathText;
     @FXML Label helperText;
