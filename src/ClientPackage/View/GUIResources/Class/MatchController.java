@@ -2,9 +2,12 @@ package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.CityButton;
+import ClientPackage.View.GUIResources.customComponent.PermitCardHandler;
+import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
-import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.*;
+import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.SnapshotToSend;
@@ -70,6 +73,9 @@ public class MatchController implements Initializable {
     @FXML private HBox regionHill;
     @FXML private HBox regionMountain;
     @FXML private HBox regionKing;
+    @FXML private HBox coastHBox;
+    @FXML private HBox hillHBox;
+    @FXML private HBox mountainHBox;
 
     private List<Circle> circlesCoast = new ArrayList<>();
     private List<Circle> circlesHill= new ArrayList<>();
@@ -99,6 +105,26 @@ public class MatchController implements Initializable {
         System.out.println("setting image");
         background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
         createArray();
+        createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
+        createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
+        createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
+    }
+
+    private void createPermitCard(HBox regionHBox, HashMap<RegionName,ArrayList<PermitCard>> permitDeck,RegionName regionName) {
+        Set<Node> imageViews = regionHBox.lookupAll("#permitCard");
+        int i = 0;
+        for (Node node: imageViews) {
+            node.setOnMouseClicked(new PermitCardHandler(permitDeck.get(regionName).get(i),this,clientController));
+            i++;
+        }
+
+        i=0;
+        for (Node node: regionHBox.lookupAll("#internalPane")){
+            Label label = (Label) node.lookup("#cityNames");
+            label.setText(permitDeck.get(regionName).get(i).getCityString());
+            i++;
+        }
+
     }
 
     private void createArray() {
@@ -158,8 +184,6 @@ public class MatchController implements Initializable {
 
 
     public void mainActionBuildWithPermitCard(){
-
-
         for (City city: clientController.getSnapshot().getMap().getCity()) {
             Pane cityPane = (Pane) background.lookup("#"+city.getCityName().getCityName());
             System.out.println(city.getCityName().getCityName());
@@ -220,7 +244,7 @@ public class MatchController implements Initializable {
        updateSnapshot(snapshot);
     }
 
-    public void turnFinished(boolean thisTurn) {
+    private void turnFinished(boolean thisTurn) {
         boolean myTurnValue= !thisTurn;
         buttonMain1.setDisable(myTurnValue);
     }
@@ -247,8 +271,9 @@ public class MatchController implements Initializable {
                 } catch (CouncilNotFoundException e) {
                     e.printStackTrace();
                 }
-
-
+                createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
+                createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
+                createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
             }
         });
 
@@ -262,50 +287,5 @@ public class MatchController implements Initializable {
         }
     }
 
-    public void mainActionBuyPermitCardFirst(Event event) {
-        popOver = new PopOver();
-        Pane pane = (Pane) event.getSource();
-        Label cityLabel = (Label) pane.lookup("#label");
-        JFXCheckBox politicCardsCheckBox;
-        VBox vBox = new VBox();
-        for (PoliticCard politicCard: clientController.getSnapshot().getCurrentUser().getPoliticCards()){
-            politicCardsCheckBox = new JFXCheckBox();
-            System.out.println(politicCard);
-            String stringa;
-            if(politicCard.getPoliticColor()==null){
-                stringa="MULTICARD";
-            }
-            else{
-                stringa=politicCard.getPoliticColor().getColor();
-            }
-
-            politicCardsCheckBox.setText(stringa);
-            politicCardsCheckBox.setId("JFXCheckBox");
-            vBox.getChildren().add(politicCardsCheckBox);
-        }
-        JFXButton jfxButton = new JFXButton();
-        jfxButton.setText("OK MAN");
-        jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                ArrayList<String> politicCard = new ArrayList<String>();
-                Set<Node> jfxCheckBoxArrayList = (Set<Node>) vBox.lookupAll("#JFXCheckBox");
-                for (Node node : jfxCheckBoxArrayList) {
-                    JFXCheckBox jfxCheckBoxTempTemp = (JFXCheckBox) node;
-                    if (jfxCheckBoxTempTemp.isArmed())
-                        politicCard.add(jfxCheckBoxTempTemp.getText());
-                }
-                clientController.mainActionBuyPermitCard(cityLabel.getText());
-                System.out.println(jfxCheckBoxArrayList + " EHEHEHEHHEHefhehasga");
-            }
-        });
-        vBox.getChildren().add(jfxButton);
-        vBox.setSpacing(10.0);
-        paneOfPopup.getChildren().add(vBox);
-
-        popOver.setContentNode(paneOfPopup);
-        popOver.show(pane);
-        System.out.println(cityLabel + " EHEHEHEHHEH");
-    }
 
 }

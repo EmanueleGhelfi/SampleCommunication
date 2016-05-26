@@ -78,4 +78,8 @@ public class PermitDeck implements Deck,Serializable {
             return permitCardsVisible.get(num);
         }
     }
+
+    public ArrayList<PermitCard> getVisibleArray(){
+        return permitCardsVisible;
+    }
 }
