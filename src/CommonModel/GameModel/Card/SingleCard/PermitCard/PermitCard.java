@@ -52,12 +52,24 @@ public class PermitCard implements Serializable{
     public void setCityAcronimous(ArrayList<Character> cityAcronimous) {
         this.cityAcronimous = cityAcronimous;
     }
-
     public ArrayList<Character> getCityAcronimous() {
         return cityAcronimous;
     }
 
     public void setRetroType(RegionName retroType) {
         this.retroType = retroType;
+    }
+
+    public RegionName getRetroType() {
+        return retroType;
+    }
+
+    public String getCityString() {
+        String cityString = "";
+        for (char cityCharacter : cityAcronimous) {
+            cityString+=cityCharacter+" / ";
+        }
+        cityString = cityString.substring(0,cityString.length()-1);
+        return cityString;
     }
 }

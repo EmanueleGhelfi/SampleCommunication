@@ -7,6 +7,7 @@ import ClientPackage.View.GeneralView.FactoryView;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -201,5 +202,18 @@ public class ClientController {
 
     public void mainActionBuyPermitCard(String text) {
         //Action action = new MainActionBuyPermitCard(snapshot.getVisiblePermitCards().get(text));
+    }
+
+    public void mainActionBuyPermitCard(PermitCard permitCard, ArrayList<PoliticCard> politicCards) {
+        System.out.println("called main action in client controller "+permitCard+" "+politicCards);
+        Action action = new MainActionBuyPermitCard(politicCards,permitCard.getRetroType(),permitCard);
+        try {
+            clientService.onAction(action);
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
 }

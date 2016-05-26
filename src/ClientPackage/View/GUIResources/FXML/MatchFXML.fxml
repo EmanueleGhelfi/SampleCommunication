@@ -51,7 +51,7 @@
                                     </ImageView>
                                  </children>
                               </Pane>
-                              <Pane id="internalPane" onMouseClicked="#mainActionBuyPermitCardFirst" prefHeight="188.0" prefWidth="145.0">
+                              <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
                                     <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -64,7 +64,7 @@
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </Pane>
-                              <Pane id="internalPane" onMouseClicked="#mainActionBuyPermitCardFirst" prefHeight="188.0" prefWidth="145.0">
+                              <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
                                     <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -81,7 +81,7 @@
                         </HBox>
                         <HBox fx:id="hillHBox" layoutX="522.0" layoutY="458.0">
                            <children>
-                              <Pane id="internalPane" onMouseClicked="#mainActionBuyPermitCardFirst" prefHeight="188.0" prefWidth="145.0">
+                              <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
                                     <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -94,7 +94,7 @@
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </Pane>
-                              <Pane id="internalPane" onMouseClicked="#mainActionBuyPermitCardFirst" prefHeight="188.0" prefWidth="145.0">
+                              <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
                                     <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -111,7 +111,7 @@
                         </HBox>
                         <HBox fx:id="mountainHBox" layoutX="888.0" layoutY="461.0">
                            <children>
-                              <Pane id="internalPane" onMouseClicked="#mainActionBuyPermitCardFirst" prefHeight="188.0" prefWidth="145.0">
+                              <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
                                     <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -124,7 +124,7 @@
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </Pane>
-                              <Pane id="internalPane" onMouseClicked="#mainActionBuyPermitCardFirst" prefHeight="188.0" prefWidth="145.0">
+                              <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
                                     <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
