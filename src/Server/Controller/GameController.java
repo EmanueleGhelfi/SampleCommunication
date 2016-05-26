@@ -67,8 +67,6 @@ public class GameController implements Serializable{
             ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
             for(int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++){
                 politicCardArrayList.add(game.getPoliticCards().drawACard());
-                System.out.println("MatchController notify game started <- " + cont + " "
-                        + politicCardArrayList.get(cont));
             }
             user.setPoliticCards(politicCardArrayList);
 
@@ -95,17 +93,14 @@ public class GameController implements Serializable{
     }
 
     public void cancelTimeout() {
-        System.out.println("Cancelled timeout");
         timer.cancel();
     }
 
     public void setTimeout() {
         if(timer==null){
-            System.out.println("Started timeout for the first time");
             timer = new Timer();
         }
         else{
-            System.out.println("Restarted timeout");
             timer.cancel();
             timerTask = new TimerTask() {
                 @Override

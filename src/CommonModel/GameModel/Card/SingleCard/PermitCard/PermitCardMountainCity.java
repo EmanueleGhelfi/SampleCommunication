@@ -6,6 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by Giulio on 15/05/2016.
  */
+//TODO rifare
 public enum PermitCardMountainCity implements Serializable {
 
     H('H', null, null), GHI('G', 'H', 'I'), F('F', null, null), HI('H', 'I', null), I('I', null, null), FG('F', 'G', null), J('J', null, null),

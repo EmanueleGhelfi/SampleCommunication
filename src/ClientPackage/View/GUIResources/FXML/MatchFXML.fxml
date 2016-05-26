@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -28,66 +29,8 @@
       <Tab text="Game">
          <content>
             <BorderPane fx:id="background" prefHeight="200.0" prefWidth="200.0" styleClass="matchBackground">
-               <bottom>
-                  <VBox prefHeight="71.0" prefWidth="1200.0" spacing="5.0">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="20.0" prefWidth="1161.0" spacing="20.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <HBox fx:id="regionCoast" spacing="10.0">
-                                 <children>
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </HBox.margin>
-                              </HBox>
-                              <HBox fx:id="regionHill" layoutX="10.0" layoutY="10.0" spacing="10.0">
-                                 <children>
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </HBox.margin>
-                              </HBox>
-                              <HBox fx:id="regionMountain" layoutX="250.0" layoutY="10.0" spacing="10.0">
-                                 <children>
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </HBox.margin>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="33.0" prefWidth="1200.0">
-                           <children>
-                              <HBox fx:id="regionKing" spacing="10.0">
-                                 <children>
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="20.0" right="20.0" />
-                                 </HBox.margin>
-                              </HBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </bottom>
                <top>
-                  <HBox prefHeight="47.0" prefWidth="1161.0" spacing="40.0" BorderPane.alignment="CENTER">
+                  <HBox prefHeight="47.0" prefWidth="1161.0" spacing="40.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                      <children>
                         <GridPane alignment="CENTER">
                            <columnConstraints>
@@ -128,7 +71,7 @@
                               <Label fx:id="richPathText" text="Percorso ricchezza" GridPane.columnIndex="1" />
                               <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../Image/coin.png" />
+                                    <Image url="@../Image/Money.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -164,7 +107,7 @@
                   </HBox>
                </top>
                <center>
-                  <Pane styleClass="matchBackground" BorderPane.alignment="CENTER">
+                  <Pane prefHeight="531.0" prefWidth="1200.0" styleClass="matchBackground" BorderPane.alignment="CENTER">
                      <children>
                         <Button fx:id="buttonMain1" layoutX="769.0" layoutY="38.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="MAIN 1" AnchorPane.leftAnchor="769.0" AnchorPane.rightAnchor="346.0" />
                         <Button layoutX="873.0" layoutY="46.0" mnemonicParsing="false" text="FAST 3" />
@@ -175,7 +118,7 @@
                         <Button layoutX="1074.0" layoutY="140.0" mnemonicParsing="false" text="FAST 4" />
                         <HBox fx:id="coastHBox" layoutX="87.0" layoutY="372.0" prefHeight="198.0" prefWidth="267.0">
                            <children>
-                              <Pane>
+                              <Pane prefHeight="198.0" prefWidth="156.0">
                                  <children>
                                     <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -186,12 +129,15 @@
                               </Pane>
                               <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
-                                    <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="permitCard" fitHeight="100.0" fitWidth="100.0" layoutX="7.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Image/PermitCard.png" />
                                        </image>
                                     </ImageView>
-                                    <Label id="cityNames" layoutX="69.0" layoutY="66.0" text="A" />
+                                    <Label id="cityNames" layoutX="53.0" layoutY="40.0" text="A">
+                                       <font>
+                                          <Font name="Rockwell Bold" size="20.0" />
+                                       </font></Label>
                                     <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" layoutX="30.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" layoutX="57.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
@@ -199,12 +145,15 @@
                               </Pane>
                               <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
-                                    <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="permitCard" fitHeight="100.0" fitWidth="100.0" layoutX="7.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Image/PermitCard.png" />
                                        </image>
                                     </ImageView>
-                                    <Label id="cityNames" layoutX="69.0" layoutY="66.0" text="A" />
+                                    <Label id="cityNames" layoutX="45.0" layoutY="38.0" text="A">
+                                       <font>
+                                          <Font name="Rockwell Bold" size="20.0" />
+                                       </font></Label>
                                     <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" layoutX="30.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" layoutX="57.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
@@ -216,12 +165,15 @@
                            <children>
                               <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
-                                    <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="permitCard" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Image/PermitCard.png" />
                                        </image>
                                     </ImageView>
-                                    <Label id="cityNames" layoutX="69.0" layoutY="66.0" text="A" />
+                                    <Label id="cityNames" layoutX="53.0" layoutY="32.0" text="A">
+                                       <font>
+                                          <Font name="Rockwell Extra Bold" size="22.0" />
+                                       </font></Label>
                                     <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" layoutX="30.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" layoutX="57.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
@@ -229,12 +181,15 @@
                               </Pane>
                               <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
-                                    <ImageView id="permitCard" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="permitCard" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Image/PermitCard.png" />
                                        </image>
                                     </ImageView>
-                                    <Label id="cityNames" layoutX="69.0" layoutY="66.0" text="A" />
+                                    <Label id="cityNames" layoutX="48.0" layoutY="32.0" text="A">
+                                       <font>
+                                          <Font name="Rockwell Extra Bold" size="22.0" />
+                                       </font></Label>
                                     <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" layoutX="30.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" layoutX="57.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
@@ -248,12 +203,15 @@
                            <children>
                               <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
-                                    <ImageView id="permitCard" fitHeight="107.0" fitWidth="72.0" layoutX="25.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="permitCard" fitHeight="100.0" fitWidth="100.0" layoutX="27.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Image/PermitCard.png" />
                                        </image>
                                     </ImageView>
-                                    <Label id="cityNames" layoutX="69.0" layoutY="66.0" text="A" />
+                                    <Label id="cityNames" layoutX="70.0" layoutY="48.0" text="A">
+                                       <font>
+                                          <Font name="Rockwell Extra Bold" size="22.0" />
+                                       </font></Label>
                                     <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" layoutX="30.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" layoutX="57.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
@@ -261,12 +219,15 @@
                               </Pane>
                               <Pane id="internalPane" prefHeight="188.0" prefWidth="145.0">
                                  <children>
-                                    <ImageView id="permitCard" fitHeight="101.0" fitWidth="95.0" layoutX="7.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="permitCard" fitHeight="100.0" fitWidth="100.0" layoutX="7.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Image/PermitCard.png" />
                                        </image>
                                     </ImageView>
-                                    <Label id="cityNames" layoutX="69.0" layoutY="66.0" text="A" />
+                                    <Label id="cityNames" layoutX="43.0" layoutY="40.0" text="A">
+                                       <font>
+                                          <Font name="Rockwell Extra Bold" size="22.0" />
+                                       </font></Label>
                                     <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" layoutX="30.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" layoutX="57.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" layoutX="83.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" />
@@ -277,6 +238,9 @@
                      </children>
                   </Pane>
                </center>
+               <bottom>
+                  <StackPane fx:id="bottomPane" prefHeight="100.0" prefWidth="1200.0" style="-: ;" BorderPane.alignment="CENTER" />
+               </bottom>
             </BorderPane>
          </content>
       </Tab>

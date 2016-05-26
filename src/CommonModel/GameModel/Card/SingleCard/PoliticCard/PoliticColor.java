@@ -11,15 +11,21 @@ public enum PoliticColor implements Serializable {
     VIOLET(Constants.VIOLET), BLACK(Constants.BLACK), ORANGE(Constants.ORANGE), PINK(Constants.PURPLE), BLUE(Constants.BLUE), WHITE(Constants.WHITE);
 
     private String color;
+    private String imageUrl;
 
     PoliticColor() {
     }
 
     PoliticColor (String color){
         this.color = color;
+        this.imageUrl="/ClientPackage/View/GUIResources/Image/"+color+"CouncilorMaterial.png";
     }
 
     public String getColor() {
         return color;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

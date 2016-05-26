@@ -53,12 +53,14 @@ public abstract class Action implements Serializable {
         game.getGameController().sendSnapshotToAll();
     }
 
+    // TODO: adjust
     protected void getPoliticCard (ArrayList<PoliticCard> politicCards, User user){
         int cont2 =0;
         for(int cont1 = 0; cont1< politicCards.size();cont1++){
             if(politicCards.get(cont1).equals(user.getPoliticCards().get(cont2))){
                 user.getPoliticCards().remove(cont2);
                 user.decrementPoliticCardNumber();
+                System.out.println("Decrementing politic card number");
             }
             else{
                 cont2++;

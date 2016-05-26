@@ -32,6 +32,7 @@ public class PermitDeck implements Deck,Serializable {
     @Override
     public void createRandomDeck() {
         //create a deck for this region
+        System.out.println("creating deck of: "+region);
         ArrayList<ArrayList<Character>> citiesPermitCard = CityFactory.getCity(region);
         if(citiesPermitCard!=null) {
             for (int i = 0; i < citiesPermitCard.size(); i++) {

@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PopupControl;
 import javafx.scene.image.ImageView;
@@ -36,6 +37,7 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
         this.permitCard = permitCard;
         this.matchController = matchController;
         this.clientController = clientController;
+        System.out.println("created");
 
     }
 
@@ -64,7 +66,6 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
             vBox.getChildren().add(politicCardsCheckBox);
         }
         JFXButton jfxButton = new JFXButton();
-        jfxButton.setRipplerFill(Paint.valueOf("BLUE"));
         jfxButton.setButtonType(JFXButton.ButtonType.FLAT);
         jfxButton.setText("OK MAN");
         jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -79,9 +80,9 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
                         System.out.println(jfxCheckBoxTempTemp.getText()+" is armed");
                         politicCardSelected.add(findPoliticCard(jfxCheckBoxTempTemp.getText()));
                     }
-                    clientController.mainActionBuyPermitCard(permitCard,politicCardSelected);
                 }
                 System.out.println(jfxCheckBoxArrayList + " arraylist");
+                clientController.mainActionBuyPermitCard(permitCard,politicCardSelected);
             }
         });
         vBox.getChildren().add(jfxButton);

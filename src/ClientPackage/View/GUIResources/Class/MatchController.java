@@ -3,6 +3,7 @@ package ClientPackage.View.GUIResources.Class;
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.CityButton;
 import ClientPackage.View.GUIResources.customComponent.PermitCardHandler;
+import ClientPackage.View.GUIResources.customComponent.SideNode;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
@@ -24,12 +25,16 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -41,8 +46,13 @@ import java.net.URL;
 import java.util.*;
 
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -76,6 +86,7 @@ public class MatchController implements Initializable {
     @FXML private HBox coastHBox;
     @FXML private HBox hillHBox;
     @FXML private HBox mountainHBox;
+    @FXML private StackPane bottomPane;
 
     private List<Circle> circlesCoast = new ArrayList<>();
     private List<Circle> circlesHill= new ArrayList<>();
@@ -104,16 +115,71 @@ public class MatchController implements Initializable {
         currentSnapshot = clientController.getSnapshot();
         System.out.println("setting image");
         background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
-        createArray();
+        //createArray();
         createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
         createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
         createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
+        createOverlay();
+    }
+
+    private void createOverlay() {
+        HiddenSidesPane hiddenSidesPane = new HiddenSidesPane();
+        HBox hbox1 = new HBox();
+        HBox hbox2 = new HBox();
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        for(RegionName regionName: RegionName.values()) {
+            HBox hBox = new HBox();
+            try {
+                ArrayList<Councilor> councilors = currentSnapshot.getCouncil(regionName);
+                for (int i = 0; i< councilors.size();i++){
+                    ImageView imageView = new ImageView();
+                    try {
+                        imageView.setImage(new Image(councilors.get(i).getColor().getImageUrl()));
+                        imageView.setFitHeight(50.0);
+                        imageView.setFitWidth(50.0);
+                    }
+                    catch (IllegalArgumentException e){
+                        System.out.println("not found match controller"+councilors.get(i).getColor().getImageUrl());
+                    }
+                    hBox.getChildren().add(imageView);
+                }
+                hbox1.getChildren().add(hBox);
+                hBox.setPrefWidth(primaryScreenBounds.getWidth()/3);
+            } catch (CouncilNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        hbox1.setPrefWidth(primaryScreenBounds.getWidth());
+        hbox1.setAlignment(Pos.CENTER);
+
+        ArrayList<Councilor> kingCouncilors = new ArrayList<>(currentSnapshot.getKing().getCouncil().getCouncil());
+        for (Councilor councilor: kingCouncilors){
+            ImageView imageView = new ImageView();
+            try{
+                imageView.setImage(new Image(councilor.getColor().getImageUrl()));
+                imageView.setFitHeight(50.0);
+                imageView.setFitWidth(50.0);
+            }
+            catch (IllegalArgumentException e){
+                System.out.println("not found match controller"+councilor.getColor().getImageUrl());
+            }
+            hbox2.getChildren().add(imageView);
+        }
+        hbox2.setPrefWidth(primaryScreenBounds.getWidth());
+        hbox2.setAlignment(Pos.CENTER);
+        SideNode sideNode = new SideNode(10.0, Side.BOTTOM,hiddenSidesPane,hbox1,hbox2);
+        sideNode.setStyle("-fx-background-color: rgba(143,147,147,.25);");
+        hiddenSidesPane.setBottom(sideNode);
+        bottomPane.getChildren().add(hiddenSidesPane);
+
     }
 
     private void createPermitCard(HBox regionHBox, HashMap<RegionName,ArrayList<PermitCard>> permitDeck,RegionName regionName) {
         Set<Node> imageViews = regionHBox.lookupAll("#permitCard");
         int i = 0;
         for (Node node: imageViews) {
+            System.out.println("Found");
             node.setOnMouseClicked(new PermitCardHandler(permitDeck.get(regionName).get(i),this,clientController));
             i++;
         }
@@ -188,13 +254,11 @@ public class MatchController implements Initializable {
             Pane cityPane = (Pane) background.lookup("#"+city.getCityName().getCityName());
             System.out.println(city.getCityName().getCityName());
             if (cityPane != null) {
-                System.out.println("DIO PORCONE");
                 CityButton cityButton = new CityButton(city, this);
                 cityPane.getChildren().add(cityButton);
                 cityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        System.out.println("EHILAAAAAAAAAAAAAAAAAAAAA");
 
                         popOver = new PopOver();
                         paneOfPopup.getChildren().add(new Text("TESTING.."));
@@ -286,6 +350,8 @@ public class MatchController implements Initializable {
             circles.get(i).fillProperty().setValue(Paint.valueOf(council.get(i).getColor().name()));
         }
     }
+
+
 
 
 }
