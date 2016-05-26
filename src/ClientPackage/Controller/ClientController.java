@@ -200,6 +200,6 @@ public class ClientController {
     }
 
     public void mainActionBuyPermitCard(String text) {
-        Action action = new MainActionBuyPermitCard(snapshot.getVisiblePermitCards().get(text));
+        //Action action = new MainActionBuyPermitCard(snapshot.getVisiblePermitCards().get(text));
     }
 }

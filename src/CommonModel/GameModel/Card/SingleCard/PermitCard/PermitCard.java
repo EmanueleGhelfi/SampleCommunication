@@ -57,7 +57,6 @@ public class PermitCard implements Serializable{
         return cityAcronimous;
     }
 
-    public void setRetroType(Region retroType) {
     public void setRetroType(RegionName retroType) {
         this.retroType = retroType;
     }

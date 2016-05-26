@@ -57,7 +57,7 @@ public class MainActionBuyPermitCard extends Action {
             int cont2 = 0;
             getPoliticCard(politicCards, user);
             // buy permit card, here you can buy permit
-            PermitDeck permitDeck = game.getPermitDeck(region);
+            PermitDeck permitDeck = game.getPermitDeck(region.getRegion());
             PermitCard permitCardToBuy = permitDeck.getPermitCardVisible(permitCard);
             permitCardToBuy.getBonus().getBonus(user, game);
             user.addPermitCard(permitCardToBuy);

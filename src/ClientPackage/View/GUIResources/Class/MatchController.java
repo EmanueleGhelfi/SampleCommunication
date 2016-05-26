@@ -263,15 +263,24 @@ public class MatchController implements Initializable {
     }
 
     public void mainActionBuyPermitCardFirst(Event event) {
-        popOver.setContentNode(paneOfPopup);
-        Pane pane = (Pane) event.getTarget();
-        Label cityLabel = (Label) pane.lookup(".Label");
-        clientController.mainActionBuyPermitCard(cityLabel.getText());
+        popOver = new PopOver();
+        Pane pane = (Pane) event.getSource();
+        Label cityLabel = (Label) pane.lookup("#label");
         JFXCheckBox politicCardsCheckBox;
         VBox vBox = new VBox();
         for (PoliticCard politicCard: clientController.getSnapshot().getCurrentUser().getPoliticCards()){
             politicCardsCheckBox = new JFXCheckBox();
-            politicCardsCheckBox.setText(politicCard.getPoliticColor().name());
+            System.out.println(politicCard);
+            String stringa;
+            if(politicCard.getPoliticColor()==null){
+                stringa="MULTICARD";
+            }
+            else{
+                stringa=politicCard.getPoliticColor().getColor();
+            }
+
+            politicCardsCheckBox.setText(stringa);
+            politicCardsCheckBox.setId("JFXCheckBox");
             vBox.getChildren().add(politicCardsCheckBox);
         }
         JFXButton jfxButton = new JFXButton();
@@ -280,16 +289,23 @@ public class MatchController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 ArrayList<String> politicCard = new ArrayList<String>();
-                Set<Node> jfxCheckBoxArrayList = (Set<Node>) vBox.lookupAll(".JFXCheckBox");
+                Set<Node> jfxCheckBoxArrayList = (Set<Node>) vBox.lookupAll("#JFXCheckBox");
                 for (Node node : jfxCheckBoxArrayList) {
                     JFXCheckBox jfxCheckBoxTempTemp = (JFXCheckBox) node;
                     if (jfxCheckBoxTempTemp.isArmed())
                         politicCard.add(jfxCheckBoxTempTemp.getText());
                 }
+                clientController.mainActionBuyPermitCard(cityLabel.getText());
+                System.out.println(jfxCheckBoxArrayList + " EHEHEHEHHEHefhehasga");
             }
         });
+        vBox.getChildren().add(jfxButton);
+        vBox.setSpacing(10.0);
         paneOfPopup.getChildren().add(vBox);
-        popOver.show(cityLabel);
+
+        popOver.setContentNode(paneOfPopup);
+        popOver.show(pane);
+        System.out.println(cityLabel + " EHEHEHEHHEH");
     }
 
 }

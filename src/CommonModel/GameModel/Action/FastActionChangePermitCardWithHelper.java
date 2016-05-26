@@ -29,7 +29,7 @@ public class FastActionChangePermitCardWithHelper extends Action {
         if(super.checkActionCounter(user)) {
             if (user.getHelpers() > Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD) {
                 user.setHelpers(user.getHelpers() - Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD);
-                game.getPermitDeck(region).changePermitCardVisibile();
+                game.getPermitDeck(region.getRegion()).changePermitCardVisibile();
                 removeAction(game, user);
             } else {
                 throw new ActionNotPossibleException();
