@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PopupControl;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -45,8 +46,9 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         politicCards = (ArrayList<PoliticCard>)  clientController.getSnapshot().getCurrentUser().getPoliticCards().clone();
         popOver = new PopOver();
+        //gre
         Pane paneOfPopup = new Pane();
-        ImageView imageView = (ImageView) event.getSource();
+        GridPane imageView = (GridPane) event.getSource();
         JFXCheckBox politicCardsCheckBox;
         VBox vBox = new VBox();
         for (PoliticCard politicCard: politicCards){
