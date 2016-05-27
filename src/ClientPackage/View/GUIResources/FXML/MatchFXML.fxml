@@ -279,9 +279,9 @@
                               <Image url="@../Image/Helper.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                        <ImageView fitHeight="77.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                            <image>
-                              <Image url="@../Image/Helper.png" />
+                              <Image url="@../../../../../../../../OneDrive/Università/Terzo%20Anno/Semestre%202/Progetto%20Finale/Images/Completed/Money.png" />
                            </image>
                         </ImageView>
                      </children>
