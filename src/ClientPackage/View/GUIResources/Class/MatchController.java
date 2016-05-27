@@ -185,8 +185,9 @@ public class MatchController implements Initializable {
         }
 
         i=0;
-        for (Node node: regionHBox.lookupAll("#internalPane")){
-            Label label = (Label) node.lookup("#cityNames");
+        for (Node node: regionHBox.lookupAll("#cityNames")){
+            System.out.println("found label");
+            Label label = (Label) node;
             label.setText(permitDeck.get(regionName).get(i).getCityString());
             i++;
         }

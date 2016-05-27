@@ -69,7 +69,7 @@ public class PermitCard implements Serializable{
         for (char cityCharacter : cityAcronimous) {
             cityString+=cityCharacter+" / ";
         }
-        cityString = cityString.substring(0,cityString.length()-1);
+        cityString = cityString.substring(0,cityString.length()-2);
         return cityString;
     }
 }
