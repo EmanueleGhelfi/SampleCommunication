@@ -43,7 +43,7 @@
                            <children>
                               <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../Image/Servente.png" />
+                                    <Image url="@../Image/Helper.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="helperText" text="Numero aiutanti" GridPane.columnIndex="1" />
