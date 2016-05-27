@@ -61,11 +61,27 @@ public class PermitDeck implements Deck,Serializable {
     }
 
     public PermitCard getPermitCardVisible(PermitCard permitCard) throws ActionNotPossibleException{
+        /*
         if(permitCardsVisible.contains(permitCard)){
             for (PermitCard permitCardToReturn: permitCardsVisible) {
-                if(permitCardToReturn.equals(permitCard))
-                    return permitCardToReturn;
+                if(permitCardToReturn.equals(permitCard)) {
+                    permitCardsVisible.remove(permitCardToReturn);
 
+                    return permitCardToReturn;
+                }
+
+            }
+        }
+        throw new ActionNotPossibleException();
+        */
+        if(permitCardsVisible.contains(permitCard)) {
+            for (int i = 0; i < permitCardsVisible.size(); i++) {
+                if(permitCardsVisible.get(i).equals(permitCard)){
+                    PermitCard permitCardToReturn = permitCardsVisible.remove(i);
+                    System.out.println("Changing permit card visible");
+                    permitCardsVisible.add(permitDeck.remove());
+                    return permitCardToReturn;
+                }
             }
         }
         throw new ActionNotPossibleException();

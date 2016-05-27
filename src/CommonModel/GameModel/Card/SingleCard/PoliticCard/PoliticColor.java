@@ -18,7 +18,7 @@ public enum PoliticColor implements Serializable {
 
     PoliticColor (String color){
         this.color = color;
-        this.imageUrl="/ClientPackage/View/GUIResources/Image/"+color+"Councilor.png";
+        this.imageUrl="/ClientPackage/View/GUIResources/Image/councilor/"+color+".png";
     }
 
     public String getColor() {

@@ -33,4 +33,24 @@ public class PoliticCard implements Serializable {
     public PoliticColor getPoliticColor() {
         return politicColor;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PoliticCard that = (PoliticCard) o;
+
+        if (isMultiColor != that.isMultiColor) return false;
+        return politicColor == that.politicColor;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = politicColor != null ? politicColor.hashCode() : 0;
+        result = 31 * result + (isMultiColor ? 1 : 0);
+        return result;
+    }
 }

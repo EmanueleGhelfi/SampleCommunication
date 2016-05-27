@@ -71,7 +71,7 @@ public abstract class Action implements Serializable {
         */
 
         for(int i = 0; i < politicCards.size(); i++){
-            for(int j = 0; j< user.getPoliticCards().size();i++){
+            for(int j = 0; j< user.getPoliticCards().size();j++){
                 if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
                     user.getPoliticCards().remove(j);
                     user.decrementPoliticCardNumber();
