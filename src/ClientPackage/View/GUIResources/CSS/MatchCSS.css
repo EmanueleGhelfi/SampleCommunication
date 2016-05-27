@@ -4,6 +4,13 @@
     -fx-background-size: 95%;
 }
 
+.pathBackground{
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/BackgroundPath.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+    -fx-background-size: 95%;
+}
+
 .permitCard{
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/PermitCard.png");
     -fx-background-repeat: stretch;
