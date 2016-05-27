@@ -46,7 +46,7 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         politicCards = (ArrayList<PoliticCard>)  clientController.getSnapshot().getCurrentUser().getPoliticCards().clone();
         popOver = new PopOver();
-        //
+        //gre
         Pane paneOfPopup = new Pane();
         GridPane imageView = (GridPane) event.getSource();
         JFXCheckBox politicCardsCheckBox;
