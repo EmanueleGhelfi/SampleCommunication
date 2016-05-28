@@ -5,6 +5,7 @@ import ClientPackage.View.GUIResources.customComponent.CityButton;
 import ClientPackage.View.GUIResources.customComponent.CouncilorHandler;
 import ClientPackage.View.GUIResources.customComponent.PermitCardHandler;
 import ClientPackage.View.GUIResources.customComponent.SideNode;
+import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Councilor;
@@ -54,6 +55,7 @@ public class MatchController implements Initializable, BaseController {
     private Pane paneOfPopup = new Pane();
     private JFXComboBox<String> councilorColorToChoose = new JFXComboBox<>();
     private String city;
+    private GUIView guiView;
     @FXML private ImageView imageTest;
     @FXML Button buttonMain1;
     @FXML Button buttonMain2;
@@ -84,11 +86,13 @@ public class MatchController implements Initializable, BaseController {
         popOver.setContentNode(paneOfPopup);
     }
 
-    public void setClientController(ClientController clientController) {
+    public void setClientController(ClientController clientController, GUIView guiView) {
         this.clientController = clientController;
+        this.guiView = guiView;
         hiddenSidesPane = new HiddenSidesPane();
         mainActionBuildWithPermitCard();
         currentSnapshot = clientController.getSnapshot();
+
         System.out.println("setting image");
         background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
         //createArray();
@@ -280,22 +284,7 @@ public class MatchController implements Initializable, BaseController {
     }
 
     public void updateSnapshot(SnapshotToSend snapshot) {
-        this.currentSnapshot = snapshot;
-        System.out.println("on update snapshot <- Match controller");
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                nobilityPathText.setText(snapshot.getCurrentUser().getNobilityPathPosition().getPosition()+"");
-                richPathText.setText(snapshot.getCurrentUser().getCoinPathPosition()+"");
-                helperText.setText(snapshot.getCurrentUser().getHelpers()+"");
-                victoryPathText.setText(snapshot.getCurrentUser().getVictoryPathPosition()+"");
 
-                reprintCouncilor();
-                createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
-                createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
-                createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
-            }
-        });
 
     }
 
@@ -332,6 +321,21 @@ public class MatchController implements Initializable, BaseController {
 
     @Override
     public void updateView() {
+        this.currentSnapshot = clientController.getSnapshot();
+        System.out.println("on update snapshot <- Match controller");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                nobilityPathText.setText(currentSnapshot.getCurrentUser().getNobilityPathPosition().getPosition()+"");
+                richPathText.setText(currentSnapshot.getCurrentUser().getCoinPathPosition()+"");
+                helperText.setText(currentSnapshot.getCurrentUser().getHelpers()+"");
+                victoryPathText.setText(currentSnapshot.getCurrentUser().getVictoryPathPosition()+"");
 
+                reprintCouncilor();
+                createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
+                createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
+                createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
+            }
+        });
     }
 }

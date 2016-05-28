@@ -23,7 +23,7 @@ public class GUIView extends Application implements BaseView {
     private WaitingController waitingController;
     private MapSelectionController mapSelectionController;
     private MatchController matchController;
-    private BaseController baseController;
+    private ArrayList<BaseController> baseControllerList;
     private ClientController clientController;
     private ArrayList<Map> maps;
     private boolean myTurn = false;
@@ -135,9 +135,9 @@ public class GUIView extends Application implements BaseView {
                     e.printStackTrace();
                 }
                 matchController = loader.getController();
-                baseController.setClientController(clientController);
+                matchController.setClientController(clientController, this);
                 System.out.println("called my turn "+myTurn);
-                baseController.setMyTurn(myTurn, clientController.getSnapshot());
+                matchController.setMyTurn(myTurn, clientController.getSnapshot());
                 Scene scene = new Scene(screen);
                 //stage= new Stage();
                 stage.setScene(scene);
@@ -166,6 +166,15 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void updateSnapshot() {
-        matchController.updateSnapshot(clientController.getSnapshot());
+        for (BaseController baseController : baseControllerList) {
+            baseController.updateView();
+        }
     }
+
+    public void registerBaseController(BaseController baseController){
+        if (!baseControllerList.contains(baseController)) {
+            baseControllerList.add(baseController);
+        }
+    }
+
 }
