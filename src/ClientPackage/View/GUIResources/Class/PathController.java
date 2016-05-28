@@ -52,12 +52,6 @@ public class PathController implements Initializable, BaseController{
 
     @Override
     public void updateView() {
-
-    }
-
-    @Override
-    public void setClientController(ClientController clientController) {
-        this.clientController = clientController;
         for (BaseUser baseUser : clientController.getSnapshot().getUsersInGame().values()) {
             if (!baseUser.getUsername().equals(clientController.getSnapshot().getCurrentUser().getUsername())) {
                 userCircularArrayList.add(baseUser);
@@ -66,6 +60,12 @@ public class PathController implements Initializable, BaseController{
         populatePermitCardAndEmporiums();
         showInformation();
         populateNobilityPath();
+    }
+
+    @Override
+    public void setClientController(ClientController clientController) {
+        this.clientController = clientController;
+        updateView();
     }
 
     private void populatePermitCardAndEmporiums() {
@@ -83,12 +83,16 @@ public class PathController implements Initializable, BaseController{
 
     public void nextPlayer(Event event) {
         userCounter++;
+        emporiumCounter = 0;
+        permitCardCounter = 0;
         populatePermitCardAndEmporiums();
         showInformation();
     }
 
     public void prevPlayer(Event event) {
         userCounter--;
+        emporiumCounter = 0;
+        permitCardCounter = 0;
         populatePermitCardAndEmporiums();
         showInformation();
     }
@@ -132,7 +136,6 @@ public class PathController implements Initializable, BaseController{
                 for (int counter = 0; counter < bonusArrayList.size(); counter++) {
                     bonusName = bonusArrayList.get(counter).getBonusName();
                     bonusImage = new Image("/ClientPackage/View/GUIResources/Image/bonus/" + bonusName);
-                    ;
                     nobilityPath.add(bonusImageView, count + 1, counter);
                 }
             }
