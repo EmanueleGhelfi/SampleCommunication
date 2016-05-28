@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<GridPane id="background" fx:id="pathBackground" layoutY="30.0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../CSS/MatchCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.PathController">
+<GridPane id="background" fx:id="path" layoutY="30.0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../CSS/MatchCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.PathController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
     </columnConstraints>

@@ -23,7 +23,7 @@ public class GUIView extends Application implements BaseView {
     private WaitingController waitingController;
     private MapSelectionController mapSelectionController;
     private MatchController matchController;
-    private ArrayList<BaseController> baseControllerList;
+    private ArrayList<BaseController> baseControllerList = new ArrayList<>();
     private ClientController clientController;
     private ArrayList<Map> maps;
     private boolean myTurn = false;
@@ -124,6 +124,7 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void gameInitialization(SnapshotToSend snapshotToSend) {
+        GUIView baseView = this;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -135,7 +136,7 @@ public class GUIView extends Application implements BaseView {
                     e.printStackTrace();
                 }
                 matchController = loader.getController();
-                matchController.setClientController(clientController, this);
+                matchController.setClientController(clientController, baseView);
                 System.out.println("called my turn "+myTurn);
                 matchController.setMyTurn(myTurn, clientController.getSnapshot());
                 Scene scene = new Scene(screen);

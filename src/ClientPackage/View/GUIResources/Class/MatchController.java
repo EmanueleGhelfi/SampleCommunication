@@ -72,7 +72,7 @@ public class MatchController implements Initializable, BaseController {
     @FXML private HBox hillHBox;
     @FXML private HBox mountainHBox;
     @FXML private StackPane bottomPane;
-    @FXML private GridPane pathBackground;
+    @FXML private GridPane path;
     @FXML private PathController pathController;
     private HiddenSidesPane hiddenSidesPane;
 
@@ -92,7 +92,8 @@ public class MatchController implements Initializable, BaseController {
         hiddenSidesPane = new HiddenSidesPane();
         mainActionBuildWithPermitCard();
         currentSnapshot = clientController.getSnapshot();
-
+        guiView.registerBaseController(this);
+        pathController.setClientController(clientController,guiView);
         System.out.println("setting image");
         background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
         //createArray();
@@ -275,7 +276,7 @@ public class MatchController implements Initializable, BaseController {
     public void setMyTurn(boolean value, SnapshotToSend snapshot) {
         myTurn = value;
         turnFinished(myTurn);
-        updateSnapshot(snapshot);
+        updateView();
     }
 
     private void turnFinished(boolean thisTurn) {
@@ -283,10 +284,6 @@ public class MatchController implements Initializable, BaseController {
         buttonMain1.setDisable(myTurnValue);
     }
 
-    public void updateSnapshot(SnapshotToSend snapshot) {
-
-
-    }
 
     private void reprintCouncilor() {
         for (RegionName regionName : RegionName.values()) {

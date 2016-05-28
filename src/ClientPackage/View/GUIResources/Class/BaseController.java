@@ -1,6 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.Snapshot.SnapshotToSend;
 
 /**
@@ -10,7 +11,7 @@ public interface BaseController {
 
     public void updateView();
 
-    public void setClientController(ClientController clientController);
+    public void setClientController(ClientController clientController, GUIView guiView);
 
     void setMyTurn(boolean myTurn, SnapshotToSend snapshot);
 }
