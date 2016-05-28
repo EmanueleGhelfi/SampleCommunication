@@ -274,14 +274,16 @@
                   </Pane>
                </center>
                <bottom>
-                  <StackPane fx:id="bottomPane" prefHeight="100.0" prefWidth="1200.0" style="-: ;" BorderPane.alignment="CENTER" />
+                  <StackPane fx:id="bottomPane" prefHeight="100.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
                </bottom>
             </BorderPane>
          </content>
       </Tab>
-      <Tab text="Paths">
+       <Tab text="Paths">
          <content>
-            <GridPane layoutY="30.0">
+             <fx:include source="PathFXML.fxml" fx:id="pathBackground"/>
+            <!--
+             <GridPane id="background" layoutY="30.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                </columnConstraints>
@@ -327,7 +329,7 @@
                               </ImageView>
                               <ImageView fitHeight="60.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                  <image>
-                                    <Image url="@../../../../../../../../OneDrive/Università/Terzo%20Anno/Semestre%202/Progetto%20Finale/Images/Completed/Money.png" />
+                                    <Image url="@../Image/Money.png" />
                                  </image>
                               </ImageView>
                               <ImageView fitHeight="62.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
@@ -452,6 +454,7 @@
                   <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
+         -->
          </content>
       </Tab>
       <Tab text="Shop" />

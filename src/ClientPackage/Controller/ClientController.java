@@ -158,7 +158,7 @@ public class ClientController {
 
     public void isMyTurn() {
         baseView.isMyTurn(snapshot);
-        System.out.println("Client Controller: is my turn");
+        System.out.println("Client BaseController: is my turn");
     }
 
     public void mainActionElectCouncilor(String parameter) {

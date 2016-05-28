@@ -1,10 +1,7 @@
 package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.Class.MapSelectionController;
-import ClientPackage.View.GUIResources.Class.MatchController;
-import ClientPackage.View.GUIResources.Class.LoginController;
-import ClientPackage.View.GUIResources.Class.WaitingController;
+import ClientPackage.View.GUIResources.Class.*;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -26,6 +23,7 @@ public class GUIView extends Application implements BaseView {
     private WaitingController waitingController;
     private MapSelectionController mapSelectionController;
     private MatchController matchController;
+    private BaseController baseController;
     private ClientController clientController;
     private ArrayList<Map> maps;
     private boolean myTurn = false;
@@ -137,9 +135,9 @@ public class GUIView extends Application implements BaseView {
                     e.printStackTrace();
                 }
                 matchController = loader.getController();
-                matchController.setClientController(clientController);
+                baseController.setClientController(clientController);
                 System.out.println("called my turn "+myTurn);
-                matchController.setMyTurn(myTurn, clientController.getSnapshot());
+                baseController.setMyTurn(myTurn, clientController.getSnapshot());
                 Scene scene = new Scene(screen);
                 //stage= new Stage();
                 stage.setScene(scene);

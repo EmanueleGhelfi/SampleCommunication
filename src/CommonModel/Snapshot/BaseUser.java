@@ -83,4 +83,7 @@ public class BaseUser implements Serializable {
     public int getCoinPathPosition() {
         return coinPathPosition;
     }
+    public int getPoliticCardNumber() {
+        return politicCardNumber;
+    }
 }

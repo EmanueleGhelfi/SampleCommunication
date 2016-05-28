@@ -4,24 +4,16 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.CityButton;
 import ClientPackage.View.GUIResources.customComponent.PermitCardHandler;
 import ClientPackage.View.GUIResources.customComponent.SideNode;
-import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.*;
-import CommonModel.GameModel.City.Region;
-import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Exception.CouncilNotFoundException;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,11 +21,8 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
 import javafx.scene.Node;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -41,31 +30,24 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
 
-import javax.swing.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
  * Created by Giulio on 17/05/2016.
  */
-public class MatchController implements Initializable {
+public class MatchController implements Initializable, BaseController {
 
     private ClientController clientController;
     private boolean myTurn;
-    //@FXML Button buttonMain1;
-    //@FXML AnchorPane background;
     private SnapshotToSend currentSnapshot;
     private PopOver popOver = new PopOver();
     private Pane paneOfPopup = new Pane();
@@ -87,6 +69,8 @@ public class MatchController implements Initializable {
     @FXML private HBox hillHBox;
     @FXML private HBox mountainHBox;
     @FXML private StackPane bottomPane;
+    @FXML private GridPane pathBackground;
+    @FXML private PathController pathController;
 
     private List<Circle> circlesCoast = new ArrayList<>();
     private List<Circle> circlesHill= new ArrayList<>();
@@ -306,7 +290,7 @@ public class MatchController implements Initializable {
     public void setMyTurn(boolean value, SnapshotToSend snapshot) {
         myTurn = value;
         turnFinished(myTurn);
-       updateSnapshot(snapshot);
+        updateSnapshot(snapshot);
     }
 
     private void turnFinished(boolean thisTurn) {
@@ -353,6 +337,8 @@ public class MatchController implements Initializable {
     }
 
 
+    @Override
+    public void updateView() {
 
-
+    }
 }

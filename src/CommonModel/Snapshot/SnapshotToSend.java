@@ -109,4 +109,12 @@ public class SnapshotToSend implements Serializable{
         }
         else throw new CouncilNotFoundException();
     }
+
+    public HashMap<String, BaseUser> getUsersInGame() {
+        return usersInGame;
+    }
+
+    public Position[] getNobilityPathPosition() {
+        return nobilityPathPosition;
+    }
 }

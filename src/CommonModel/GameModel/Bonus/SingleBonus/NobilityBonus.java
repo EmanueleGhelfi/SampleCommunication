@@ -6,6 +6,7 @@ import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -23,5 +24,15 @@ public class NobilityBonus implements Bonus,Serializable {
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         game.getNobilityPath().goAhead(user, nobilityNumber);
+    }
+
+    @Override
+    public String getBonusName() {
+        return "NobilityBonus";
+    }
+
+    @Override
+    public ArrayList<Bonus> getBonusArrayList() {
+        return null;
     }
 }

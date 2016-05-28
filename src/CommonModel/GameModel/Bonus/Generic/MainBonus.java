@@ -103,4 +103,13 @@ public class MainBonus implements Bonus,Serializable {
             bonus.getBonus(user,game);
         }
     }
+
+    @Override
+    public String getBonusName() {
+        return "MainBonus";
+    }
+
+    public ArrayList<Bonus> getBonusArrayList() {
+        return bonusArrayList;
+    }
 }
