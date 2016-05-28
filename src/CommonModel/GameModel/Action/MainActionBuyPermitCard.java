@@ -58,7 +58,7 @@ public class MainActionBuyPermitCard extends Action {
             removePoliticCard(politicCards, user);
             // buy permit card, here you can buy permit
             PermitDeck permitDeck = game.getPermitDeck(region.getRegion());
-            PermitCard permitCardToBuy = permitDeck.getPermitCardVisible(permitCard);
+            PermitCard permitCardToBuy = permitDeck.getAndRemovePermitCardVisible(permitCard);
             permitCardToBuy.getBonus().getBonus(user, game);
             user.addPermitCard(permitCardToBuy);
             System.out.println("AFTER ADDING "+user.getPermitCards().size());
@@ -66,7 +66,7 @@ public class MainActionBuyPermitCard extends Action {
         }
     }
 
-    //TODO MAIN-TEST
+    // MAIN-TEST
     public static void main(String[] args){
         Game game = new Game();
         User user = null;

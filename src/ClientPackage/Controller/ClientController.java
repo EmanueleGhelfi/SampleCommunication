@@ -9,13 +9,13 @@ import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.RegionName;
+import CommonModel.GameModel.Council.King;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Councilor;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -161,13 +161,9 @@ public class ClientController {
         System.out.println("Client BaseController: is my turn");
     }
 
-    public void mainActionElectCouncilor(String parameter) {
-        PoliticColor temp;
-        if (parameter == "WHITE")
-            temp = PoliticColor.WHITE;
-        else
-            temp = PoliticColor.BLACK;
-        Action action = new MainActionElectCouncilor(new Councilor(temp), snapshot.getKing(), RegionName.HILL);
+    public void mainActionElectCouncilor(Councilor councilor, King king, RegionName regionName) {
+        System.out.println("Elect councilor in client controller");
+        Action action = new MainActionElectCouncilor(councilor, king, regionName);
         try {
             clientService.onAction(action);
         } catch (ActionNotPossibleException e) {
@@ -181,8 +177,8 @@ public class ClientController {
         baseView.turnFinished();
     }
 
-    public void fastActionElectCouncilorWithHelper() {
-        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL,snapshot.getKing(),new Councilor(PoliticColor.BLACK),Constants.REGION_COUNCIL);
+    public void fastActionElectCouncilorWithHelper(Councilor councilor, King king, RegionName region, String councilType) {
+        Action action = new FastActionElectCouncilorWithHelper(region,king,councilor,councilType);
         try {
             clientService.onAction(action);
         } catch (ActionNotPossibleException e) {

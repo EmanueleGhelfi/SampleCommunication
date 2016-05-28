@@ -33,7 +33,6 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
         this.permitCard = permitCard;
         this.matchController = matchController;
         this.clientController = clientController;
-        System.out.println("created");
 
     }
 
@@ -41,7 +40,6 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         politicCards = (ArrayList<PoliticCard>)  clientController.getSnapshot().getCurrentUser().getPoliticCards().clone();
         popOver = new PopOver();
-        //gre
         Pane paneOfPopup = new Pane();
         GridPane imageView = (GridPane) event.getSource();
         JFXCheckBox politicCardsCheckBox;
@@ -68,17 +66,14 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
         jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Pressed");
                 ArrayList<PoliticCard> politicCardSelected = new ArrayList<PoliticCard>();
                 Set<Node> jfxCheckBoxArrayList = (Set<Node>) vBox.lookupAll("#JFXCheckBox");
                 for (Node node : jfxCheckBoxArrayList) {
                     JFXCheckBox jfxCheckBoxTempTemp = (JFXCheckBox) node;
                     if (jfxCheckBoxTempTemp.isSelected()) {
-                        System.out.println(jfxCheckBoxTempTemp.getText()+" is armed");
                         politicCardSelected.add(findPoliticCard(jfxCheckBoxTempTemp.getText()));
                     }
                 }
-                System.out.println(jfxCheckBoxArrayList + " arraylist");
                 clientController.mainActionBuyPermitCard(permitCard,politicCardSelected);
             }
         });

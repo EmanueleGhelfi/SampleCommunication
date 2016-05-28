@@ -30,84 +30,88 @@
          <content>
             <BorderPane fx:id="background" prefHeight="200.0" prefWidth="200.0" styleClass="matchBackground">
                <top>
-                  <HBox prefHeight="47.0" prefWidth="1161.0" spacing="40.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+                  <StackPane fx:id="bottomPane" prefHeight="100.0" prefWidth="1200.0">
                      <children>
-                        <GridPane alignment="CENTER">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
+                        <HBox prefHeight="47.0" prefWidth="1161.0" spacing="40.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                            <children>
-                              <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Image/Helper.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="helperText" text="Numero aiutanti" GridPane.columnIndex="1" />
+                              <GridPane alignment="CENTER">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/Helper.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="helperText" text="Numero aiutanti" GridPane.columnIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <GridPane alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                                 <children>
+                                    <Label fx:id="victoryPathText" text="Percorso vittoria" GridPane.columnIndex="1" />
+                                    <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/ShieldTrasparent.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                              <GridPane alignment="CENTER" layoutX="131.0" layoutY="10.0">
+                                 <children>
+                                    <Label fx:id="richPathText" text="Percorso ricchezza" GridPane.columnIndex="1" />
+                                    <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/Money.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                              <GridPane alignment="CENTER" layoutX="266.0" layoutY="10.0">
+                                 <children>
+                                    <Label fx:id="nobilityPathText" text="Percorso Nobiltà" GridPane.columnIndex="1" />
+                                    <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/NobilityArrow.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
                            </children>
-                        </GridPane>
-                        <GridPane alignment="CENTER" layoutX="10.0" layoutY="10.0">
-                           <children>
-                              <Label fx:id="victoryPathText" text="Percorso vittoria" GridPane.columnIndex="1" />
-                              <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Image/ShieldTrasparent.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane alignment="CENTER" layoutX="131.0" layoutY="10.0">
-                           <children>
-                              <Label fx:id="richPathText" text="Percorso ricchezza" GridPane.columnIndex="1" />
-                              <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Image/Money.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane alignment="CENTER" layoutX="266.0" layoutY="10.0">
-                           <children>
-                              <Label fx:id="nobilityPathText" text="Percorso Nobiltà" GridPane.columnIndex="1" />
-                              <ImageView fitHeight="45.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Image/NobilityArrow.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
+                           <padding>
+                              <Insets left="40.0" />
+                           </padding>
+                        </HBox>
                      </children>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </HBox>
+                  </StackPane>
                </top>
                <center>
-                  <Pane prefHeight="531.0" prefWidth="1200.0" styleClass="matchBackground" BorderPane.alignment="CENTER">
+                  <Pane prefHeight="481.0" prefWidth="1200.0" styleClass="matchBackground" BorderPane.alignment="CENTER">
                      <children>
                         <Button fx:id="buttonMain1" layoutX="769.0" layoutY="38.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="MAIN 1" AnchorPane.leftAnchor="769.0" AnchorPane.rightAnchor="346.0" />
                         <Button layoutX="873.0" layoutY="46.0" mnemonicParsing="false" text="FAST 3" />
@@ -116,7 +120,15 @@
                         <Button layoutX="825.0" layoutY="158.0" mnemonicParsing="false" text="MAIN 3" />
                         <Button layoutX="955.0" layoutY="84.0" mnemonicParsing="false" text="MAIN 4" AnchorPane.rightAnchor="174.4482421875" />
                         <Button layoutX="1074.0" layoutY="140.0" mnemonicParsing="false" text="FAST 4" />
-                        <HBox fx:id="coastHBox" layoutX="93.0" layoutY="398.0" prefHeight="76.0" prefWidth="267.0" spacing="5.0">
+                        <Button layoutX="990.0" layoutY="38.0" mnemonicParsing="false" text="FAST 1" />
+                        <Button layoutX="1056.0" layoutY="38.0" mnemonicParsing="false" text="FAST 2" />
+                     </children>
+                  </Pane>
+               </center>
+               <bottom>
+                  <StackPane prefHeight="157.0" prefWidth="1200.0" style="-: ;" BorderPane.alignment="CENTER">
+                     <children>
+                        <Group>
                            <children>
                               <ImageView fitHeight="112.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -275,6 +287,162 @@
                </center>
                <bottom>
                   <StackPane fx:id="bottomPane" prefHeight="100.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+                              <HBox fx:id="hillHBox" layoutX="460.0" layoutY="398.0" prefHeight="76.0" prefWidth="267.0" spacing="5.0">
+                                 <children>
+                                    <ImageView fitHeight="112.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/Hill.png" />
+                                       </image>
+                                    </ImageView>
+                                    <GridPane id="permitCard" prefHeight="112.0" prefWidth="85.0" styleClass="permitCard" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label id="cityNames" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="21.0" prefWidth="48.0" text="A/B/C" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Rockwell Bold" size="9.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                                          <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="10.0" prefWidth="24.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="51.0" minWidth="10.0" prefWidth="44.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="67.0" minWidth="10.0" prefWidth="33.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                    <GridPane id="permitCard" layoutX="95.0" layoutY="10.0" prefHeight="112.0" prefWidth="85.0" styleClass="permitCard">
+                                       <children>
+                                          <Label id="cityNames" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="21.0" prefWidth="48.0" text="A/B/C" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Rockwell Bold" size="9.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                                          <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="10.0" prefWidth="24.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="51.0" minWidth="10.0" prefWidth="44.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="67.0" minWidth="10.0" prefWidth="33.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                              <HBox fx:id="coastHBox" layoutX="93.0" layoutY="398.0" prefHeight="76.0" prefWidth="267.0" spacing="5.0">
+                                 <children>
+                                    <ImageView fitHeight="112.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/Coast.png" />
+                                       </image>
+                                    </ImageView>
+                                    <GridPane id="permitCard" prefHeight="112.0" prefWidth="85.0" styleClass="permitCard" HBox.hgrow="ALWAYS">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="10.0" prefWidth="24.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="51.0" minWidth="10.0" prefWidth="44.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="67.0" minWidth="10.0" prefWidth="33.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label id="cityNames" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="21.0" prefWidth="48.0" text="A/B/C/D" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Rockwell Bold" size="9.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                                          <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                    <GridPane id="permitCard" layoutX="95.0" layoutY="10.0" prefHeight="112.0" prefWidth="85.0" styleClass="permitCard">
+                                       <children>
+                                          <Label id="cityNames" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="21.0" prefWidth="48.0" text="A/B/C" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Rockwell Bold" size="9.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                                          <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="10.0" prefWidth="24.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="51.0" minWidth="10.0" prefWidth="44.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="67.0" minWidth="10.0" prefWidth="33.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                              <HBox fx:id="mountainHBox" layoutX="822.0" layoutY="398.0" prefHeight="76.0" prefWidth="267.0" spacing="5.0">
+                                 <children>
+                                    <ImageView fitHeight="112.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/Mountain.png" />
+                                       </image>
+                                    </ImageView>
+                                    <GridPane id="permitCard" prefHeight="112.0" prefWidth="85.0" styleClass="permitCard" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label id="cityNames" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="21.0" prefWidth="48.0" text="A/B/C" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Rockwell Bold" size="9.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                                          <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="10.0" prefWidth="24.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="51.0" minWidth="10.0" prefWidth="44.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="67.0" minWidth="10.0" prefWidth="33.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                    <GridPane id="permitCard" layoutX="95.0" layoutY="10.0" prefHeight="112.0" prefWidth="85.0" styleClass="permitCard">
+                                       <children>
+                                          <Label id="cityNames" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="21.0" prefWidth="48.0" text="A/B/C" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                             <font>
+                                                <Font name="Rockwell Bold" size="9.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView id="firstBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                                          <ImageView id="thirdBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ImageView id="secondBonus" fitHeight="35.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="10.0" prefWidth="24.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="51.0" minWidth="10.0" prefWidth="44.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="67.0" minWidth="10.0" prefWidth="33.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </Group>
+                     </children></StackPane>
                </bottom>
             </BorderPane>
          </content>

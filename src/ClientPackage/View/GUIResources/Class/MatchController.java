@@ -2,6 +2,7 @@ package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.CityButton;
+import ClientPackage.View.GUIResources.customComponent.CouncilorHandler;
 import ClientPackage.View.GUIResources.customComponent.PermitCardHandler;
 import ClientPackage.View.GUIResources.customComponent.SideNode;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
@@ -71,16 +72,12 @@ public class MatchController implements Initializable, BaseController {
     @FXML private StackPane bottomPane;
     @FXML private GridPane pathBackground;
     @FXML private PathController pathController;
+    private HiddenSidesPane hiddenSidesPane;
 
-    private List<Circle> circlesCoast = new ArrayList<>();
-    private List<Circle> circlesHill= new ArrayList<>();
-    private List<Circle> circlesMountain= new ArrayList<>();
-    private List<Circle> circlesKing= new ArrayList<>();
 
-    private ArrayList<Councilor> coastCouncil = new ArrayList<>();
-    private ArrayList<Councilor> hillCouncil = new ArrayList<>();
-    private ArrayList<Councilor> mountainCouncil = new ArrayList<>();
-    private ArrayList<Councilor> kingCouncil = new ArrayList<>();
+    private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
+    private ArrayList<ImageView> kingCouncil = new ArrayList<>();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -89,12 +86,7 @@ public class MatchController implements Initializable, BaseController {
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
-        councilorColorToChoose.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                clientController.mainActionElectCouncilor(councilorColorToChoose.getSelectionModel().getSelectedItem());
-            }
-        });
+        hiddenSidesPane = new HiddenSidesPane();
         mainActionBuildWithPermitCard();
         currentSnapshot = clientController.getSnapshot();
         System.out.println("setting image");
@@ -107,7 +99,10 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void createOverlay() {
-        HiddenSidesPane hiddenSidesPane = new HiddenSidesPane();
+        if(bottomPane.getChildren().contains(hiddenSidesPane)) {
+            bottomPane.getChildren().remove(hiddenSidesPane);
+        }
+        hiddenSidesPane = new HiddenSidesPane();
         HBox hbox1 = new HBox();
         HBox hbox2 = new HBox();
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -115,20 +110,24 @@ public class MatchController implements Initializable, BaseController {
             HBox hBox = new HBox();
             try {
                 ArrayList<Councilor> councilors = currentSnapshot.getCouncil(regionName);
+                ArrayList<ImageView> imageViews = new ArrayList<>();
                 for (int i = 0; i< councilors.size();i++){
                     ImageView imageView = new ImageView();
                     try {
                         imageView.setImage(new Image(councilors.get(i).getColor().getImageUrl()));
                         imageView.setFitHeight(50.0);
                         imageView.setFitWidth(50.0);
+                        imageViews.add(imageView);
                     }
                     catch (IllegalArgumentException e){
-                        System.out.println("not found match controller"+councilors.get(i).getColor().getImageUrl());
+                        System.out.println("not found image in match controller"+councilors.get(i).getColor().getImageUrl());
                     }
                     hBox.getChildren().add(imageView);
                 }
+                councilHashMap.put(regionName,imageViews);
                 hbox1.getChildren().add(hBox);
                 hBox.setPrefWidth(primaryScreenBounds.getWidth()/3);
+                hBox.setOnMouseClicked(new CouncilorHandler(hBox,regionName,this,clientController,null));
             } catch (CouncilNotFoundException e) {
                 e.printStackTrace();
             }
@@ -144,17 +143,20 @@ public class MatchController implements Initializable, BaseController {
                 imageView.setImage(new Image(councilor.getColor().getImageUrl()));
                 imageView.setFitHeight(50.0);
                 imageView.setFitWidth(50.0);
+                kingCouncil.add(imageView);
             }
             catch (IllegalArgumentException e){
-                System.out.println("not found match controller"+councilor.getColor().getImageUrl());
+                System.out.println("not found image match controller"+councilor.getColor().getImageUrl());
             }
             hbox2.getChildren().add(imageView);
         }
+        hbox2.setOnMouseClicked(new CouncilorHandler(hbox2,null,this,clientController,currentSnapshot.getKing()));
         hbox2.setPrefWidth(primaryScreenBounds.getWidth());
         hbox2.setAlignment(Pos.CENTER);
         SideNode sideNode = new SideNode(10.0, Side.BOTTOM,hiddenSidesPane,hbox1,hbox2);
         sideNode.setStyle("-fx-background-color: rgba(143,147,147,.25);");
-        hiddenSidesPane.setBottom(sideNode);
+        hiddenSidesPane.setTop(sideNode);
+
         bottomPane.getChildren().add(hiddenSidesPane);
 
     }
@@ -163,14 +165,12 @@ public class MatchController implements Initializable, BaseController {
         Set<Node> imageViews = regionHBox.lookupAll("#permitCard");
         int i = 0;
         for (Node node: imageViews) {
-            System.out.println("Found");
             node.setOnMouseClicked(new PermitCardHandler(permitDeck.get(regionName).get(i),this,clientController));
             i++;
         }
 
         i=0;
         for (Node node: regionHBox.lookupAll("#cityNames")){
-            System.out.println("found label");
             Label label = (Label) node;
             label.setText(permitDeck.get(regionName).get(i).getCityString());
             i++;
@@ -178,23 +178,7 @@ public class MatchController implements Initializable, BaseController {
 
     }
 
-    private void createArray() {
-        for (Node node : regionCoast.getChildren()) {
-            circlesCoast.add((Circle) node);
-        }
 
-        for (Node node : regionHill.getChildren()) {
-            circlesHill.add((Circle) node);
-        }
-
-        for (Node node : regionMountain.getChildren()) {
-            circlesMountain.add((Circle) node);
-        }
-
-        for (Node node : regionKing.getChildren()) {
-            circlesKing.add((Circle) node);
-        }
-    }
 
 
 
@@ -275,9 +259,6 @@ public class MatchController implements Initializable, BaseController {
     public void fastActionChangePermitCardWithHelper(){
     }
 
-    public void fastActionElectCouncilorWithHelper(){
-        clientController.fastActionElectCouncilorWithHelper();
-    }
 
     public void fastActionMoneyForHelper(){
 
@@ -299,6 +280,7 @@ public class MatchController implements Initializable, BaseController {
     }
 
     public void updateSnapshot(SnapshotToSend snapshot) {
+        this.currentSnapshot = snapshot;
         System.out.println("on update snapshot <- Match controller");
         Platform.runLater(new Runnable() {
             @Override
@@ -308,23 +290,34 @@ public class MatchController implements Initializable, BaseController {
                 helperText.setText(snapshot.getCurrentUser().getHelpers()+"");
                 victoryPathText.setText(snapshot.getCurrentUser().getVictoryPathPosition()+"");
 
-                try {
-                    coastCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.COAST);
-                    fillCircle(circlesCoast,coastCouncil);
-                    hillCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.HILL);
-                    fillCircle(circlesHill,hillCouncil);
-                    mountainCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.MOUNTAIN);
-                    fillCircle(circlesMountain,mountainCouncil);
-                    kingCouncil = new ArrayList<Councilor>(snapshot.getKing().getCouncil().getCouncil());
-                    fillCircle(circlesKing,kingCouncil);
-                } catch (CouncilNotFoundException e) {
-                    e.printStackTrace();
-                }
+                reprintCouncilor();
                 createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
                 createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
                 createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
             }
         });
+
+    }
+
+    private void reprintCouncilor() {
+        for (RegionName regionName : RegionName.values()) {
+            ArrayList<Councilor> councilors = null;
+            try {
+                councilors = currentSnapshot.getCouncil(regionName);
+                ArrayList<ImageView> imageView = councilHashMap.get(regionName);
+                for(int i = 0; i< councilors.size();i++){
+                    imageView.get(i).setImage(new Image(councilors.get(i).getColor().getImageUrl()));
+                }
+            } catch (CouncilNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        ArrayList<Councilor> kingCouncilArray = new ArrayList<>(currentSnapshot.getKing().getCouncil().getCouncil());
+        for (int i = 0; i<kingCouncil.size();i++) {
+            kingCouncil.get(i).setImage(new Image(kingCouncilArray.get(i).getColor().getImageUrl()));
+        }
 
     }
 

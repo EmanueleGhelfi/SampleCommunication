@@ -104,19 +104,19 @@ public class GUIView extends Application implements BaseView {
                 Parent screen = null;
                 try {
                     screen = loader.load();
+                    mapSelectionController = loader.getController();
+                    mapSelectionController.setClientController(clientController);
+                    if(maps!=null)
+                        mapSelectionController.showMap(maps);
+                    scene = new Scene(screen);
+                    stage.setScene(scene);
+                    stage.show();
+                    maps = mapArrayList;
+                    if(waitingController!=null){
+                        mapSelectionController.showMap(maps);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-                mapSelectionController = loader.getController();
-                mapSelectionController.setClientController(clientController);
-                if(maps!=null)
-                    mapSelectionController.showMap(maps);
-                scene = new Scene(screen);
-                stage.setScene(scene);
-                stage.show();
-                maps = mapArrayList;
-                if(waitingController!=null){
-                    mapSelectionController.showMap(maps);
                 }
             }
         });

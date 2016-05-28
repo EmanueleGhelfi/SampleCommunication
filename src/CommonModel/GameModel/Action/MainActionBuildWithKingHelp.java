@@ -25,7 +25,7 @@ public class MainActionBuildWithKingHelp extends Action {
         this.politicCards = politicCards;
     }
 
-    //TODO
+
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // count number of correct politic card

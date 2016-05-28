@@ -54,7 +54,6 @@ public abstract class Action implements Serializable {
         game.getGameController().sendSnapshotToAll();
     }
 
-    // TODO: adjust
     protected void removePoliticCard(ArrayList<PoliticCard> politicCards, User user){
         int cont2 =0;
         /*
