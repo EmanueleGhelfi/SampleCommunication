@@ -1,5 +1,6 @@
 package ClientPackage.View.GUIResources.customComponent;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Node;
@@ -14,6 +15,7 @@ public class SideNode extends VBox {
     public SideNode(double spacing, Side side, HiddenSidesPane pane, Node... children) {
         super(spacing, children);
         setAlignment(Pos.CENTER);
-        setPrefSize(100, 100);
+        setPadding(new Insets(0,100,0,100));
+        setPrefSize(30, 30);
     }
 }

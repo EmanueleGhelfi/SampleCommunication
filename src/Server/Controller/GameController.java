@@ -1,10 +1,7 @@
 package Server.Controller;
 
 import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.King;
 import CommonModel.Snapshot.SnapshotToSend;
@@ -15,7 +12,6 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Utilities.Exception.MapsNotFoundException;
 
-import javax.jws.soap.SOAPBinding;
 import java.io.Serializable;
 import java.util.*;
 
@@ -125,6 +121,7 @@ public class GameController implements Serializable{
      * create snapshot and change round
      * @param user user that has finished round
      */
+    //TODO: manage disconnection
     public void onFinishRound(User user) {
         System.out.println("on finish round called");
         user.getBaseCommunication().finishTurn();
@@ -134,11 +131,25 @@ public class GameController implements Serializable{
             SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
             if(user.equals(userArrayList.get(cont))){
-                userArrayList.get((cont+1)%game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
-                userArrayList.get((cont+1)%game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
-                userArrayList.get((cont+1)%game.getUsers().size()).getBaseCommunication().changeRound();
+                int nextUser = cont+1;
+                while (!userArrayList.get((nextUser)%game.getUsers().size()).isConnected() || nextUser%game.getUsers().size()==cont){
+                    System.out.println("user not connected "+ userArrayList.get((nextUser)%game.getUsers().size()));
+                    nextUser++;
+                }
+                if((nextUser%game.getUsers().size())==cont){
+                    onAllUserDisconnected();
+                }
+                else {
+                    userArrayList.get((nextUser) % game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
+                    userArrayList.get((nextUser) % game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
+                    userArrayList.get((nextUser) % game.getUsers().size()).getBaseCommunication().changeRound();
+                }
             }
         }
+    }
+
+    private void onAllUserDisconnected() {
+        System.out.println("All user Disconnected! I don't know what to do");
     }
 
     public void doAction(Action action, User user) throws ActionNotPossibleException {
@@ -180,9 +191,13 @@ public class GameController implements Serializable{
         users.get(0).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
         users.get(0).getBaseCommunication().changeRound();
 
+
         for(int i = 1;i< users.size();i++){
             users.get(i).getBaseCommunication().finishTurn();
+
         }
+
+        sendSnapshotToAll();
     }
 
     public void sendSnapshotToAll() {

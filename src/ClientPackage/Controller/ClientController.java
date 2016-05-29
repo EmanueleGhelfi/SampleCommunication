@@ -212,4 +212,18 @@ public class ClientController {
         }
 
     }
+
+    /**
+     * called when doing a generic action
+     * @param action
+     */
+    public void doAction(Action action) {
+        try {
+            clientService.onAction(action);
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 }

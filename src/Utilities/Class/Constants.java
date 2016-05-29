@@ -113,7 +113,7 @@ public class Constants {
     public static final int VICTORY_PATH_LENGTH = 100;
 
     //TIMEOUT TO CREATE GAME
-    public static final int GAME_TIMEOUT = 2000;
+    public static final int GAME_TIMEOUT = 5000;
 
     //DECK SIZE
     public static final int SINGLECOLOR_POLITIC_DECK_SIZE = 13;

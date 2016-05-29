@@ -6,19 +6,26 @@ import ClientPackage.View.GUIResources.customComponent.CouncilorHandler;
 import ClientPackage.View.GUIResources.customComponent.PermitCardHandler;
 import ClientPackage.View.GUIResources.customComponent.SideNode;
 import ClientPackage.View.GeneralView.GUIView;
+import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
+import CommonModel.GameModel.Action.FastActionMoneyForHelper;
+import CommonModel.GameModel.Action.FastActionNewMainAction;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Exception.CouncilNotFoundException;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
@@ -57,13 +64,24 @@ public class MatchController implements Initializable, BaseController {
     private String city;
     private GUIView guiView;
     @FXML private ImageView imageTest;
+    //BUTTONs
     @FXML Button buttonMain1;
-    @FXML Button buttonMain2;
+    @FXML JFXButton coastPermitButton;
+    @FXML JFXButton hillPermitButton;
+    @FXML JFXButton mountainPermitButton;
+
+    //LABELS
+
     @FXML BorderPane background;
     @FXML Label nobilityPathText;
     @FXML Label richPathText;
     @FXML Label helperText;
     @FXML Label victoryPathText;
+    @FXML Label fastActionText;
+    @FXML Label mainActionText;
+    @FXML Label turnText;
+
+    //HBOX
     @FXML private HBox regionCoast;
     @FXML private HBox regionHill;
     @FXML private HBox regionMountain;
@@ -101,6 +119,13 @@ public class MatchController implements Initializable, BaseController {
         createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
         createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
         createOverlay();
+        initPermitButton();
+    }
+
+    private void initPermitButton() {
+        coastPermitButton.setOnMouseClicked(new PermitButtonHandler(RegionName.COAST));
+        hillPermitButton.setOnMouseClicked(new PermitButtonHandler(RegionName.HILL));
+        mountainPermitButton.setOnMouseClicked(new PermitButtonHandler(RegionName.MOUNTAIN));
     }
 
     private void createOverlay() {
@@ -120,8 +145,8 @@ public class MatchController implements Initializable, BaseController {
                     ImageView imageView = new ImageView();
                     try {
                         imageView.setImage(new Image(councilors.get(i).getColor().getImageUrl()));
-                        imageView.setFitHeight(50.0);
-                        imageView.setFitWidth(50.0);
+                        imageView.setFitHeight(10.0);
+                        imageView.setFitWidth(10.0);
                         imageViews.add(imageView);
                     }
                     catch (IllegalArgumentException e){
@@ -146,8 +171,8 @@ public class MatchController implements Initializable, BaseController {
             ImageView imageView = new ImageView();
             try{
                 imageView.setImage(new Image(councilor.getColor().getImageUrl()));
-                imageView.setFitHeight(50.0);
-                imageView.setFitWidth(50.0);
+                imageView.setFitHeight(10.0);
+                imageView.setFitWidth(10.0);
                 kingCouncil.add(imageView);
             }
             catch (IllegalArgumentException e){
@@ -275,13 +300,26 @@ public class MatchController implements Initializable, BaseController {
 
     public void setMyTurn(boolean value, SnapshotToSend snapshot) {
         myTurn = value;
+        this.currentSnapshot = snapshot;
         turnFinished(myTurn);
         updateView();
     }
 
     private void turnFinished(boolean thisTurn) {
-        boolean myTurnValue= !thisTurn;
-        buttonMain1.setDisable(myTurnValue);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(thisTurn){
+                    turnText.setText("E' il tuo turno!");
+                }
+                else{
+                    turnText.setText("Non è il tuo turno!");
+                }
+                boolean myTurnValue= !thisTurn;
+                buttonMain1.setDisable(myTurnValue);
+            }
+        });
+
     }
 
 
@@ -327,6 +365,8 @@ public class MatchController implements Initializable, BaseController {
                 richPathText.setText(currentSnapshot.getCurrentUser().getCoinPathPosition()+"");
                 helperText.setText(currentSnapshot.getCurrentUser().getHelpers()+"");
                 victoryPathText.setText(currentSnapshot.getCurrentUser().getVictoryPathPosition()+"");
+                mainActionText.setText(currentSnapshot.getCurrentUser().getMainActionCounter()+"");
+                fastActionText.setText(currentSnapshot.getCurrentUser().getFastActionCounter()+"");
 
                 reprintCouncilor();
                 createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
@@ -334,5 +374,71 @@ public class MatchController implements Initializable, BaseController {
                 createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
             }
         });
+    }
+
+    /**
+     * Called on click on helper image
+     * @param event
+     */
+    public void buyHelper(Event event) {
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Action action = new FastActionMoneyForHelper();
+                clientController.doAction(action);
+            }
+        };
+
+        String buttonText = "Compra aiutanti";
+        String infoLabel = "Azione veloce: Compra un aiutante per tre monete!";
+
+        showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
+    }
+
+    public void showDefaultPopOver(EventHandler<MouseEvent> eventHandler, String infoLabel, String buttonText, Node source){
+        PopOver popOver = new PopOver();
+        VBox vBox = new VBox();
+        JFXButton jfxButton = new JFXButton();
+        jfxButton.getStyleClass().add("button-raised-second");
+        jfxButton.setText(buttonText);
+        jfxButton.setOnMouseClicked(eventHandler);
+        Label label = new Label();
+        label.setText(infoLabel);
+        vBox.getChildren().add(label);
+        vBox.getChildren().add(jfxButton);
+        vBox.setSpacing(30);
+        vBox.setPadding(new Insets(40,40,40,40));
+        popOver.setContentNode(vBox);
+        popOver.show(source);
+    }
+
+    public void buyMainAction(Event event) {
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Action action = new FastActionNewMainAction();
+                clientController.doAction(action);
+            }
+        };
+
+        String buttonText = "Compra Azione!";
+        String infoLabel = "Azione veloce: Ottieni un azione principale per 3 aiutanti!!";
+
+        showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
+    }
+
+    private class PermitButtonHandler implements EventHandler<MouseEvent>{
+
+        private RegionName regionName;
+
+        PermitButtonHandler(RegionName regionName) {
+            this.regionName = regionName;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            Action action = new FastActionChangePermitCardWithHelper(regionName);
+            clientController.doAction(action);
+        }
     }
 }

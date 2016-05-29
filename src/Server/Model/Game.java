@@ -84,7 +84,6 @@ public class Game implements Serializable{
         for (RegionName regionName:RegionName.values()) {
             Region region = new Region(regionName,5);
             regions.put(region.getRegion(),region);
-            System.out.println(region);
         }
     }
 
@@ -143,7 +142,7 @@ public class Game implements Serializable{
     }
 
     public boolean addUserToGame(User userToAdd) {
-        System.out.println("ADDING A USER TO A GAME "+userToAdd);
+        System.out.println("ADDING A USER TO A GAME "+userToAdd.getUsername());
         if(!usersInGame.containsKey(userToAdd.getUsername())){
             usersInGame.put(userToAdd.getUsername(),userToAdd);
             if(usersInGame.size()>=2 && usersInGame.size()<Constants.MAX_CLIENT_NUMBER){

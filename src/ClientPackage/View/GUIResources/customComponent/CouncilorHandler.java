@@ -68,8 +68,6 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
             jfxComboBox.getItems().add(new Label(politicColor.getColor()));
         }
         jfxComboBox.setPromptText("Scegli il consigliere che vuoi aggiungere");
-
-
         mainActionButton.getStyleClass().add("button-raised");
         mainActionButton.setText("SCALZA GUADAGNANDO SOLDI!!!!");
         mainActionButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

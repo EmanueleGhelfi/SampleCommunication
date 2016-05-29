@@ -26,7 +26,7 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
     PermitCard permitCard;
     MatchController matchController;
     ClientController clientController;
-    PopOver popOver;
+    PopOver popOver = new PopOver();
     ArrayList<PoliticCard> politicCards = new ArrayList<>();
 
     public PermitCardHandler(PermitCard permitCard, MatchController matchController, ClientController clientController) {
@@ -39,9 +39,15 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event) {
         politicCards = (ArrayList<PoliticCard>)  clientController.getSnapshot().getCurrentUser().getPoliticCards().clone();
+        if(popOver.isShowing()){
+            popOver.hide();
+        }
         popOver = new PopOver();
+        popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_CENTER);
         Pane paneOfPopup = new Pane();
         GridPane imageView = (GridPane) event.getSource();
+        double targetX = event.getScreenX();
+        double targetY = event.getScreenY();
         JFXCheckBox politicCardsCheckBox;
         VBox vBox = new VBox();
         for (PoliticCard politicCard: politicCards){
@@ -83,7 +89,7 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
         paneOfPopup.getChildren().add(vBox);
 
         popOver.setContentNode(paneOfPopup);
-        popOver.show(imageView);
+        popOver.show(imageView,targetX,targetY);
     }
 
     private PoliticCard findPoliticCard(String politicCardType) {

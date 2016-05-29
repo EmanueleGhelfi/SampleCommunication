@@ -94,21 +94,21 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             rmiClientInterface.sendSnapshot(snapshotToSend);
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 
     /** Overriding BaseCommunication
      *  called when is the turn of the user
      */
-    //TODO: change round
     @Override
     public void changeRound() {
         //call is your round (with a notification)
         try {
-            System.out.println("user "+user.getUsername()+" is his turn");
             rmiClientInterface.isYourTurn();
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 
@@ -122,6 +122,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             rmiClientInterface.sendMap(availableMaps);
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 
@@ -132,6 +133,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             System.out.println("Sending map to: "+user.getUsername());
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 
@@ -142,6 +144,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             rmiClientInterface.finishTurn();
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 

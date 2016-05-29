@@ -7,10 +7,13 @@ import Server.Model.Map;
 import Utilities.Class.Constants;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -53,6 +56,12 @@ public class GUIView extends Application implements BaseView {
         loginController = loader.getController();
         loginController.setClientController(clientController);
         scene = new Scene(screen);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                System.exit(0);
+            }
+        });
         this.stage.setScene(scene);
         this.stage.show();
     }
@@ -125,6 +134,7 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         GUIView baseView = this;
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -138,7 +148,7 @@ public class GUIView extends Application implements BaseView {
                 matchController = loader.getController();
                 matchController.setClientController(clientController, baseView);
                 System.out.println("called my turn "+myTurn);
-                matchController.setMyTurn(myTurn, clientController.getSnapshot());
+                matchController.setMyTurn(myTurn, snapshotToSend);
                 Scene scene = new Scene(screen);
                 //stage= new Stage();
                 stage.setScene(scene);
