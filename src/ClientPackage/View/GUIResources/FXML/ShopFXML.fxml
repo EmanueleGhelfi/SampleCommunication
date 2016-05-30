@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXListView fx:id="sellListView" layoutX="90.0" layoutY="100.0" />
+            <JFXListView fx:id="buyListView" layoutX="365.0" layoutY="100.0" />
+            <Text layoutX="141.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VENDI" />
+            <Text layoutX="416.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COMPRA" />
+            <JFXButton layoutX="419.0" layoutY="322.0" onAction="#onBuy" text="COMPRA" />
+            <JFXButton layoutX="133.0" layoutY="322.0" onAction="#onSell" text="VENDI" />
+            <JFXButton layoutX="284.0" layoutY="335.0" text="FINISH" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

@@ -5,5 +5,9 @@ package CommonModel.GameModel.Market;
  */
 public interface BuyableObject {
 
-    String getType();
+    //String getType();
+
+    String getInfo();
+
+
 }

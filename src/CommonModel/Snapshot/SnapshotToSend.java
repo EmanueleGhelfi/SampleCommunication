@@ -36,7 +36,7 @@ public class SnapshotToSend implements Serializable{
     private Map map;
 
     //list of buyable wrapper, all object that user can buy
-    private ArrayList<BuyableWrapper> marketList;
+    private ArrayList<BuyableWrapper> marketList = new ArrayList<>();
 
     public SnapshotToSend() {
     }

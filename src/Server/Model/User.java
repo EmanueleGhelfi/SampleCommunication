@@ -151,4 +151,11 @@ public class User extends CurrentUser implements Serializable{
     }
 
 
+    public void removePoliticCard(PoliticCard buyableObject) {
+        for (PoliticCard politicCard : politicCards) {
+            if(politicCard.equals(buyableObject)){
+                politicCards.remove(politicCard);
+            }
+        }
+    }
 }

@@ -61,4 +61,9 @@ public class PoliticCard implements Serializable,BuyableObject {
     public String getType() {
         return Constants.POLITIC_CARD;
     }
+
+    @Override
+    public String getInfo() {
+        return this.toString();
+    }
 }

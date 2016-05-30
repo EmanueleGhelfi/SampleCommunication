@@ -1,15 +1,19 @@
 package Server.Controller;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.King;
+import CommonModel.GameModel.Market.BuyableObject;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.Map;
 import Server.Model.User;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
+import Utilities.Exception.AlreadyPresentException;
 import Utilities.Exception.MapsNotFoundException;
 
 import java.io.Serializable;
@@ -205,5 +209,45 @@ public class GameController implements Serializable{
             SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
         }
+    }
+
+    public boolean onReceiveBuyableObject(BuyableWrapper[] buyableWrappers) {
+        for (BuyableWrapper buyableWrapper: buyableWrappers) {
+            try {
+                game.addBuyableWrapper(buyableWrapper);
+            } catch (AlreadyPresentException e) {
+                System.out.println("L'oggetto è già in vendita!");
+            }
+        }
+        return true;
+
+    }
+
+    public boolean onBuyObject(User user, BuyableWrapper[] buyableWrappers) {
+        int counter = 0;
+        for (BuyableWrapper buyableWrapper : buyableWrappers) {
+            try {
+                game.getMoneyPath().goAhead(user, buyableWrapper.getCost());
+                if(buyableWrapper.getBuyableObject() instanceof PermitCard){
+                    System.out.println("found permit card");
+                    game.getUser(buyableWrapper.getUsername()).removePermitCard((PermitCard) buyableWrapper.getBuyableObject());
+                    user.addPermitCard((PermitCard) buyableWrapper.getBuyableObject());
+                }
+                else if(buyableWrapper.getBuyableObject() instanceof PoliticCard){
+                    System.out.println("found politic card");
+                    game.getUser(buyableWrapper.getUsername()).removePoliticCard((PoliticCard) buyableWrapper.getBuyableObject());
+                    user.addPoliticCard((PoliticCard)buyableWrapper.getBuyableObject());
+                }
+                counter++;
+            } catch (ActionNotPossibleException e) {
+
+            }
+
+        }
+
+        if(counter==buyableWrappers.length){
+            return true;
+        }
+        else return false;
     }
 }

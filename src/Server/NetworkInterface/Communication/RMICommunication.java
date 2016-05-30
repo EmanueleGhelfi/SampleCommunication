@@ -2,6 +2,8 @@ package Server.NetworkInterface.Communication;
 
 import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Market.BuyableObject;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -81,6 +83,17 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     @Override
     public void sendMap(Map map) throws RemoteException {
         user.getGame().getGameController().setMap(map);
+    }
+
+    @Override
+    public boolean sendBuyableObject(BuyableWrapper... buyableWrappers) throws RemoteException {
+        return user.getGameController().onReceiveBuyableObject(buyableWrappers);
+    }
+
+    @Override
+    public boolean buyObject(BuyableWrapper... buyableWrappers) throws RemoteException {
+        user.getGameController().onBuyObject(user,buyableWrappers);
+        return false;
     }
 
 

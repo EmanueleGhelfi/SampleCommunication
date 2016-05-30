@@ -7,11 +7,13 @@ import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
 import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.King;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.MoneyPath;
 import CommonModel.GameModel.Path.NobilityPath;
 import CommonModel.GameModel.Path.VictoryPath;
 import Server.Controller.GameController;
 import Utilities.Class.Constants;
+import Utilities.Exception.AlreadyPresentException;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -58,6 +60,9 @@ public class Game implements Serializable{
     private HashMap<RegionName,RegionBonusCard> regionBonusCard = new HashMap<>();
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
     private Stack<KingBonusCard> kingBonusCards = new Stack<>();
+
+    //list of buyable wrapper, all object that user can buy
+    private ArrayList<BuyableWrapper> marketList = new ArrayList<>();
 
     public Game() {
         this.started = false;
@@ -287,5 +292,18 @@ public class Game implements Serializable{
 
     public void setKing(King king) {
         this.king = king;
+    }
+
+    public void addBuyableWrapper(BuyableWrapper buyableWrapper) throws AlreadyPresentException {
+        if(marketList.contains(buyableWrapper))
+            throw new AlreadyPresentException();
+        else{
+            marketList.add(buyableWrapper);
+        }
+    }
+
+
+    public User getUser(String username){
+        return usersInGame.get(username);
     }
 }

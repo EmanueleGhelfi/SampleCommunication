@@ -2,6 +2,8 @@ package RMIInterface;
 
 import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Market.BuyableObject;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
@@ -15,10 +17,14 @@ public interface RMIClientHandler extends Remote{
 
     boolean tryToSetName(String username) throws RemoteException;
 
-    void test(Action electCouncilor) throws ActionNotPossibleException, RemoteException;
+    void test(Action action) throws ActionNotPossibleException, RemoteException;
 
     void sendRemoteClientObject(RMIClientInterface clientRMIService) throws RemoteException;
 
     void sendMap(Map map) throws RemoteException;
+
+    boolean sendBuyableObject(BuyableWrapper... buyableWrappers) throws RemoteException;
+
+    boolean buyObject(BuyableWrapper... buyableWrappers) throws RemoteException;
 
 }
