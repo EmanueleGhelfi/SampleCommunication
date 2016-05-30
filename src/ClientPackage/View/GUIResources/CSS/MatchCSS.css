@@ -4,6 +4,7 @@
     -fx-background-size: 95%;
 }
 
+
 .pathBackground{
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/BackgroundPath.png");
     -fx-background-repeat: stretch;
