@@ -143,4 +143,8 @@ public class Constants {
     public static final int DEFAULT_POLITIC_CARD_HAND = 6;
     public static final int MAX_CLIENT_NUMBER = 10;
 
+    //MARKET NAME
+    public static final String PERMIT_CARD = "PERMIT_CARD";
+    public static final String POLITIC_CARD = "POLITIC_CARD";
+
 }

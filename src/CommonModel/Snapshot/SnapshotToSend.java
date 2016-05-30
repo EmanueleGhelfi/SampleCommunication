@@ -9,6 +9,7 @@ import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.Position;
 import Server.Model.*;
 import Server.Model.Map;
@@ -33,6 +34,9 @@ public class SnapshotToSend implements Serializable{
     private Position[] nobilityPathPosition;
     private CurrentUser currentUser;
     private Map map;
+
+    //list of buyable wrapper, all object that user can buy
+    private ArrayList<BuyableWrapper> marketList;
 
     public SnapshotToSend() {
     }

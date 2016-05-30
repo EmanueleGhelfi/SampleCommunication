@@ -1,11 +1,14 @@
 package CommonModel.GameModel.Card.SingleCard.PoliticCard;
 
+import CommonModel.GameModel.Market.BuyableObject;
+import Utilities.Class.Constants;
+
 import java.io.Serializable;
 
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class PoliticCard implements Serializable {
+public class PoliticCard implements Serializable,BuyableObject {
 
     private PoliticColor politicColor;
     // true if card is multicolor
@@ -52,5 +55,10 @@ public class PoliticCard implements Serializable {
         int result = politicColor != null ? politicColor.hashCode() : 0;
         result = 31 * result + (isMultiColor ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String getType() {
+        return Constants.POLITIC_CARD;
     }
 }

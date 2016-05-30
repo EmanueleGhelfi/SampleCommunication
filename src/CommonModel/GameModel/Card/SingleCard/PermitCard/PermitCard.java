@@ -4,6 +4,8 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
+import CommonModel.GameModel.Market.BuyableObject;
+import Utilities.Class.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class PermitCard implements Serializable{
+public class PermitCard implements Serializable,BuyableObject{
 
     private Bonus bonus;
     private ArrayList<Character> cityAcronimous;
@@ -71,5 +73,10 @@ public class PermitCard implements Serializable{
         }
         cityString = cityString.substring(0,cityString.length()-2);
         return cityString;
+    }
+
+    @Override
+    public String getType() {
+        return Constants.PERMIT_CARD;
     }
 }
