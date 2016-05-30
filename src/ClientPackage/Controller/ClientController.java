@@ -10,6 +10,7 @@ import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.King;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -225,5 +226,9 @@ public class ClientController {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
+        clientService.sendSaleItem(realSaleList);
     }
 }

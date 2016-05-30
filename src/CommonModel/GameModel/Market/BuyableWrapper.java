@@ -9,11 +9,17 @@ public class BuyableWrapper {
     private BuyableObject buyableObject;
     private int cost;
     private String username;
+    private boolean onSale;
 
 
     public BuyableWrapper(BuyableObject buyableObject, int cost, String username) {
         this.buyableObject = buyableObject;
         this.cost = cost;
+        this.username = username;
+    }
+
+    public BuyableWrapper(BuyableObject buyableObject, String username) {
+        this.buyableObject = buyableObject;
         this.username = username;
     }
 
@@ -49,6 +55,28 @@ public class BuyableWrapper {
 
     public int getCost() {
         return cost;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
+
+    public boolean isOnSale() {
+        return onSale;
+    }
+
+    public void setOnSale(boolean onSale) {
+        this.onSale = onSale;
+    }
+
+    @Override
+    public String toString() {
+        return "BuyableWrapper{" +
+                "buyableObject=" + buyableObject +
+                ", cost=" + cost +
+                ", username='" + username + '\'' +
+                ", onSale=" + onSale +
+                '}';
     }
 }
 

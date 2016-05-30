@@ -75,7 +75,7 @@ public class PermitCard implements Serializable,BuyableObject{
         return cityString;
     }
 
-    @Override
+
     public String getType() {
         return Constants.PERMIT_CARD;
     }

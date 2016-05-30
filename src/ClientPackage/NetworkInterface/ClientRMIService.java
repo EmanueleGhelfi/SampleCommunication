@@ -2,6 +2,7 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -78,6 +79,17 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     public void sendMap(Map map) {
         try {
             rmiClientHandler.sendMap(map);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
+        try {
+            if(rmiClientHandler.sendBuyableObject(realSaleList)){
+                System.out.println("OK messi in vendita");
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }

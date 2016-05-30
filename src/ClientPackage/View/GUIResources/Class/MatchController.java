@@ -90,8 +90,12 @@ public class MatchController implements Initializable, BaseController {
     @FXML private HBox hillHBox;
     @FXML private HBox mountainHBox;
     @FXML private StackPane bottomPane;
+
+    // Include
     @FXML private GridPane path;
     @FXML private PathController pathController;
+    @FXML private BorderPane shop;
+    @FXML private ShopController shopController;
     private HiddenSidesPane hiddenSidesPane;
 
 
@@ -111,7 +115,8 @@ public class MatchController implements Initializable, BaseController {
         mainActionBuildWithPermitCard();
         currentSnapshot = clientController.getSnapshot();
         guiView.registerBaseController(this);
-        pathController.setClientController(clientController,guiView);
+        initController();
+
         System.out.println("setting image");
         background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
         //createArray();
@@ -120,6 +125,11 @@ public class MatchController implements Initializable, BaseController {
         createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
         createOverlay();
         initPermitButton();
+    }
+
+    private void initController() {
+        pathController.setClientController(clientController,guiView);
+        shopController.setClientController(clientController,guiView);
     }
 
     private void initPermitButton() {

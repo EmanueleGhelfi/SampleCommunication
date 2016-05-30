@@ -9,6 +9,7 @@ import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -23,7 +24,7 @@ public interface RMIClientHandler extends Remote{
 
     void sendMap(Map map) throws RemoteException;
 
-    boolean sendBuyableObject(BuyableWrapper... buyableWrappers) throws RemoteException;
+    boolean sendBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException;
 
     boolean buyObject(BuyableWrapper... buyableWrappers) throws RemoteException;
 

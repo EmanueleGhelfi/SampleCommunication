@@ -86,9 +86,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
-    public boolean sendBuyableObject(BuyableWrapper... buyableWrappers) throws RemoteException {
+    public boolean sendBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException {
         return user.getGameController().onReceiveBuyableObject(buyableWrappers);
     }
+
+
 
     @Override
     public boolean buyObject(BuyableWrapper... buyableWrappers) throws RemoteException {

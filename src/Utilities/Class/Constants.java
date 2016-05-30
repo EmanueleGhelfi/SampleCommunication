@@ -15,6 +15,7 @@ public class Constants {
     public static final String CODE_MAP = "CODE_MAP";
     public static final String CODE_INITIALIZE_GAME = "CODE_INITIALIZE_GAME";
     public static final String CODE_TURN_FINISHED = "CODE_TURN_FINISHED";
+    public static final String CODE_MARKET_SELL = "CODE_MARKET_SELL";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -146,5 +147,6 @@ public class Constants {
     //MARKET NAME
     public static final String PERMIT_CARD = "PERMIT_CARD";
     public static final String POLITIC_CARD = "POLITIC_CARD";
+
 
 }

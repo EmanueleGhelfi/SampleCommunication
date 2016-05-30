@@ -211,7 +211,7 @@ public class GameController implements Serializable{
         }
     }
 
-    public boolean onReceiveBuyableObject(BuyableWrapper[] buyableWrappers) {
+    public boolean onReceiveBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) {
         for (BuyableWrapper buyableWrapper: buyableWrappers) {
             try {
                 game.addBuyableWrapper(buyableWrapper);
@@ -219,6 +219,7 @@ public class GameController implements Serializable{
                 System.out.println("L'oggetto è già in vendita!");
             }
         }
+        System.out.println("Dopo aver aggiunto: "+buyableWrappers);
         return true;
 
     }

@@ -3,6 +3,7 @@ package ClientPackage.NetworkInterface;
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
@@ -72,6 +73,11 @@ public class ClientSocketService extends ClientService implements Runnable {
     @Override
     public void sendMap(Map map) {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_MAP, map);
+    }
+
+    @Override
+    public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_SELL,realSaleList);
     }
 
     @Override
