@@ -125,10 +125,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                         break;
                     }
                     case Constants.CODE_MARKET_SELL:{
-
-                        Type resultType = new TypeToken<ArrayList<BuyableWrapper>>() {
-                        }.getType();
-                        ArrayList<BuyableWrapper> buyableWrappers = gson.fromJson(communicationInfo.getInfo(),resultType);
+                        ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
                         CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_SELL,user.getGameController().onReceiveBuyableObject(buyableWrappers));
                     }
                 }

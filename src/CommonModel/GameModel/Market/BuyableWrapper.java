@@ -2,15 +2,20 @@ package CommonModel.GameModel.Market;
 
 import CommonModel.Snapshot.BaseUser;
 
+import java.io.Serializable;
+
 /**
  * Created by Emanuele on 30/05/2016.
  */
-public class BuyableWrapper {
+public class BuyableWrapper implements Serializable {
     private BuyableObject buyableObject;
     private int cost;
     private String username;
     private boolean onSale;
 
+
+    public BuyableWrapper() {
+    }
 
     public BuyableWrapper(BuyableObject buyableObject, int cost, String username) {
         this.buyableObject = buyableObject;

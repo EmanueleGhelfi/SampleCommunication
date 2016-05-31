@@ -220,6 +220,7 @@ public class GameController implements Serializable{
             }
         }
         System.out.println("Dopo aver aggiunto: "+buyableWrappers);
+        sendSnapshotToAll();
         return true;
 
     }

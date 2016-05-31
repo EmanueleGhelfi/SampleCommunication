@@ -306,4 +306,8 @@ public class Game implements Serializable{
     public User getUser(String username){
         return usersInGame.get(username);
     }
+
+    public ArrayList<BuyableWrapper> getMarketList() {
+        return marketList;
+    }
 }

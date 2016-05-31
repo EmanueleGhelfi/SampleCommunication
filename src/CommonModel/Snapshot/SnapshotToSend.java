@@ -52,6 +52,7 @@ public class SnapshotToSend implements Serializable{
         this.nobilityPathPosition = game.getNobilityPath().getPosition();
         this.currentUser = new CurrentUser(user);
         this.map = game.getMap();
+        this.marketList = game.getMarketList();
         for (RegionName region : RegionName.values()) {
             visiblePermitCards.put(region,game.getPermitDeck(region).getVisibleArray());
         }
@@ -120,5 +121,9 @@ public class SnapshotToSend implements Serializable{
 
     public Position[] getNobilityPathPosition() {
         return nobilityPathPosition;
+    }
+
+    public ArrayList<BuyableWrapper> getMarketList() {
+        return marketList;
     }
 }

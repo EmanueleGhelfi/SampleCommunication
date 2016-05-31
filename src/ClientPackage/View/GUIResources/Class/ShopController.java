@@ -1,6 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import ClientPackage.View.GUIResources.customComponent.BuyListCell;
 import ClientPackage.View.GUIResources.customComponent.CustomListCell;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
@@ -14,6 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
@@ -30,6 +33,8 @@ public class ShopController implements BaseController {
     @FXML private JFXListView sellListView;
 
     ArrayList<BuyableWrapper> sellList = new ArrayList<>();
+    ArrayList<BuyableWrapper> buyList = new ArrayList<>();
+    ShopController shopController=this;
 
     public void onBuy(ActionEvent actionEvent) {
 
@@ -52,6 +57,7 @@ public class ShopController implements BaseController {
 
     @Override
     public void updateView() {
+        System.out.println("On update shopController");
         SnapshotToSend snapshotTosend= clientController.getSnapshot();
         sellList= new ArrayList<>();
         for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
@@ -74,6 +80,17 @@ public class ShopController implements BaseController {
         sellListView.getStyleClass().add("mylistview");
         sellListView.autosize();
 
+        buyList = snapshotTosend.getMarketList();
+
+        buyListView.setItems(FXCollections.observableArrayList(buyList));
+        sellListView.setCellFactory(new Callback<JFXListView, JFXListCell>() {
+            @Override
+            public JFXListCell call(JFXListView param) {
+                return new BuyListCell(param,shopController);
+            }
+        });
+
+
     }
 
     @Override
@@ -88,5 +105,11 @@ public class ShopController implements BaseController {
     @Override
     public void setMyTurn(boolean myTurn, SnapshotToSend snapshot) {
 
+    }
+
+    public void addItemToBuy(BuyableWrapper item) {
+    }
+
+    public void removeItemToBuy(BuyableWrapper item) {
     }
 }

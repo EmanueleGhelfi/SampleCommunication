@@ -61,6 +61,11 @@ public class PoliticCard implements Serializable,BuyableObject {
 
     @Override
     public String getInfo() {
-        return this.toString();
+        if(isMultiColor()){
+            return "MULTICOLOR";
+        }
+        else {
+            return getPoliticColor().getColor();
+        }
     }
 }
