@@ -220,7 +220,14 @@ public class GameController implements Serializable{
             }
         }
         System.out.println("Dopo aver aggiunto: "+buyableWrappers);
-        sendSnapshotToAll();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sendSnapshotToAll();
+            }
+        }).start();
+        System.out.println("after starting thread in game controller");
+
         return true;
 
     }

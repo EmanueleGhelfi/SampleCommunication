@@ -10,6 +10,7 @@ import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableListBase;
@@ -20,6 +21,7 @@ import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Emanuele on 30/05/2016.
@@ -42,10 +44,10 @@ public class ShopController implements BaseController {
 
     public void onSell(ActionEvent actionEvent) {
         ArrayList<BuyableWrapper> realSaleList = new ArrayList<>();
-        //TODO: look for checked
         for (BuyableWrapper buyableWrapper : sellList) {
             System.out.println("Costo:" + buyableWrapper.getCost());
             if(buyableWrapper.isOnSale()){
+                System.out.println("found on sale");
                 realSaleList.add(buyableWrapper);
             }
         }
@@ -53,6 +55,7 @@ public class ShopController implements BaseController {
         if(realSaleList.size()>0){
             clientController.sendSaleItem(realSaleList);
         }
+
     }
 
     @Override
@@ -60,14 +63,40 @@ public class ShopController implements BaseController {
         System.out.println("On update shopController");
         SnapshotToSend snapshotTosend= clientController.getSnapshot();
         sellList= new ArrayList<>();
+        buyList = snapshotTosend.getMarketList();
+
+        /*
+        for(BuyableWrapper buyableWrapper: buyList){
+            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
+                sellList.add(buyableWrapper);
+                buyList.remove(buyableWrapper);
+            }
+        }
+        */
+
+        for(Iterator<BuyableWrapper> itr = buyList.iterator(); itr.hasNext();){
+            BuyableWrapper buyableWrapper = itr.next();
+            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
+                sellList.add(buyableWrapper);
+                itr.remove();
+            }
+        }
+
         for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
-            sellList.add(new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername()));
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
+            if(!sellList.contains(buyableWrapperTmp)){
+                sellList.add(buyableWrapperTmp);
+            }
         }
 
         for(PermitCard permitCard: snapshotTosend.getCurrentUser().getPermitCards()){
-            sellList.add(new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername()));
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername());
+            if(!sellList.contains(buyableWrapperTmp)){
+                sellList.add(buyableWrapperTmp);
+            }
         }
 
+        sellListView.getItems().clear();
         sellListView.setItems(FXCollections.observableArrayList(sellList));
         sellListView.setCellFactory(new Callback<JFXListView, JFXListCell>() {
             @Override
@@ -79,16 +108,23 @@ public class ShopController implements BaseController {
         sellListView.getStyleClass().add("jfx-list-view");
         sellListView.getStyleClass().add("mylistview");
         sellListView.autosize();
+        sellListView.refresh();
 
-        buyList = snapshotTosend.getMarketList();
 
+
+        buyListView.getItems().clear();
         buyListView.setItems(FXCollections.observableArrayList(buyList));
-        sellListView.setCellFactory(new Callback<JFXListView, JFXListCell>() {
+        buyListView.setCellFactory(new Callback<JFXListView, JFXListCell>() {
             @Override
             public JFXListCell call(JFXListView param) {
                 return new BuyListCell(param,shopController);
             }
         });
+
+        buyListView.getStyleClass().add("jfx-list-view");
+        buyListView.getStyleClass().add("mylistview");
+        buyListView.autosize();
+        buyListView.refresh();
 
 
     }

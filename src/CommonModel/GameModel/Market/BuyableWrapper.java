@@ -35,11 +35,9 @@ public class BuyableWrapper implements Serializable {
 
         BuyableWrapper that = (BuyableWrapper) o;
 
-        if (cost != that.cost) return false;
         if (buyableObject != null ? !buyableObject.equals(that.buyableObject) : that.buyableObject != null)
             return false;
         return username != null ? username.equals(that.username) : that.username == null;
-
     }
 
     @Override

@@ -178,7 +178,13 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void updateSnapshot() {
         for (BaseController baseController : baseControllerList) {
-            baseController.updateView();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    baseController.updateView();
+                }
+            });
+
         }
     }
 

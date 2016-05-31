@@ -2,6 +2,7 @@ package ClientPackage.View.GUIResources.customComponent;
 
 import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
@@ -35,12 +36,11 @@ public class CustomListCell extends JFXListCell<BuyableWrapper> {
     public void updateItem(BuyableWrapper item, boolean empty) {
         super.updateItem(item, empty);
         if(!empty) {
-            BuyableWrapper currentObject = item;
+
 
             GridPane gridPane = new GridPane();
-            Label labelName = new Label(currentObject.getUsername());
-            Label labelCost = new Label(currentObject.getCost()+"");
-            Label labelInfo = new Label(currentObject.getBuyableObject().getInfo());
+            Label labelName = new Label(item.getUsername());
+            Label labelInfo = new Label(item.getBuyableObject().getInfo());
             NumberSpinner numberSpinner = new NumberSpinner(0,1);
             numberSpinner.numberProperty().setValue(item.getCost());
             numberSpinner.numberProperty().addListener(new ChangeListener<Integer>() {
@@ -51,14 +51,30 @@ public class CustomListCell extends JFXListCell<BuyableWrapper> {
                 }
             });
 
-            JFXCheckBox checkBox = new JFXCheckBox();
-            checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                    System.out.println("checked");
-                    item.setOnSale(newValue);
-                }
-            });
+            if(!item.isOnSale()) {
+                JFXCheckBox checkBox = new JFXCheckBox();
+                checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                        System.out.println("checked");
+                        item.setOnSale(newValue);
+                    }
+                });
+                checkBox.setSelected(item.isOnSale());
+                gridPane.add(checkBox,3,0);
+            }
+            else{
+                JFXButton jfxButton = new JFXButton("REMOVE");
+                jfxButton.getStyleClass().add("removeButton");
+                gridPane.add(jfxButton,3,0);
+                jfxButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        System.out.println("pressed");
+                    }
+                });
+            }
+
             ColumnConstraints col1 = new ColumnConstraints();
             col1.setPercentWidth(20);
             ColumnConstraints col2 = new ColumnConstraints();
@@ -68,12 +84,11 @@ public class CustomListCell extends JFXListCell<BuyableWrapper> {
             ColumnConstraints col4 = new ColumnConstraints();
             col4.setPercentWidth(30);
 
-
             gridPane.getColumnConstraints().addAll(col1,col2,col3,col4);
             gridPane.add(labelName,0,0);
             gridPane.add(labelInfo,1,0);
             gridPane.add(numberSpinner,2,0);
-            gridPane.add(checkBox,3,0);
+
 
             gridPane.setHgap(10);
             gridPane.setPrefHeight(40);
@@ -82,7 +97,6 @@ public class CustomListCell extends JFXListCell<BuyableWrapper> {
             setPrefWidth(jfxListView.getWidth());
             gridPane.setAlignment(Pos.CENTER);
             setGraphic(gridPane);
-
         }
         else {
             setGraphic(null);

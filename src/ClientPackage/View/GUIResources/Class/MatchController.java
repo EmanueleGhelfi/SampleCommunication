@@ -368,9 +368,6 @@ public class MatchController implements Initializable, BaseController {
     public void updateView() {
         this.currentSnapshot = clientController.getSnapshot();
         System.out.println("on update snapshot <- Match controller");
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
                 nobilityPathText.setText(currentSnapshot.getCurrentUser().getNobilityPathPosition().getPosition()+"");
                 richPathText.setText(currentSnapshot.getCurrentUser().getCoinPathPosition()+"");
                 helperText.setText(currentSnapshot.getCurrentUser().getHelpers()+"");
@@ -382,8 +379,7 @@ public class MatchController implements Initializable, BaseController {
                 createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
                 createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
                 createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
-            }
-        });
+
     }
 
     /**
