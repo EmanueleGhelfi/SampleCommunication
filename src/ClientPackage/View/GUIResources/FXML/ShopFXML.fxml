@@ -9,8 +9,8 @@
    <center>
       <Pane BorderPane.alignment="CENTER">
          <children>
-            <JFXListView fx:id="sellListView" layoutX="90.0" layoutY="100.0" prefHeight="414.0" prefWidth="358.0" />
-            <JFXListView fx:id="buyListView" layoutX="489.0" layoutY="66.0" prefHeight="413.0" prefWidth="349.0" />
+            <JFXListView fx:id="sellListView" layoutX="107.0" layoutY="117.0" />
+            <JFXListView fx:id="buyListView" layoutX="378.0" layoutY="117.0" />
             <Text layoutX="141.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VENDI" />
             <Text layoutX="416.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COMPRA" />
             <JFXButton layoutX="489.0" layoutY="565.0" onAction="#onBuy" styleClass="button-raised" text="COMPRA" />
