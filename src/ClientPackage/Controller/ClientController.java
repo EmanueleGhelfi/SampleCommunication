@@ -231,4 +231,8 @@ public class ClientController {
     public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
         clientService.sendSaleItem(realSaleList);
     }
+
+    public void onBuy(ArrayList<BuyableWrapper> buyList) {
+        clientService.onBuy(buyList);
+    }
 }

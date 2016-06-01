@@ -81,6 +81,11 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     @Override
+    public void onBuy(ArrayList<BuyableWrapper> buyList) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_BUY,buyList);
+    }
+
+    @Override
     public void run() {
         System.out.println("ClientSocketService Started");
         String line;

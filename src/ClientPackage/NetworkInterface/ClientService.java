@@ -21,4 +21,6 @@ import java.util.ArrayList;
     public abstract void sendMap(Map map);
 
     public abstract void sendSaleItem(ArrayList<BuyableWrapper> realSaleList);
+
+   public abstract void onBuy(ArrayList<BuyableWrapper> buyList);
 }

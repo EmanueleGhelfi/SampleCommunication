@@ -26,6 +26,6 @@ public interface RMIClientHandler extends Remote{
 
     boolean sendBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException;
 
-    boolean buyObject(BuyableWrapper... buyableWrappers) throws RemoteException;
+    boolean buyObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException;
 
 }

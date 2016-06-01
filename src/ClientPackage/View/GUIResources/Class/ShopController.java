@@ -18,6 +18,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
@@ -33,12 +36,17 @@ public class ShopController implements BaseController {
 
     @FXML private JFXListView buyListView;
     @FXML private JFXListView sellListView;
+    @FXML private BorderPane shop;
+    @FXML private AnchorPane shopBackground;
 
     ArrayList<BuyableWrapper> sellList = new ArrayList<>();
     ArrayList<BuyableWrapper> buyList = new ArrayList<>();
     ShopController shopController=this;
 
     public void onBuy(ActionEvent actionEvent) {
+
+        System.out.println("in shopController"+buyList);
+        clientController.onBuy(buyList);
 
     }
 
@@ -135,7 +143,19 @@ public class ShopController implements BaseController {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
+
+        manageUI();
+
         updateView();
+    }
+
+    private void manageUI() {
+        sellListView.prefWidthProperty().bind(shopBackground.widthProperty().divide(3));
+        sellListView.prefHeightProperty().bind(shopBackground.heightProperty().divide(1.2));
+
+
+        buyListView.prefWidthProperty().bind(shopBackground.widthProperty().divide(3));
+        buyListView.prefHeightProperty().bind(shopBackground.heightProperty().divide(1.2));
     }
 
     @Override
@@ -144,8 +164,15 @@ public class ShopController implements BaseController {
     }
 
     public void addItemToBuy(BuyableWrapper item) {
+        if(!buyList.contains(item)){
+            buyList.add(item);
+        }
+
     }
 
     public void removeItemToBuy(BuyableWrapper item) {
+        if(buyList.contains(item)){
+            buyList.remove(item);
+        }
     }
 }

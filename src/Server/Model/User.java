@@ -3,6 +3,7 @@ package Server.Model;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.CurrentUser;
 import Server.Controller.GameController;
@@ -54,12 +55,12 @@ public class User extends CurrentUser implements Serializable{
      * @param permitCardToRemove the permit card to remove
      */
     public void removePermitCard(PermitCard permitCardToRemove){
-        for (PermitCard permitCard: permitCards) {
-            if (permitCard.equals(permitCardToRemove)){
-                permitCards.remove(permitCard);
-                oldPermitCards.add(permitCardToRemove);
+        for(Iterator<PermitCard> itr = permitCards.iterator(); itr.hasNext();) {
+            PermitCard permitCard = itr.next();
+            if (permitCard.equals(permitCardToRemove)) {
+                oldPermitCards.add(permitCard);
+                itr.remove();
             }
-
         }
     }
 
@@ -152,10 +153,23 @@ public class User extends CurrentUser implements Serializable{
 
 
     public void removePoliticCard(PoliticCard buyableObject) {
-        for (PoliticCard politicCard : politicCards) {
+        for(Iterator<PoliticCard> itr = politicCards.iterator(); itr.hasNext();){
+            PoliticCard politicCard = itr.next();
             if(politicCard.equals(buyableObject)){
-                politicCards.remove(politicCard);
+                itr.remove();
             }
         }
+    }
+
+    public PermitCard removePermitCardDefinitevely(PermitCard permitCardToRemove){
+        for(Iterator<PermitCard> itr = permitCards.iterator(); itr.hasNext();){
+            PermitCard permitCard = itr.next();
+            if(permitCard.equals(permitCardToRemove)){
+                itr.remove();
+                return permitCard;
+            }
+        }
+        return null;
+
     }
 }

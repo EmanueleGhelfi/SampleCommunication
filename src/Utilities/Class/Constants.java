@@ -16,6 +16,7 @@ public class Constants {
     public static final String CODE_INITIALIZE_GAME = "CODE_INITIALIZE_GAME";
     public static final String CODE_TURN_FINISHED = "CODE_TURN_FINISHED";
     public static final String CODE_MARKET_SELL = "CODE_MARKET_SELL";
+    public static final String CODE_MARKET_BUY = "CODE_MARKET_BUY";
 
     //GENERAL STRING
     public static final String GUI = "GUI";

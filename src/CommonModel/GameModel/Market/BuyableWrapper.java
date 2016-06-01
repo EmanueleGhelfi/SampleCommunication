@@ -40,14 +40,6 @@ public class BuyableWrapper implements Serializable {
         return username != null ? username.equals(that.username) : that.username == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = buyableObject != null ? buyableObject.hashCode() : 0;
-        result = 31 * result + cost;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        return result;
-    }
-
     public BuyableObject getBuyableObject() {
         return buyableObject;
     }

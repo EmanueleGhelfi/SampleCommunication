@@ -95,6 +95,15 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         }
     }
 
+    @Override
+    public void onBuy(ArrayList<BuyableWrapper> buyList) {
+        try {
+            rmiClientHandler.buyObject(buyList);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String generateName() {
         String randomSequence="";
         Random randomGenerator = new Random();

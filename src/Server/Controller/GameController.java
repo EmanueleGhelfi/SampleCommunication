@@ -232,14 +232,15 @@ public class GameController implements Serializable{
 
     }
 
-    public boolean onBuyObject(User user, BuyableWrapper[] buyableWrappers) {
+    public boolean onBuyObject(User user, ArrayList<BuyableWrapper> buyableWrappers) {
         int counter = 0;
         for (BuyableWrapper buyableWrapper : buyableWrappers) {
             try {
                 game.getMoneyPath().goAhead(user, buyableWrapper.getCost());
+                game.removeFromMarketList(buyableWrapper);
                 if(buyableWrapper.getBuyableObject() instanceof PermitCard){
                     System.out.println("found permit card");
-                    game.getUser(buyableWrapper.getUsername()).removePermitCard((PermitCard) buyableWrapper.getBuyableObject());
+                    game.getUser(buyableWrapper.getUsername()).removePermitCardDefinitevely((PermitCard) buyableWrapper.getBuyableObject());
                     user.addPermitCard((PermitCard) buyableWrapper.getBuyableObject());
                 }
                 else if(buyableWrapper.getBuyableObject() instanceof PoliticCard){
@@ -254,7 +255,16 @@ public class GameController implements Serializable{
 
         }
 
-        if(counter==buyableWrappers.length){
+        System.out.println("Dopo aver aggiunto: "+buyableWrappers);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sendSnapshotToAll();
+            }
+        }).start();
+        System.out.println("after starting thread in game controller");
+
+        if(counter==buyableWrappers.size()){
             return true;
         }
         else return false;

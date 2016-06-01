@@ -10,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -74,27 +75,28 @@ public class CustomListCell extends JFXListCell<BuyableWrapper> {
                     }
                 });
             }
-
+/*
             ColumnConstraints col1 = new ColumnConstraints();
-            col1.setPercentWidth(20);
+            col1.setPercentWidth(10);
             ColumnConstraints col2 = new ColumnConstraints();
-            col2.setPercentWidth(40);
+            col2.setPercentWidth(30);
             ColumnConstraints col3 = new ColumnConstraints();
-            col3.setPercentWidth(20);
+            col3.setPercentWidth(30);
             ColumnConstraints col4 = new ColumnConstraints();
             col4.setPercentWidth(30);
 
             gridPane.getColumnConstraints().addAll(col1,col2,col3,col4);
+            */
             gridPane.add(labelName,0,0);
             gridPane.add(labelInfo,1,0);
             gridPane.add(numberSpinner,2,0);
 
 
-            gridPane.setHgap(10);
-            gridPane.setPrefHeight(40);
-            gridPane.setPrefWidth(jfxListView.getWidth());
-            setPrefHeight(40);
-            setPrefWidth(jfxListView.getWidth());
+
+
+           gridPane.setPadding(new Insets(20,20,20,20));
+
+            gridPane.setHgap(20);
             gridPane.setAlignment(Pos.CENTER);
             setGraphic(gridPane);
         }

@@ -126,7 +126,14 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                     }
                     case Constants.CODE_MARKET_SELL:{
                         ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
-                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_SELL,user.getGameController().onReceiveBuyableObject(buyableWrappers));
+                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_SELL,user.getGame().getGameController().onReceiveBuyableObject(buyableWrappers));
+                        break;
+                    }
+
+                    case Constants.CODE_MARKET_BUY:{
+                        ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
+                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_BUY,user.getGame().getGameController().onBuyObject(user,buyableWrappers));
+                        break;
                     }
                 }
             }
