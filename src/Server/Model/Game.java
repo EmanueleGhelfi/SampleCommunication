@@ -308,15 +308,18 @@ public class Game implements Serializable{
     }
 
     public ArrayList<BuyableWrapper> getMarketList() {
-        return marketList;
+        return (ArrayList<BuyableWrapper>) marketList.clone();
     }
 
     public void removeFromMarketList(BuyableWrapper buyableWrapper) {
+        /*
         for(int i = 0; i< marketList.size();i++){
             if(marketList.get(i).equals(buyableWrapper)){
                 marketList.remove(i);
                 break;
             }
         }
+        */
+        marketList.remove(buyableWrapper);
     }
 }

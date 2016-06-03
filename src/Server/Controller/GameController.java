@@ -4,6 +4,7 @@ import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.RegionName;
+import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
@@ -205,10 +206,12 @@ public class GameController implements Serializable{
     }
 
     public void sendSnapshotToAll() {
-        for (User user : game.getUsers()) {
-            SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
-            user.getBaseCommunication().sendSnapshot(snapshotToSend);
-        }
+        new Thread(()-> {
+            for (User user : game.getUsers()) {
+                SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
+                user.getBaseCommunication().sendSnapshot(snapshotToSend);
+            }
+        }).start();
     }
 
     public boolean onReceiveBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) {
@@ -220,12 +223,7 @@ public class GameController implements Serializable{
             }
         }
         System.out.println("Dopo aver aggiunto: "+buyableWrappers);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sendSnapshotToAll();
-            }
-        }).start();
+        sendSnapshotToAll();
         System.out.println("after starting thread in game controller");
 
         return true;
@@ -236,7 +234,8 @@ public class GameController implements Serializable{
         int counter = 0;
         for (BuyableWrapper buyableWrapper : buyableWrappers) {
             try {
-                game.getMoneyPath().goAhead(user, buyableWrapper.getCost());
+                game.getMoneyPath().goAhead(user, -buyableWrapper.getCost());
+                game.getMoneyPath().goAhead(game.getUser(buyableWrapper.getUsername()),buyableWrapper.getCost());
                 game.removeFromMarketList(buyableWrapper);
                 if(buyableWrapper.getBuyableObject() instanceof PermitCard){
                     System.out.println("found permit card");
@@ -248,6 +247,11 @@ public class GameController implements Serializable{
                     game.getUser(buyableWrapper.getUsername()).removePoliticCard((PoliticCard) buyableWrapper.getBuyableObject());
                     user.addPoliticCard((PoliticCard)buyableWrapper.getBuyableObject());
                 }
+                else if(buyableWrapper.getBuyableObject() instanceof Helper){
+                    System.out.println("found helper");
+                    game.getUser(buyableWrapper.getUsername()).removeHelper();
+                    user.addHelper();
+                }
                 counter++;
             } catch (ActionNotPossibleException e) {
 
@@ -255,18 +259,17 @@ public class GameController implements Serializable{
 
         }
 
-        System.out.println("Dopo aver aggiunto: "+buyableWrappers);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sendSnapshotToAll();
-            }
-        }).start();
+        sendSnapshotToAll();
         System.out.println("after starting thread in game controller");
 
         if(counter==buyableWrappers.size()){
             return true;
         }
         else return false;
+    }
+
+    public void onRemoveItem(BuyableWrapper item) {
+        game.removeFromMarketList(item);
+        sendSnapshotToAll();
     }
 }

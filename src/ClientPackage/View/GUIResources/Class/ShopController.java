@@ -2,25 +2,19 @@ package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.BuyListCell;
-import ClientPackage.View.GUIResources.customComponent.CustomListCell;
+import ClientPackage.View.GUIResources.customComponent.SellListCell;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
@@ -37,7 +31,7 @@ public class ShopController implements BaseController {
     @FXML private JFXListView buyListView;
     @FXML private JFXListView sellListView;
     @FXML private BorderPane shop;
-    @FXML private AnchorPane shopBackground;
+
 
     ArrayList<BuyableWrapper> sellList = new ArrayList<>();
     ArrayList<BuyableWrapper> buyList = new ArrayList<>();
@@ -45,25 +39,30 @@ public class ShopController implements BaseController {
 
     public void onBuy(ActionEvent actionEvent) {
 
-        System.out.println("in shopController"+buyList);
-        clientController.onBuy(buyList);
+        Runnable runnable = () -> {
+            System.out.println("in shopController"+buyList);
+            clientController.onBuy(buyList);
+        };
+        new Thread(runnable).start();
 
     }
 
     public void onSell(ActionEvent actionEvent) {
-        ArrayList<BuyableWrapper> realSaleList = new ArrayList<>();
-        for (BuyableWrapper buyableWrapper : sellList) {
-            System.out.println("Costo:" + buyableWrapper.getCost());
-            if(buyableWrapper.isOnSale()){
-                System.out.println("found on sale");
-                realSaleList.add(buyableWrapper);
-            }
-        }
-
-        if(realSaleList.size()>0){
-            clientController.sendSaleItem(realSaleList);
-        }
-
+            Runnable runnable = () -> {
+                ArrayList<BuyableWrapper> realSaleList = new ArrayList<>();
+                for (BuyableWrapper buyableWrapper : sellList) {
+                    System.out.println("Costo:" + buyableWrapper.getCost());
+                    if(buyableWrapper.isOnSale()){
+                        System.out.println("found on sale");
+                        realSaleList.add(buyableWrapper);
+                    }
+                }
+                if(realSaleList.size()>0) {
+                    System.out.println("in shopController" + buyList);
+                    clientController.sendSaleItem(realSaleList);
+                }
+            };
+            new Thread(runnable).start();
     }
 
     @Override
@@ -82,25 +81,29 @@ public class ShopController implements BaseController {
         }
         */
 
-        for(Iterator<BuyableWrapper> itr = buyList.iterator(); itr.hasNext();){
-            BuyableWrapper buyableWrapper = itr.next();
-            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
-                sellList.add(buyableWrapper);
-                itr.remove();
-            }
-        }
+
 
         for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
             BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
-            if(!sellList.contains(buyableWrapperTmp)){
                 sellList.add(buyableWrapperTmp);
-            }
         }
 
         for(PermitCard permitCard: snapshotTosend.getCurrentUser().getPermitCards()){
             BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername());
-            if(!sellList.contains(buyableWrapperTmp)){
                 sellList.add(buyableWrapperTmp);
+        }
+
+        for(Helper helper: snapshotTosend.getCurrentUser().getHelpers()){
+            BuyableWrapper buyableWrapper = new BuyableWrapper(helper,snapshotTosend.getCurrentUser().getUsername());
+            sellList.add(buyableWrapper);
+        }
+
+        for(Iterator<BuyableWrapper> itr = buyList.iterator(); itr.hasNext();){
+            BuyableWrapper buyableWrapper = itr.next();
+            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
+                sellList.remove(buyableWrapper);
+                sellList.add(buyableWrapper);
+                itr.remove();
             }
         }
 
@@ -109,7 +112,7 @@ public class ShopController implements BaseController {
         sellListView.setCellFactory(new Callback<JFXListView, JFXListCell>() {
             @Override
             public JFXListCell call(JFXListView param) {
-                return new CustomListCell(sellListView);
+                return new SellListCell(sellListView,clientController);
             }
         });
 
@@ -150,12 +153,14 @@ public class ShopController implements BaseController {
     }
 
     private void manageUI() {
+        /*
         sellListView.prefWidthProperty().bind(shopBackground.widthProperty().divide(3));
         sellListView.prefHeightProperty().bind(shopBackground.heightProperty().divide(1.2));
 
 
         buyListView.prefWidthProperty().bind(shopBackground.widthProperty().divide(3));
         buyListView.prefHeightProperty().bind(shopBackground.heightProperty().divide(1.2));
+        */
     }
 
     @Override

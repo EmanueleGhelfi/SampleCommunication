@@ -95,8 +95,10 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         return user.getGame().getGameController().onBuyObject(user,buyableWrappers);
     }
 
-
-
+    @Override
+    public void onRemoveItem(BuyableWrapper item) throws RemoteException {
+        user.getGame().getGameController().onRemoveItem(item);
+    }
 
 
     /** Overriding BaseCommunication
@@ -134,7 +136,9 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     @Override
     public void sendAvailableMap(ArrayList<Map> availableMaps) {
         try {
-            rmiClientInterface.sendMap(availableMaps);
+            if(rmiClientInterface!=null) {
+                rmiClientInterface.sendMap(availableMaps);
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
             user.setConnected(false);

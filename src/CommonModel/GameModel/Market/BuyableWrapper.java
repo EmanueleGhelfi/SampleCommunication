@@ -41,7 +41,7 @@ public class BuyableWrapper implements Serializable {
     }
 
     public BuyableObject getBuyableObject() {
-        return buyableObject;
+        return buyableObject.getCopy();
     }
 
     public String getUsername() {

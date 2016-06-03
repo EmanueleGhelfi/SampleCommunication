@@ -104,6 +104,15 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         }
     }
 
+    @Override
+    public void onRemoveItemFromMarket(BuyableWrapper item) {
+        try {
+            rmiClientHandler.onRemoveItem(item);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String generateName() {
         String randomSequence="";
         Random randomGenerator = new Random();

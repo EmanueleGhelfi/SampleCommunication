@@ -235,4 +235,8 @@ public class ClientController {
     public void onBuy(ArrayList<BuyableWrapper> buyList) {
         clientService.onBuy(buyList);
     }
+
+    public void removeItemFromMarket(BuyableWrapper item) {
+        clientService.onRemoveItemFromMarket(item);
+    }
 }

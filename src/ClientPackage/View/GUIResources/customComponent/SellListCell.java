@@ -1,5 +1,6 @@
 package ClientPackage.View.GUIResources.customComponent;
 
+import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import com.jfoenix.controls.JFXButton;
@@ -22,14 +23,15 @@ import java.math.BigDecimal;
 /**
  * Created by Emanuele on 30/05/2016.
  */
-public class CustomListCell extends JFXListCell<BuyableWrapper> {
+public class SellListCell extends JFXListCell<BuyableWrapper> {
 
+    private final ClientController clientController;
     BuyableWrapper buyableObject;
     JFXListView jfxListView;
 
-    public CustomListCell(JFXListView listView) {
+    public SellListCell(JFXListView listView, ClientController clientController) {
         this.jfxListView = listView;
-
+        this.clientController = clientController;
     }
 
 
@@ -37,8 +39,6 @@ public class CustomListCell extends JFXListCell<BuyableWrapper> {
     public void updateItem(BuyableWrapper item, boolean empty) {
         super.updateItem(item, empty);
         if(!empty) {
-
-
             GridPane gridPane = new GridPane();
             Label labelName = new Label(item.getUsername());
             Label labelInfo = new Label(item.getBuyableObject().getInfo());
@@ -51,6 +51,8 @@ public class CustomListCell extends JFXListCell<BuyableWrapper> {
                     item.setCost(newValue);
                 }
             });
+            //numberSpinner.prefWidthProperty().bind(prefWidthProperty().divide(2));
+            numberSpinner.setPrefWidth(50);
 
             if(!item.isOnSale()) {
                 JFXCheckBox checkBox = new JFXCheckBox();
@@ -72,6 +74,11 @@ public class CustomListCell extends JFXListCell<BuyableWrapper> {
                     @Override
                     public void handle(ActionEvent event) {
                         System.out.println("pressed");
+                        Runnable runnable = () -> {
+                            clientController.removeItemFromMarket(item);
+                        };
+                        new Thread(runnable).start();
+
                     }
                 });
             }

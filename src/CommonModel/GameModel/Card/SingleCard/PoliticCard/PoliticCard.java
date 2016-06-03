@@ -68,4 +68,14 @@ public class PoliticCard implements Serializable,BuyableObject {
             return getPoliticColor().getColor();
         }
     }
+
+    @Override
+    public BuyableObject getCopy() {
+        try {
+            return (BuyableObject) this.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

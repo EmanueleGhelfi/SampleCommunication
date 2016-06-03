@@ -107,7 +107,7 @@ public class PathController implements Initializable, BaseController{
     private void showInformation() {
         playerName.setText(userCircularArrayList.get(userCounter).getUsername());
         politicCardNumber.setText(Integer.toString(userCircularArrayList.get(userCounter).getPoliticCardNumber()));
-        helperNumber.setText(Integer.toString(userCircularArrayList.get(userCounter).getHelpers()));
+        helperNumber.setText(Integer.toString(userCircularArrayList.get(userCounter).getHelpers().size()));
         victoryPathNumber.setText(Integer.toString(userCircularArrayList.get(userCounter).getVictoryPathPosition()));
         moneyPathNumber.setText(Integer.toString(userCircularArrayList.get(userCounter).getCoinPathPosition()));
         nobilityPathNumber.setText(Integer.toString(userCircularArrayList.get(userCounter).getNobilityPathPosition().getPosition()));

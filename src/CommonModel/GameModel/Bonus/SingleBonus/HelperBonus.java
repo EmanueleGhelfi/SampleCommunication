@@ -23,7 +23,7 @@ public class HelperBonus implements Bonus,Serializable {
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-        user.setHelpers(user.getHelpers()+helperNumber);
+        user.setHelpers(user.getHelpers().size()+helperNumber);
     }
 
     @Override

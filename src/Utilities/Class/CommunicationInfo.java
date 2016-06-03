@@ -105,7 +105,14 @@ public class CommunicationInfo {
         Type resultType = new TypeToken<ArrayList<BuyableWrapper>>() {
         }.getType();
         return gson.fromJson(array,resultType);
+    }
 
+    public static BuyableWrapper getBuyableWrapper(String buyableWrapper){
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .registerTypeAdapter(BuyableObject.class,new InterfaceAdapter<BuyableObject>())
+                .create();
+        return gson.fromJson(buyableWrapper,BuyableWrapper.class);
     }
 
 }

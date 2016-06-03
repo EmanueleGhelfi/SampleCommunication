@@ -3,6 +3,7 @@ package Server.Model;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.CurrentUser;
@@ -89,8 +90,13 @@ public class User extends CurrentUser implements Serializable{
     }
 
     public void setHelpers(int helpers) {
-        this.helpers = helpers;
+        //this.helpers = new ArrayList<>(helpers);
+        for(int i =0; i< helpers; i++){
+            this.helpers.add(new Helper() );
+        }
+        System.out.println(this.getHelpers().size());
     }
+
     public int getPoliticCardSize(){
         return politicCards.size();
     }
@@ -159,6 +165,13 @@ public class User extends CurrentUser implements Serializable{
                 itr.remove();
             }
         }
+    }
+    public void addHelper(){
+        helpers.add(new Helper());
+    }
+
+    public void removeHelper(){
+        helpers.remove(helpers.size()-1);
     }
 
     public PermitCard removePermitCardDefinitevely(PermitCard permitCardToRemove){

@@ -23,4 +23,6 @@ import java.util.ArrayList;
     public abstract void sendSaleItem(ArrayList<BuyableWrapper> realSaleList);
 
    public abstract void onBuy(ArrayList<BuyableWrapper> buyList);
+
+    public abstract void onRemoveItemFromMarket(BuyableWrapper item);
 }

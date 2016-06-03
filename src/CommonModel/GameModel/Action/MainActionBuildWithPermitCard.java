@@ -34,8 +34,8 @@ public class MainActionBuildWithPermitCard extends Action{
                     }
                 }
                 // if user can build
-                if (user.getHelpers() >= helperToSpend) {
-                    user.setHelpers(user.getHelpers() - helperToSpend);
+                if (user.getHelpers().size() >= helperToSpend) {
+                    user.setHelpers(user.getHelpers().size() - helperToSpend);
                     user.addEmporium(gameCity);
                     gameCity.getBonus().getBonus(user, game);
                     // get bonus to old city near the city in wich the user wants to build

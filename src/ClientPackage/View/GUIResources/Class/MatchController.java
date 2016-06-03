@@ -370,7 +370,7 @@ public class MatchController implements Initializable, BaseController {
         System.out.println("on update snapshot <- Match controller");
                 nobilityPathText.setText(currentSnapshot.getCurrentUser().getNobilityPathPosition().getPosition()+"");
                 richPathText.setText(currentSnapshot.getCurrentUser().getCoinPathPosition()+"");
-                helperText.setText(currentSnapshot.getCurrentUser().getHelpers()+"");
+                helperText.setText(currentSnapshot.getCurrentUser().getHelpers().size()+"");
                 victoryPathText.setText(currentSnapshot.getCurrentUser().getVictoryPathPosition()+"");
                 mainActionText.setText(currentSnapshot.getCurrentUser().getMainActionCounter()+"");
                 fastActionText.setText(currentSnapshot.getCurrentUser().getFastActionCounter()+"");

@@ -86,6 +86,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         try {
             while ((line = in.readLine()) != null) {
                 CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
+
                 switch (communicationInfo.getCode()) {
                     case Constants.CODE_NAME: {
                         String username = gson.fromJson(communicationInfo.getInfo(),String.class);
@@ -133,6 +134,12 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                     case Constants.CODE_MARKET_BUY:{
                         ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
                         CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_BUY,user.getGame().getGameController().onBuyObject(user,buyableWrappers));
+                        break;
+                    }
+
+                    case Constants.CODE_MARKET_REMOVE:{
+                        BuyableWrapper buyableWrapper = CommunicationInfo.getBuyableWrapper(communicationInfo.getInfo());
+                        user.getGame().getGameController().onRemoveItem(buyableWrapper);
                         break;
                     }
                 }

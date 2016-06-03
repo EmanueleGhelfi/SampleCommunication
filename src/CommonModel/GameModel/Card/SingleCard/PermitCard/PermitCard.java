@@ -84,4 +84,14 @@ public class PermitCard implements Serializable,BuyableObject{
     public String getInfo() {
         return getCityString();
     }
+
+    @Override
+    public BuyableObject getCopy() {
+        try {
+            return (BuyableObject) this.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
