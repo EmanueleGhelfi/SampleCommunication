@@ -315,6 +315,16 @@ public class MatchController implements Initializable, BaseController {
         updateView();
     }
 
+    @Override
+    public void onStartMarket() {
+
+    }
+
+    @Override
+    public void onStartBuyPhase() {
+
+    }
+
     private void turnFinished(boolean thisTurn) {
         Platform.runLater(new Runnable() {
             @Override

@@ -29,4 +29,8 @@ public interface RMIClientHandler extends Remote{
     boolean buyObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException;
 
     void onRemoveItem(BuyableWrapper item) throws RemoteException;
+
+    void onFinishSellPhase() throws RemoteException;
+
+    void onFinishBuyPhase() throws RemoteException;
 }

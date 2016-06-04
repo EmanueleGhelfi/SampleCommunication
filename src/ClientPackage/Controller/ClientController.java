@@ -239,4 +239,20 @@ public class ClientController {
     public void removeItemFromMarket(BuyableWrapper item) {
         clientService.onRemoveItemFromMarket(item);
     }
+
+    public void onStartMarket() {
+        baseView.onStartMarket();
+    }
+
+    public void sendFinishSellPhase() {
+        clientService.onFinishSellPhase();
+    }
+
+    public void onStartBuyPhase() {
+        baseView.onStartBuyPhase();
+    }
+
+    public void sendFinishedBuyPhase() {
+        clientService.sendFinishedBuyPhase();
+    }
 }

@@ -7,6 +7,8 @@ import CommonModel.GameModel.Market.BuyableObject;
  */
 public class Helper implements BuyableObject{
 
+    private String type = "Helper";
+
     public Helper() {
     }
 
@@ -24,6 +26,19 @@ public class Helper implements BuyableObject{
         }
         return null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Helper helper = (Helper) o;
+
+        return type != null ? type.equals(helper.type) : helper.type == null;
+
+    }
+
+
 
     @Override
     public String toString() {

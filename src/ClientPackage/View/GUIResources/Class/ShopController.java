@@ -9,9 +9,11 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
@@ -31,7 +33,13 @@ public class ShopController implements BaseController {
     @FXML private JFXListView buyListView;
     @FXML private JFXListView sellListView;
     @FXML private BorderPane shop;
+    @FXML private JFXButton sellButton;
+    @FXML private JFXButton buyButton;
+    @FXML private  JFXButton finishButton;
 
+
+    private boolean sellPhase=false;
+    private boolean buyPhase=false;
 
     ArrayList<BuyableWrapper> sellList = new ArrayList<>();
     ArrayList<BuyableWrapper> buyList = new ArrayList<>();
@@ -152,6 +160,7 @@ public class ShopController implements BaseController {
         updateView();
     }
 
+    //OLD
     private void manageUI() {
         /*
         sellListView.prefWidthProperty().bind(shopBackground.widthProperty().divide(3));
@@ -168,6 +177,26 @@ public class ShopController implements BaseController {
 
     }
 
+    @Override
+    public void onStartMarket() {
+
+        sellPhase = true;
+        buyPhase = false;
+        buyButton.setDisable(true);
+        finishButton.setDisable(false);
+        sellButton.setDisable(false);
+
+    }
+
+    @Override
+    public void onStartBuyPhase() {
+        buyPhase=true;
+        buyButton.setDisable(false);
+        finishButton.setDisable(false);
+        sellButton.setDisable(true);
+
+    }
+
     public void addItemToBuy(BuyableWrapper item) {
         if(!buyList.contains(item)){
             buyList.add(item);
@@ -178,6 +207,18 @@ public class ShopController implements BaseController {
     public void removeItemToBuy(BuyableWrapper item) {
         if(buyList.contains(item)){
             buyList.remove(item);
+        }
+    }
+
+    public void onFinishMarket(ActionEvent actionEvent) {
+        if(sellPhase){
+            sellPhase=false;
+            clientController.sendFinishSellPhase();
+        }
+        else if(buyPhase){
+
+            buyPhase = false;
+            clientController.sendFinishedBuyPhase();
         }
     }
 }

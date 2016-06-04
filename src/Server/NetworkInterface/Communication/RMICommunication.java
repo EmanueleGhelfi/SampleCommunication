@@ -100,6 +100,17 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         user.getGame().getGameController().onRemoveItem(item);
     }
 
+    @Override
+    public void onFinishSellPhase() throws RemoteException {
+        user.getGameController().onFinishSellPhase(user);
+    }
+
+    @Override
+    public void onFinishBuyPhase() throws RemoteException {
+        user.getGameController().onFinishBuyPhase(user);
+
+    }
+
 
     /** Overriding BaseCommunication
      *
@@ -164,6 +175,25 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         } catch (RemoteException e) {
             e.printStackTrace();
             user.setConnected(false);
+        }
+    }
+
+    @Override
+    public void sendStartMarket() {
+        try {
+            rmiClientInterface.onStartMarket();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            user.setConnected(false);
+        }
+    }
+
+    @Override
+    public void sendStartBuyPhase() {
+        try {
+            rmiClientInterface.onStartBuyPhase();
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 

@@ -113,6 +113,22 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         }
     }
 
+    @Override
+    public void onFinishSellPhase() {
+        try {
+            rmiClientHandler.onFinishSellPhase();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendFinishedBuyPhase() {
+        rmiClientHandler.onFinishBuyPhase();
+
+    }
+
+    //OLD VERSION
     private String generateName() {
         String randomSequence="";
         Random randomGenerator = new Random();
@@ -125,6 +141,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         return randomSequence;
     }
 
+    //OLD VERSION
     public String getIP() throws UnknownHostException {
         InetAddress IP=InetAddress.getLocalHost();
         System.out.println("IP of my system is := "+IP.getHostAddress());
@@ -155,5 +172,15 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     @Override
     public void finishTurn() throws RemoteException {
         clientController.turnFinished();
+    }
+
+    @Override
+    public void onStartMarket() throws RemoteException {
+        clientController.onStartMarket();
+    }
+
+    @Override
+    public void onStartBuyPhase() throws RemoteException {
+        clientController.onStartBuyPhase();
     }
 }

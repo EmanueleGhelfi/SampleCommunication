@@ -91,6 +91,17 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     @Override
+    public void onFinishSellPhase() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_SELL_PHASE,null);
+    }
+
+    @Override
+    public void sendFinishedBuyPhase() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_BUY_PHASE,null);
+
+    }
+
+    @Override
     public void run() {
         System.out.println("ClientSocketService Started");
         String line;
@@ -155,6 +166,14 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_TURN_FINISHED:{
                 clientController.turnFinished();
+                break;
+            }
+            case Constants.CODE_START_MARKET:{
+                clientController.onStartMarket();
+                break;
+            }
+            case Constants.CODE_START_BUY_PHASE:{
+                clientController.onStartBuyPhase();
                 break;
             }
         }

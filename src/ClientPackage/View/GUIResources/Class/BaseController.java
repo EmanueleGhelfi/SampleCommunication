@@ -14,4 +14,8 @@ public interface BaseController {
     public void setClientController(ClientController clientController, GUIView guiView);
 
     void setMyTurn(boolean myTurn, SnapshotToSend snapshot);
+
+    void onStartMarket();
+
+    void onStartBuyPhase();
 }

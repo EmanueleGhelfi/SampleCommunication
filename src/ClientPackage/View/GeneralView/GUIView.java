@@ -188,6 +188,22 @@ public class GUIView extends Application implements BaseView {
         }
     }
 
+    @Override
+    public void onStartMarket() {
+        Platform.runLater(()->{
+            baseControllerList.forEach(baseController -> {
+                baseController.onStartMarket();
+            });
+        });
+    }
+
+    @Override
+    public void onStartBuyPhase() {
+        Platform.runLater(()->{
+            baseControllerList.forEach(baseController -> baseController.onStartBuyPhase());
+        });
+    }
+
     public void registerBaseController(BaseController baseController){
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);

@@ -88,6 +88,11 @@ public class PathController implements Initializable, BaseController{
     public void setMyTurn(boolean myTurn, SnapshotToSend snapshot) {
     }
 
+    @Override
+    public void onStartMarket() {
+
+    }
+
     public void nextPlayer(Event event) {
         userCounter++;
         emporiumCounter = 0;

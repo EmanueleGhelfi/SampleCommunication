@@ -25,4 +25,8 @@ import java.util.ArrayList;
    public abstract void onBuy(ArrayList<BuyableWrapper> buyList);
 
     public abstract void onRemoveItemFromMarket(BuyableWrapper item);
+
+    public abstract void onFinishSellPhase();
+
+    public abstract void sendFinishedBuyPhase();
 }

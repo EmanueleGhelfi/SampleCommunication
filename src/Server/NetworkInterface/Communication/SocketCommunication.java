@@ -76,6 +76,17 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void sendStartMarket() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_START_MARKET,null);
+
+    }
+
+    @Override
+    public void sendStartBuyPhase() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_START_BUY_PHASE,null);
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
@@ -140,6 +151,16 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                     case Constants.CODE_MARKET_REMOVE:{
                         BuyableWrapper buyableWrapper = CommunicationInfo.getBuyableWrapper(communicationInfo.getInfo());
                         user.getGame().getGameController().onRemoveItem(buyableWrapper);
+                        break;
+                    }
+
+                    case Constants.CODE_FINISH_SELL_PHASE:{
+                        user.getGameController().onFinishSellPhase(user);
+                        break;
+                    }
+
+                    case Constants.CODE_FINISH_BUY_PHASE:{
+                        user.getGameController().onFinishBuyPhase(user);
                         break;
                     }
                 }
