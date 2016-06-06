@@ -93,6 +93,16 @@ public class PathController implements Initializable, BaseController{
 
     }
 
+    @Override
+    public void onStartBuyPhase() {
+
+    }
+
+    @Override
+    public void onFinishMarket() {
+
+    }
+
     public void nextPlayer(Event event) {
         userCounter++;
         emporiumCounter = 0;

@@ -124,7 +124,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendFinishedBuyPhase() {
-        rmiClientHandler.onFinishBuyPhase();
+        try {
+            rmiClientHandler.onFinishBuyPhase();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -182,5 +186,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     @Override
     public void onStartBuyPhase() throws RemoteException {
         clientController.onStartBuyPhase();
+    }
+
+    @Override
+    public void disableMarketPhase() throws RemoteException {
+
+        clientController.onFinishBuyPhase();
     }
 }

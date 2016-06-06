@@ -255,4 +255,9 @@ public class ClientController {
     public void sendFinishedBuyPhase() {
         clientService.sendFinishedBuyPhase();
     }
+
+
+    public void onFinishBuyPhase() {
+        baseView.onFinishMarket();
+    }
 }

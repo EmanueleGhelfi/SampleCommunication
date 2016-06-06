@@ -43,16 +43,17 @@ public class ShopController implements BaseController {
 
     ArrayList<BuyableWrapper> sellList = new ArrayList<>();
     ArrayList<BuyableWrapper> buyList = new ArrayList<>();
+    ArrayList<BuyableWrapper> toBuy = new ArrayList<>();
     ShopController shopController=this;
 
     public void onBuy(ActionEvent actionEvent) {
 
         Runnable runnable = () -> {
             System.out.println("in shopController"+buyList);
-            clientController.onBuy(buyList);
+            clientController.onBuy(toBuy);
+            toBuy.clear();
         };
         new Thread(runnable).start();
-
     }
 
     public void onSell(ActionEvent actionEvent) {
@@ -126,7 +127,6 @@ public class ShopController implements BaseController {
 
         sellListView.getStyleClass().add("jfx-list-view");
         sellListView.getStyleClass().add("mylistview");
-        sellListView.autosize();
         sellListView.refresh();
 
 
@@ -142,7 +142,6 @@ public class ShopController implements BaseController {
 
         buyListView.getStyleClass().add("jfx-list-view");
         buyListView.getStyleClass().add("mylistview");
-        buyListView.autosize();
         buyListView.refresh();
 
 
@@ -194,19 +193,26 @@ public class ShopController implements BaseController {
         buyButton.setDisable(false);
         finishButton.setDisable(false);
         sellButton.setDisable(true);
+    }
 
+    @Override
+    public void  onFinishMarket() {
+        buyButton.setDisable(true);
+        finishButton.setDisable(true);
+        sellButton.setDisable(true);
     }
 
     public void addItemToBuy(BuyableWrapper item) {
-        if(!buyList.contains(item)){
-            buyList.add(item);
+        System.out.println("adding item :"+item);
+        if(!toBuy.contains(item)){
+            toBuy.add(item);
         }
 
     }
 
     public void removeItemToBuy(BuyableWrapper item) {
-        if(buyList.contains(item)){
-            buyList.remove(item);
+        if(toBuy.contains(item)){
+            toBuy.remove(item);
         }
     }
 

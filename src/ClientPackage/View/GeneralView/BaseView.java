@@ -29,4 +29,6 @@ public interface BaseView {
     void onStartMarket();
 
     void onStartBuyPhase();
+
+    void onFinishMarket();
 }

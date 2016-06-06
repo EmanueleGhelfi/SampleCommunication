@@ -4,6 +4,7 @@ import CommonModel.GameModel.Market.BuyableObject;
 import Utilities.Class.Constants;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Giulio on 14/05/2016.
@@ -11,8 +12,13 @@ import java.io.Serializable;
 public class PoliticCard implements Serializable,BuyableObject {
 
     private PoliticColor politicColor;
+
     // true if card is multicolor
     private boolean isMultiColor;
+
+    // for equals, id of the object
+    static final AtomicLong NEXT_ID = new AtomicLong(0);
+    final long id = NEXT_ID.getAndIncrement();
 
     public PoliticCard() {
     }
@@ -46,6 +52,7 @@ public class PoliticCard implements Serializable,BuyableObject {
         PoliticCard that = (PoliticCard) o;
 
         if (isMultiColor != that.isMultiColor) return false;
+        if (id != that.id) return false;
         return politicColor == that.politicColor;
 
     }

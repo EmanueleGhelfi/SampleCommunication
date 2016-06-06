@@ -87,6 +87,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void disableMarketPhase() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_MARKET_PHASE,null);
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())

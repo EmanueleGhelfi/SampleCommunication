@@ -59,4 +59,14 @@ public class CLIView implements BaseView {
 
     }
 
+    @Override
+    public void onStartBuyPhase() {
+
+    }
+
+    @Override
+    public void onFinishMarket() {
+
+    }
+
 }

@@ -18,4 +18,6 @@ public interface BaseController {
     void onStartMarket();
 
     void onStartBuyPhase();
+
+    void onFinishMarket();
 }

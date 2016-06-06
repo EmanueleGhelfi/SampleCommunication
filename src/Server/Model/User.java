@@ -4,6 +4,7 @@ import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Helper;
+import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.CurrentUser;
@@ -170,8 +171,9 @@ public class User extends CurrentUser implements Serializable{
         helpers.add(new Helper());
     }
 
-    public void removeHelper(){
-        helpers.remove(helpers.size()-1);
+    public void removeHelper(Helper buyableObject){
+        //helpers.remove(helpers.size()-1);
+        helpers.remove(buyableObject);
     }
 
     public PermitCard removePermitCardDefinitevely(PermitCard permitCardToRemove){

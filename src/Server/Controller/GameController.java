@@ -32,7 +32,7 @@ public class GameController implements Serializable{
     private ArrayList<Map> availableMaps = new ArrayList<>();
     // initialized to users size, when 0 start market
     private int turnCounter =0;
-    private HashMap<User,Boolean> marketHashMap;
+    private HashMap<User,Boolean> marketHashMap = new HashMap<>();
     private ArrayList<User> users = new ArrayList<>();
     private boolean sellPhase=false;
     private boolean buyPhase = false;
@@ -184,26 +184,44 @@ public class GameController implements Serializable{
         userToAdd.getBaseCommunication().sendAvailableMap(availableMaps);
     }
 
+    /* set map and init game*/
     public void setMap(Map map) {
         if(availableMaps.contains(map)){
             System.out.println("MAP PRESENT");
-            for (Map mapToSelect : availableMaps) {
-                if(mapToSelect.equals(map)){
-                    game.setMap(map);
-                    game.setKing(new King(map.getCity().get(0)));
-                    for (User user: game.getUsers()) {
-                        SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
-                        // init game
-                        user.getBaseCommunication().sendSelectedMap(snapshotToSend);
-                    }
-                    selectFirstPlayer();
-                    break;
-                }
+            Map mapToFind = findMap(map);
+            game.setMap(mapToFind);
+            game.setKing(new King(map.getCity().get(0)));
+            for (User user: game.getUsers()) {
+                SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
+                // init game
+                user.getBaseCommunication().sendSelectedMap(snapshotToSend);
             }
+            selectFirstPlayer();
+            sendFinishMarketToAll();
+
         }
         else{
             System.out.println("MAP NOT PRESENT");
         }
+    }
+
+    private Map findMap(Map map) {
+        for (Map mapToSelect: availableMaps){
+            if(map.equals(mapToSelect)){
+                return mapToSelect;
+            }
+        }
+        return null;
+    }
+
+    /** disable market phase in all user */
+    private void sendFinishMarketToAll() {
+        new Thread(()->{
+            for (User user:users){
+                user.getBaseCommunication().disableMarketPhase();
+            }
+        }).start();
+
     }
 
     private void selectFirstPlayer() {
@@ -264,7 +282,7 @@ public class GameController implements Serializable{
                 }
                 else if(buyableWrapper.getBuyableObject() instanceof Helper){
                     System.out.println("found helper");
-                    game.getUser(buyableWrapper.getUsername()).removeHelper();
+                    game.getUser(buyableWrapper.getUsername()).removeHelper((Helper)buyableWrapper.getBuyableObject());
                     user.addHelper();
                 }
                 counter++;
@@ -351,6 +369,7 @@ public class GameController implements Serializable{
             }
             else {
                 buyPhase=false;
+                sendFinishMarketToAll();
                 changeRound(nextUser);
             }
         }

@@ -109,8 +109,8 @@ public class ClientSocketService extends ClientService implements Runnable {
             while ((line = in.readLine())!=null){
                 // create a new runnable and use a executor service in order to execute this task
                 class DecoderTask implements Runnable{
-                    String lineToDecode;
-                    public DecoderTask(String line) {
+                    private String lineToDecode;
+                    private DecoderTask(String line) {
                         this.lineToDecode = line;
                     }
                     @Override
@@ -126,7 +126,7 @@ public class ClientSocketService extends ClientService implements Runnable {
         }
     }
 
-    public void decodeInfo(String line){
+    private void decodeInfo(String line){
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT)
@@ -174,6 +174,10 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_START_BUY_PHASE:{
                 clientController.onStartBuyPhase();
+                break;
+            }
+            case Constants.CODE_FINISH_MARKET_PHASE:{
+                clientController.onFinishBuyPhase();
                 break;
             }
         }

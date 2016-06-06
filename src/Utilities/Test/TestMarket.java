@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.ArrayComparisonFailure;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -19,12 +20,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestMarket {
     User user;
+    User user2;
 
     @Before
     public void before(){
         GamesManager gameController = GamesManager.getInstance();
         user = new User(new RMICommunication(),gameController);
+        user2 = new User(new RMICommunication(),gameController);
         gameController.addToGame(user);
+        gameController.addToGame(user2);
         user.getGameController().notifyStarted();
     }
 
@@ -47,6 +51,24 @@ public class TestMarket {
         BuyableWrapper buyableWrapper = new BuyableWrapper(politicCard,2,user.getUsername());
         user.getGameController().onRemoveItem(buyableWrapper);
         assertEquals(user.getGame().getMarketList().size(),0);
+    }
+
+    @Test
+    public void testHelper(){
+        ArrayList<BuyableWrapper> buyableWrappers = new ArrayList<>();
+        user2.setHelpers(3);
+        user.setHelpers(1);
+        BuyableWrapper buyableWrapper = new BuyableWrapper(user2.getHelpers().get(0),3,user2.getUsername());
+        BuyableWrapper buyableWrapper1 = new BuyableWrapper(user2.getHelpers().get(1),3,user2.getUsername());
+        buyableWrappers.add(buyableWrapper);
+        buyableWrappers.add(buyableWrapper1);
+        user2.getGameController().onReceiveBuyableObject(buyableWrappers);
+        assertEquals(user2.getGame().getMarketList().size(),2);
+        ArrayList<BuyableWrapper> buyableWrappersToBuy = new ArrayList<>();
+        buyableWrappersToBuy.add(buyableWrapper1);
+
+        user.getGameController().onBuyObject(user,buyableWrappersToBuy);
+        assertEquals(user.getHelpers().size(),2);
     }
 
 

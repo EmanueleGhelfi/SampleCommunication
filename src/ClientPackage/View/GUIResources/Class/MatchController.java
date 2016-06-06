@@ -325,6 +325,11 @@ public class MatchController implements Initializable, BaseController {
 
     }
 
+    @Override
+    public void onFinishMarket() {
+
+    }
+
     private void turnFinished(boolean thisTurn) {
         Platform.runLater(new Runnable() {
             @Override

@@ -124,6 +124,9 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             e.printStackTrace();
             user.setConnected(false);
         }
+        catch (NullPointerException e){
+            System.out.println("null pointer in rmi communication");
+        }
     }
 
     /** Overriding BaseCommunication
@@ -192,6 +195,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     public void sendStartBuyPhase() {
         try {
             rmiClientInterface.onStartBuyPhase();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void disableMarketPhase() {
+        try {
+            rmiClientInterface.disableMarketPhase();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
