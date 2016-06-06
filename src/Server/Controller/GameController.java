@@ -197,8 +197,9 @@ public class GameController implements Serializable{
                 // init game
                 user.getBaseCommunication().sendSelectedMap(snapshotToSend);
             }
-            selectFirstPlayer();
             sendFinishMarketToAll();
+            selectFirstPlayer();
+
 
         }
         else{

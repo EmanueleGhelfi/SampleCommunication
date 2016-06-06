@@ -16,8 +16,13 @@ import javafx.collections.FXCollections;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.util.Callback;
+import org.controlsfx.control.spreadsheet.Grid;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,6 +41,10 @@ public class ShopController implements BaseController {
     @FXML private JFXButton sellButton;
     @FXML private JFXButton buyButton;
     @FXML private  JFXButton finishButton;
+    @FXML private GridPane gridPane;
+
+    private ScrollPane sellPane;
+    private ScrollPane buyPane;
 
 
     private boolean sellPhase=false;
@@ -78,43 +87,9 @@ public class ShopController implements BaseController {
     public void updateView() {
         System.out.println("On update shopController");
         SnapshotToSend snapshotTosend= clientController.getSnapshot();
-        sellList= new ArrayList<>();
-        buyList = snapshotTosend.getMarketList();
+        updateList();
+        manageUI();
 
-        /*
-        for(BuyableWrapper buyableWrapper: buyList){
-            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
-                sellList.add(buyableWrapper);
-                buyList.remove(buyableWrapper);
-            }
-        }
-        */
-
-
-
-        for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
-            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
-                sellList.add(buyableWrapperTmp);
-        }
-
-        for(PermitCard permitCard: snapshotTosend.getCurrentUser().getPermitCards()){
-            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername());
-                sellList.add(buyableWrapperTmp);
-        }
-
-        for(Helper helper: snapshotTosend.getCurrentUser().getHelpers()){
-            BuyableWrapper buyableWrapper = new BuyableWrapper(helper,snapshotTosend.getCurrentUser().getUsername());
-            sellList.add(buyableWrapper);
-        }
-
-        for(Iterator<BuyableWrapper> itr = buyList.iterator(); itr.hasNext();){
-            BuyableWrapper buyableWrapper = itr.next();
-            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
-                sellList.remove(buyableWrapper);
-                sellList.add(buyableWrapper);
-                itr.remove();
-            }
-        }
 
         sellListView.getItems().clear();
         sellListView.setItems(FXCollections.observableArrayList(sellList));
@@ -147,6 +122,47 @@ public class ShopController implements BaseController {
 
     }
 
+    private void updateList() {
+        sellList= new ArrayList<>();
+        SnapshotToSend snapshotTosend = clientController.getSnapshot();
+        buyList = snapshotTosend.getMarketList();
+
+        /*
+        for(BuyableWrapper buyableWrapper: buyList){
+            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
+                sellList.add(buyableWrapper);
+                buyList.remove(buyableWrapper);
+            }
+        }
+        */
+
+
+
+        for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
+            sellList.add(buyableWrapperTmp);
+        }
+
+        for(PermitCard permitCard: snapshotTosend.getCurrentUser().getPermitCards()){
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername());
+            sellList.add(buyableWrapperTmp);
+        }
+
+        for(Helper helper: snapshotTosend.getCurrentUser().getHelpers()){
+            BuyableWrapper buyableWrapper = new BuyableWrapper(helper,snapshotTosend.getCurrentUser().getUsername());
+            sellList.add(buyableWrapper);
+        }
+
+        for(Iterator<BuyableWrapper> itr = buyList.iterator(); itr.hasNext();){
+            BuyableWrapper buyableWrapper = itr.next();
+            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
+                sellList.remove(buyableWrapper);
+                sellList.add(buyableWrapper);
+                itr.remove();
+            }
+        }
+    }
+
     @Override
     public void setClientController(ClientController clientController, GUIView guiView) {
         System.out.println("Set client controller");
@@ -157,18 +173,44 @@ public class ShopController implements BaseController {
         manageUI();
 
         updateView();
+
+        onFinishMarket();
     }
 
-    //OLD
+    //NEW
     private void manageUI() {
-        /*
-        sellListView.prefWidthProperty().bind(shopBackground.widthProperty().divide(3));
-        sellListView.prefHeightProperty().bind(shopBackground.heightProperty().divide(1.2));
+        sellPane = new ScrollPane();
+        GridPane gridPane = new GridPane();
+        double columnNumber = 4;
+        double rowNumber = Math.ceil(sellList.size()/columnNumber);
+        for(int i = 0; i< columnNumber;i++){
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setPercentWidth(100/columnNumber);
+            gridPane.getColumnConstraints().add(i,columnConstraints);
+            for(int j = 0; j<rowNumber;j++){
+                RowConstraints rowConstraints = new RowConstraints();
+                rowConstraints.setPercentHeight(100/rowNumber);
+                gridPane.getRowConstraints().add(rowConstraints);
+                createCell(i,j);
+            }
+        }
+
+    }
+
+    private void createCell(int i, int j) {
+        GridPane gridPaneInternal = new GridPane();
+        RowConstraints row1 = new RowConstraints();
+        row1.setPercentHeight(5);
+        RowConstraints row2 = new RowConstraints();
+        row2.setPercentHeight(70);
+        RowConstraints row3 = new RowConstraints();
+        row3.setPercentHeight(10);
+        RowConstraints row4 = new RowConstraints();
+        row4.setPercentHeight(10);
+        ColumnConstraints columnConstraints= new ColumnConstraints();
+        columnConstraints.setPercentWidth(5);
 
 
-        buyListView.prefWidthProperty().bind(shopBackground.widthProperty().divide(3));
-        buyListView.prefHeightProperty().bind(shopBackground.heightProperty().divide(1.2));
-        */
     }
 
     @Override
@@ -178,13 +220,11 @@ public class ShopController implements BaseController {
 
     @Override
     public void onStartMarket() {
-
         sellPhase = true;
         buyPhase = false;
         buyButton.setDisable(true);
         finishButton.setDisable(false);
         sellButton.setDisable(false);
-
     }
 
     @Override
@@ -216,7 +256,7 @@ public class ShopController implements BaseController {
         }
     }
 
-    public void onFinishMarket(ActionEvent actionEvent) {
+    public void sendOnFinishMarket(ActionEvent actionEvent) {
         if(sellPhase){
             sellPhase=false;
             clientController.sendFinishSellPhase();
