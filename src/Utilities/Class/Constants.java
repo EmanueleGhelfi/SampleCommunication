@@ -15,6 +15,14 @@ public class Constants {
     public static final String CODE_MAP = "CODE_MAP";
     public static final String CODE_INITIALIZE_GAME = "CODE_INITIALIZE_GAME";
     public static final String CODE_TURN_FINISHED = "CODE_TURN_FINISHED";
+    public static final String CODE_MARKET_SELL = "CODE_MARKET_SELL";
+    public static final String CODE_MARKET_BUY = "CODE_MARKET_BUY";
+    public static final String CODE_MARKET_REMOVE = "CODE_MARKET_REMOVE";
+    public static final String CODE_START_BUY_PHASE = "CODE_START_BUY_PHASE";
+    public static final String CODE_START_MARKET = "CODE_START_MARKET";
+    public static final String CODE_FINISH_SELL_PHASE = "CODE_FINISH_SELL_PHASE";
+    public static final String CODE_FINISH_BUY_PHASE = "CODE_FINISH_BUY_PHASE";
+    public static final String CODE_FINISH_MARKET_PHASE = "CODE_FINISH_MARKET_PHASE";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -113,7 +121,7 @@ public class Constants {
     public static final int VICTORY_PATH_LENGTH = 100;
 
     //TIMEOUT TO CREATE GAME
-    public static final int GAME_TIMEOUT = 20000;
+    public static final int GAME_TIMEOUT = 5000;
 
     //DECK SIZE
     public static final int SINGLECOLOR_POLITIC_DECK_SIZE = 13;
@@ -142,5 +150,10 @@ public class Constants {
     public static final int DEFAULT_HELPER_COUNTER = 1;
     public static final int DEFAULT_POLITIC_CARD_HAND = 6;
     public static final int MAX_CLIENT_NUMBER = 10;
+
+    //MARKET NAME
+    public static final String PERMIT_CARD = "PERMIT_CARD";
+    public static final String POLITIC_CARD = "POLITIC_CARD";
+
 
 }

@@ -21,4 +21,10 @@ public interface RMIClientInterface extends Remote {
     void isYourTurn() throws RemoteException;
 
     void finishTurn() throws RemoteException;
+
+    void onStartMarket() throws RemoteException;
+
+    void onStartBuyPhase() throws RemoteException;
+
+    void disableMarketPhase() throws RemoteException;
 }

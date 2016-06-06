@@ -1,99 +1,240 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import CommonModel.GameModel.Council.Council;
+import ClientPackage.View.GUIResources.customComponent.CityButton;
+import ClientPackage.View.GUIResources.customComponent.CouncilorHandler;
+import ClientPackage.View.GUIResources.customComponent.PermitCardHandler;
+import ClientPackage.View.GUIResources.customComponent.SideNode;
+import ClientPackage.View.GeneralView.GUIView;
+import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
+import CommonModel.GameModel.Action.FastActionMoneyForHelper;
+import CommonModel.GameModel.Action.FastActionNewMainAction;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Exception.CouncilNotFoundException;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;
+import com.jfoenix.controls.JFXComboBox;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.geometry.Side;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ButtonType;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import java.util.Optional;
+import javafx.scene.text.Text;
+import javafx.stage.Screen;
+import org.controlsfx.control.HiddenSidesPane;
+import org.controlsfx.control.PopOver;
+
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * Created by Giulio on 17/05/2016.
  */
-public class MatchController implements Initializable {
+public class MatchController implements Initializable, BaseController {
 
     private ClientController clientController;
     private boolean myTurn;
-    @FXML Button buttonMain1;
-    @FXML AnchorPane background;
     private SnapshotToSend currentSnapshot;
+    private PopOver popOver = new PopOver();
+    private Pane paneOfPopup = new Pane();
+    private JFXComboBox<String> councilorColorToChoose = new JFXComboBox<>();
+    private String city;
+    private GUIView guiView;
+    @FXML private ImageView imageTest;
+    //BUTTONs
+    @FXML Button buttonMain1;
+    @FXML JFXButton coastPermitButton;
+    @FXML JFXButton hillPermitButton;
+    @FXML JFXButton mountainPermitButton;
 
-    @FXML
-    Label nobilityPathText;
+    //LABELS
 
-    @FXML
-    Label richPathText;
+    @FXML BorderPane background;
+    @FXML Label nobilityPathText;
+    @FXML Label richPathText;
+    @FXML Label helperText;
+    @FXML Label victoryPathText;
+    @FXML Label fastActionText;
+    @FXML Label mainActionText;
+    @FXML Label turnText;
 
-    @FXML
-    Label helperText;
-
-    @FXML
-    Label victoryPathText;
-
+    //HBOX
     @FXML private HBox regionCoast;
     @FXML private HBox regionHill;
     @FXML private HBox regionMountain;
     @FXML private HBox regionKing;
+    @FXML private HBox coastHBox;
+    @FXML private HBox hillHBox;
+    @FXML private HBox mountainHBox;
+    @FXML private StackPane bottomPane;
 
-    private List<Circle> circlesCoast = new ArrayList<>();
-    private List<Circle> circlesHill= new ArrayList<>();
-    private List<Circle> circlesMountain= new ArrayList<>();
-    private List<Circle> circlesKing= new ArrayList<>();
-
-    private ArrayList<Councilor> coastCouncil = new ArrayList<>();
-    private ArrayList<Councilor> hillCouncil = new ArrayList<>();
-    private ArrayList<Councilor> mountainCouncil = new ArrayList<>();
-    private ArrayList<Councilor> kingCouncil = new ArrayList<>();
+    // Include
+    @FXML private GridPane path;
+    @FXML private PathController pathController;
+    @FXML private BorderPane shop;
+    @FXML private ShopController shopController;
+    private HiddenSidesPane hiddenSidesPane;
 
 
+    private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
+    private ArrayList<ImageView> kingCouncil = new ArrayList<>();
 
 
-    public void setClientController(ClientController clientController) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        popOver.setContentNode(paneOfPopup);
+    }
+
+    public void setClientController(ClientController clientController, GUIView guiView) {
         this.clientController = clientController;
+        this.guiView = guiView;
+        hiddenSidesPane = new HiddenSidesPane();
+        mainActionBuildWithPermitCard();
         currentSnapshot = clientController.getSnapshot();
+        guiView.registerBaseController(this);
+        initController();
+
         System.out.println("setting image");
         background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
-        createArray();
+        //createArray();
+        createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
+        createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
+        createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
+        createOverlay();
+        initPermitButton();
     }
 
-    private void createArray() {
-        for (Node node : regionCoast.getChildren()) {
-            circlesCoast.add((Circle) node);
-        }
-
-        for (Node node : regionHill.getChildren()) {
-            circlesHill.add((Circle) node);
-        }
-
-        for (Node node : regionMountain.getChildren()) {
-            circlesMountain.add((Circle) node);
-        }
-
-        for (Node node : regionKing.getChildren()) {
-            circlesKing.add((Circle) node);
-        }
+    private void initController() {
+        pathController.setClientController(clientController,guiView);
+        shopController.setClientController(clientController,guiView);
     }
+
+    private void initPermitButton() {
+        coastPermitButton.setOnMouseClicked(new PermitButtonHandler(RegionName.COAST));
+        hillPermitButton.setOnMouseClicked(new PermitButtonHandler(RegionName.HILL));
+        mountainPermitButton.setOnMouseClicked(new PermitButtonHandler(RegionName.MOUNTAIN));
+    }
+
+    private void createOverlay() {
+        if(bottomPane.getChildren().contains(hiddenSidesPane)) {
+            bottomPane.getChildren().remove(hiddenSidesPane);
+        }
+        hiddenSidesPane = new HiddenSidesPane();
+        HBox hbox1 = new HBox();
+        HBox hbox2 = new HBox();
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        for(RegionName regionName: RegionName.values()) {
+            HBox hBox = new HBox();
+            try {
+                ArrayList<Councilor> councilors = currentSnapshot.getCouncil(regionName);
+                ArrayList<ImageView> imageViews = new ArrayList<>();
+                for (int i = 0; i< councilors.size();i++){
+                    ImageView imageView = new ImageView();
+                    try {
+                        imageView.setImage(new Image(councilors.get(i).getColor().getImageUrl()));
+                        imageView.setFitHeight(10.0);
+                        imageView.setFitWidth(10.0);
+                        imageViews.add(imageView);
+                    }
+                    catch (IllegalArgumentException e){
+                        System.out.println("not found image in match controller"+councilors.get(i).getColor().getImageUrl());
+                    }
+                    hBox.getChildren().add(imageView);
+                }
+                councilHashMap.put(regionName,imageViews);
+                hbox1.getChildren().add(hBox);
+                hBox.setPrefWidth(primaryScreenBounds.getWidth()/3);
+                hBox.setOnMouseClicked(new CouncilorHandler(hBox,regionName,this,clientController,null));
+            } catch (CouncilNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        hbox1.setPrefWidth(primaryScreenBounds.getWidth());
+        hbox1.setAlignment(Pos.CENTER);
+
+        ArrayList<Councilor> kingCouncilors = new ArrayList<>(currentSnapshot.getKing().getCouncil().getCouncil());
+        for (Councilor councilor: kingCouncilors){
+            ImageView imageView = new ImageView();
+            try{
+                imageView.setImage(new Image(councilor.getColor().getImageUrl()));
+                imageView.setFitHeight(10.0);
+                imageView.setFitWidth(10.0);
+                kingCouncil.add(imageView);
+            }
+            catch (IllegalArgumentException e){
+                System.out.println("not found image match controller"+councilor.getColor().getImageUrl());
+            }
+            hbox2.getChildren().add(imageView);
+        }
+        hbox2.setOnMouseClicked(new CouncilorHandler(hbox2,null,this,clientController,currentSnapshot.getKing()));
+        hbox2.setPrefWidth(primaryScreenBounds.getWidth());
+        hbox2.setAlignment(Pos.CENTER);
+        SideNode sideNode = new SideNode(10.0, Side.BOTTOM,hiddenSidesPane,hbox1,hbox2);
+        sideNode.setStyle("-fx-background-color: rgba(143,147,147,.25);");
+        hiddenSidesPane.setTop(sideNode);
+
+        bottomPane.getChildren().add(hiddenSidesPane);
+
+    }
+
+    private void createPermitCard(HBox regionHBox, HashMap<RegionName,ArrayList<PermitCard>> permitDeck,RegionName regionName) {
+        Set<Node> imageViews = regionHBox.lookupAll("#permitCard");
+        int i = 0;
+        for (Node node: imageViews) {
+            node.setOnMouseClicked(new PermitCardHandler(permitDeck.get(regionName).get(i),this,clientController));
+            i++;
+        }
+
+        i=0;
+        for (Node node: regionHBox.lookupAll("#cityNames")){
+            Label label = (Label) node;
+            label.setText(permitDeck.get(regionName).get(i).getCityString());
+            i++;
+        }
+
+    }
+
+
+
+
 
     public void mainActionElectCouncilor(){
+
+        ArrayList<String> colorList = new ArrayList<>();
+        colorList.add("WHITE");
+        colorList.add("BLACK");
+
+        ObservableList<String> observableColorList = FXCollections.observableArrayList(colorList);
+        councilorColorToChoose.setItems(observableColorList);
+
+        paneOfPopup.getChildren().addAll(councilorColorToChoose);
+        popOver.show(imageTest);
+
+        /*
         String parameter = null;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("ELEGGI IL CONSIGLIERE");
@@ -112,14 +253,42 @@ public class MatchController implements Initializable {
                 break;
         }
         clientController.mainActionElectCouncilor(parameter);
-
+        */
     }
 
-    public void mainActionBuyPermitCard(){
 
-    }
 
     public void mainActionBuildWithPermitCard(){
+        for (City city: clientController.getSnapshot().getMap().getCity()) {
+            Pane cityPane = (Pane) background.lookup("#"+city.getCityName().getCityName());
+            System.out.println(city.getCityName().getCityName());
+            if (cityPane != null) {
+                CityButton cityButton = new CityButton(city, this);
+                cityPane.getChildren().add(cityButton);
+                cityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        popOver = new PopOver();
+                        paneOfPopup.getChildren().add(new Text("TESTING.."));
+                        JFXListView<String> list = new JFXListView<String>();
+                        ArrayList<String> ehehe = new ArrayList<String>();
+                        for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()) {
+                            String temporaryChar = null;
+                            for (Character character : permitCard.getCityAcronimous()) {
+                                if (character.equals(city.getCityName().getCityName().charAt(0))) {
+                                    temporaryChar = temporaryChar + permitCard.getCityAcronimous().toString();
+                                }
+                            }
+                        }
+                        list.setItems(FXCollections.observableArrayList(ehehe));
+                        paneOfPopup.getChildren().add(list);
+                        popOver.setContentNode(paneOfPopup);
+                        popOver.show(cityPane);
+                    }
+                });
+            }
+        }
 
     }
 
@@ -130,9 +299,6 @@ public class MatchController implements Initializable {
     public void fastActionChangePermitCardWithHelper(){
     }
 
-    public void fastActionElectCouncilorWithHelper(){
-        clientController.fastActionElectCouncilorWithHelper();
-    }
 
     public void fastActionMoneyForHelper(){
 
@@ -144,41 +310,63 @@ public class MatchController implements Initializable {
 
     public void setMyTurn(boolean value, SnapshotToSend snapshot) {
         myTurn = value;
+        this.currentSnapshot = snapshot;
         turnFinished(myTurn);
-       updateSnapshot(snapshot);
+        updateView();
     }
 
-    public void turnFinished(boolean thisTurn) {
-        boolean myTurnValue= !thisTurn;
-        buttonMain1.setDisable(myTurnValue);
+    @Override
+    public void onStartMarket() {
+
     }
 
-    public void updateSnapshot(SnapshotToSend snapshot) {
-        System.out.println("on update snapshot <- Match controller");
+    @Override
+    public void onStartBuyPhase() {
+
+    }
+
+    @Override
+    public void onFinishMarket() {
+
+    }
+
+    private void turnFinished(boolean thisTurn) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                nobilityPathText.setText(snapshot.getCurrentUser().getNobilityPathPosition().getPosition()+"");
-                richPathText.setText(snapshot.getCurrentUser().getCoinPathPosition()+"");
-                helperText.setText(snapshot.getCurrentUser().getHelpers()+"");
-                victoryPathText.setText(snapshot.getCurrentUser().getVictoryPathPosition()+"");
-
-                try {
-                    coastCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.COAST);
-                    fillCircle(circlesCoast,coastCouncil);
-                    hillCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.HILL);
-                    fillCircle(circlesHill,hillCouncil);
-                    mountainCouncil = snapshot.getCouncil(CommonModel.GameModel.City.RegionName.MOUNTAIN);
-                    fillCircle(circlesMountain,mountainCouncil);
-                    kingCouncil = new ArrayList<Councilor>(snapshot.getKing().getCouncil().getCouncil());
-                    fillCircle(circlesKing,kingCouncil);
-                } catch (CouncilNotFoundException e) {
-                    e.printStackTrace();
+                if(thisTurn){
+                    turnText.setText("E' il tuo turno!");
                 }
-
-
+                else{
+                    turnText.setText("Non è il tuo turno!");
+                }
+                boolean myTurnValue= !thisTurn;
+                buttonMain1.setDisable(myTurnValue);
             }
         });
+
+    }
+
+
+    private void reprintCouncilor() {
+        for (RegionName regionName : RegionName.values()) {
+            ArrayList<Councilor> councilors = null;
+            try {
+                councilors = currentSnapshot.getCouncil(regionName);
+                ArrayList<ImageView> imageView = councilHashMap.get(regionName);
+                for(int i = 0; i< councilors.size();i++){
+                    imageView.get(i).setImage(new Image(councilors.get(i).getColor().getImageUrl()));
+                }
+            } catch (CouncilNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        ArrayList<Councilor> kingCouncilArray = new ArrayList<>(currentSnapshot.getKing().getCouncil().getCouncil());
+        for (int i = 0; i<kingCouncil.size();i++) {
+            kingCouncil.get(i).setImage(new Image(kingCouncilArray.get(i).getColor().getImageUrl()));
+        }
 
     }
 
@@ -190,11 +378,88 @@ public class MatchController implements Initializable {
         }
     }
 
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void updateView() {
+        this.currentSnapshot = clientController.getSnapshot();
+        System.out.println("on update snapshot <- Match controller");
+                nobilityPathText.setText(currentSnapshot.getCurrentUser().getNobilityPathPosition().getPosition()+"");
+                richPathText.setText(currentSnapshot.getCurrentUser().getCoinPathPosition()+"");
+                helperText.setText(currentSnapshot.getCurrentUser().getHelpers().size()+"");
+                victoryPathText.setText(currentSnapshot.getCurrentUser().getVictoryPathPosition()+"");
+                mainActionText.setText(currentSnapshot.getCurrentUser().getMainActionCounter()+"");
+                fastActionText.setText(currentSnapshot.getCurrentUser().getFastActionCounter()+"");
 
+                reprintCouncilor();
+                createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
+                createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
+                createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
 
+    }
 
+    /**
+     * Called on click on helper image
+     * @param event
+     */
+    public void buyHelper(Event event) {
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Action action = new FastActionMoneyForHelper();
+                clientController.doAction(action);
+            }
+        };
 
+        String buttonText = "Compra aiutanti";
+        String infoLabel = "Azione veloce: Compra un aiutante per tre monete!";
+
+        showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
+    }
+
+    public void showDefaultPopOver(EventHandler<MouseEvent> eventHandler, String infoLabel, String buttonText, Node source){
+        PopOver popOver = new PopOver();
+        VBox vBox = new VBox();
+        JFXButton jfxButton = new JFXButton();
+        jfxButton.getStyleClass().add("button-raised-second");
+        jfxButton.setText(buttonText);
+        jfxButton.setOnMouseClicked(eventHandler);
+        Label label = new Label();
+        label.setText(infoLabel);
+        vBox.getChildren().add(label);
+        vBox.getChildren().add(jfxButton);
+        vBox.setSpacing(30);
+        vBox.setPadding(new Insets(40,40,40,40));
+        popOver.setContentNode(vBox);
+        popOver.show(source);
+    }
+
+    public void buyMainAction(Event event) {
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Action action = new FastActionNewMainAction();
+                clientController.doAction(action);
+            }
+        };
+
+        String buttonText = "Compra Azione!";
+        String infoLabel = "Azione veloce: Ottieni un azione principale per 3 aiutanti!!";
+
+        showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
+    }
+
+    private class PermitButtonHandler implements EventHandler<MouseEvent>{
+
+        private RegionName regionName;
+
+        PermitButtonHandler(RegionName regionName) {
+            this.regionName = regionName;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            Action action = new FastActionChangePermitCardWithHelper(regionName);
+            clientController.doAction(action);
+        }
     }
 }

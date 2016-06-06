@@ -2,6 +2,7 @@ package CommonModel.Snapshot;
 
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Path.Position;
 import Server.Model.User;
 import java.io.Serializable;
@@ -18,7 +19,7 @@ public class BaseUser implements Serializable {
     protected int victoryPathPosition;
     protected Position nobilityPathPosition;
     protected ArrayList<City> usersEmporium;
-    protected int helpers;
+    protected ArrayList<Helper> helpers = new ArrayList<>();
     protected ArrayList<PermitCard> permitCards;
     protected ArrayList<PermitCard> oldPermitCards;
     protected int politicCardNumber;
@@ -49,7 +50,7 @@ public class BaseUser implements Serializable {
                 ", victoryPathPosition=" + victoryPathPosition +
                 ", nobilityPathPosition=" + nobilityPathPosition +
                 ", usersEmporium=" + usersEmporium +
-                ", helpers=" + helpers +
+                ", helpers=" + helpers.size() +
                 ", permitCards=" + permitCards +
                 ", oldPermitCards=" + oldPermitCards +
                 ", politicCardNumber=" + politicCardNumber +
@@ -59,7 +60,7 @@ public class BaseUser implements Serializable {
     public boolean isConnected() {
         return connected;
     }
-    public int getHelpers() {
+    public ArrayList<Helper> getHelpers() {
         return helpers;
     }
     public Position getNobilityPathPosition() {
@@ -82,5 +83,8 @@ public class BaseUser implements Serializable {
     }
     public int getCoinPathPosition() {
         return coinPathPosition;
+    }
+    public int getPoliticCardNumber() {
+        return politicCardNumber;
     }
 }

@@ -3,6 +3,7 @@ package Server.NetworkInterface.Communication;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.Color;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
@@ -14,12 +15,14 @@ import Utilities.Class.InterfaceAdapter;
 import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -73,6 +76,22 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void sendStartMarket() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_START_MARKET,null);
+
+    }
+
+    @Override
+    public void sendStartBuyPhase() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_START_BUY_PHASE,null);
+    }
+
+    @Override
+    public void disableMarketPhase() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_MARKET_PHASE,null);
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
@@ -83,6 +102,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         try {
             while ((line = in.readLine()) != null) {
                 CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
+
                 switch (communicationInfo.getCode()) {
                     case Constants.CODE_NAME: {
                         String username = gson.fromJson(communicationInfo.getInfo(),String.class);
@@ -119,6 +139,33 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                         Map map = gson.fromJson(communicationInfo.getInfo(),Map.class);
                         user.getGame().getGameController().setMap(map);
                         System.out.println("Map arrived in socket communication");
+                        break;
+                    }
+                    case Constants.CODE_MARKET_SELL:{
+                        ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
+                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_SELL,user.getGame().getGameController().onReceiveBuyableObject(buyableWrappers));
+                        break;
+                    }
+
+                    case Constants.CODE_MARKET_BUY:{
+                        ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
+                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_BUY,user.getGame().getGameController().onBuyObject(user,buyableWrappers));
+                        break;
+                    }
+
+                    case Constants.CODE_MARKET_REMOVE:{
+                        BuyableWrapper buyableWrapper = CommunicationInfo.getBuyableWrapper(communicationInfo.getInfo());
+                        user.getGame().getGameController().onRemoveItem(buyableWrapper);
+                        break;
+                    }
+
+                    case Constants.CODE_FINISH_SELL_PHASE:{
+                        user.getGameController().onFinishSellPhase(user);
+                        break;
+                    }
+
+                    case Constants.CODE_FINISH_BUY_PHASE:{
+                        user.getGameController().onFinishBuyPhase(user);
                         break;
                     }
                 }

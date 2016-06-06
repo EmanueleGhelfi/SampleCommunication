@@ -3,6 +3,7 @@ package ClientPackage.NetworkInterface;
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
@@ -63,7 +64,7 @@ public class ClientSocketService extends ClientService implements Runnable {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME,name);
     }
 
-    //TODO test?
+
     @Override
     public void onAction(Action action) {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_ACTION, action);
@@ -75,6 +76,32 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     @Override
+    public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_SELL,realSaleList);
+    }
+
+    @Override
+    public void onBuy(ArrayList<BuyableWrapper> buyList) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_BUY,buyList);
+    }
+
+    @Override
+    public void onRemoveItemFromMarket(BuyableWrapper item) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_REMOVE,item);
+    }
+
+    @Override
+    public void onFinishSellPhase() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_SELL_PHASE,null);
+    }
+
+    @Override
+    public void sendFinishedBuyPhase() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_BUY_PHASE,null);
+
+    }
+
+    @Override
     public void run() {
         System.out.println("ClientSocketService Started");
         String line;
@@ -82,8 +109,8 @@ public class ClientSocketService extends ClientService implements Runnable {
             while ((line = in.readLine())!=null){
                 // create a new runnable and use a executor service in order to execute this task
                 class DecoderTask implements Runnable{
-                    String lineToDecode;
-                    public DecoderTask(String line) {
+                    private String lineToDecode;
+                    private DecoderTask(String line) {
                         this.lineToDecode = line;
                     }
                     @Override
@@ -99,7 +126,7 @@ public class ClientSocketService extends ClientService implements Runnable {
         }
     }
 
-    public void decodeInfo(String line){
+    private void decodeInfo(String line){
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT)
@@ -139,6 +166,18 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_TURN_FINISHED:{
                 clientController.turnFinished();
+                break;
+            }
+            case Constants.CODE_START_MARKET:{
+                clientController.onStartMarket();
+                break;
+            }
+            case Constants.CODE_START_BUY_PHASE:{
+                clientController.onStartBuyPhase();
+                break;
+            }
+            case Constants.CODE_FINISH_MARKET_PHASE:{
+                clientController.onFinishBuyPhase();
                 break;
             }
         }

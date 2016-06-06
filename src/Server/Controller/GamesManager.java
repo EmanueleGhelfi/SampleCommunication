@@ -44,7 +44,6 @@ public class GamesManager {
              registry = LocateRegistry.createRegistry(Constants.RMI_PORT);
         }
         catch (ExportException e){
-            e.printStackTrace();
             registry = LocateRegistry.getRegistry();
         }
         registry.rebind(Constants.SERVER,rmiListener);
@@ -75,6 +74,7 @@ public class GamesManager {
         System.out.println(game);
         game.addUserToGame(userToAdd);
         userToAdd.setGame(game);
+        userToAdd.setGameController(game.getGameController());
         System.out.println(userToAdd);
     }
 

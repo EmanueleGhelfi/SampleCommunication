@@ -7,6 +7,7 @@ import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Giulio on 13/05/2016.
@@ -44,5 +45,15 @@ public class KingBonusCard implements Bonus,Serializable {
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         victoryPointBonus.getBonus(user, game);
         game.popKingBonusCard();
+    }
+
+    @Override
+    public String getBonusName() {
+        return "KingBonusCard";
+    }
+
+    @Override
+    public ArrayList<Bonus> getBonusArrayList() {
+        return null;
     }
 }

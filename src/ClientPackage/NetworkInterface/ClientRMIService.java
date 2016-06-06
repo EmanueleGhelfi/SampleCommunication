@@ -2,6 +2,7 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -83,6 +84,55 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         }
     }
 
+    @Override
+    public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
+        try {
+            if(rmiClientHandler.sendBuyableObject(realSaleList)){
+                System.out.println("OK messi in vendita");
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onBuy(ArrayList<BuyableWrapper> buyList) {
+        try {
+            rmiClientHandler.buyObject(buyList);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRemoveItemFromMarket(BuyableWrapper item) {
+        try {
+            rmiClientHandler.onRemoveItem(item);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onFinishSellPhase() {
+        try {
+            rmiClientHandler.onFinishSellPhase();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendFinishedBuyPhase() {
+        try {
+            rmiClientHandler.onFinishBuyPhase();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //OLD VERSION
     private String generateName() {
         String randomSequence="";
         Random randomGenerator = new Random();
@@ -95,6 +145,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         return randomSequence;
     }
 
+    //OLD VERSION
     public String getIP() throws UnknownHostException {
         InetAddress IP=InetAddress.getLocalHost();
         System.out.println("IP of my system is := "+IP.getHostAddress());
@@ -125,5 +176,21 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     @Override
     public void finishTurn() throws RemoteException {
         clientController.turnFinished();
+    }
+
+    @Override
+    public void onStartMarket() throws RemoteException {
+        clientController.onStartMarket();
+    }
+
+    @Override
+    public void onStartBuyPhase() throws RemoteException {
+        clientController.onStartBuyPhase();
+    }
+
+    @Override
+    public void disableMarketPhase() throws RemoteException {
+
+        clientController.onFinishBuyPhase();
     }
 }

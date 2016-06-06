@@ -2,12 +2,17 @@ package Utilities.Class;
 
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Market.BuyableObject;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.PrintWriter;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * Sends and decode communicationInfo
@@ -41,6 +46,7 @@ public class CommunicationInfo {
 
         gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .registerTypeAdapter(BuyableObject.class,new InterfaceAdapter<BuyableObject>())
                 .create();
 
         if(toSend!=null) {
@@ -86,8 +92,27 @@ public class CommunicationInfo {
     public static SnapshotToSend getSnapshot(String snapshot){
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
                 .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .registerTypeAdapter(BuyableObject.class,new InterfaceAdapter<BuyableObject>())
                 .create();
         return gson.fromJson(snapshot,SnapshotToSend.class);
+    }
+
+    public static ArrayList<BuyableWrapper> getBuyableArray(String array){
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .registerTypeAdapter(BuyableObject.class,new InterfaceAdapter<BuyableObject>())
+                .create();
+        Type resultType = new TypeToken<ArrayList<BuyableWrapper>>() {
+        }.getType();
+        return gson.fromJson(array,resultType);
+    }
+
+    public static BuyableWrapper getBuyableWrapper(String buyableWrapper){
+        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
+                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .registerTypeAdapter(BuyableObject.class,new InterfaceAdapter<BuyableObject>())
+                .create();
+        return gson.fromJson(buyableWrapper,BuyableWrapper.class);
     }
 
 }

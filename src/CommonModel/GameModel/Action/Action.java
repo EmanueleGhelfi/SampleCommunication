@@ -31,6 +31,7 @@ public abstract class Action implements Serializable {
                 else return true;
             case Constants.MAIN_ACTION:
                 if(user.getMainActionCounter()<=0){
+                    System.out.println("Not your turn");
                     throw new ActionNotPossibleException();
                 }
                 else return true;
@@ -53,15 +54,29 @@ public abstract class Action implements Serializable {
         game.getGameController().sendSnapshotToAll();
     }
 
-    protected void getPoliticCard (ArrayList<PoliticCard> politicCards, User user){
+    protected void removePoliticCard(ArrayList<PoliticCard> politicCards, User user){
         int cont2 =0;
+        /*
         for(int cont1 = 0; cont1< politicCards.size();cont1++){
             if(politicCards.get(cont1).equals(user.getPoliticCards().get(cont2))){
                 user.getPoliticCards().remove(cont2);
                 user.decrementPoliticCardNumber();
+                System.out.println("Decrementing politic card number");
             }
             else{
                 cont2++;
+            }
+        }
+        */
+
+        for(int i = 0; i < politicCards.size(); i++){
+            for(int j = 0; j< user.getPoliticCards().size();j++){
+                if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
+                    user.getPoliticCards().remove(j);
+                    user.decrementPoliticCardNumber();
+                    System.out.println("Decrementing politic card number");
+                    break;
+                }
             }
         }
     }

@@ -32,6 +32,7 @@ public class PermitDeck implements Deck,Serializable {
     @Override
     public void createRandomDeck() {
         //create a deck for this region
+        System.out.println("creating deck of: "+region);
         ArrayList<ArrayList<Character>> citiesPermitCard = CityFactory.getCity(region);
         if(citiesPermitCard!=null) {
             for (int i = 0; i < citiesPermitCard.size(); i++) {
@@ -59,12 +60,15 @@ public class PermitDeck implements Deck,Serializable {
         permitCardsVisible.add(permitDeck.remove());
     }
 
-    public PermitCard getPermitCardVisible(PermitCard permitCard) throws ActionNotPossibleException{
-        if(permitCardsVisible.contains(permitCard)){
-            for (PermitCard permitCardToReturn: permitCardsVisible) {
-                if(permitCardToReturn.equals(permitCard))
+    public PermitCard getAndRemovePermitCardVisible(PermitCard permitCard) throws ActionNotPossibleException{
+        if(permitCardsVisible.contains(permitCard)) {
+            for (int i = 0; i < permitCardsVisible.size(); i++) {
+                if(permitCardsVisible.get(i).equals(permitCard)){
+                    PermitCard permitCardToReturn = permitCardsVisible.remove(i);
+                    System.out.println("Changing permit card visible");
+                    permitCardsVisible.add(permitDeck.remove());
                     return permitCardToReturn;
-
+                }
             }
         }
         throw new ActionNotPossibleException();
@@ -77,5 +81,9 @@ public class PermitDeck implements Deck,Serializable {
         else{
             return permitCardsVisible.get(num);
         }
+    }
+
+    public ArrayList<PermitCard> getVisibleArray(){
+        return permitCardsVisible;
     }
 }

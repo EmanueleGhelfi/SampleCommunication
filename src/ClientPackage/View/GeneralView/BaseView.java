@@ -25,4 +25,10 @@ public interface BaseView {
     void isMyTurn(SnapshotToSend snapshot);
 
     void updateSnapshot();
+
+    void onStartMarket();
+
+    void onStartBuyPhase();
+
+    void onFinishMarket();
 }

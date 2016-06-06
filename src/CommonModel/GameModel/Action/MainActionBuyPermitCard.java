@@ -48,24 +48,25 @@ public class MainActionBuyPermitCard extends Action {
             // calculate money to spend
             newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
             // go ahead in money path
-            game.getMoneyPath().goAhead(user, newPositionInMoneyPath);
+            game.getMoneyPath().goAhead(user, - newPositionInMoneyPath);
             // re-add to game deck
             game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(politicCards));
             // remove cards from user
             System.out.println("POLITICS CARD" + politicCards.size());
             System.out.println("USER CARD" + user.getPoliticCards().size());
             int cont2 = 0;
-            getPoliticCard(politicCards, user);
+            removePoliticCard(politicCards, user);
             // buy permit card, here you can buy permit
-            PermitDeck permitDeck = game.getPermitDeck(region);
-            PermitCard permitCardToBuy = permitDeck.getPermitCardVisible(permitCard);
+            PermitDeck permitDeck = game.getPermitDeck(region.getRegion());
+            PermitCard permitCardToBuy = permitDeck.getAndRemovePermitCardVisible(permitCard);
             permitCardToBuy.getBonus().getBonus(user, game);
             user.addPermitCard(permitCardToBuy);
+            System.out.println("AFTER ADDING "+user.getPermitCards().size());
             removeAction(game, user);
         }
     }
 
-    //TODO MAIN-TEST
+    // MAIN-TEST
     public static void main(String[] args){
         Game game = new Game();
         User user = null;

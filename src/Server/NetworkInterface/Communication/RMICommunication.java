@@ -2,6 +2,8 @@ package Server.NetworkInterface.Communication;
 
 import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Market.BuyableObject;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -83,6 +85,32 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         user.getGame().getGameController().setMap(map);
     }
 
+    @Override
+    public boolean sendBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException {
+        return user.getGame().getGameController().onReceiveBuyableObject(buyableWrappers);
+    }
+
+    @Override
+    public boolean buyObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException {
+        return user.getGame().getGameController().onBuyObject(user,buyableWrappers);
+    }
+
+    @Override
+    public void onRemoveItem(BuyableWrapper item) throws RemoteException {
+        user.getGame().getGameController().onRemoveItem(item);
+    }
+
+    @Override
+    public void onFinishSellPhase() throws RemoteException {
+        user.getGameController().onFinishSellPhase(user);
+    }
+
+    @Override
+    public void onFinishBuyPhase() throws RemoteException {
+        user.getGameController().onFinishBuyPhase(user);
+
+    }
+
 
     /** Overriding BaseCommunication
      *
@@ -94,21 +122,24 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             rmiClientInterface.sendSnapshot(snapshotToSend);
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
+        }
+        catch (NullPointerException e){
+            System.out.println("null pointer in rmi communication");
         }
     }
 
     /** Overriding BaseCommunication
      *  called when is the turn of the user
      */
-    //TODO: change round
     @Override
     public void changeRound() {
         //call is your round (with a notification)
         try {
-            System.out.println("user "+user.getUsername()+" is his turn");
             rmiClientInterface.isYourTurn();
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 
@@ -119,9 +150,12 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     @Override
     public void sendAvailableMap(ArrayList<Map> availableMaps) {
         try {
-            rmiClientInterface.sendMap(availableMaps);
+            if(rmiClientInterface!=null) {
+                rmiClientInterface.sendMap(availableMaps);
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 
@@ -132,6 +166,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             System.out.println("Sending map to: "+user.getUsername());
         } catch (RemoteException e) {
             e.printStackTrace();
+            user.setConnected(false);
         }
     }
 
@@ -140,6 +175,35 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         try {
             System.out.println("user "+user.getUsername()+" has finished turn");
             rmiClientInterface.finishTurn();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            user.setConnected(false);
+        }
+    }
+
+    @Override
+    public void sendStartMarket() {
+        try {
+            rmiClientInterface.onStartMarket();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            user.setConnected(false);
+        }
+    }
+
+    @Override
+    public void sendStartBuyPhase() {
+        try {
+            rmiClientInterface.onStartBuyPhase();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void disableMarketPhase() {
+        try {
+            rmiClientInterface.disableMarketPhase();
         } catch (RemoteException e) {
             e.printStackTrace();
         }

@@ -7,11 +7,13 @@ import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
 import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.King;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.MoneyPath;
 import CommonModel.GameModel.Path.NobilityPath;
 import CommonModel.GameModel.Path.VictoryPath;
 import Server.Controller.GameController;
 import Utilities.Class.Constants;
+import Utilities.Exception.AlreadyPresentException;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -59,6 +61,9 @@ public class Game implements Serializable{
     private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
     private Stack<KingBonusCard> kingBonusCards = new Stack<>();
 
+    //list of buyable wrapper, all object that user can buy
+    private ArrayList<BuyableWrapper> marketList = new ArrayList<>();
+
     public Game() {
         this.started = false;
         gameController = new GameController(this);
@@ -84,7 +89,6 @@ public class Game implements Serializable{
         for (RegionName regionName:RegionName.values()) {
             Region region = new Region(regionName,5);
             regions.put(region.getRegion(),region);
-            System.out.println(region);
         }
     }
 
@@ -143,7 +147,7 @@ public class Game implements Serializable{
     }
 
     public boolean addUserToGame(User userToAdd) {
-        System.out.println("ADDING A USER TO A GAME "+userToAdd);
+        System.out.println("ADDING A USER TO A GAME "+userToAdd.getUsername());
         if(!usersInGame.containsKey(userToAdd.getUsername())){
             usersInGame.put(userToAdd.getUsername(),userToAdd);
             if(usersInGame.size()>=2 && usersInGame.size()<Constants.MAX_CLIENT_NUMBER){
@@ -288,5 +292,34 @@ public class Game implements Serializable{
 
     public void setKing(King king) {
         this.king = king;
+    }
+
+    public void addBuyableWrapper(BuyableWrapper buyableWrapper) throws AlreadyPresentException {
+        if(marketList.contains(buyableWrapper))
+            throw new AlreadyPresentException();
+        else{
+            marketList.add(buyableWrapper);
+        }
+    }
+
+
+    public User getUser(String username){
+        return usersInGame.get(username);
+    }
+
+    public ArrayList<BuyableWrapper> getMarketList() {
+        return (ArrayList<BuyableWrapper>) marketList.clone();
+    }
+
+    public void removeFromMarketList(BuyableWrapper buyableWrapper) {
+        /*
+        for(int i = 0; i< marketList.size();i++){
+            if(marketList.get(i).equals(buyableWrapper)){
+                marketList.remove(i);
+                break;
+            }
+        }
+        */
+        marketList.remove(buyableWrapper);
     }
 }

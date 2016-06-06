@@ -4,6 +4,8 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
+import CommonModel.GameModel.Market.BuyableObject;
+import Utilities.Class.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class PermitCard implements Serializable{
+public class PermitCard implements Serializable,BuyableObject{
 
     private Bonus bonus;
     private ArrayList<Character> cityAcronimous;
@@ -52,7 +54,44 @@ public class PermitCard implements Serializable{
     public void setCityAcronimous(ArrayList<Character> cityAcronimous) {
         this.cityAcronimous = cityAcronimous;
     }
+    public ArrayList<Character> getCityAcronimous() {
+        return cityAcronimous;
+    }
+
     public void setRetroType(RegionName retroType) {
         this.retroType = retroType;
+    }
+
+    public RegionName getRetroType() {
+        return retroType;
+    }
+
+    public String getCityString() {
+        String cityString = "";
+        for (char cityCharacter : cityAcronimous) {
+            cityString+=cityCharacter+" / ";
+        }
+        cityString = cityString.substring(0,cityString.length()-2);
+        return cityString;
+    }
+
+
+    public String getType() {
+        return Constants.PERMIT_CARD;
+    }
+
+    @Override
+    public String getInfo() {
+        return getCityString();
+    }
+
+    @Override
+    public BuyableObject getCopy() {
+        try {
+            return (BuyableObject) this.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

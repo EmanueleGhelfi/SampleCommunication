@@ -6,14 +6,17 @@ import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.RegionName;
+import CommonModel.GameModel.Council.King;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Councilor;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -156,16 +159,12 @@ public class ClientController {
 
     public void isMyTurn() {
         baseView.isMyTurn(snapshot);
-        System.out.println("Client Controller: is my turn");
+        System.out.println("Client BaseController: is my turn");
     }
 
-    public void mainActionElectCouncilor(String parameter) {
-        PoliticColor temp;
-        if (parameter == "WHITE")
-            temp = PoliticColor.WHITE;
-        else
-            temp = PoliticColor.BLACK;
-        Action action = new MainActionElectCouncilor(new Councilor(temp), snapshot.getKing(), RegionName.HILL);
+    public void mainActionElectCouncilor(Councilor councilor, King king, RegionName regionName) {
+        System.out.println("Elect councilor in client controller");
+        Action action = new MainActionElectCouncilor(councilor, king, regionName);
         try {
             clientService.onAction(action);
         } catch (ActionNotPossibleException e) {
@@ -179,8 +178,8 @@ public class ClientController {
         baseView.turnFinished();
     }
 
-    public void fastActionElectCouncilorWithHelper() {
-        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL,snapshot.getKing(),new Councilor(PoliticColor.BLACK),Constants.REGION_COUNCIL);
+    public void fastActionElectCouncilorWithHelper(Councilor councilor, King king, RegionName region, String councilType) {
+        Action action = new FastActionElectCouncilorWithHelper(region,king,councilor,councilType);
         try {
             clientService.onAction(action);
         } catch (ActionNotPossibleException e) {
@@ -196,5 +195,69 @@ public class ClientController {
 
     public SnapshotToSend getSnapshot() {
         return snapshot;
+    }
+
+    public void mainActionBuyPermitCard(String text) {
+        //Action action = new MainActionBuyPermitCard(snapshot.getVisiblePermitCards().get(text));
+    }
+
+    public void mainActionBuyPermitCard(PermitCard permitCard, ArrayList<PoliticCard> politicCards) {
+        System.out.println("called main action in client controller "+permitCard+" "+politicCards);
+        Action action = new MainActionBuyPermitCard(politicCards,permitCard.getRetroType(),permitCard);
+        try {
+            clientService.onAction(action);
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * called when doing a generic action
+     * @param action
+     */
+    public void doAction(Action action) {
+        try {
+            clientService.onAction(action);
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
+        clientService.sendSaleItem(realSaleList);
+    }
+
+    public void onBuy(ArrayList<BuyableWrapper> buyList) {
+        clientService.onBuy(buyList);
+    }
+
+    public void removeItemFromMarket(BuyableWrapper item) {
+        clientService.onRemoveItemFromMarket(item);
+    }
+
+    public void onStartMarket() {
+        baseView.onStartMarket();
+    }
+
+    public void sendFinishSellPhase() {
+        clientService.onFinishSellPhase();
+    }
+
+    public void onStartBuyPhase() {
+        baseView.onStartBuyPhase();
+    }
+
+    public void sendFinishedBuyPhase() {
+        clientService.sendFinishedBuyPhase();
+    }
+
+
+    public void onFinishBuyPhase() {
+        baseView.onFinishMarket();
     }
 }

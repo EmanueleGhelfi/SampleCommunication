@@ -3,6 +3,9 @@ package Server.Model;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.Council.Helper;
+import CommonModel.GameModel.Market.BuyableObject;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.CurrentUser;
 import Server.Controller.GameController;
@@ -54,12 +57,12 @@ public class User extends CurrentUser implements Serializable{
      * @param permitCardToRemove the permit card to remove
      */
     public void removePermitCard(PermitCard permitCardToRemove){
-        for (PermitCard permitCard: permitCards) {
-            if (permitCard.equals(permitCardToRemove)){
-                permitCards.remove(permitCard);
-                oldPermitCards.add(permitCardToRemove);
+        for(Iterator<PermitCard> itr = permitCards.iterator(); itr.hasNext();) {
+            PermitCard permitCard = itr.next();
+            if (permitCard.equals(permitCardToRemove)) {
+                oldPermitCards.add(permitCard);
+                itr.remove();
             }
-
         }
     }
 
@@ -88,8 +91,13 @@ public class User extends CurrentUser implements Serializable{
     }
 
     public void setHelpers(int helpers) {
-        this.helpers = helpers;
+        //this.helpers = new ArrayList<>(helpers);
+        for(int i =0; i< helpers; i++){
+            this.helpers.add(new Helper() );
+        }
+        System.out.println(this.getHelpers().size());
     }
+
     public int getPoliticCardSize(){
         return politicCards.size();
     }
@@ -151,4 +159,32 @@ public class User extends CurrentUser implements Serializable{
     }
 
 
+    public void removePoliticCard(PoliticCard buyableObject) {
+        for(Iterator<PoliticCard> itr = politicCards.iterator(); itr.hasNext();){
+            PoliticCard politicCard = itr.next();
+            if(politicCard.equals(buyableObject)){
+                itr.remove();
+            }
+        }
+    }
+    public void addHelper(){
+        helpers.add(new Helper());
+    }
+
+    public void removeHelper(Helper buyableObject){
+        //helpers.remove(helpers.size()-1);
+        helpers.remove(buyableObject);
+    }
+
+    public PermitCard removePermitCardDefinitevely(PermitCard permitCardToRemove){
+        for(Iterator<PermitCard> itr = permitCards.iterator(); itr.hasNext();){
+            PermitCard permitCard = itr.next();
+            if(permitCard.equals(permitCardToRemove)){
+                itr.remove();
+                return permitCard;
+            }
+        }
+        return null;
+
+    }
 }

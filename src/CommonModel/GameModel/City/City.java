@@ -74,4 +74,7 @@ public class City implements Serializable {
         return cityColor;
     }
 
+    public CityName getCityName() {
+        return cityName;
+    }
 }

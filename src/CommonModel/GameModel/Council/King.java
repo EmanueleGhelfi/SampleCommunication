@@ -21,7 +21,7 @@ public class King implements Serializable, GotCouncil {
         for(int i = 0; i< Constants.COUNCILOR_DIMENSION; i++){
             PoliticColor[] politicColors = PoliticColor.values();
             int value = random.nextInt(5);
-            System.out.println("Random color king called"+politicColors[value]);
+
             council.add(new Councilor(politicColors[value]));
         }
         this.currentCity = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
@@ -33,7 +33,7 @@ public class King implements Serializable, GotCouncil {
         for(int i = 0; i< Constants.COUNCILOR_DIMENSION; i++){
             PoliticColor[] politicColors = PoliticColor.values();
             int value = random.nextInt(5);
-            System.out.println("Random color king called"+politicColors[value]);
+
             council.add(new Councilor(politicColors[value]));
         }
         this.currentCity = currentCity;

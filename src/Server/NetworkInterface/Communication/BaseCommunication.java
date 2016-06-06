@@ -23,4 +23,9 @@ public abstract class BaseCommunication {
 
     public abstract void finishTurn();
 
+    public abstract void sendStartMarket();
+
+    public abstract void sendStartBuyPhase();
+
+    public abstract void disableMarketPhase();
 }

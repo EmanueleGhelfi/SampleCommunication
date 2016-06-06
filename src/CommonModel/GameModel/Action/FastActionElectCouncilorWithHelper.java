@@ -41,8 +41,8 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
         Council council = null;
         if(super.checkActionCounter(user)) {
             System.out.println("ELECT COUNCILOR "+user.getHelpers());
-            if (user.getHelpers() >= Constants.HELPER_LIMITATION_ELECT_COUNCILOR) {
-                user.setHelpers(user.getHelpers() - Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
+            if (user.getHelpers().size() >= Constants.HELPER_LIMITATION_ELECT_COUNCILOR) {
+                user.setHelpers(user.getHelpers().size() - Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
                 if (councilType.equals(Constants.REGION_COUNCIL)) {
                     Region councilRegion = game.getRegion(region);
                     council = councilRegion.getCouncil();

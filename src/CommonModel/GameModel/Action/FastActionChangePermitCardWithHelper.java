@@ -1,6 +1,7 @@
 package CommonModel.GameModel.Action;
 
 import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.RegionName;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
@@ -11,9 +12,9 @@ import Server.Model.User;
  */
 public class FastActionChangePermitCardWithHelper extends Action {
 
-    private Region region;
+    private RegionName region;
 
-    public FastActionChangePermitCardWithHelper(Region region) {
+    public FastActionChangePermitCardWithHelper(RegionName region) {
         this.actionType = Constants.FAST_ACTION;
         this.region = region;
     }
@@ -27,8 +28,8 @@ public class FastActionChangePermitCardWithHelper extends Action {
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // check
         if(super.checkActionCounter(user)) {
-            if (user.getHelpers() > Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD) {
-                user.setHelpers(user.getHelpers() - Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD);
+            if (user.getHelpers().size() >= Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD) {
+                user.setHelpers(user.getHelpers().size() - Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD);
                 game.getPermitDeck(region).changePermitCardVisibile();
                 removeAction(game, user);
             } else {

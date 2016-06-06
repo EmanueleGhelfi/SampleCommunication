@@ -25,7 +25,7 @@ public class MainActionBuildWithKingHelp extends Action {
         this.politicCards = politicCards;
     }
 
-    //TODO
+
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // count number of correct politic card
@@ -44,13 +44,13 @@ public class MainActionBuildWithKingHelp extends Action {
                 // calculate money to spend
                 newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
                 // go ahead in money path
-                game.getMoneyPath().goAhead(user, newPositionInMoneyPath);
+                game.getMoneyPath().goAhead(user, - newPositionInMoneyPath);
                 // re-add to game deck
                 game.getPoliticCards().addToQueue(new HashSet<>(politicCards));
                 // remove cards from user
                 System.out.println("POLITICS CARD" + politicCards.size());
                 System.out.println("USER CARD" + user.getPoliticCards().size());
-                getPoliticCard(politicCards, user);
+                removePoliticCard(politicCards, user);
                 if (kingPath.size() * Constants.KING_PRICE < user.getCoinPathPosition()) {
                     for (City city : kingPath) {
                         user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
