@@ -180,6 +180,7 @@ public class GameController implements Serializable{
         action.doAction(game,user);
     }
 
+    // send available map
     private void sendAvailableMap(User userToAdd) {
         userToAdd.getBaseCommunication().sendAvailableMap(availableMaps);
     }
