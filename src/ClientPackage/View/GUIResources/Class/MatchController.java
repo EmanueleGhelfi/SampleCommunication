@@ -126,6 +126,8 @@ public class MatchController implements Initializable, BaseController {
         backgroundImage.setPreserveRatio(true);
         backgroundImage.fitHeightProperty().bind(gridPane.heightProperty());
         backgroundImage.fitWidthProperty().bind(gridPane.widthProperty());
+        gridPane.prefWidthProperty().bind(background.prefWidthProperty());
+        gridPane.prefHeightProperty().bind(background.prefHeightProperty());
 
 
 
@@ -135,10 +137,7 @@ public class MatchController implements Initializable, BaseController {
                 System.out.println("changed to "+newValue.getWidth()+" "+" "+newValue.getHeight());
                 background.setPrefWidth(newValue.getWidth());
                 background.setPrefHeight(newValue.getHeight());
-                gridPane.setPrefWidth(newValue.getWidth());
-                gridPane.setPrefHeight(newValue.getHeight());
-                tabPane.setPrefWidth(newValue.getWidth());
-                tabPane.setPrefHeight(newValue.getHeight());
+               // gridPane.setPrefSize(background.getPrefWidth(),background.getMaxHeight());
 
             }
         });
@@ -175,22 +174,31 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void createCity() {
-        Circle arkon = new Circle();
-        arkon.setFill(Paint.valueOf("BLACK"));
-        //ARKON
-        arkon.radiusProperty().bind(background.widthProperty().divide(20));
-        background.getChildren().add(arkon);
-        arkon.layoutXProperty().bind(background.widthProperty().multiply(0.20));
-        arkon.layoutYProperty().bind(background.heightProperty().multiply(0.14));
-        //BURGEN
-        Circle burgen = new Circle();
-        burgen.setFill(Paint.valueOf("BLACK"));
-        //ARKON
-        burgen.radiusProperty().bind(background.widthProperty().divide(20));
-        background.getChildren().add(burgen);
-        burgen.layoutXProperty().bind(background.widthProperty().multiply(0.19));
-        burgen.layoutYProperty().bind(background.heightProperty().multiply(0.42));
 
+        //arkon
+        CreateSingleCity(0.20,0.16);
+        //burgen
+        CreateSingleCity(0.19,0.44);
+        //castrum
+        CreateSingleCity(0.30,0.26);
+        //dorful
+        CreateSingleCity(0.30,0.50);
+        //esti
+        CreateSingleCity(0.20,0.70);
+        //framek
+        CreateSingleCity(0.45,0.20);
+        //graden
+        CreateSingleCity(0.45,0.50);
+
+    }
+
+    private void CreateSingleCity(double layoutX, double layoutY) {
+        Circle castrum = new Circle();
+        castrum.setFill(Paint.valueOf("BLACK"));
+        castrum.radiusProperty().bind(background.widthProperty().divide(20));
+        background.getChildren().add(castrum);
+        castrum.layoutXProperty().bind(background.widthProperty().multiply(layoutX));
+        castrum.layoutYProperty().bind(background.heightProperty().multiply(layoutY));
     }
 
     private void handleClick() {

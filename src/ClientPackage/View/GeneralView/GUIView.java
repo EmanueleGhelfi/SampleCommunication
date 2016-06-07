@@ -156,6 +156,8 @@ public class GUIView extends Application implements BaseView {
                 Scene scene = new Scene(screen);
                 //stage= new Stage();
                 stage.setScene(scene);
+                stage.setMinHeight(600);
+                stage.setMinWidth(1200);
                 stage.show();
                 //resizingWindow();
             }
