@@ -34,6 +34,11 @@ public class Helper implements BuyableObject{
     }
 
     @Override
+    public String getUrl() {
+        return "Helper";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

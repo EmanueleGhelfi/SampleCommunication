@@ -12,25 +12,37 @@ import CommonModel.Snapshot.SnapshotToSend;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
-import org.controlsfx.control.spreadsheet.Grid;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ResourceBundle;
+import java.util.Set;
+
+import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte0.runnable;
 
 /**
  * Created by Emanuele on 30/05/2016.
  */
-public class ShopController implements BaseController {
+public class ShopController implements BaseController, Initializable {
 
     ClientController clientController;
     GUIView guiView;
@@ -40,12 +52,9 @@ public class ShopController implements BaseController {
     @FXML private BorderPane shop;
     @FXML private JFXButton sellButton;
     @FXML private JFXButton buyButton;
-    @FXML private  JFXButton finishButton;
-    @FXML private GridPane gridPane;
-
-    private ScrollPane sellPane;
-    private ScrollPane buyPane;
-
+    @FXML private JFXButton finishButton;
+    @FXML private GridPane background;
+    @FXML private TilePane sellPane;
 
     private boolean sellPhase=false;
     private boolean buyPhase=false;
@@ -53,6 +62,7 @@ public class ShopController implements BaseController {
     ArrayList<BuyableWrapper> sellList = new ArrayList<>();
     ArrayList<BuyableWrapper> buyList = new ArrayList<>();
     ArrayList<BuyableWrapper> toBuy = new ArrayList<>();
+    ArrayList<BuyableWrapper> trueList = new ArrayList<>();
     ShopController shopController=this;
 
     public void onBuy(ActionEvent actionEvent) {
@@ -66,7 +76,7 @@ public class ShopController implements BaseController {
     }
 
     public void onSell(ActionEvent actionEvent) {
-            Runnable runnable = () -> {
+        /*
                 ArrayList<BuyableWrapper> realSaleList = new ArrayList<>();
                 for (BuyableWrapper buyableWrapper : sellList) {
                     System.out.println("Costo:" + buyableWrapper.getCost());
@@ -79,8 +89,8 @@ public class ShopController implements BaseController {
                     System.out.println("in shopController" + buyList);
                     clientController.sendSaleItem(realSaleList);
                 }
-            };
             new Thread(runnable).start();
+            */
     }
 
     @Override
@@ -88,7 +98,6 @@ public class ShopController implements BaseController {
         System.out.println("On update shopController");
         SnapshotToSend snapshotTosend= clientController.getSnapshot();
         updateList();
-        manageUI();
 
 
         sellListView.getItems().clear();
@@ -137,7 +146,6 @@ public class ShopController implements BaseController {
         */
 
 
-
         for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
             BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
             sellList.add(buyableWrapperTmp);
@@ -161,6 +169,12 @@ public class ShopController implements BaseController {
                 itr.remove();
             }
         }
+
+        for (BuyableWrapper buyableWrapper : sellList) {
+            sellPane.getChildren().add(addItems(buyableWrapper));
+            System.out.println(" ANCORA UNA VOLTA IN QUESTO FOR....");
+        }
+
     }
 
     @Override
@@ -169,48 +183,13 @@ public class ShopController implements BaseController {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
-
-        manageUI();
+        sellPane.setPrefColumns(4);
+        sellPane.setPrefRows(10);
+        sellPane.setAlignment(Pos.CENTER);
 
         updateView();
 
-        onFinishMarket();
-    }
-
-    //NEW
-    private void manageUI() {
-        sellPane = new ScrollPane();
-        GridPane gridPane = new GridPane();
-        double columnNumber = 4;
-        double rowNumber = Math.ceil(sellList.size()/columnNumber);
-        for(int i = 0; i< columnNumber;i++){
-            ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(100/columnNumber);
-            gridPane.getColumnConstraints().add(i,columnConstraints);
-            for(int j = 0; j<rowNumber;j++){
-                RowConstraints rowConstraints = new RowConstraints();
-                rowConstraints.setPercentHeight(100/rowNumber);
-                gridPane.getRowConstraints().add(rowConstraints);
-                createCell(i,j);
-            }
-        }
-
-    }
-
-    private void createCell(int i, int j) {
-        GridPane gridPaneInternal = new GridPane();
-        RowConstraints row1 = new RowConstraints();
-        row1.setPercentHeight(5);
-        RowConstraints row2 = new RowConstraints();
-        row2.setPercentHeight(70);
-        RowConstraints row3 = new RowConstraints();
-        row3.setPercentHeight(10);
-        RowConstraints row4 = new RowConstraints();
-        row4.setPercentHeight(10);
-        ColumnConstraints columnConstraints= new ColumnConstraints();
-        columnConstraints.setPercentWidth(5);
-
-
+        //onFinishMarket();
     }
 
     @Override
@@ -266,5 +245,84 @@ public class ShopController implements BaseController {
             buyPhase = false;
             clientController.sendFinishedBuyPhase();
         }
+    }
+
+
+    private GridPane addItems(BuyableWrapper information){
+        System.out.println("SON QUIIIIIIIIIIIII");
+        GridPane baseGridPane = new GridPane();
+        baseGridPane.setId("itemPane");
+        AnchorPane pane = new AnchorPane();
+        ImageView imageView = new ImageView();
+        if (information.getBuyableObject() instanceof PermitCard){
+            Label label = new Label();
+            label.setText(information.getBuyableObject().getUrl());
+            baseGridPane.add(label, 0, 1);
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png"));
+        } else {
+            System.out.println(information.getBuyableObject().getUrl() + " <- LUPIN");
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/"
+                    + information.getBuyableObject().getUrl() + ".png"));
+        }
+        imageView.setId("ImageView");
+        imageView.fitWidthProperty().bind(pane.widthProperty());
+        imageView.fitHeightProperty().bind(pane.heightProperty());
+        CheckBox checkBox = new CheckBox();
+        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue)
+                    trueList.add(information);
+                else
+                    trueList.remove(information);
+            }
+        });
+        pane.getChildren().addAll(imageView, checkBox);
+        AnchorPane.setTopAnchor(checkBox, 0.0);
+        AnchorPane.setLeftAnchor(checkBox, 0.0);
+        baseGridPane.add(pane, 1, 1);
+        AnchorPane useablePane = new AnchorPane();
+        VBox vBox = new VBox();
+        ImageView more = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/More.png"));
+        ImageView less = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/Less.png"));
+        vBox.getChildren().addAll(more, less);
+        useablePane.getChildren().add(vBox);
+        AnchorPane.setRightAnchor(vBox, 0.0);
+        Text text = new Text();
+        text.setText("0");
+        more.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                changePrice(text, true);
+            }
+        });
+        less.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                changePrice(text, false);
+            }
+        });
+        useablePane.getChildren().add(text);
+        AnchorPane.setLeftAnchor(text, 0.0);
+        baseGridPane.add(useablePane, 1, 2);
+        return baseGridPane;
+    }
+
+    private void changePrice(Text text, boolean upper) {
+        int textTaken = Integer.parseInt(text.getText());
+        if (upper) {
+            text.setText(Integer.toString((textTaken + 1)));
+        } else {
+            if (textTaken > 0)
+                text.setText(Integer.toString((textTaken - 1)));
+            else
+                text.setText(Integer.toString((textTaken)));
+        }
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }
