@@ -125,16 +125,18 @@ public class Map implements Serializable {
         City arkon = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
         City burgen = new City(Color.YELLOW,CityName.BURGEN,RegionName.COAST);
         City castrum = new City(Color.GREY,CityName.CASTRUM,RegionName.COAST);
-        City dorful = new City(Color.BLUE,CityName.DORFUL,RegionName.COAST);
+        City dorful = new City(Color.GREY,CityName.DORFUL,RegionName.COAST);
         City esti = new City(Color.GREY,CityName.ESTI,RegionName.COAST);
         City framek = new City(Color.YELLOW,CityName.FRAMEK,RegionName.HILL);
-        City indur = new City(Color.ORANGE,CityName.INDUR,RegionName.HILL);
-        City graden = new City(Color.GREY,CityName.GRADEN,RegionName.HILL);
-        City juvelar = new City(Color.PURPLE,CityName.JUVELAR,RegionName.HILL);
+        City graden = new City(Color.PURPLE,CityName.GRADEN,RegionName.HILL);
         City hellar = new City(Color.YELLOW,CityName.HELLAR,RegionName.HILL);
+        City indur = new City(Color.ORANGE,CityName.INDUR,RegionName.HILL);
+
+        City juvelar = new City(Color.GREY,CityName.JUVELAR,RegionName.HILL);
+
         City kultos = new City(Color.YELLOW,CityName.KULTOS,RegionName.MOUNTAIN);
-        City lyram = new City(Color.BLUE,CityName.LYRAM,RegionName.MOUNTAIN);
-        City merkatim = new City(Color.GREY,CityName.MERKATIM,RegionName.MOUNTAIN);
+        City lyram = new City(Color.GREY,CityName.LYRAM,RegionName.MOUNTAIN);
+        City merkatim = new City(Color.BLUE,CityName.MERKATIM,RegionName.MOUNTAIN);
         City naris = new City(Color.ORANGE,CityName.NARIS,RegionName.MOUNTAIN);
         City osium = new City(Color.YELLOW,CityName.OSIUM,RegionName.MOUNTAIN);
 
@@ -165,10 +167,10 @@ public class Map implements Serializable {
         cities.add(dorful);
         cities.add(esti);
         cities.add(framek);
-        cities.add(indur);
         cities.add(graden);
-        cities.add(juvelar);
         cities.add(hellar);
+        cities.add(indur);
+        cities.add(juvelar);
         cities.add(kultos);
         cities.add(lyram);
         cities.add(merkatim);
@@ -179,7 +181,7 @@ public class Map implements Serializable {
         map.setCity(cities);
         map.setLinks(links);
         map.setMapName("prima mappa");
-        map.setMapPreview("/ClientPackage/View/GUIResources/Image/Mappa1.jpg");
+        map.setMapPreview("/ClientPackage/View/GUIResources/Image/Mappa1v2.jpg");
 
         System.out.println(map);
         Gson gson = new Gson();

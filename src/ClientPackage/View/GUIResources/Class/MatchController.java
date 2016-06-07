@@ -186,6 +186,11 @@ public class MatchController implements Initializable, BaseController {
         CreateSingleCity(0.41,0.15, currentSnapshot.getMap().getCity().get(5));
         //graden
         CreateSingleCity(0.41,0.38, currentSnapshot.getMap().getCity().get(6));
+        //juvelar
+        CreateSingleCity(0.54,0.47, currentSnapshot.getMap().getCity().get(8));
+        //Lyram
+        CreateSingleCity(0.67,0.4, currentSnapshot.getMap().getCity().get(11));
+
 
     }
 
@@ -195,11 +200,12 @@ public class MatchController implements Initializable, BaseController {
 
         //castrum.setFill(Paint.valueOf("BLACK"));
         //castrum.radiusProperty().bind(background.widthProperty().divide(20));
+        System.out.println(city.getCityName().toString().toLowerCase());
         try {
-            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/"+city.getCityName().toString().toLowerCase()+".png"));
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/City/"+city.getColor().getColor().toLowerCase()+".png"));
         }
         catch (Exception e){
-            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/arkon.png"));
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/City/blue.png"));
         }
         imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.17));
         imageView.fitWidthProperty().bind(background.widthProperty().divide(9));
