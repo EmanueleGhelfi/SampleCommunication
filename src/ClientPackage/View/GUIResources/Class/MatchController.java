@@ -31,6 +31,7 @@ import javafx.geometry.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -99,6 +100,7 @@ public class MatchController implements Initializable, BaseController {
     private HiddenSidesPane hiddenSidesPane;
     @FXML private ImageView backgroundImage;
     @FXML private GridPane gridPane;
+    @FXML private TabPane tabPane;
 
 
     private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
@@ -133,10 +135,15 @@ public class MatchController implements Initializable, BaseController {
                 System.out.println("changed to "+newValue.getWidth()+" "+" "+newValue.getHeight());
                 background.setPrefWidth(newValue.getWidth());
                 background.setPrefHeight(newValue.getHeight());
+                gridPane.setPrefWidth(newValue.getWidth());
+                gridPane.setPrefHeight(newValue.getHeight());
+                tabPane.setPrefWidth(newValue.getWidth());
+                tabPane.setPrefHeight(newValue.getHeight());
 
             }
         });
 
+        /*
         backgroundImage.boundsInLocalProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
@@ -144,6 +151,7 @@ public class MatchController implements Initializable, BaseController {
                 background.setPrefHeight(newValue.getHeight());
             }
         });
+        */
 
         backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
             @Override
