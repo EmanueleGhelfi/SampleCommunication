@@ -29,7 +29,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
@@ -39,7 +38,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 
@@ -48,7 +46,6 @@ import javafx.stage.Screen;
 import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -176,29 +173,53 @@ public class MatchController implements Initializable, BaseController {
     private void createCity() {
 
         //arkon
-        CreateSingleCity(0.20,0.16);
+        CreateSingleCity(0.15,0.13,currentSnapshot.getMap().getCity().get(0));
         //burgen
-        CreateSingleCity(0.19,0.44);
+        CreateSingleCity(0.14,0.39, currentSnapshot.getMap().getCity().get(1));
         //castrum
-        CreateSingleCity(0.30,0.26);
+        CreateSingleCity(0.25,0.18, currentSnapshot.getMap().getCity().get(2));
         //dorful
-        CreateSingleCity(0.30,0.50);
+        CreateSingleCity(0.25,0.44, currentSnapshot.getMap().getCity().get(3));
         //esti
-        CreateSingleCity(0.20,0.70);
+        CreateSingleCity(0.17,0.65, currentSnapshot.getMap().getCity().get(4));
         //framek
-        CreateSingleCity(0.45,0.20);
+        CreateSingleCity(0.41,0.15, currentSnapshot.getMap().getCity().get(5));
         //graden
-        CreateSingleCity(0.45,0.50);
+        CreateSingleCity(0.41,0.38, currentSnapshot.getMap().getCity().get(6));
 
     }
 
-    private void CreateSingleCity(double layoutX, double layoutY) {
-        Circle castrum = new Circle();
-        castrum.setFill(Paint.valueOf("BLACK"));
-        castrum.radiusProperty().bind(background.widthProperty().divide(20));
-        background.getChildren().add(castrum);
-        castrum.layoutXProperty().bind(background.widthProperty().multiply(layoutX));
-        castrum.layoutYProperty().bind(background.heightProperty().multiply(layoutY));
+    private void CreateSingleCity(double layoutX, double layoutY, City city) {
+        //Circle castrum = new Circle();
+        ImageView imageView = new ImageView();
+
+        //castrum.setFill(Paint.valueOf("BLACK"));
+        //castrum.radiusProperty().bind(background.widthProperty().divide(20));
+        try {
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/"+city.getCityName().toString().toLowerCase()+".png"));
+        }
+        catch (Exception e){
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/arkon.png"));
+        }
+        imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.17));
+        imageView.fitWidthProperty().bind(background.widthProperty().divide(9));
+        background.getChildren().add(imageView);
+        imageView.layoutXProperty().bind(background.widthProperty().multiply(layoutX));
+        imageView.layoutYProperty().bind(background.heightProperty().multiply(layoutY));
+        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imageView.setScaleX(1.2);
+                imageView.setScaleY(1.2);
+            }
+        });
+        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imageView.setScaleY(1);
+                imageView.setScaleX(1);
+            }
+        });
     }
 
     private void handleClick() {
