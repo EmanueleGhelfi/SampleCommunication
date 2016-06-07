@@ -20,4 +20,8 @@ public interface BaseController {
     void onStartBuyPhase();
 
     void onFinishMarket();
+
+    void onResizeHeight(double height, double width);
+
+    void onResizeWidth(double width, double height);
 }

@@ -19,16 +19,15 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.geometry.Side;
+import javafx.geometry.*;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -39,6 +38,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 
@@ -47,6 +47,7 @@ import javafx.stage.Screen;
 import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -65,14 +66,13 @@ public class MatchController implements Initializable, BaseController {
     private GUIView guiView;
     @FXML private ImageView imageTest;
     //BUTTONs
-    @FXML Button buttonMain1;
     @FXML JFXButton coastPermitButton;
     @FXML JFXButton hillPermitButton;
     @FXML JFXButton mountainPermitButton;
 
     //LABELS
 
-    @FXML BorderPane background;
+    @FXML Pane background;
     @FXML Label nobilityPathText;
     @FXML Label richPathText;
     @FXML Label helperText;
@@ -97,6 +97,8 @@ public class MatchController implements Initializable, BaseController {
     @FXML private BorderPane shop;
     @FXML private ShopController shopController;
     private HiddenSidesPane hiddenSidesPane;
+    @FXML private ImageView backgroundImage;
+    @FXML private GridPane gridPane;
 
 
     private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
@@ -118,13 +120,70 @@ public class MatchController implements Initializable, BaseController {
         initController();
 
         System.out.println("setting image");
-        background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
+        backgroundImage.setImage(new Image(currentSnapshot.getMap().getMapPreview()));
+        backgroundImage.setPreserveRatio(true);
+        backgroundImage.fitHeightProperty().bind(gridPane.heightProperty());
+        backgroundImage.fitWidthProperty().bind(gridPane.widthProperty());
+
+
+
+        backgroundImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+                System.out.println("changed to "+newValue.getWidth()+" "+" "+newValue.getHeight());
+                background.setPrefWidth(newValue.getWidth());
+                background.setPrefHeight(newValue.getHeight());
+
+            }
+        });
+
+        backgroundImage.boundsInLocalProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+                background.setPrefWidth(newValue.getWidth());
+                background.setPrefHeight(newValue.getHeight());
+            }
+        });
+
+        backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("image: "+newValue.doubleValue());
+                System.out.println("background "+ background.getWidth() );
+            }
+        });
+
+
+
+        //background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
         //createArray();
         createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
         createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
         createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
         createOverlay();
         initPermitButton();
+        handleClick();
+        createCity();
+    }
+
+    private void createCity() {
+        Circle circle = new Circle();
+        circle.setFill(Paint.valueOf("BLACK"));
+        circle.radiusProperty().bind(background.widthProperty().divide(10));
+        background.getChildren().add(circle);
+        circle.layoutXProperty().bind(background.widthProperty().multiply(0.20));
+        circle.layoutYProperty().bind(background.heightProperty().multiply(0.14));
+    }
+
+    private void handleClick() {
+        background.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("event x and y "+event.getX()/background.getWidth()+" "+event.getY()/background.getHeight());
+                System.out.println("Scene  "+event.getSceneX()+" "+event.getSceneY());
+                System.out.println("Altro "+event.getScreenX()+" "+event.getScreenY());
+            }
+        });
     }
 
     private void initController() {
@@ -330,6 +389,16 @@ public class MatchController implements Initializable, BaseController {
 
     }
 
+    @Override
+    public void onResizeHeight(double height, double width) {
+
+    }
+
+    @Override
+    public void onResizeWidth(double width, double height) {
+
+    }
+
     private void turnFinished(boolean thisTurn) {
         Platform.runLater(new Runnable() {
             @Override
@@ -340,8 +409,7 @@ public class MatchController implements Initializable, BaseController {
                 else{
                     turnText.setText("Non è il tuo turno!");
                 }
-                boolean myTurnValue= !thisTurn;
-                buttonMain1.setDisable(myTurnValue);
+
             }
         });
 

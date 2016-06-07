@@ -90,7 +90,7 @@ public class ShopController implements BaseController {
         updateList();
         manageUI();
 
-
+/*
         sellListView.getItems().clear();
         sellListView.setItems(FXCollections.observableArrayList(sellList));
         sellListView.setCellFactory(new Callback<JFXListView, JFXListCell>() {
@@ -118,6 +118,7 @@ public class ShopController implements BaseController {
         buyListView.getStyleClass().add("jfx-list-view");
         buyListView.getStyleClass().add("mylistview");
         buyListView.refresh();
+        */
 
 
     }
@@ -240,6 +241,16 @@ public class ShopController implements BaseController {
         buyButton.setDisable(true);
         finishButton.setDisable(true);
         sellButton.setDisable(true);
+    }
+
+    @Override
+    public void onResizeHeight(double height, double width) {
+
+    }
+
+    @Override
+    public void onResizeWidth(double width, double height) {
+
     }
 
     public void addItemToBuy(BuyableWrapper item) {
