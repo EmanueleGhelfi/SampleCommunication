@@ -167,12 +167,22 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void createCity() {
-        Circle circle = new Circle();
-        circle.setFill(Paint.valueOf("BLACK"));
-        circle.radiusProperty().bind(background.widthProperty().divide(10));
-        background.getChildren().add(circle);
-        circle.layoutXProperty().bind(background.widthProperty().multiply(0.20));
-        circle.layoutYProperty().bind(background.heightProperty().multiply(0.14));
+        Circle arkon = new Circle();
+        arkon.setFill(Paint.valueOf("BLACK"));
+        //ARKON
+        arkon.radiusProperty().bind(background.widthProperty().divide(20));
+        background.getChildren().add(arkon);
+        arkon.layoutXProperty().bind(background.widthProperty().multiply(0.20));
+        arkon.layoutYProperty().bind(background.heightProperty().multiply(0.14));
+        //BURGEN
+        Circle burgen = new Circle();
+        burgen.setFill(Paint.valueOf("BLACK"));
+        //ARKON
+        burgen.radiusProperty().bind(background.widthProperty().divide(20));
+        background.getChildren().add(burgen);
+        burgen.layoutXProperty().bind(background.widthProperty().multiply(0.19));
+        burgen.layoutYProperty().bind(background.heightProperty().multiply(0.42));
+
     }
 
     private void handleClick() {
