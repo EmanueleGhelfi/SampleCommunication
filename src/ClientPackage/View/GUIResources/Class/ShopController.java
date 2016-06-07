@@ -55,6 +55,7 @@ public class ShopController implements BaseController, Initializable {
     @FXML private JFXButton finishButton;
     @FXML private GridPane background;
     @FXML private TilePane sellPane;
+    @FXML private TilePane buyPane;
 
     private boolean sellPhase=false;
     private boolean buyPhase=false;
@@ -66,9 +67,7 @@ public class ShopController implements BaseController, Initializable {
     ShopController shopController=this;
 
     public void onBuy(ActionEvent actionEvent) {
-
         Runnable runnable = () -> {
-            System.out.println("in shopController"+buyList);
             clientController.onBuy(toBuy);
             toBuy.clear();
         };
@@ -76,21 +75,12 @@ public class ShopController implements BaseController, Initializable {
     }
 
     public void onSell(ActionEvent actionEvent) {
-        /*
-                ArrayList<BuyableWrapper> realSaleList = new ArrayList<>();
-                for (BuyableWrapper buyableWrapper : sellList) {
-                    System.out.println("Costo:" + buyableWrapper.getCost());
-                    if(buyableWrapper.isOnSale()){
-                        System.out.println("found on sale");
-                        realSaleList.add(buyableWrapper);
-                    }
-                }
-                if(realSaleList.size()>0) {
-                    System.out.println("in shopController" + buyList);
-                    clientController.sendSaleItem(realSaleList);
-                }
-            new Thread(runnable).start();
-            */
+        Runnable runnable = () -> {
+            if (trueList.size() > 0) {
+                clientController.sendSaleItem(trueList);
+            }
+        };
+        new Thread(runnable).start();
     }
 
     @Override
@@ -98,37 +88,6 @@ public class ShopController implements BaseController, Initializable {
         System.out.println("On update shopController");
         SnapshotToSend snapshotTosend= clientController.getSnapshot();
         updateList();
-
-
-        sellListView.getItems().clear();
-        sellListView.setItems(FXCollections.observableArrayList(sellList));
-        sellListView.setCellFactory(new Callback<JFXListView, JFXListCell>() {
-            @Override
-            public JFXListCell call(JFXListView param) {
-                return new SellListCell(sellListView,clientController);
-            }
-        });
-
-        sellListView.getStyleClass().add("jfx-list-view");
-        sellListView.getStyleClass().add("mylistview");
-        sellListView.refresh();
-
-
-
-        buyListView.getItems().clear();
-        buyListView.setItems(FXCollections.observableArrayList(buyList));
-        buyListView.setCellFactory(new Callback<JFXListView, JFXListCell>() {
-            @Override
-            public JFXListCell call(JFXListView param) {
-                return new BuyListCell(param,shopController);
-            }
-        });
-
-        buyListView.getStyleClass().add("jfx-list-view");
-        buyListView.getStyleClass().add("mylistview");
-        buyListView.refresh();
-
-
     }
 
     private void updateList() {
@@ -136,15 +95,12 @@ public class ShopController implements BaseController, Initializable {
         SnapshotToSend snapshotTosend = clientController.getSnapshot();
         buyList = snapshotTosend.getMarketList();
 
-        /*
         for(BuyableWrapper buyableWrapper: buyList){
             if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
                 sellList.add(buyableWrapper);
                 buyList.remove(buyableWrapper);
             }
         }
-        */
-
 
         for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
             BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
@@ -172,9 +128,10 @@ public class ShopController implements BaseController, Initializable {
 
         for (BuyableWrapper buyableWrapper : sellList) {
             sellPane.getChildren().add(addItems(buyableWrapper));
-            System.out.println(" ANCORA UNA VOLTA IN QUESTO FOR....");
         }
-
+        for (BuyableWrapper buyableWrapper : buyList) {
+            buyPane.getChildren().add(addItems(buyableWrapper));
+        }
     }
 
     @Override
@@ -185,11 +142,15 @@ public class ShopController implements BaseController, Initializable {
         guiView.registerBaseController(this);
         sellPane.setPrefColumns(4);
         sellPane.setPrefRows(10);
+        sellPane.setHgap(5);
+        sellPane.setVgap(5);
+        buyPane.setPrefColumns(4);
+        buyPane.setPrefRows(10);
+        buyPane.setHgap(5);
+        buyPane.setVgap(5);
         sellPane.setAlignment(Pos.CENTER);
-
         updateView();
-
-        //onFinishMarket();
+        onFinishMarket();
     }
 
     @Override
@@ -226,7 +187,6 @@ public class ShopController implements BaseController, Initializable {
         if(!toBuy.contains(item)){
             toBuy.add(item);
         }
-
     }
 
     public void removeItemToBuy(BuyableWrapper item) {
@@ -247,12 +207,13 @@ public class ShopController implements BaseController, Initializable {
         }
     }
 
-
     private GridPane addItems(BuyableWrapper information){
-        System.out.println("SON QUIIIIIIIIIIIII");
         GridPane baseGridPane = new GridPane();
-        baseGridPane.setId("itemPane");
+        baseGridPane.prefWidthProperty().bind(sellPane.widthProperty().divide(10));
+        baseGridPane.prefHeightProperty().bind(sellPane.heightProperty().divide(10));
         AnchorPane pane = new AnchorPane();
+        pane.prefWidthProperty().bind(baseGridPane.widthProperty());
+        pane.prefHeightProperty().bind(baseGridPane.heightProperty().divide(2));
         ImageView imageView = new ImageView();
         if (information.getBuyableObject() instanceof PermitCard){
             Label label = new Label();
@@ -265,8 +226,8 @@ public class ShopController implements BaseController, Initializable {
                     + information.getBuyableObject().getUrl() + ".png"));
         }
         imageView.setId("ImageView");
-        imageView.fitWidthProperty().bind(pane.widthProperty());
-        imageView.fitHeightProperty().bind(pane.heightProperty());
+        imageView.fitWidthProperty().bind(pane.widthProperty().divide(5));
+        imageView.fitHeightProperty().bind(pane.heightProperty().divide(5));
         CheckBox checkBox = new CheckBox();
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -307,6 +268,21 @@ public class ShopController implements BaseController, Initializable {
         baseGridPane.add(useablePane, 1, 2);
         return baseGridPane;
     }
+
+    /*
+    private void settingResources(BuyableWrapper wrapper, ){
+        if (wrapper.getBuyableObject() instanceof PermitCard) {
+            Label label = new Label();
+            label.setText(wrapper.getBuyableObject().getUrl());
+            baseGridPane.add(label, 0, 1);
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png"));
+        } else {
+            System.out.println(buyableWrapper.getBuyableObject().getUrl() + " <- LUPIN");
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/"
+                    + buyableWrapper.getBuyableObject().getUrl() + ".png"));
+        }
+    }
+    */
 
     private void changePrice(Text text, boolean upper) {
         int textTaken = Integer.parseInt(text.getText());
