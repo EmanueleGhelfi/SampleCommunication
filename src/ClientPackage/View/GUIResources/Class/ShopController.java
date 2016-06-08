@@ -20,11 +20,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -208,14 +210,15 @@ public class ShopController implements BaseController, Initializable {
         GridPane baseGridPane = new GridPane();
         baseGridPane.setAlignment(Pos.CENTER);
         ColumnConstraints columnConstraints1 = new ColumnConstraints(25);
-        ColumnConstraints columnConstraints2 = new ColumnConstraints(75);
+        ColumnConstraints columnConstraints2 = new ColumnConstraints(50);
+        ColumnConstraints columnConstraints3 = new ColumnConstraints(25);
         RowConstraints rowConstraints1 = new RowConstraints(40);
         RowConstraints rowConstraints2 = new RowConstraints(40);
         RowConstraints rowConstraints3 = new RowConstraints(20);
-        baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2);
+        baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3);
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
-        baseGridPane.prefWidthProperty().bind(sellPane.prefTileWidthProperty());
-        baseGridPane.prefHeightProperty().bind(sellPane.prefTileHeightProperty());
+        //baseGridPane.prefWidthProperty().bind(sellPane.prefTileWidthProperty());
+        //baseGridPane.prefHeightProperty().bind(sellPane.prefTileHeightProperty());
         CheckBox checkBox = new CheckBox();
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -229,8 +232,29 @@ public class ShopController implements BaseController, Initializable {
             }
         });
         checkBox.setVisible(false);
-        ListSpinner listSpinner = new ListSpinner(0, 20, 1);
-        listSpinner.setVisible(false);
+        ImageView upper = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/plus.png"));
+        ImageView downer = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/minus.png"));
+        JFXButton button = new JFXButton();
+        button.setText("0");
+        button.setStyle("-fx-background-color: wheat");
+        upper.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (Integer.parseInt(button.getText()) - 1 < 20)
+                button.setText(Integer.toString(Integer.parseInt(button.getText()) + 1));
+            }
+        });
+        downer.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (Integer.parseInt(button.getText()) - 1 > 0)
+                    button.setText(Integer.toString(Integer.parseInt(button.getText()) - 1));
+            }
+        });
+
+        upper.setVisible(false);
+        downer.setVisible(false);
+        button.setVisible(false);
         ImageView imageView = new ImageView();
         if (information.getBuyableObject() instanceof PermitCard){
             Label label = new Label();
@@ -245,29 +269,50 @@ public class ShopController implements BaseController, Initializable {
         }
         imageView.fitWidthProperty().bind(baseGridPane.prefWidthProperty());
         imageView.fitHeightProperty().bind(baseGridPane.prefHeightProperty());
+        //baseGridPane.prefWidthProperty().bind(sellPane.prefTileWidthProperty());
+        //baseGridPane.prefHeightProperty().bind(sellPane.prefTileHeightProperty());
+        baseGridPane.setPrefWidth(200);
+        baseGridPane.setPrefHeight(300);
+        System.out.println(baseGridPane.getMaxHeight() + " THE MAXH");
+        System.out.println(baseGridPane.getMaxWidth() + " THE MAXW");
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 checkBox.setVisible(true);
-                listSpinner.setVisible(true);
-                imageView.setOpacity(0.8);
+                upper.setVisible(true);
+                downer.setVisible(true);
+                button.setVisible(true);
+                ColorAdjust colorAdjust = new ColorAdjust();
+                colorAdjust.setBrightness(-0.5);
+                imageView.setEffect(colorAdjust);
             }
         });
-        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+        baseGridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 checkBox.setVisible(false);
-                listSpinner.setVisible(false);
-                imageView.setOpacity(1);
+                upper.setVisible(false);
+                downer.setVisible(false);
+                button.setVisible(false);
+                imageView.setEffect(null);
             }
         });
         baseGridPane.add(imageView, 0, 0);
-        GridPane.setColumnSpan(imageView, 2);
+        GridPane.setColumnSpan(imageView, 3);
         GridPane.setRowSpan(imageView, 3);
         baseGridPane.add(checkBox, 1, 0);
-        baseGridPane.add(listSpinner, 0, 1);
-        GridPane.setColumnSpan(listSpinner, 2);
-        baseGridPane.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"))));
+        baseGridPane.add(upper, 0, 1);
+        baseGridPane.add(button, 1, 1);
+        baseGridPane.add(downer, 2, 1);
+        upper.fitWidthProperty().bind(imageView.fitWidthProperty().divide(5));
+        upper.fitHeightProperty().bind(imageView.fitHeightProperty().divide(5));
+        downer.fitWidthProperty().bind(imageView.fitWidthProperty().divide(5));
+        downer.fitHeightProperty().bind(imageView.fitHeightProperty().divide(5));
+        button.prefWidthProperty().bind(imageView.fitWidthProperty().divide(5));
+        button.prefHeightProperty().bind(imageView.fitHeightProperty().divide(5));
+        baseGridPane.setGridLinesVisible(true);
+        //button.getStyleClass().add("circularButton");
+        //baseGridPane.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"))));
 
         /*
         ImageView image = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/Icon.png"));
