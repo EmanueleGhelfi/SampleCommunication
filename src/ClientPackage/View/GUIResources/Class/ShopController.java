@@ -272,6 +272,7 @@ public class ShopController implements BaseController, Initializable {
             image = new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png");
 
         } else {
+            System.out.println(information.getBuyableObject().getUrl());
             image = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
         }
         imageView.setImage(image);
