@@ -28,10 +28,14 @@
             <JFXButton fx:id="finishButton" onAction="#sendOnFinishMarket" prefHeight="0.0" prefWidth="100.0" styleClass="button-raised" text="FINISH" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.vgrow="NEVER" />
             <JFXButton fx:id="buyButton" onAction="#onBuy" styleClass="button-raised" text="COMPRA" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <JFXButton fx:id="sellButton" onAction="#onSell" styleClass="button-raised" text="VENDI" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-            <TilePane fx:id="sellPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TilePane fx:id="buyPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ScrollPane fx:id="sellScroll" pannable="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+              <content>
+                  <TilePane fx:id="sellPane" alignment="CENTER" prefTileHeight="150.0" prefTileWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+              </content>
+            </ScrollPane>
          </children>
       </GridPane>
    </center>

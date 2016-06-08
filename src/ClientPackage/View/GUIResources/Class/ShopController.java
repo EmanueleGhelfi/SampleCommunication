@@ -24,12 +24,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import jfxtras.scene.control.ListSpinner;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -56,6 +59,7 @@ public class ShopController implements BaseController, Initializable {
     @FXML private GridPane background;
     @FXML private TilePane sellPane;
     @FXML private TilePane buyPane;
+    @FXML private ScrollPane sellScroll;
 
     private boolean sellPhase=false;
     private boolean buyPhase=false;
@@ -140,15 +144,8 @@ public class ShopController implements BaseController, Initializable {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
-        sellPane.setPrefColumns(4);
-        sellPane.setPrefRows(10);
-        sellPane.setHgap(5);
-        sellPane.setVgap(5);
-        buyPane.setPrefColumns(4);
-        buyPane.setPrefRows(10);
-        buyPane.setHgap(5);
-        buyPane.setVgap(5);
-        sellPane.setAlignment(Pos.CENTER);
+        sellPane.prefWidthProperty().bind(sellScroll.widthProperty());
+        sellPane.prefHeightProperty().bind(sellScroll.heightProperty());
         updateView();
         onFinishMarket();
     }
@@ -209,8 +206,77 @@ public class ShopController implements BaseController, Initializable {
 
     private GridPane addItems(BuyableWrapper information){
         GridPane baseGridPane = new GridPane();
-        baseGridPane.prefWidthProperty().bind(sellPane.widthProperty().divide(10));
-        baseGridPane.prefHeightProperty().bind(sellPane.heightProperty().divide(10));
+        baseGridPane.setAlignment(Pos.CENTER);
+        ColumnConstraints columnConstraints1 = new ColumnConstraints(25);
+        ColumnConstraints columnConstraints2 = new ColumnConstraints(75);
+        RowConstraints rowConstraints1 = new RowConstraints(40);
+        RowConstraints rowConstraints2 = new RowConstraints(40);
+        RowConstraints rowConstraints3 = new RowConstraints(20);
+        baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2);
+        baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
+        baseGridPane.prefWidthProperty().bind(sellPane.prefTileWidthProperty());
+        baseGridPane.prefHeightProperty().bind(sellPane.prefTileHeightProperty());
+        CheckBox checkBox = new CheckBox();
+        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue)
+                    trueList.add(information);
+                    //TODO BUY
+                else
+                    trueList.remove(information);
+                    //TODO BUY
+            }
+        });
+        checkBox.setVisible(false);
+        ListSpinner listSpinner = new ListSpinner(0, 20, 1);
+        listSpinner.setVisible(false);
+        ImageView imageView = new ImageView();
+        if (information.getBuyableObject() instanceof PermitCard){
+            Label label = new Label();
+            label.setText(information.getBuyableObject().getUrl());
+            baseGridPane.add(label, 0, 1);
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png"));
+
+        } else {
+            System.out.println(information.getBuyableObject().getUrl() + " <- LUPIN");
+            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/"
+                    + information.getBuyableObject().getUrl() + ".png"));
+        }
+        imageView.fitWidthProperty().bind(baseGridPane.prefWidthProperty());
+        imageView.fitHeightProperty().bind(baseGridPane.prefHeightProperty());
+        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                checkBox.setVisible(true);
+                listSpinner.setVisible(true);
+                imageView.setOpacity(0.8);
+            }
+        });
+        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                checkBox.setVisible(false);
+                listSpinner.setVisible(false);
+                imageView.setOpacity(1);
+            }
+        });
+        baseGridPane.add(imageView, 0, 0);
+        GridPane.setColumnSpan(imageView, 2);
+        GridPane.setRowSpan(imageView, 3);
+        baseGridPane.add(checkBox, 1, 0);
+        baseGridPane.add(listSpinner, 0, 1);
+        GridPane.setColumnSpan(listSpinner, 2);
+        baseGridPane.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"))));
+
+        /*
+        ImageView image = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/Icon.png"));
+        baseGridPane.add(image, 0, 0);
+        image.fitWidthProperty().bind(baseGridPane.prefWidthProperty());
+        image.fitHeightProperty().bind(baseGridPane.prefHeightProperty());
+        */
+        System.out.println(" IN TEORIA STO AGGIUNGENDO ");
+        /*
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(baseGridPane.widthProperty());
         pane.prefHeightProperty().bind(baseGridPane.heightProperty().divide(2));
@@ -234,8 +300,10 @@ public class ShopController implements BaseController, Initializable {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue)
                     trueList.add(information);
+                //TODO BUY
                 else
                     trueList.remove(information);
+                //TODO BUY
             }
         });
         pane.getChildren().addAll(imageView, checkBox);
@@ -266,6 +334,7 @@ public class ShopController implements BaseController, Initializable {
         useablePane.getChildren().add(text);
         AnchorPane.setLeftAnchor(text, 0.0);
         baseGridPane.add(useablePane, 1, 2);
+        */
         return baseGridPane;
     }
 
