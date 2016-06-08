@@ -126,7 +126,7 @@ public class Map implements Serializable {
         City burgen = new City(Color.YELLOW,CityName.BURGEN,RegionName.COAST);
         City castrum = new City(Color.GREY,CityName.CASTRUM,RegionName.COAST);
         City dorful = new City(Color.GREY,CityName.DORFUL,RegionName.COAST);
-        City esti = new City(Color.GREY,CityName.ESTI,RegionName.COAST);
+        City esti = new City(Color.ORANGE,CityName.ESTI,RegionName.COAST);
         City framek = new City(Color.YELLOW,CityName.FRAMEK,RegionName.HILL);
         City graden = new City(Color.PURPLE,CityName.GRADEN,RegionName.HILL);
         City hellar = new City(Color.YELLOW,CityName.HELLAR,RegionName.HILL);
@@ -181,7 +181,7 @@ public class Map implements Serializable {
         map.setCity(cities);
         map.setLinks(links);
         map.setMapName("prima mappa");
-        map.setMapPreview("/ClientPackage/View/GUIResources/Image/Mappa1v2.jpg");
+        map.setMapPreview("/ClientPackage/View/GUIResources/Image/Map1v3.jpg");
 
         System.out.println(map);
         Gson gson = new Gson();

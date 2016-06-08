@@ -6,23 +6,25 @@ import ClientPackage.View.GUIResources.customComponent.CouncilorHandler;
 import ClientPackage.View.GUIResources.customComponent.PermitCardHandler;
 import ClientPackage.View.GUIResources.customComponent.SideNode;
 import ClientPackage.View.GeneralView.GUIView;
-import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
-import CommonModel.GameModel.Action.FastActionMoneyForHelper;
-import CommonModel.GameModel.Action.FastActionNewMainAction;
+import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Councilor;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import com.sun.rowset.internal.Row;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -31,6 +33,8 @@ import javafx.geometry.*;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -63,6 +67,7 @@ public class MatchController implements Initializable, BaseController {
     private String city;
     private GUIView guiView;
     @FXML private ImageView imageTest;
+    private PermitCard permitCardSelected = null;
     //BUTTONs
     @FXML JFXButton coastPermitButton;
     @FXML JFXButton hillPermitButton;
@@ -98,6 +103,10 @@ public class MatchController implements Initializable, BaseController {
     @FXML private ImageView backgroundImage;
     @FXML private GridPane gridPane;
     @FXML private TabPane tabPane;
+
+    @FXML private JFXHamburger hamburgerIcon;
+    @FXML private GridPane hamburgerMenu;
+
 
 
     private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
@@ -168,6 +177,52 @@ public class MatchController implements Initializable, BaseController {
         initPermitButton();
         handleClick();
         createCity();
+        populateHamburgerMenu();
+        initHamburgerIcon();
+    }
+
+    private void populateHamburgerMenu() {
+        JFXComboBox<String> users = new JFXComboBox<>();
+        clientController.getSnapshot().getUsersInGame().forEach((s, baseUser) -> {
+            users.getItems().add(baseUser.getUsername());
+        });
+        hamburgerMenu.add(users,1,0);
+        GridPane.setValignment(users,VPos.CENTER);
+        GridPane.setHalignment(users,HPos.CENTER);
+    }
+
+    private void initHamburgerIcon() {
+        HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburgerIcon);
+        burgerTask.setRate(-1);
+        hamburgerIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
+
+            burgerTask.setRate(burgerTask.getRate()*-1);
+            if(burgerTask.getRate()==1){
+                openSlider();
+            }
+            else{
+                closeSlider();
+            }
+            burgerTask.play();
+        });
+    }
+
+    private void closeSlider() {
+        hamburgerMenu.setPrefHeight(0);
+        hamburgerMenu.setPrefWidth(0);
+        hamburgerMenu.setVisible(false);
+        hamburgerIcon.setTranslateX(0);
+        //hamburgerIcon.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLACK"),null,null)));
+
+    }
+
+    private void openSlider() {
+
+        hamburgerMenu.setVisible(true);
+        hamburgerMenu.setPrefHeight(backgroundImage.getFitHeight());
+        hamburgerMenu.setPrefWidth(backgroundImage.getFitWidth()/5);
+        //hamburgerMenu.setBackground(new Background(new BackgroundFill(Paint.valueOf("Black"),null,null)));
+        //hamburgerIcon.setTranslateX(-hamburgerMenu.getPrefWidth());
     }
 
     private void createCity() {
@@ -175,21 +230,33 @@ public class MatchController implements Initializable, BaseController {
         //arkon
         CreateSingleCity(0.15,0.13,currentSnapshot.getMap().getCity().get(0));
         //burgen
-        CreateSingleCity(0.14,0.39, currentSnapshot.getMap().getCity().get(1));
+        CreateSingleCity(0.11,0.43, currentSnapshot.getMap().getCity().get(1));
         //castrum
-        CreateSingleCity(0.25,0.18, currentSnapshot.getMap().getCity().get(2));
+        CreateSingleCity(0.27,0.25, currentSnapshot.getMap().getCity().get(2));
         //dorful
-        CreateSingleCity(0.25,0.44, currentSnapshot.getMap().getCity().get(3));
+        CreateSingleCity(0.27,0.49, currentSnapshot.getMap().getCity().get(3));
         //esti
-        CreateSingleCity(0.17,0.65, currentSnapshot.getMap().getCity().get(4));
+        CreateSingleCity(0.17,0.69, currentSnapshot.getMap().getCity().get(4));
         //framek
-        CreateSingleCity(0.41,0.15, currentSnapshot.getMap().getCity().get(5));
+        CreateSingleCity(0.41,0.18, currentSnapshot.getMap().getCity().get(5));
         //graden
-        CreateSingleCity(0.41,0.38, currentSnapshot.getMap().getCity().get(6));
-        //juvelar
-        CreateSingleCity(0.54,0.47, currentSnapshot.getMap().getCity().get(8));
+        CreateSingleCity(0.41,0.40, currentSnapshot.getMap().getCity().get(6));
+        //hellar
+        CreateSingleCity(0.43,0.65, currentSnapshot.getMap().getCity().get(7));
+        //Indur
+        CreateSingleCity(0.55,0.2,currentSnapshot.getMap().getCity().get(8));
+        //Kultos
+        CreateSingleCity(0.7,0.17,currentSnapshot.getMap().getCity().get(10));
         //Lyram
-        CreateSingleCity(0.67,0.4, currentSnapshot.getMap().getCity().get(11));
+        CreateSingleCity(0.66,0.44, currentSnapshot.getMap().getCity().get(11));
+        //Merkatim
+        CreateSingleCity(0.64,0.69, currentSnapshot.getMap().getCity().get(12));
+        //Naris
+        CreateSingleCity(0.80,0.32, currentSnapshot.getMap().getCity().get(13));
+        //Osium
+        CreateSingleCity(0.78,0.59, currentSnapshot.getMap().getCity().get(14));
+        //Juvelar
+        CreateSingleCity(0.54,0.48,currentSnapshot.getMap().getCity().get(9));
 
 
     }
@@ -226,6 +293,91 @@ public class MatchController implements Initializable, BaseController {
                 imageView.setScaleX(1);
             }
         });
+
+        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                showPopoverOnCity(city,imageView);
+            }
+        });
+    }
+
+    private void showPopoverOnCity(City city, ImageView imageView) {
+        PopOver popOver = new PopOver();
+
+        //TODO: show button and other stuff
+        GridPane grid = new GridPane();
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        ColumnConstraints columnConstraints1 = new ColumnConstraints();
+        columnConstraints.setPercentWidth(50);
+        columnConstraints1.setPercentWidth(50);
+        RowConstraints rowConstraints = new RowConstraints();
+        RowConstraints rowConstraints1 = new RowConstraints();
+        RowConstraints rowConstraints2 = new RowConstraints();
+        rowConstraints.setPercentHeight(20);
+        rowConstraints1.setPercentHeight(40);
+        rowConstraints2.setPercentHeight(40);
+        grid.getColumnConstraints().addAll(columnConstraints,columnConstraints1);
+        grid.getRowConstraints().addAll(rowConstraints,rowConstraints1,rowConstraints2);
+        Label cityLabel = new Label(city.getCityName().getCityName());
+        grid.add(cityLabel,0,0);
+        GridPane.setHalignment(cityLabel,HPos.CENTER);
+        GridPane.setValignment(cityLabel,VPos.CENTER);
+        GridPane.setColumnSpan(cityLabel,2);
+
+        /*
+        TreeItem<String> treeItem = new TreeItem<>("Utenti con empori nella città:");
+        for (BaseUser baseUser : clientController.getSnapshot().getUsersInGame().values()) {
+            if(baseUser.getUsersEmporium().contains(city)){
+                System.out.println("Found emporium");
+                TreeItem<String> user = new TreeItem<>(baseUser.getUsername());
+                treeItem.getChildren().add(user);
+            }
+            else{
+                System.out.println("emporium not found");
+                TreeItem<String> user = new TreeItem<>(baseUser.getUsername());
+                treeItem.getChildren().add(user);
+            }
+        }
+        TreeView<String> treeView = new TreeView<>(treeItem);
+        grid.add(treeView,0,1);
+        GridPane.setColumnSpan(treeView,2);
+        */
+        JFXComboBox<String> jfxComboBox = new JFXComboBox<>();
+        for (PermitCard permitCard :
+                clientController.getSnapshot().getCurrentUser().getPermitCards()) {
+            jfxComboBox.getItems().add(permitCard.getCityString());
+        }
+
+        jfxComboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("Selection changed to: "+newValue);
+                permitCardSelected = clientController.getSnapshot().getCurrentUser().getPermitCards().get(newValue.intValue());
+            }
+        });
+        jfxComboBox.setPromptText("Seleziona la carta permesso");
+        grid.add(jfxComboBox,0,2);
+
+        JFXButton jfxButton = new JFXButton("Compra emporio!");
+        jfxButton.getStyleClass().add("buyEmporiumButton");
+
+        jfxButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Action action = new MainActionBuildWithPermitCard(city,permitCardSelected);
+                clientController.doAction(action);
+            }
+        });
+
+        grid.add(jfxButton,1,2);
+        //treeView.setPrefHeight(backgroundImage.getFitHeight()/7);
+        grid.setPrefSize(backgroundImage.getFitWidth()/3,backgroundImage.getFitHeight()/3);
+
+        popOver.setContentNode(grid);
+        popOver.show(imageView);
+
+
     }
 
     private void handleClick() {
@@ -582,5 +734,9 @@ public class MatchController implements Initializable, BaseController {
             Action action = new FastActionChangePermitCardWithHelper(regionName);
             clientController.doAction(action);
         }
+    }
+
+    public void setPermitCardSelected(PermitCard permitCardSelected) {
+        this.permitCardSelected = permitCardSelected;
     }
 }
