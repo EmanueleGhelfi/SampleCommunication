@@ -94,4 +94,9 @@ public class PermitCard implements Serializable,BuyableObject{
         }
         return null;
     }
+
+    @Override
+    public String getUrl() {
+        return getCityString();
+    }
 }

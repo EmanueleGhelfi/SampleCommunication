@@ -13,4 +13,6 @@ public interface BuyableObject extends Serializable, Cloneable {
 
     BuyableObject getCopy();
 
+    String getUrl();
+
 }

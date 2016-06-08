@@ -85,4 +85,11 @@ public class PoliticCard implements Serializable,BuyableObject {
         }
         return null;
     }
+
+    @Override
+    public String getUrl() {
+        if (isMultiColor())
+            return "MulticolorPoliticCard";
+        return getPoliticColor().getColor().substring(0, 1).toUpperCase() + getPoliticColor().getColor().substring(1) + "PoliticCard";
+    }
 }
