@@ -184,6 +184,16 @@ public class ShopController implements BaseController, Initializable {
         sellButton.setDisable(true);
     }
 
+    @Override
+    public void onResizeHeight(double height, double width) {
+
+    }
+
+    @Override
+    public void onResizeWidth(double width, double height) {
+
+    }
+
     public void addItemToBuy(BuyableWrapper item) {
         System.out.println("adding item :"+item);
         if(!toBuy.contains(item)){

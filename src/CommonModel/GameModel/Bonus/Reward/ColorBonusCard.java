@@ -45,7 +45,9 @@ public class ColorBonusCard implements RewardBonusCard,Serializable {
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-        victoryPointBonus.getBonus(user, game);
+        if(victoryPointBonus!=null) {
+            victoryPointBonus.getBonus(user, game);
+        }
     }
 
     @Override

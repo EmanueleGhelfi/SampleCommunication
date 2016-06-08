@@ -18,6 +18,9 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.sun.rowset.internal.Row;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.beans.value.ChangeListener;
@@ -47,6 +50,7 @@ import java.util.*;
 
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
 
@@ -104,8 +108,15 @@ public class MatchController implements Initializable, BaseController {
     @FXML private GridPane gridPane;
     @FXML private TabPane tabPane;
 
+    //HAMBURGERMENU
     @FXML private JFXHamburger hamburgerIcon;
     @FXML private GridPane hamburgerMenu;
+    @FXML private Label moneyLabel;
+    @FXML private Label victoryLabel;
+    @FXML private Label politicLabel;
+    @FXML private Label helperLabel;
+    @FXML private Label permitLabel;
+    @FXML private Label nobilityLabel;
 
 
 
@@ -184,20 +195,41 @@ public class MatchController implements Initializable, BaseController {
     private void populateHamburgerMenu() {
         JFXComboBox<String> users = new JFXComboBox<>();
         clientController.getSnapshot().getUsersInGame().forEach((s, baseUser) -> {
-            users.getItems().add(baseUser.getUsername());
+            if(!(baseUser.getUsername().equals(clientController.getSnapshot().getCurrentUser().getUsername())))
+                users.getItems().add(baseUser.getUsername());
         });
         hamburgerMenu.add(users,1,0);
         GridPane.setValignment(users,VPos.CENTER);
         GridPane.setHalignment(users,HPos.CENTER);
+        users.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                populateField(clientController.getSnapshot().getUsersInGame().get(newValue));
+            }
+        });
+        users.getSelectionModel().select(0);
+    }
+
+    private void populateField(BaseUser baseUser) {
+        moneyLabel.setText(baseUser.getCoinPathPosition()+"");
+        politicLabel.setText(baseUser.getPoliticCardNumber()+"");
+        helperLabel.setText(baseUser.getHelpers().size()+"");
+        nobilityLabel.setText(baseUser.getNobilityPathPosition().getPosition()+"");
+        permitLabel.setText(baseUser.getPermitCards().get(0).getCityString());
+        victoryLabel.setText(baseUser.getVictoryPathPosition()+"");
     }
 
     private void initHamburgerIcon() {
+        hamburgerMenu.setVisible(false);
+        hamburgerMenu.setPrefHeight(0);
+        hamburgerMenu.setPrefWidth(0);
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburgerIcon);
         burgerTask.setRate(-1);
         hamburgerIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
 
             burgerTask.setRate(burgerTask.getRate()*-1);
             if(burgerTask.getRate()==1){
+
                 openSlider();
             }
             else{
@@ -208,19 +240,71 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void closeSlider() {
-        hamburgerMenu.setPrefHeight(0);
-        hamburgerMenu.setPrefWidth(0);
-        hamburgerMenu.setVisible(false);
         hamburgerIcon.setTranslateX(0);
         //hamburgerIcon.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLACK"),null,null)));
+        final Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1500),
+                new KeyValue(hamburgerMenu.prefWidthProperty(), 0)));
+
+        List<Node> nodes = hamburgerMenu.getChildren();
+        nodes.forEach(node -> {
+            if(node instanceof ImageView) {
+                ImageView imageView = (ImageView) node;
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.scaleXProperty(), 0)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.scaleYProperty(), 0)));
+            }
+            else{
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(node.scaleXProperty(), 0)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(node.scaleYProperty(), 0)));
+            }
+        });
+
+        timeline.play();
+        timeline.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //hamburgerMenu.setVisible(false);
+            }
+        });
 
     }
 
     private void openSlider() {
 
+
         hamburgerMenu.setVisible(true);
+        hamburgerMenu.setScaleX(1);
+        hamburgerMenu.setPrefWidth(0);
+        final Timeline timeline = new Timeline();
         hamburgerMenu.setPrefHeight(backgroundImage.getFitHeight());
-        hamburgerMenu.setPrefWidth(backgroundImage.getFitWidth()/5);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000),
+                new KeyValue(hamburgerMenu.prefWidthProperty(), backgroundImage.getFitWidth()/5)));
+
+        List<Node> nodes = hamburgerMenu.getChildren();
+        nodes.forEach(node -> {
+            if(node instanceof ImageView) {
+                ImageView imageView = (ImageView) node;
+                imageView.setScaleX(1);
+                imageView.setScaleY(1);
+                imageView.setFitHeight(0);
+                imageView.setFitWidth(0);
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.fitWidthProperty(), 40)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.fitHeightProperty(), 40)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.scaleXProperty(), 1)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.scaleYProperty(), 1)));
+            }
+            else{
+                node.setScaleX(0);
+                node.setScaleY(0);
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(node.scaleXProperty(), 1)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(node.scaleYProperty(), 1)));
+            }
+        });
+
+        timeline.play();
+
+        //hamburgerMenu.setPrefWidth(backgroundImage.getFitWidth()/5);
+        hamburgerMenu.setOpacity(0.9);
         //hamburgerMenu.setBackground(new Background(new BackgroundFill(Paint.valueOf("Black"),null,null)));
         //hamburgerIcon.setTranslateX(-hamburgerMenu.getPrefWidth());
     }
