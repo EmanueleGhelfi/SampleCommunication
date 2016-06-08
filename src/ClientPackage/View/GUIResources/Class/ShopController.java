@@ -1,8 +1,6 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.customComponent.BuyListCell;
-import ClientPackage.View.GUIResources.customComponent.SellListCell;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
@@ -10,22 +8,15 @@ import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
@@ -33,18 +24,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
-import jfxtras.scene.control.ListSpinner;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
-import java.util.Set;
-
-import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte0.runnable;
 
 /**
  * Created by Emanuele on 30/05/2016.
@@ -226,27 +211,9 @@ public class ShopController implements BaseController, Initializable {
         rowConstraints3.setPercentHeight(20);
         baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3);
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
-        ImageView upper = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/plus.png"));
-        ImageView downer = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/minus.png"));
         JFXButton button = new JFXButton();
         button.setText("0");
         button.setStyle("-fx-background-color: wheat");
-        upper.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (Integer.parseInt(button.getText()) - 1 < 20)
-                button.setText(Integer.toString(Integer.parseInt(button.getText()) + 1));
-            }
-        });
-        downer.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (Integer.parseInt(button.getText()) - 1 > 0)
-                    button.setText(Integer.toString(Integer.parseInt(button.getText()) - 1));
-            }
-        });
-        upper.setVisible(false);
-        downer.setVisible(false);
         button.setVisible(false);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -264,17 +231,48 @@ public class ShopController implements BaseController, Initializable {
             }
         });
         Image image = null;
+        Image upperImage = null;
+        Image downerImage = null;
         ImageView imageView = new ImageView(image);
         if (information.getBuyableObject() instanceof PermitCard){
             Label label = new Label();
             label.setText(information.getBuyableObject().getUrl());
             baseGridPane.add(label, 0, 1);
             image = new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png");
+            upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
+            downerImage = new Image ("/ClientPackage/View/GUIResources/Image/minusWhite.png");
 
         } else {
-            System.out.println(information.getBuyableObject().getUrl());
-            image = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
+            if (information.getBuyableObject() instanceof Helper) {
+                image = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
+                upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusBlack.png");
+                downerImage = new Image("/ClientPackage/View/GUIResources/Image/minusBlack.png");
+            } else {
+                image = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
+                upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
+                downerImage = new Image ("/ClientPackage/View/GUIResources/Image/minusWhite.png");
+            }
         }
+        ImageView upper = new ImageView(upperImage);
+        ImageView downer = new ImageView(downerImage);
+        upper.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (Integer.parseInt(button.getText()) - 1 < 19)
+                    button.setText(Integer.toString(Integer.parseInt(button.getText()) + 1));
+            }
+        });
+        downer.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (Integer.parseInt(button.getText()) - 1 > 0)
+                    button.setText(Integer.toString(Integer.parseInt(button.getText()) - 1));
+                else
+                    button.setText(Integer.toString(0));
+            }
+        });
+        upper.setVisible(false);
+        downer.setVisible(false);
         imageView.setImage(image);
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -316,8 +314,8 @@ public class ShopController implements BaseController, Initializable {
         GridPane.setValignment(button, VPos.CENTER);
         baseGridPane.prefHeightProperty().bind(imageView.fitWidthProperty().multiply(0.8));
         baseGridPane.prefWidthProperty().bind(imageView.fitWidthProperty().multiply(0.8));
-        sellPane.setHgap(50);
-        sellPane.setVgap(50);
+        sellPane.setHgap(10);
+        sellPane.setVgap(10);
         System.out.println(" IN TEORIA STO AGGIUNGENDO ");
         return baseGridPane;
     }

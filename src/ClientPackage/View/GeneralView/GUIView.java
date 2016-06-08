@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -55,6 +56,8 @@ public class GUIView extends Application implements BaseView {
         Parent screen = loader.load();
         loginController = loader.getController();
         loginController.setClientController(clientController);
+        primaryStage.getIcons().add(new Image("/ClientPackage/View/GUIResources/Image/Icon.png"));
+        primaryStage.setTitle("COFfee");
         scene = new Scene(screen);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -64,6 +67,8 @@ public class GUIView extends Application implements BaseView {
         });
         this.stage.setScene(scene);
         this.stage.show();
+        stage.setMinHeight(400);
+        stage.setMinWidth(600);
     }
 
     @Override
@@ -101,6 +106,8 @@ public class GUIView extends Application implements BaseView {
         scene = new Scene(screen);
         this.stage.setScene(scene);
         this.stage.show();
+        stage.setMinHeight(400);
+        stage.setMinWidth(600);
     }
 
     @Override
