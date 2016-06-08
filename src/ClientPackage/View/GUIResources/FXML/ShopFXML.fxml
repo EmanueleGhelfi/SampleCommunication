@@ -33,7 +33,7 @@
             <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <ScrollPane fx:id="sellScroll" pannable="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
               <content>
-                  <TilePane fx:id="sellPane" alignment="CENTER" prefTileHeight="300.0" prefTileWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TilePane fx:id="sellPane" alignment="CENTER" prefTileHeight="200.0" prefTileWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
               </content>
             </ScrollPane>
          </children>

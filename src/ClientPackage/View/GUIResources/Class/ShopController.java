@@ -21,7 +21,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -209,29 +211,24 @@ public class ShopController implements BaseController, Initializable {
     private GridPane addItems(BuyableWrapper information){
         GridPane baseGridPane = new GridPane();
         baseGridPane.setAlignment(Pos.CENTER);
-        ColumnConstraints columnConstraints1 = new ColumnConstraints(25);
-        ColumnConstraints columnConstraints2 = new ColumnConstraints(50);
-        ColumnConstraints columnConstraints3 = new ColumnConstraints(25);
-        RowConstraints rowConstraints1 = new RowConstraints(40);
-        RowConstraints rowConstraints2 = new RowConstraints(40);
-        RowConstraints rowConstraints3 = new RowConstraints(20);
+
+        ColumnConstraints columnConstraints1 = new ColumnConstraints();
+        ColumnConstraints columnConstraints2 = new ColumnConstraints();
+        ColumnConstraints columnConstraints3 = new ColumnConstraints();
+        columnConstraints1.setPercentWidth(25);
+        columnConstraints2.setPercentWidth(50);
+        columnConstraints3.setPercentWidth(25);
+        RowConstraints rowConstraints1 = new RowConstraints();
+        RowConstraints rowConstraints2 = new RowConstraints();
+        RowConstraints rowConstraints3 = new RowConstraints();
+        rowConstraints1.setPercentHeight(40);
+        rowConstraints2.setPercentHeight(40);
+        rowConstraints3.setPercentHeight(20);
         baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3);
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
+
         //baseGridPane.prefWidthProperty().bind(sellPane.prefTileWidthProperty());
         //baseGridPane.prefHeightProperty().bind(sellPane.prefTileHeightProperty());
-        CheckBox checkBox = new CheckBox();
-        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue)
-                    trueList.add(information);
-                    //TODO BUY
-                else
-                    trueList.remove(information);
-                    //TODO BUY
-            }
-        });
-        checkBox.setVisible(false);
         ImageView upper = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/plus.png"));
         ImageView downer = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/minus.png"));
         JFXButton button = new JFXButton();
@@ -251,34 +248,24 @@ public class ShopController implements BaseController, Initializable {
                     button.setText(Integer.toString(Integer.parseInt(button.getText()) - 1));
             }
         });
-
         upper.setVisible(false);
         downer.setVisible(false);
         button.setVisible(false);
-        ImageView imageView = new ImageView();
+        Image image = null;
+        ImageView imageView = new ImageView(image);
         if (information.getBuyableObject() instanceof PermitCard){
             Label label = new Label();
             label.setText(information.getBuyableObject().getUrl());
             baseGridPane.add(label, 0, 1);
-            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png"));
+            image = new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png");
 
         } else {
-            System.out.println(information.getBuyableObject().getUrl() + " <- LUPIN");
-            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/"
-                    + information.getBuyableObject().getUrl() + ".png"));
+            image = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
         }
-        imageView.fitWidthProperty().bind(baseGridPane.prefWidthProperty());
-        imageView.fitHeightProperty().bind(baseGridPane.prefHeightProperty());
-        //baseGridPane.prefWidthProperty().bind(sellPane.prefTileWidthProperty());
-        //baseGridPane.prefHeightProperty().bind(sellPane.prefTileHeightProperty());
-        baseGridPane.setPrefWidth(200);
-        baseGridPane.setPrefHeight(300);
-        System.out.println(baseGridPane.getMaxHeight() + " THE MAXH");
-        System.out.println(baseGridPane.getMaxWidth() + " THE MAXW");
+        imageView.setImage(image);
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                checkBox.setVisible(true);
                 upper.setVisible(true);
                 downer.setVisible(true);
                 button.setVisible(true);
@@ -290,7 +277,6 @@ public class ShopController implements BaseController, Initializable {
         baseGridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                checkBox.setVisible(false);
                 upper.setVisible(false);
                 downer.setVisible(false);
                 button.setVisible(false);
@@ -300,16 +286,66 @@ public class ShopController implements BaseController, Initializable {
         baseGridPane.add(imageView, 0, 0);
         GridPane.setColumnSpan(imageView, 3);
         GridPane.setRowSpan(imageView, 3);
-        baseGridPane.add(checkBox, 1, 0);
         baseGridPane.add(upper, 0, 1);
         baseGridPane.add(button, 1, 1);
         baseGridPane.add(downer, 2, 1);
+
+
+        upper.setPreserveRatio(false);
+        upper.setFitWidth(40);
+        upper.setFitHeight(40);
+
+        downer.setPreserveRatio(false);
+        downer.setFitWidth(40);
+        downer.setFitHeight(40);
+
+        GridPane.setHalignment(upper, HPos.CENTER);
+        GridPane.setHalignment(downer, HPos.CENTER);
+        GridPane.setHalignment(button, HPos.CENTER);
+
+        GridPane.setValignment(upper, VPos.CENTER);
+        GridPane.setValignment(downer, VPos.CENTER);
+        GridPane.setValignment(button, VPos.CENTER);
+
+
+
+        baseGridPane.prefHeightProperty().bind(imageView.fitWidthProperty().multiply(0.8));
+        baseGridPane.prefWidthProperty().bind(imageView.fitWidthProperty().multiply(0.8));
+        /*
+        sellPane.prefTileWidthProperty().bind(baseGridPane.prefWidthProperty());
+        sellPane.prefTileHeightProperty().bind(baseGridPane.prefHeightProperty());
+        */
+
+        //imageView.fitWidthProperty().bind(baseGridPane.prefWidthProperty());
+        //imageView.fitHeightProperty().bind(baseGridPane.prefHeightProperty());
+
+        //System.out.println(image.getWidth() +  " IMAGE");
+        //System.out.println(imageView.getFitWidth() +  " IMAGEVIEW");
+        //System.out.println(baseGridPane.getWidth() +  " BASE");
+        //System.out.println(sellPane.getTileWidth() + " TILE");
+        //System.out.println(sellPane.getWidth() +  " SELL PANE");
+
+        sellPane.setHgap(50);
+        sellPane.setVgap(50);
+
+        /*
+        upper.fitWidthProperty().bind(sellPane.prefTileWidthProperty());
+        upper.fitHeightProperty().bind(sellPane.prefTileHeightProperty());
+        downer.fitWidthProperty().bind(sellPane.prefTileWidthProperty());
+        downer.fitHeightProperty().bind(sellPane.prefTileHeightProperty());
+        button.prefWidthProperty().bind(sellPane.prefTileWidthProperty());
+        button.prefHeightProperty().bind(sellPane.prefTileHeightProperty());
+
+        */
+        /*
         upper.fitWidthProperty().bind(imageView.fitWidthProperty().divide(5));
         upper.fitHeightProperty().bind(imageView.fitHeightProperty().divide(5));
         downer.fitWidthProperty().bind(imageView.fitWidthProperty().divide(5));
         downer.fitHeightProperty().bind(imageView.fitHeightProperty().divide(5));
         button.prefWidthProperty().bind(imageView.fitWidthProperty().divide(5));
         button.prefHeightProperty().bind(imageView.fitHeightProperty().divide(5));
+        */
+
         baseGridPane.setGridLinesVisible(true);
         //button.getStyleClass().add("circularButton");
         //baseGridPane.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"))));
