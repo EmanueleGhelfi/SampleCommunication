@@ -10,12 +10,12 @@
         <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="386.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@../Image/ArrowRight.png" />
+                    <Image url="@../Image/Right.png" />
                 </image>
             </ImageView>
             <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="14.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@../Image/ArrowLeft.png" />
+                    <Image url="@../Image/Left.png" />
                 </image>
                     </ImageView>
       <Region layoutX="132.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: YELLOW;" />

@@ -64,7 +64,7 @@ public class GameController implements Serializable{
      * Called when init game
      */
     public void notifyStarted() {
-       users = new ArrayList<>(game.getUsers());
+        users = new ArrayList<>(game.getUsers());
         game.setStarted(true);
         setDefaultStuff();
         // send map to first user

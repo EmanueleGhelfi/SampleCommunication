@@ -7,15 +7,21 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="loginPane" stylesheets="@../CSS/LoginCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../CSS/LoginWaitingMapSelectionCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.LoginController">
    <center>
-      <VBox alignment="CENTER">
+      <VBox alignment="CENTER" spacing="50.0">
          <children>
-            <Label fx:id="errorText" text="CIAO BELLO" />
-            <JFXTextField fx:id="usernameText" maxWidth="308.0" minWidth="308.0" prefHeight="31.0" prefWidth="308.0" promptText="Inserisci qui il tuo nome" BorderPane.alignment="CENTER">
+            <Label fx:id="errorText" text="A beautiful mind product.." textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font></Label>
+            <JFXTextField fx:id="usernameText" alignment="CENTER" maxWidth="308.0" promptText="Inserisci qui il tuo nome" BorderPane.alignment="CENTER">
 
             </JFXTextField>
-            <JFXButton onAction="#onButtonLoginPressed" text="LOGIN!" />
+            <JFXButton fx:id="button" onAction="#onButtonLoginPressed" text="HERE WE GO">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font></JFXButton>
          </children>
       </VBox>
    </center>

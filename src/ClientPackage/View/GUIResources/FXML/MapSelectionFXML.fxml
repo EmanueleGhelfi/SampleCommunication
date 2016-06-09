@@ -8,40 +8,65 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MapSelectionController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../CSS/LoginWaitingMapSelectionCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MapSelectionController">
    <bottom>
-      <Pane prefHeight="64.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" layoutX="289.0" layoutY="16.0">
          <children>
-            <Button layoutX="268.0" layoutY="17.0" mnemonicParsing="false" onAction="#takeImage" text="Button" />
-         </children></Pane>
+            <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" text="Choose" />
+         </children>
+         <padding>
+            <Insets bottom="25.0" />
+         </padding>
+      </VBox>
    </bottom>
    <top>
-      <Pane prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER">
          <children>
-            <Text layoutX="169.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCEGLI LA MAPPA CON CUI GIOCARE">
+            <Text layoutX="169.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCEGLI LA MAPPA CON CUI GIOCARE" textAlignment="CENTER">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>
             </Text>
-         </children></Pane>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets top="25.0" />
+         </padding>
+      </VBox>
    </top>
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <GridPane layoutX="64.0" layoutY="75.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="35.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="35.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="25.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <ImageView fx:id="thisImageView" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="nextImageView" fitHeight="110.0" fitWidth="140.0" layoutX="330.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="prevImageView" fitHeight="110.0" fitWidth="140.0" layoutX="130.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="70.0" fitWidth="66.0" layoutX="538.0" layoutY="83.0" onMouseClicked="#nextVisibleMap" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Image/ArrowRight.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="70.0" fitWidth="66.0" layoutY="83.0" onMouseClicked="#prevVisibleMap" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Image/ArrowLeft.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="prevImageView" fitHeight="101.0" fitWidth="119.0" layoutX="64.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ImageView fx:id="thisImageView" fitHeight="150.0" fitWidth="200.0" layoutX="134.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ImageView fx:id="nextImageView" fitHeight="110.0" fitWidth="140.0" layoutX="264.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
          </children>
-      </Pane>
+      </GridPane>
    </center>
+   <left>
+      <ImageView fitHeight="70.0" fitWidth="66.0" onMouseClicked="#prevVisibleMap" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../Image/Left.png" />
+         </image>
+      </ImageView>
+   </left>
+   <right>
+      <ImageView fitHeight="70.0" fitWidth="66.0" onMouseClicked="#nextVisibleMap" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../Image/Right.png" />
+         </image>
+      </ImageView>
+   </right>
 </BorderPane>
