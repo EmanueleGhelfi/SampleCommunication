@@ -104,6 +104,7 @@ public class GUIView extends Application implements BaseView {
         waitingController = loader.getController();
         waitingController.setClientController(clientController);
         scene = new Scene(screen);
+        stage.setResizable(false);
         this.stage.setScene(scene);
         this.stage.show();
         stage.setMinHeight(400);
@@ -115,6 +116,7 @@ public class GUIView extends Application implements BaseView {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                stage.setResizable(true);
                 System.out.println("show map page");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MAP_SELECTION_FXML));
                 Parent screen = null;
