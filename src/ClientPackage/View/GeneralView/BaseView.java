@@ -31,4 +31,6 @@ public interface BaseView {
     void onStartBuyPhase();
 
     void onFinishMarket();
+
+    void selectPermitCard();
 }

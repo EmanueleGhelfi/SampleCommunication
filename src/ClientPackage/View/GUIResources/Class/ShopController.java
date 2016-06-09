@@ -194,6 +194,11 @@ public class ShopController implements BaseController, Initializable {
 
     }
 
+    @Override
+    public void selectPermitCard() {
+
+    }
+
     public void addItemToBuy(BuyableWrapper item) {
         System.out.println("adding item :"+item);
         if(!toBuy.contains(item)){

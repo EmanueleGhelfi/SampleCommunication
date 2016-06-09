@@ -216,6 +216,14 @@ public class GUIView extends Application implements BaseView {
         baseControllerList.forEach(baseController -> baseController.onFinishMarket());
     }
 
+    @Override
+    public void selectPermitCard() {
+        Platform.runLater(()->{
+            baseControllerList.forEach(BaseController::selectPermitCard);
+        });
+
+    }
+
     public void registerBaseController(BaseController baseController){
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);

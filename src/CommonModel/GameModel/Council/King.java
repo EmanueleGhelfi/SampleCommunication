@@ -44,6 +44,10 @@ public class King implements Serializable, GotCouncil {
         return council;
     }
 
+    public City getCurrentCity() {
+        return currentCity;
+    }
+
     public void setCurrentCity(City currentCity) {
         this.currentCity = currentCity;
     }

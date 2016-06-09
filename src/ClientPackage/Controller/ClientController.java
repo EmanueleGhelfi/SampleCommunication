@@ -260,4 +260,8 @@ public class ClientController {
     public void onFinishBuyPhase() {
         baseView.onFinishMarket();
     }
+
+    public void selectPermitCard() {
+        baseView.selectPermitCard();
+    }
 }

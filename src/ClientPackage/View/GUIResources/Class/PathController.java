@@ -113,6 +113,11 @@ public class PathController implements Initializable, BaseController{
 
     }
 
+    @Override
+    public void selectPermitCard() {
+
+    }
+
     public void nextPlayer(Event event) {
         userCounter++;
         emporiumCounter = 0;
