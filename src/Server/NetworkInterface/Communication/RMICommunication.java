@@ -209,6 +209,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
+    @Override
+    public void selectPermitCard() {
+        try {
+            rmiClientInterface.selectPermitCard();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void setUser(User user) {

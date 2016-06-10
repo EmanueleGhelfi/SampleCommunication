@@ -193,4 +193,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
         clientController.onFinishBuyPhase();
     }
+
+    @Override
+    public void selectPermitCard() throws RemoteException {
+        clientController.selectPermitCard();
+    }
 }

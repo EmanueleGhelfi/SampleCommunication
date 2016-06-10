@@ -40,4 +40,16 @@ public class RegionBonusCard implements RewardBonusCard, Serializable {
     public ArrayList<Bonus> getBonusArrayList() {
         return null;
     }
+
+    @Override
+    public ArrayList<String> getBonusURL() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> getBonusInfo() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.addAll(victoryPointBonus.getBonusInfo());
+        return toReturn;
+    }
 }

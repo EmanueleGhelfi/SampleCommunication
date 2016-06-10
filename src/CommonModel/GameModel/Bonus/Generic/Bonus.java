@@ -15,6 +15,11 @@ public interface Bonus {
 
     String getBonusName();
 
-    public ArrayList<Bonus> getBonusArrayList();
+    ArrayList<Bonus> getBonusArrayList();
+
+    ArrayList<String> getBonusURL();
+
+    ArrayList<String> getBonusInfo();
+
 
 }

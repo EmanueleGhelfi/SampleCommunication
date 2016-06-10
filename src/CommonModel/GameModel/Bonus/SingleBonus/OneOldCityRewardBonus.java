@@ -28,4 +28,14 @@ public class OneOldCityRewardBonus implements Bonus,Serializable {
     public ArrayList<Bonus> getBonusArrayList() {
         return null;
     }
+
+    @Override
+    public String getBonusURL() {
+        return null;
+    }
+
+    @Override
+    public String getBonusInfo() {
+        return null;
+    }
 }

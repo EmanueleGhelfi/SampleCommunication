@@ -155,5 +155,8 @@ public class Constants {
     public static final String PERMIT_CARD = "PERMIT_CARD";
     public static final String POLITIC_CARD = "POLITIC_CARD";
 
+    // Folder
+    public  static String IMAGE_PATH= "/ClientPackage/View/GUIResources/Image/";
+
 
 }

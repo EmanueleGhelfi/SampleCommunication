@@ -1,6 +1,7 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -20,6 +21,7 @@ public class PermitCardBonus implements Bonus, Serializable {
     //TODO teso
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
+        user.getBaseCommunication().selectPermitCard();
     }
 
     @Override
@@ -29,6 +31,16 @@ public class PermitCardBonus implements Bonus, Serializable {
 
     @Override
     public ArrayList<Bonus> getBonusArrayList() {
+        return null;
+    }
+
+    @Override
+    public String getBonusURL() {
+        return Constants.IMAGE_PATH+"PermitCard.png";
+    }
+
+    @Override
+    public String getBonusInfo() {
         return null;
     }
 }

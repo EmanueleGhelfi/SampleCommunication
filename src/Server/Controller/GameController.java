@@ -324,7 +324,7 @@ public class GameController implements Serializable{
             }
 
             finishedUser = marketHashMap.entrySet().stream()
-                    .filter(userBooleanEntry -> userBooleanEntry.getValue())
+                    .filter(java.util.Map.Entry::getValue)
                     .count();
 
             if (finishedUser == marketHashMap.size()) {
@@ -364,7 +364,7 @@ public class GameController implements Serializable{
             marketHashMap.put(user,true);
 
             long finishedUser = marketHashMap.entrySet().stream()
-                    .filter(userBooleanEntry -> userBooleanEntry.getValue())
+                    .filter(java.util.Map.Entry::getValue)
                     .count();
             if(finishedUser<users.size()) {
                 selectRandomUser();

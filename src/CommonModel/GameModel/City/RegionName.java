@@ -6,7 +6,7 @@ import Utilities.Class.Constants;
  * Created by Emanuele on 25/05/2016.
  */
 public enum  RegionName {
-    MOUNTAIN (Constants.MOUNTAIN), HILL (Constants.HILL), COAST (Constants.COAST);
+    COAST (Constants.COAST),HILL (Constants.HILL), MOUNTAIN (Constants.MOUNTAIN);
 
     private String regionName;
 

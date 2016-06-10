@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
@@ -62,6 +63,7 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
         JFXComboBox<Label> jfxComboBox = new JFXComboBox<Label>();
         JFXButton mainActionButton = new JFXButton();
         JFXButton fastActionButton = new JFXButton();
+        HBox hBoxSource = (HBox)event.getSource();
 
         for (PoliticColor politicColor: PoliticColor.values()){
             politicColors.add(politicColor);
@@ -101,7 +103,9 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
         vBox.getChildren().add(hBox);
         vBox.setPadding(new Insets(20.0,20.0,20.0,20.0));
         vBox.setSpacing(20);
+        double targetX = event.getScreenX();
+        double targetY = event.getScreenY();
         popOver.setContentNode(vBox);
-        popOver.show(node);
+        popOver.show(hBoxSource,targetX,targetY);
     }
 }

@@ -103,6 +103,21 @@ public class PathController implements Initializable, BaseController{
 
     }
 
+    @Override
+    public void onResizeHeight(double height, double width) {
+
+    }
+
+    @Override
+    public void onResizeWidth(double width, double height) {
+
+    }
+
+    @Override
+    public void selectPermitCard() {
+
+    }
+
     public void nextPlayer(Event event) {
         userCounter++;
         emporiumCounter = 0;

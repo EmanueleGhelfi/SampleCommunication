@@ -31,4 +31,18 @@ public class NewMainAction implements Bonus,Serializable {
         return null;
     }
 
+    @Override
+    public ArrayList<String> getBonusURL() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add(Constants.IMAGE_PATH+"mainAction.png");
+        return toReturn;
+    }
+
+    @Override
+    public ArrayList<String> getBonusInfo() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add("");
+        return toReturn;
+    }
+
 }

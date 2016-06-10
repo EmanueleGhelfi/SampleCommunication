@@ -7,6 +7,8 @@ import Server.Model.Map;
 import Utilities.Class.Constants;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +19,8 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Emanuele on 13/05/2016.
@@ -144,9 +148,11 @@ public class GUIView extends Application implements BaseView {
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         GUIView baseView = this;
 
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                stage.setResizable(true);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MATCH_FXML));
                 Parent screen = null;
                 try {
@@ -161,7 +167,10 @@ public class GUIView extends Application implements BaseView {
                 Scene scene = new Scene(screen);
                 //stage= new Stage();
                 stage.setScene(scene);
+                stage.setMinHeight(600);
+                stage.setMinWidth(1200);
                 stage.show();
+                //resizingWindow();
             }
         });
     }
@@ -218,10 +227,121 @@ public class GUIView extends Application implements BaseView {
         baseControllerList.forEach(baseController -> baseController.onFinishMarket());
     }
 
+    @Override
+    public void selectPermitCard() {
+        Platform.runLater(()->{
+            baseControllerList.forEach(BaseController::selectPermitCard);
+        });
+
+    }
+
     public void registerBaseController(BaseController baseController){
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);
         }
     }
 
+    public void resizingWindow(){
+
+        final ChangeListener<Number> listener = new ChangeListener<Number>() {
+            final Timer timer = new Timer();
+            TimerTask timerTask = null;
+            final long delayTime = 200;
+
+            double width= stage.getWidth();
+            double height = stage.getHeight();
+
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if(timerTask!=null){
+                    timerTask.cancel();
+                }
+
+                timerTask=new TimerTask() {
+                    @Override
+                    public void run() {
+                        System.out.println("Finished resize ehehehe");
+
+
+                        if(stage.getHeight()==newValue.doubleValue()) {
+                            if (!(stage.getWidth() < stage.getHeight() / 0.6 + 5 && stage.getWidth() > stage.getHeight() / 0.6 + 5)) {
+                                System.out.println("cambiata width");
+                                stage.setWidth(stage.getHeight() / 0.6);
+                                for (BaseController baseController : baseControllerList) {
+                                    baseController.onResizeHeight(stage.getHeight(),scene.getWidth());
+                                    //baseController.onResizeWidth(newSceneHeight.doubleValue()*1.7784);
+                                }
+                            }
+                        }
+
+                        if(stage.getWidth()==newValue.doubleValue()) {
+                            if (!(stage.getHeight() < stage.getWidth() * 0.6 + 5 && stage.getHeight() > stage.getWidth() * 0.6 - 5)) {
+                                System.out.println("cambiata height");
+                                stage.setHeight(stage.getWidth() * 0.6);
+                                for (BaseController baseController : baseControllerList) {
+                                    baseController.onResizeWidth(stage.getWidth(),stage.getHeight());
+                                    //baseController.onResizeHeight(newSceneWidth.doubleValue()*0.5623);
+                                }
+                            }
+                        }
+
+                    }
+                };
+                timer.schedule(timerTask,delayTime);
+            }
+        };
+
+        /*
+        stage.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                System.out.println("Prima height: "+stage.getHeight()+" e deve essere "+newSceneWidth.doubleValue()*0.56);
+                if(!(stage.getHeight()<newSceneWidth.doubleValue()*0.56+5 && stage.getHeight()>newSceneWidth.doubleValue()*0.56-5)) {
+                    stage.setHeight(newSceneWidth.doubleValue() * 0.56);
+                }
+                //stage.heightProperty().multiply((newSceneWidth.doubleValue()-oldSceneWidth.doubleValue())*0.56);
+                for (BaseController baseController : baseControllerList) {
+                    baseController.onResizeWidth(newSceneWidth,stage.getHeight());
+                    //baseController.onResizeHeight(newSceneWidth.doubleValue()*0.5623);
+                }
+                System.out.println("Height :"+stage.getHeight());
+                System.out.println("Width: "+stage.getWidth());
+            }
+        });
+        stage.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                System.out.println("called on resize height");
+                if(!(stage.getWidth()<newSceneHeight.doubleValue()/0.56+5 && stage.getWidth()>newSceneHeight.doubleValue()/0.56-5)) {
+                    stage.setWidth(newSceneHeight.doubleValue() / 0.56);
+                }
+               // stage.widthProperty().multiply((newSceneHeight.doubleValue()-oldSceneHeight.doubleValue())*1.7);
+                for (BaseController baseController : baseControllerList) {
+                    baseController.onResizeHeight(newSceneHeight,scene.getWidth());
+                    //baseController.onResizeWidth(newSceneHeight.doubleValue()*1.7784);
+                }
+                System.out.println("Height :"+stage.getHeight());
+                System.out.println("Width: "+stage.getWidth());
+            }
+        });
+        stage.resizableProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                System.out.println("RESIZE "+newValue);
+            }
+        });
+        */
+        stage.widthProperty().addListener(listener);
+        stage.heightProperty().addListener(listener);
+
+
+
+
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
 }

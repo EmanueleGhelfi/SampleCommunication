@@ -12,7 +12,7 @@
    <bottom>
       <VBox alignment="CENTER" layoutX="289.0" layoutY="16.0">
          <children>
-            <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" text="Choose" />
+            <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" text="Choose" onAction="#chooseMap" />
          </children>
          <padding>
             <Insets bottom="25.0" />

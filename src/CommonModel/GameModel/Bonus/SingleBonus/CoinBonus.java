@@ -35,4 +35,19 @@ public class CoinBonus implements Bonus,Serializable {
     public ArrayList<Bonus> getBonusArrayList() {
         return null;
     }
+
+    @Override
+    public ArrayList<String> getBonusURL() {
+
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add(Constants.IMAGE_PATH+"Money.png");
+        return toReturn;
+    }
+
+    @Override
+    public ArrayList<String> getBonusInfo() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add(coinNumber+"");
+        return toReturn;
+    }
 }

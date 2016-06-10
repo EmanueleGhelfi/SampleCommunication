@@ -27,4 +27,6 @@ public interface RMIClientInterface extends Remote {
     void onStartBuyPhase() throws RemoteException;
 
     void disableMarketPhase() throws RemoteException;
+
+    void selectPermitCard() throws RemoteException;
 }
