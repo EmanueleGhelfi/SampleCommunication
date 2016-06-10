@@ -362,7 +362,8 @@ public class MatchController implements Initializable, BaseController {
         bonusURL.forEach(bonus->{
             ImageView imageView = new ImageView();
             //todo check
-                imageView.setImage(new Image(bonus));
+            System.out.println(bonus + " THE ERROR");
+            imageView.setImage(new Image(bonus));
             imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.05));
             imageView.fitWidthProperty().bind(background.widthProperty().divide(25));
             background.getChildren().add(imageView);
