@@ -1,6 +1,7 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -27,13 +28,19 @@ public class TwoOldCityRewardBonus implements Bonus, Serializable {
     }
 
     @Override
-    public String getBonusURL() {
-        return null;
+    public ArrayList<String> getBonusURL() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add(Constants.IMAGE_PATH+"TwoOldBonusCard.png");
+        return toReturn;
+
     }
 
     @Override
-    public String getBonusInfo() {
-        return null;
+    public ArrayList<String> getBonusInfo() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add("");
+        return toReturn;
+
     }
 
 }

@@ -35,12 +35,17 @@ public class PermitCardBonus implements Bonus, Serializable {
     }
 
     @Override
-    public String getBonusURL() {
-        return Constants.IMAGE_PATH+"PermitCard.png";
+    public ArrayList<String> getBonusURL() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add(Constants.IMAGE_PATH+"NewPermitCardBonus.png");
+        return toReturn;
+
     }
 
     @Override
-    public String getBonusInfo() {
-        return null;
+    public ArrayList<String> getBonusInfo() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add("");
+        return toReturn;
     }
 }
