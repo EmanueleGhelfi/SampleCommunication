@@ -38,11 +38,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.net.URL;
@@ -367,15 +369,18 @@ public class MatchController implements Initializable, BaseController {
             //todo check
             imageView.setImage(new Image(bonusURL.get(i)));
             imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.05));
-            imageView.fitWidthProperty().bind(background.widthProperty().divide(25));
+            imageView.fitWidthProperty().bind(background.widthProperty().divide(30));
+            DropShadow ds = new DropShadow(15, Color.BLACK);
+            imageView.setEffect(ds);
+            imageView.setPreserveRatio(true);
             background.getChildren().add(imageView);
             imageView.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city1)).add(i*20));
             imageView.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city1)));
             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    imageView.setScaleX(1.2);
-                    imageView.setScaleY(1.2);
+                    imageView.setScaleX(1.1);
+                    imageView.setScaleY(1.1);
                 }
             });
             imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
