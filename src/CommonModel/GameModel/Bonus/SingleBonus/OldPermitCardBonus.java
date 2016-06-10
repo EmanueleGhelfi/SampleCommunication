@@ -1,6 +1,7 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -27,5 +28,10 @@ public class OldPermitCardBonus implements Bonus,Serializable {
     @Override
     public ArrayList<Bonus> getBonusArrayList() {
         return null;
+    }
+
+    @Override
+    public String getBonusURL() {
+        return Constants.IMAGE_PATH+"PermitCard.png";
     }
 }

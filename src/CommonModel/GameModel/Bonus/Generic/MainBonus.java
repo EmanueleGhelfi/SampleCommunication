@@ -112,4 +112,9 @@ public class MainBonus implements Bonus,Serializable {
     public ArrayList<Bonus> getBonusArrayList() {
         return bonusArrayList;
     }
+
+    @Override
+    public String getBonusURL() {
+        return null;
+    }
 }

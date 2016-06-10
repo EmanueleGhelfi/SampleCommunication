@@ -31,4 +31,9 @@ public class NewMainAction implements Bonus,Serializable {
         return null;
     }
 
+    @Override
+    public String getBonusURL() {
+        return Constants.IMAGE_PATH+"mainAction.png";
+    }
+
 }

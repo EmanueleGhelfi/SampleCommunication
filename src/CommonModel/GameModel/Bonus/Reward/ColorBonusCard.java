@@ -60,4 +60,9 @@ public class ColorBonusCard implements RewardBonusCard,Serializable {
         return null;
     }
 
+    @Override
+    public String getBonusURL() {
+        return null;
+    }
+
 }

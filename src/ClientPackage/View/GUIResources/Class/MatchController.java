@@ -551,7 +551,7 @@ public class MatchController implements Initializable, BaseController {
                     ImageView imageView = new ImageView();
                     try {
                         imageView.setImage(new Image(councilors.get(i).getColor().getImageUrl()));
-                        imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(15));
+                        imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(10));
                         imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(3));
                         imageView.setPreserveRatio(true);
                         imageViews.add(imageView);
@@ -584,7 +584,7 @@ public class MatchController implements Initializable, BaseController {
             ImageView imageView = new ImageView();
             try{
                 imageView.setImage(new Image(councilor.getColor().getImageUrl()));
-                imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(15));
+                imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(10));
                 imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(3));
                 imageView.setPreserveRatio(true);
                 kingCouncil.add(imageView);
@@ -610,7 +610,7 @@ public class MatchController implements Initializable, BaseController {
 
             currentSnapshot.getVisibleRegionPermitCard(regionName).forEach(permitCard -> {
                 GridPane gridPane = new GridPane();
-                gridPane.prefWidthProperty().bind(bottomPane.prefWidthProperty().divide(20));
+                gridPane.prefWidthProperty().bind(bottomPane.prefWidthProperty().divide(15));
                 gridPane.prefHeightProperty().bind(bottomPane.prefHeightProperty().divide(2));
                 Label label = new Label(permitCard.getCityString());
 
@@ -634,23 +634,25 @@ public class MatchController implements Initializable, BaseController {
 
         }
 
-        permitHBox.spacingProperty().bind(background.prefWidthProperty().divide(10));
+        permitHBox.spacingProperty().bind(background.prefWidthProperty().divide(6));
         permitHBox.setAlignment(Pos.CENTER);
         permitHBox.prefHeightProperty().bind(vbox.prefHeightProperty().divide(3));
         permitHBox.prefWidthProperty().bind(vbox.prefWidthProperty());
         hbox2.setAlignment(Pos.CENTER);
         //SideNode sideNode = new SideNode(10.0, Side.BOTTOM,hiddenSidesPane,hbox1,hbox2,permitHBox);
         //sideNode.setStyle("-fx-background-color: rgba(143,147,147,.25);");
-        vbox.getChildren().addAll(hbox1,hbox2,permitHBox);
+        vbox.getChildren().addAll(hbox2,hbox1,permitHBox);
         vbox.spacingProperty().bind(bottomPane.prefHeightProperty().divide(8));
-        StackPane.setMargin(vbox,new Insets(0,0,0,20));
+        StackPane.setMargin(vbox,new Insets(20,0,20,20));
 
 
         bottomPane.getChildren().add(vbox);
         vbox.prefWidthProperty().bind(bottomPane.prefWidthProperty());
         vbox.prefHeightProperty().bind(bottomPane.prefHeightProperty());
-        bottomPane.prefHeightProperty().bind(background.prefHeightProperty().divide(8));
+        bottomPane.prefHeightProperty().bind(background.prefHeightProperty().divide(5));
         bottomPane.prefWidthProperty().bind(background.prefWidthProperty());
+        bottomPane.setOpacity(0.8);
+        bottomPane.setVisible(false);
 
     }
 
@@ -913,6 +915,15 @@ public class MatchController implements Initializable, BaseController {
         String infoLabel = "Azione veloce: Ottieni un azione principale per 3 aiutanti!!";
 
         showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
+    }
+
+    public void showMore(ActionEvent actionEvent) {
+        if(bottomPane.isVisible()){
+            bottomPane.setVisible(false);
+        }
+        else {
+            bottomPane.setVisible(true);
+        }
     }
 
     private class PermitButtonHandler implements EventHandler<MouseEvent>{

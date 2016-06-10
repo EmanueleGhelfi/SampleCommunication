@@ -70,3 +70,12 @@
     -fx-background-insets: 2, 0, 0;
     -fx-background-radius: 2em;
 }
+
+.whiteBackground{
+    -fx-background-color: white;
+}
+
+.moreImg{
+    -fx-background-color: white;
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/icon/more.png");
+}

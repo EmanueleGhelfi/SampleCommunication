@@ -148,9 +148,11 @@ public class GUIView extends Application implements BaseView {
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         GUIView baseView = this;
 
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                stage.setResizable(true);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MATCH_FXML));
                 Parent screen = null;
                 try {

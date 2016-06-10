@@ -26,4 +26,9 @@ public class TwoOldCityRewardBonus implements Bonus, Serializable {
         return null;
     }
 
+    @Override
+    public String getBonusURL() {
+        return null;
+    }
+
 }
