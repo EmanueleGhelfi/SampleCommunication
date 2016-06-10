@@ -103,7 +103,7 @@
                               </Label>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <image>
-                                    <Image url="@../Image/ShieldTrasparent.png" />
+                                    <Image url="@../Image/ShieldTransparent.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -403,7 +403,7 @@
                         </ImageView>
                         <ImageView fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <image>
-                              <Image url="@../Image/ShieldTrasparent.png" />
+                              <Image url="@../Image/ShieldTransparent.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="336.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
@@ -529,7 +529,7 @@
                               </ImageView>
                               <ImageView fitHeight="62.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                  <image>
-                                    <Image url="@../Image/ShieldTrasparent.png" />
+                                    <Image url="@../Image/ShieldTransparent.png" />
                                  </image>
                               </ImageView>
                               <ImageView fitHeight="60.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">

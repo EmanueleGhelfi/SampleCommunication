@@ -21,6 +21,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -359,14 +361,15 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void createBonus(ArrayList<String> bonusURL, ArrayList<String> bonusInfo, City city1) {
-        bonusURL.forEach(bonus->{
+        for(int i = 0; i< bonusURL.size();i++){
             ImageView imageView = new ImageView();
+            System.out.println("bonus url "+bonusURL.get(i));
             //todo check
-                imageView.setImage(new Image(bonus));
+            imageView.setImage(new Image(bonusURL.get(i)));
             imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.05));
             imageView.fitWidthProperty().bind(background.widthProperty().divide(25));
             background.getChildren().add(imageView);
-            imageView.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city1)));
+            imageView.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city1)).add(i*20));
             imageView.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city1)));
             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
@@ -389,7 +392,7 @@ public class MatchController implements Initializable, BaseController {
                     //showPopoverOnCity(city,imageView);
                 }
             });
-        });
+        }
 
     }
 
