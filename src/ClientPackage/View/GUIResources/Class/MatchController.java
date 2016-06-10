@@ -190,6 +190,7 @@ public class MatchController implements Initializable, BaseController {
         initPermitButton();
         handleClick();
         createCity();
+
         populateHamburgerMenu();
         initHamburgerIcon();
     }
@@ -347,10 +348,48 @@ public class MatchController implements Initializable, BaseController {
         */
         clientController.getSnapshot().getMap().getCity().forEach(city1 -> {
             CreateSingleCity(CityPosition.getX(city1),CityPosition.getY(city1),city1);
+                createBonus(city1.getBonus().getBonusURL(),city1.getBonus()
+                        .getBonusInfo(),city1);
         });
 
-        createKingImage(CityPosition.getX(clientController.getSnapshot().getKing().getCurrentCity()),CityPosition.getY(clientController.getSnapshot().getKing().getCurrentCity()));
+        createKingImage(CityPosition.getX(clientController.getSnapshot().getKing().getCurrentCity()),CityPosition
+                .getY(clientController.getSnapshot().getKing().getCurrentCity()));
 
+
+    }
+
+    private void createBonus(ArrayList<String> bonusURL, ArrayList<String> bonusInfo, City city1) {
+        bonusURL.forEach(bonus->{
+            ImageView imageView = new ImageView();
+            //todo check
+                imageView.setImage(new Image(bonus));
+            imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.05));
+            imageView.fitWidthProperty().bind(background.widthProperty().divide(25));
+            background.getChildren().add(imageView);
+            imageView.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city1)));
+            imageView.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city1)));
+            imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    imageView.setScaleX(1.2);
+                    imageView.setScaleY(1.2);
+                }
+            });
+            imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    imageView.setScaleY(1);
+                    imageView.setScaleX(1);
+                }
+            });
+
+            imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    //showPopoverOnCity(city,imageView);
+                }
+            });
+        });
 
     }
 
