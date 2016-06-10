@@ -9,7 +9,7 @@
 
 <BorderPane fx:id="shop" minHeight="500.0" minWidth="500.0" style="-fx-background-color: white;" stylesheets="@../CSS/MatchCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.ShopController">
    <center>
-      <GridPane fx:id="background" BorderPane.alignment="CENTER">
+      <GridPane fx:id="background" styleClass="shopBackground" stylesheets="@../CSS/ShopCSS.css" BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="15" />
             <ColumnConstraints hgrow="SOMETIMES" percentWidth="30" />
@@ -25,13 +25,13 @@
             <RowConstraints percentHeight="5" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="finishButton" onAction="#sendOnFinishMarket" prefHeight="0.0" prefWidth="100.0" styleClass="button-raised" text="FINISH" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.vgrow="NEVER" />
-            <JFXButton fx:id="buyButton" onAction="#onBuy" styleClass="button-raised" text="COMPRA" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-            <JFXButton fx:id="sellButton" onAction="#onSell" styleClass="button-raised" text="VENDI" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-            <TilePane fx:id="buyPane" prefHeight="200.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <ScrollPane fx:id="sellScroll" pannable="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+            <JFXButton fx:id="finishButton" onAction="#sendOnFinishMarket" prefHeight="0.0" prefWidth="100.0" styleClass="button-raised" text="FINISH" visible="false" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.vgrow="NEVER" />
+            <JFXButton fx:id="buyButton" onAction="#onBuy" styleClass="button-raised" text="COMPRA" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <JFXButton fx:id="sellButton" onAction="#onSell" styleClass="button-raised" text="VENDI" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <TilePane fx:id="buyPane" prefHeight="200.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="200.0" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Label" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ScrollPane fx:id="sellScroll" pannable="true" visible="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
               <content>
                   <TilePane fx:id="sellPane" alignment="CENTER" prefTileHeight="200.0" prefTileWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
               </content>

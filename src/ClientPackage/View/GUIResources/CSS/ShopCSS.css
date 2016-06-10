@@ -43,3 +43,7 @@
 .circularButton{
     -fx-background-radius: 50%;
 }
+
+.shopBackground{
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/ShopBackground.jpg");
+}

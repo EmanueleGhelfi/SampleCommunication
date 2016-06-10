@@ -138,6 +138,18 @@ public class ShopController implements BaseController, Initializable {
         sellPane.prefHeightProperty().bind(sellScroll.heightProperty());
         updateView();
         onFinishMarket();
+        detectClick();
+    }
+
+    private void detectClick() {
+        background.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("event x and y "+event.getX()/background.getWidth()+" "+event.getY()/background.getHeight());
+                System.out.println("Scene  "+event.getSceneX()+" "+event.getSceneY());
+                System.out.println("Altro "+event.getScreenX()+" "+event.getScreenY());
+            }
+        });
     }
 
     @Override
