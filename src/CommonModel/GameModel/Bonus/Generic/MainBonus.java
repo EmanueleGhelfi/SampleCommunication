@@ -114,7 +114,20 @@ public class MainBonus implements Bonus,Serializable {
     }
 
     @Override
-    public String getBonusURL() {
-        return null;
+    public ArrayList<String> getBonusURL() {
+        ArrayList<String> toReturn = new ArrayList<>();
+        bonusArrayList.forEach(bonus ->
+            toReturn.addAll(bonus.getBonusURL())
+        );
+        return toReturn;
+    }
+
+    @Override
+    public ArrayList<String> getBonusInfo() {
+        ArrayList<String> toReturn = new ArrayList<>();
+        bonusArrayList.forEach(bonus ->
+                toReturn.addAll(bonus.getBonusInfo())
+        );
+        return toReturn;
     }
 }

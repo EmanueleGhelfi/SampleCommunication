@@ -32,4 +32,9 @@ public class PoliticCardBonus implements Bonus, Serializable {
     public String getBonusURL() {
         return Constants.IMAGE_PATH+"RetroPoliticCard.png";
     }
+
+    @Override
+    public String getBonusInfo() {
+        return null;
+    }
 }

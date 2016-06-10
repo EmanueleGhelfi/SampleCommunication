@@ -33,4 +33,9 @@ public class OneOldCityRewardBonus implements Bonus,Serializable {
     public String getBonusURL() {
         return null;
     }
+
+    @Override
+    public String getBonusInfo() {
+        return null;
+    }
 }

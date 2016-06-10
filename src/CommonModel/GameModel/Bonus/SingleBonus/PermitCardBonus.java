@@ -38,4 +38,9 @@ public class PermitCardBonus implements Bonus, Serializable {
     public String getBonusURL() {
         return Constants.IMAGE_PATH+"PermitCard.png";
     }
+
+    @Override
+    public String getBonusInfo() {
+        return null;
+    }
 }

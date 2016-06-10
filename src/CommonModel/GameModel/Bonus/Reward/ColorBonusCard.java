@@ -61,8 +61,15 @@ public class ColorBonusCard implements RewardBonusCard,Serializable {
     }
 
     @Override
-    public String getBonusURL() {
-        return null;
+    public ArrayList<String> getBonusURL() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public ArrayList<String> getBonusInfo() {
+        ArrayList<String> toReturn =  new ArrayList<>();
+        toReturn.addAll(victoryPointBonus.getBonusInfo());
+        return toReturn;
     }
 
 }

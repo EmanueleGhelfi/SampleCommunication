@@ -37,7 +37,16 @@ public class HelperBonus implements Bonus,Serializable {
     }
 
     @Override
-    public String getBonusURL() {
-        return Constants.IMAGE_PATH+"Helper.png";
+    public ArrayList<String> getBonusURL() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add(Constants.IMAGE_PATH+"Helper.png");
+        return toReturn;
+    }
+
+    @Override
+    public ArrayList<String> getBonusInfo() {
+        ArrayList<String> toReturn = new ArrayList<String>();
+        toReturn.add(helperNumber+"");
+        return toReturn;
     }
 }

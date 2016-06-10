@@ -31,7 +31,13 @@ public class OldPermitCardBonus implements Bonus,Serializable {
     }
 
     @Override
-    public String getBonusURL() {
+    public ArrayList<String> getBonusURL() {
+
         return Constants.IMAGE_PATH+"PermitCard.png";
+    }
+
+    @Override
+    public String getBonusInfo() {
+        return null;
     }
 }

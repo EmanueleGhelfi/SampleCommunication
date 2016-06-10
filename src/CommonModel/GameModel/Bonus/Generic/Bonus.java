@@ -17,7 +17,9 @@ public interface Bonus {
 
     ArrayList<Bonus> getBonusArrayList();
 
-    String getBonusURL();
+    ArrayList<String> getBonusURL();
+
+    ArrayList<String> getBonusInfo();
 
 
 }
