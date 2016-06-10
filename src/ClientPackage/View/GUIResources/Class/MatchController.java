@@ -151,7 +151,6 @@ public class MatchController implements Initializable, BaseController {
         gridPane.prefHeightProperty().bind(background.prefHeightProperty());
 
 
-
         backgroundImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
@@ -180,8 +179,6 @@ public class MatchController implements Initializable, BaseController {
                 System.out.println("background "+ background.getWidth() );
             }
         });
-
-
 
         //background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
         //createArray();

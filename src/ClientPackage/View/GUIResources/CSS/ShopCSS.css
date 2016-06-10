@@ -46,4 +46,6 @@
 
 .shopBackground{
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/ShopBackground.jpg");
+    -fx-background-size: 100%;
+    -fx-background-repeat: stretch;
 }

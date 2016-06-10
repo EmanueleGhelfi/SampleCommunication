@@ -39,13 +39,17 @@ public class ShopController implements BaseController, Initializable {
     ClientController clientController;
     GUIView guiView;
 
+    private ImageView politicCardDeck = new ImageView();
+    private ImageView permitCardDeck = new ImageView();
+    private ImageView helperDeck = new ImageView();
+
     @FXML private JFXListView buyListView;
     @FXML private JFXListView sellListView;
     @FXML private BorderPane shop;
     @FXML private JFXButton sellButton;
     @FXML private JFXButton buyButton;
     @FXML private JFXButton finishButton;
-    @FXML private GridPane background;
+    @FXML private Pane shopBackground;
     @FXML private TilePane sellPane;
     @FXML private TilePane buyPane;
     @FXML private ScrollPane sellScroll;
@@ -58,6 +62,7 @@ public class ShopController implements BaseController, Initializable {
     ArrayList<BuyableWrapper> buyList = new ArrayList<>();
     ArrayList<BuyableWrapper> toBuy = new ArrayList<>();
     ArrayList<BuyableWrapper> trueList = new ArrayList<>();
+
     ShopController shopController=this;
 
     public void onBuy(ActionEvent actionEvent) {
@@ -121,7 +126,7 @@ public class ShopController implements BaseController, Initializable {
         }
 
         for (BuyableWrapper buyableWrapper : sellList) {
-            sellPane.getChildren().add(addItems(buyableWrapper));
+            //sellPane.getChildren().add(addItems(buyableWrapper));
         }
         for (BuyableWrapper buyableWrapper : buyList) {
             buyPane.getChildren().add(addItems(buyableWrapper));
@@ -134,18 +139,42 @@ public class ShopController implements BaseController, Initializable {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
-        sellPane.prefWidthProperty().bind(sellScroll.widthProperty());
-        sellPane.prefHeightProperty().bind(sellScroll.heightProperty());
+        //sellPane.prefWidthProperty().bind(sellScroll.widthProperty());
+        //sellPane.prefHeightProperty().bind(sellScroll.heightProperty());
         updateView();
         onFinishMarket();
         detectClick();
+        createDeck();
+    }
+
+    private void createDeck() {
+        politicCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PoliticCardDistorted.png"));
+        permitCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png"));
+        helperDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/HelperDistorted.png"));
+
+        shopBackground.getChildren().addAll(politicCardDeck, permitCardDeck, helperDeck);
+
+        politicCardDeck.layoutXProperty().bind(shopBackground.widthProperty().multiply(0.3883));
+        politicCardDeck.layoutYProperty().bind(shopBackground.heightProperty().multiply(0.5612));
+        permitCardDeck.layoutXProperty().bind(shopBackground.widthProperty().multiply(0.4591));
+        permitCardDeck.layoutYProperty().bind(shopBackground.heightProperty().multiply(0.5552));
+        helperDeck.layoutXProperty().bind(shopBackground.widthProperty().multiply(0.535));
+        helperDeck.layoutYProperty().bind(shopBackground.heightProperty().multiply(0.5597));
+
+        politicCardDeck.fitWidthProperty().bind(shopBackground.prefWidthProperty().divide(10));
+        politicCardDeck.fitHeightProperty().bind(shopBackground.prefWidthProperty().divide(10));
+        permitCardDeck.fitWidthProperty().bind(shopBackground.prefWidthProperty().divide(10));
+        permitCardDeck.fitHeightProperty().bind(shopBackground.prefWidthProperty().divide(10));
+        helperDeck.fitWidthProperty().bind(shopBackground.prefWidthProperty().divide(10));
+        helperDeck.fitHeightProperty().bind(shopBackground.prefWidthProperty().divide(10));
+
     }
 
     private void detectClick() {
-        background.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        shopBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("event x and y "+event.getX()/background.getWidth()+" "+event.getY()/background.getHeight());
+                System.out.println("event x and y "+event.getX()/shopBackground.getWidth()+" "+event.getY()/shopBackground.getHeight());
                 System.out.println("Scene  "+event.getSceneX()+" "+event.getSceneY());
                 System.out.println("Altro "+event.getScreenX()+" "+event.getScreenY());
             }
@@ -341,8 +370,8 @@ public class ShopController implements BaseController, Initializable {
         GridPane.setValignment(button, VPos.CENTER);
         baseGridPane.prefHeightProperty().bind(imageView.fitWidthProperty().multiply(0.8));
         baseGridPane.prefWidthProperty().bind(imageView.fitWidthProperty().multiply(0.8));
-        sellPane.setHgap(10);
-        sellPane.setVgap(10);
+        //sellPane.setHgap(10);
+        //sellPane.setVgap(10);
         System.out.println(" IN TEORIA STO AGGIUNGENDO ");
         return baseGridPane;
     }
