@@ -10,10 +10,13 @@ import CommonModel.Snapshot.SnapshotToSend;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -38,6 +41,8 @@ public class ShopController implements BaseController, Initializable {
 
     ClientController clientController;
     GUIView guiView;
+
+    private ImageView backgroundImage = new ImageView();
 
     private ImageView politicCardDeck = new ImageView();
     private ImageView permitCardDeck = new ImageView();
@@ -139,6 +144,20 @@ public class ShopController implements BaseController, Initializable {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
+        backgroundImage.setImage(new Image("/ClientPackage/View/GUIResources/Image/ShopBackground.jpg"));
+        backgroundImage.setPreserveRatio(true);
+        backgroundImage.fitHeightProperty().bind(shopBackground.heightProperty());
+        backgroundImage.fitWidthProperty().bind(shopBackground.widthProperty());
+        shopBackground.widthProperty().bind(shop.widthProperty());
+        shopBackground.heightProperty().bind(shop.heightProperty());
+        backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("image: "+newValue.doubleValue());
+                System.out.println("background "+ shopBackground.getWidth() );
+            }
+        });
+        shopBackground.getChildren().add(backgroundImage);
         //sellPane.prefWidthProperty().bind(sellScroll.widthProperty());
         //sellPane.prefHeightProperty().bind(sellScroll.heightProperty());
         updateView();

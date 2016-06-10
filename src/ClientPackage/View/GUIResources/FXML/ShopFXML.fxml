@@ -9,7 +9,7 @@
 
 <BorderPane fx:id="shop" minHeight="500.0" minWidth="500.0" style="-fx-background-color: white;" stylesheets="@../CSS/MatchCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.ShopController">
    <center>
-      <Pane fx:id="shopBackground" styleClass="shopBackground" stylesheets="@../CSS/ShopCSS.css">
+      <Pane fx:id="shopBackground" stylesheets="@../CSS/ShopCSS.css">
          <children>
             <TilePane fx:id="buyPane" layoutX="400.0" layoutY="23.0" prefHeight="200.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="200.0" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <JFXButton fx:id="buyButton" layoutX="513.0" layoutY="378.0" onAction="#onBuy" styleClass="button-raised" text="COMPRA" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
