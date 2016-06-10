@@ -67,7 +67,7 @@
                         </ImageView>
                         <ImageView fitHeight="62.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                             <image>
-                                <Image url="@../Image/ShieldTrasparent.png" />
+                                <Image url="@../Image/ShieldTransparent.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="60.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
