@@ -83,7 +83,10 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void showLoginError() {
-        loginController.showLoginError();
+        Platform.runLater(()->{
+            loginController.showLoginError();
+        });
+
     }
 
     @Override
@@ -231,6 +234,14 @@ public class GUIView extends Application implements BaseView {
     public void selectPermitCard() {
         Platform.runLater(()->{
             baseControllerList.forEach(BaseController::selectPermitCard);
+        });
+
+    }
+
+    @Override
+    public void selectCityRewardBonus() {
+        Platform.runLater(()->{
+            baseControllerList.forEach(BaseController::selectCityRewardBonus);
         });
 
     }

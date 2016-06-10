@@ -10,6 +10,7 @@ import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
+import Utilities.Class.Graphics;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXHamburger;
@@ -366,21 +367,31 @@ public class MatchController implements Initializable, BaseController {
         for(int i = 0; i< bonusURL.size();i++){
             ImageView imageView = new ImageView();
             System.out.println("bonus url "+bonusURL.get(i));
-            //todo check
             imageView.setImage(new Image(bonusURL.get(i)));
             imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.05));
             imageView.fitWidthProperty().bind(background.widthProperty().divide(30));
+            imageView.getStyleClass().add(city1.getCityName().getCityName());
+            Label singleBonusInfo = new Label(bonusInfo.get(i));
+            singleBonusInfo.getStyleClass().add("bonusLabel");
+            singleBonusInfo.setLabelFor(imageView);
+            singleBonusInfo.setWrapText(true);
             DropShadow ds = new DropShadow(15, Color.BLACK);
             imageView.setEffect(ds);
             imageView.setPreserveRatio(true);
             background.getChildren().add(imageView);
+            background.getChildren().add(singleBonusInfo);
             imageView.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city1)).add(i*20));
             imageView.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city1)));
+            singleBonusInfo.layoutXProperty().bind(imageView.layoutXProperty().add(imageView.fitWidthProperty().divide(3)));
+            singleBonusInfo.layoutYProperty().bind(imageView.layoutYProperty().add(imageView.fitHeightProperty().divide(3)));
+
+
+
             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    imageView.setScaleX(1.1);
-                    imageView.setScaleY(1.1);
+                    imageView.setScaleX(1.05);
+                    imageView.setScaleY(1.05);
                 }
             });
             imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -403,18 +414,14 @@ public class MatchController implements Initializable, BaseController {
 
     private void createKingImage(double x, double y) {
         ImageView imageView = new ImageView();
-
-        try {
-            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/Crown.png"));
-        }
-        catch (Exception e){
-            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/City/blue.png"));
-        }
-        imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.1));
-        imageView.fitWidthProperty().bind(background.widthProperty().divide(15));
+            imageView.setImage(new Image(Constants.IMAGE_PATH+"Crown.png"));
+        imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.07));
+        imageView.fitWidthProperty().bind(background.widthProperty().divide(25));
+        DropShadow ds = new DropShadow(15, Color.BLACK);
+        imageView.setEffect(ds);
         background.getChildren().add(imageView);
         imageView.layoutXProperty().bind(background.widthProperty().multiply(x));
-        imageView.layoutYProperty().bind(background.heightProperty().multiply(y));
+        imageView.layoutYProperty().bind(background.heightProperty().multiply(y).add(50));
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -845,6 +852,16 @@ public class MatchController implements Initializable, BaseController {
     @Override
     public void selectPermitCard() {
 
+    }
+
+    @Override
+    public void selectCityRewardBonus() {
+        clientController.getSnapshot().getCurrentUser().getUsersEmporium().forEach(this::pulseBonus);
+    }
+
+    private void pulseBonus(City city1) {
+        Set<Node> nodes =background.lookupAll("."+city1.getCityName().getCityName());
+        nodes.forEach(node -> Graphics.scaleTransitionEffectCycle(node,1.2f,1.2f));
     }
 
     private void turnFinished(boolean thisTurn) {

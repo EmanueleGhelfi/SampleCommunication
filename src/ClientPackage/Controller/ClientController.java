@@ -264,4 +264,8 @@ public class ClientController {
     public void selectPermitCard() {
         baseView.selectPermitCard();
     }
+
+    public void selectCityRewardBonus() {
+        baseView.selectCityRewardBonus();
+    }
 }

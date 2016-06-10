@@ -118,6 +118,11 @@ public class PathController implements Initializable, BaseController{
 
     }
 
+    @Override
+    public void selectCityRewardBonus() {
+
+    }
+
     public void nextPlayer(Event event) {
         userCounter++;
         emporiumCounter = 0;

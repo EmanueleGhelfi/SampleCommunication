@@ -17,7 +17,7 @@ public class OneOldCityRewardBonus implements Bonus,Serializable {
     //TODO teso
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-
+        user.getBaseCommunication().selectCityRewardBonus();
     }
 
     @Override

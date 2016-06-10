@@ -180,6 +180,10 @@ public class ClientSocketService extends ClientService implements Runnable {
                 clientController.onFinishBuyPhase();
                 break;
             }
+            case Constants.SELECT_CITY_REWARD_BONUS:{
+                clientController.selectCityRewardBonus();
+                break;
+            }
         }
     }
 }

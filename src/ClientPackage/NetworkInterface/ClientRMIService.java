@@ -198,4 +198,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     public void selectPermitCard() throws RemoteException {
         clientController.selectPermitCard();
     }
+
+    @Override
+    public void selectCityRewardBonus() throws RemoteException {
+        clientController.selectCityRewardBonus();
+    }
 }

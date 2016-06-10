@@ -97,6 +97,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void selectCityRewardBonus() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.SELECT_CITY_REWARD_BONUS,null);
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())

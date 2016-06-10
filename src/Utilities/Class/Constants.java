@@ -23,6 +23,7 @@ public class Constants {
     public static final String CODE_FINISH_SELL_PHASE = "CODE_FINISH_SELL_PHASE";
     public static final String CODE_FINISH_BUY_PHASE = "CODE_FINISH_BUY_PHASE";
     public static final String CODE_FINISH_MARKET_PHASE = "CODE_FINISH_MARKET_PHASE";
+    public static final String SELECT_CITY_REWARD_BONUS = "SELECT_CITY_REWARD_BONUS";
 
     //GENERAL STRING
     public static final String GUI = "GUI";

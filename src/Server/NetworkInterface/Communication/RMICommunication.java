@@ -218,6 +218,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
+    @Override
+    public void selectCityRewardBonus() {
+        try {
+            rmiClientInterface.selectCityRewardBonus();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void setUser(User user) {

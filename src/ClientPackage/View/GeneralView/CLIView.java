@@ -74,4 +74,9 @@ public class CLIView implements BaseView {
 
     }
 
+    @Override
+    public void selectCityRewardBonus() {
+
+    }
+
 }
