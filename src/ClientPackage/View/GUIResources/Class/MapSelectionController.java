@@ -3,6 +3,7 @@ package ClientPackage.View.GUIResources.Class;
 import ClientPackage.Controller.ClientController;
 import Server.Model.Map;
 import Utilities.Class.CircularArrayList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -70,4 +71,7 @@ public class MapSelectionController implements Initializable {
         this.clientController = clientController;
     }
 
+    public void chooseMap(ActionEvent actionEvent) {
+        clientController.sendMap(mapArrayList.get(mapCounter));
+    }
 }

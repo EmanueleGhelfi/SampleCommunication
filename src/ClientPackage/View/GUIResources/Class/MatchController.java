@@ -9,6 +9,7 @@ import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import Utilities.Class.Constants;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXHamburger;
@@ -45,12 +46,15 @@ import javafx.scene.shape.Circle;
 import java.net.URL;
 import java.util.*;
 
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
+import org.controlsfx.control.decoration.GraphicDecoration;
 import org.controlsfx.control.spreadsheet.Grid;
+import sun.font.FontFamily;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -547,9 +551,9 @@ public class MatchController implements Initializable, BaseController {
                     ImageView imageView = new ImageView();
                     try {
                         imageView.setImage(new Image(councilors.get(i).getColor().getImageUrl()));
-                        imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(30));
-                        imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(7));
-                        imageView.setPreserveRatio(false);
+                        imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(15));
+                        imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(3));
+                        imageView.setPreserveRatio(true);
                         imageViews.add(imageView);
                     }
                     catch (IllegalArgumentException e){
@@ -560,7 +564,8 @@ public class MatchController implements Initializable, BaseController {
                 councilHashMap.put(regionName,imageViews);
                 hbox1.getChildren().add(hBox);
                 //hBox.setPrefWidth(primaryScreenBounds.getWidth()/3);
-                hBox.prefWidthProperty().bind(background.prefWidthProperty().divide(3));
+                //hBox.prefWidthProperty().bind(hbox1.prefWidthProperty().divide(3));
+                //hBox.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLACK"),null,null),null,null));
                 hBox.setOnMouseClicked(new CouncilorHandler(hBox,regionName,this,clientController,null));
             } catch (CouncilNotFoundException e) {
                 e.printStackTrace();
@@ -568,27 +573,35 @@ public class MatchController implements Initializable, BaseController {
         }
 
         //hbox1.setPrefWidth(primaryScreenBounds.getWidth());
-        hbox1.prefWidthProperty().bind(background.prefWidthProperty());
+        hbox1.prefWidthProperty().bind(bottomPane.prefWidthProperty());
+        hbox1.spacingProperty().bind(bottomPane.prefWidthProperty().divide(5));
         hbox1.setAlignment(Pos.CENTER);
 
+
+        HBox kingHBox = new HBox();
         ArrayList<Councilor> kingCouncilors = new ArrayList<>(currentSnapshot.getKing().getCouncil().getCouncil());
         for (Councilor councilor: kingCouncilors){
             ImageView imageView = new ImageView();
             try{
                 imageView.setImage(new Image(councilor.getColor().getImageUrl()));
-                imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(30));
-                imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(7));
-                imageView.setPreserveRatio(false);
+                imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(15));
+                imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(3));
+                imageView.setPreserveRatio(true);
                 kingCouncil.add(imageView);
             }
             catch (IllegalArgumentException e){
                 System.out.println("not found image match controller"+councilor.getColor().getImageUrl());
             }
-            hbox2.getChildren().add(imageView);
+            kingHBox.getChildren().add(imageView);
         }
-        hbox2.setOnMouseClicked(new CouncilorHandler(hbox2,null,this,clientController,currentSnapshot.getKing()));
+        hbox2.getChildren().add(kingHBox);
+        kingHBox.setAlignment(Pos.CENTER);
+        kingHBox.setOnMouseClicked(new CouncilorHandler(hbox2,null,this,clientController,currentSnapshot.getKing()));
         //hbox2.setPrefWidth(primaryScreenBounds.getWidth());
-        hbox2.prefWidthProperty().bind(background.prefWidthProperty());
+        //hbox2.prefWidthProperty().bind(bottomPane.prefWidthProperty());
+        hbox2.setAlignment(Pos.CENTER);
+
+
         // Permit Card
         HBox permitHBox= new HBox();
 
@@ -598,17 +611,22 @@ public class MatchController implements Initializable, BaseController {
             currentSnapshot.getVisibleRegionPermitCard(regionName).forEach(permitCard -> {
                 GridPane gridPane = new GridPane();
                 gridPane.prefWidthProperty().bind(bottomPane.prefWidthProperty().divide(20));
-                gridPane.prefHeightProperty().bind(bottomPane.prefHeightProperty().divide(5));
+                gridPane.prefHeightProperty().bind(bottomPane.prefHeightProperty().divide(2));
                 Label label = new Label(permitCard.getCityString());
-                gridPane.add(label,0,0);
-                GridPane.setColumnSpan(label,3);
-                ImageView imageView = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png"));
-                imageView.setPreserveRatio(false);
+
+                ImageView imageView = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png"));
+                imageView.setPreserveRatio(true);
                 gridPane.add(imageView,0,0);
+                gridPane.add(label,0,0);
+                label.setFont(Font.font(8));
+                GridPane.setColumnSpan(label,3);
+                GridPane.setHalignment(label,HPos.CENTER);
+                GridPane.setValignment(label,VPos.CENTER);
                 GridPane.setRowSpan(imageView,3);
                 GridPane.setColumnSpan(imageView,3);
                 imageView.fitWidthProperty().bind(gridPane.prefWidthProperty());
                 imageView.fitHeightProperty().bind(gridPane.prefHeightProperty());
+                gridPane.setOnMouseClicked(new PermitCardHandler(permitCard,this,clientController));
                 hboxTmp.getChildren().add(gridPane);
             });
 
@@ -618,12 +636,14 @@ public class MatchController implements Initializable, BaseController {
 
         permitHBox.spacingProperty().bind(background.prefWidthProperty().divide(10));
         permitHBox.setAlignment(Pos.CENTER);
-        permitHBox.prefHeightProperty().bind(hiddenSidesPane.prefHeightProperty().divide(4));
-        permitHBox.prefWidthProperty().bind(hiddenSidesPane.prefWidthProperty());
+        permitHBox.prefHeightProperty().bind(vbox.prefHeightProperty().divide(3));
+        permitHBox.prefWidthProperty().bind(vbox.prefWidthProperty());
         hbox2.setAlignment(Pos.CENTER);
         //SideNode sideNode = new SideNode(10.0, Side.BOTTOM,hiddenSidesPane,hbox1,hbox2,permitHBox);
         //sideNode.setStyle("-fx-background-color: rgba(143,147,147,.25);");
         vbox.getChildren().addAll(hbox1,hbox2,permitHBox);
+        vbox.spacingProperty().bind(bottomPane.prefHeightProperty().divide(8));
+        StackPane.setMargin(vbox,new Insets(0,0,0,20));
 
 
         bottomPane.getChildren().add(vbox);
