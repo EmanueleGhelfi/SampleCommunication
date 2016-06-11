@@ -31,5 +31,5 @@ public abstract class BaseCommunication {
 
     public abstract void selectPermitCard();
 
-    public abstract void selectCityRewardBonus();
+    public abstract void selectCityRewardBonus(SnapshotToSend snapshotToSend);
 }

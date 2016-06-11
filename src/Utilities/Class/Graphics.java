@@ -4,6 +4,9 @@ import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -43,7 +46,7 @@ public class Graphics {
         scaleTransition.playFromStart();
     }
 
-    public static Animation scaleTransitionEffectCycle (Node node, float toValueX, float toValueY){
+    public static Animation scaleTransitionEffectCycle (Node node, float toValueX, float toValueY, BooleanProperty stopTransition){
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500), node);
         scaleTransition.setCycleCount(Animation.INDEFINITE);
         scaleTransition.setInterpolator(Interpolator.EASE_BOTH);
@@ -52,6 +55,16 @@ public class Graphics {
         scaleTransition.setToX(toValueX);
         scaleTransition.setToY(toValueY);
         scaleTransition.playFromStart();
+        stopTransition.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue){
+                    scaleTransition.stop();
+                    node.setScaleX(1);
+                    node.setScaleY(1);
+                }
+            }
+        });
         return scaleTransition;
     }
 

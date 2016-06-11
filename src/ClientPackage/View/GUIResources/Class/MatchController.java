@@ -22,7 +22,9 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -125,6 +127,8 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
 
+    private BooleanProperty pulseBonus;
+
 
 
     private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
@@ -152,8 +156,6 @@ public class MatchController implements Initializable, BaseController {
         backgroundImage.fitWidthProperty().bind(gridPane.widthProperty());
         gridPane.prefWidthProperty().bind(background.prefWidthProperty());
         gridPane.prefHeightProperty().bind(background.prefHeightProperty());
-
-
 
         backgroundImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
             @Override
@@ -405,7 +407,11 @@ public class MatchController implements Initializable, BaseController {
             imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
+                    if(pulseBonus!=null){
+                        pulseBonus.setValue(true);
+                    }
                     //showPopoverOnCity(city,imageView);
+
                 }
             });
         }
@@ -467,8 +473,8 @@ public class MatchController implements Initializable, BaseController {
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                imageView.setScaleX(1.2);
-                imageView.setScaleY(1.2);
+                imageView.setScaleX(1.1);
+                imageView.setScaleY(1.1);
             }
         });
         imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -856,12 +862,14 @@ public class MatchController implements Initializable, BaseController {
 
     @Override
     public void selectCityRewardBonus() {
+        System.out.println("Select city reward bonus");
         clientController.getSnapshot().getCurrentUser().getUsersEmporium().forEach(this::pulseBonus);
     }
 
     private void pulseBonus(City city1) {
+        pulseBonus = new SimpleBooleanProperty(false);
         Set<Node> nodes =background.lookupAll("."+city1.getCityName().getCityName());
-        nodes.forEach(node -> Graphics.scaleTransitionEffectCycle(node,1.2f,1.2f));
+        nodes.forEach(node -> Graphics.scaleTransitionEffectCycle(node,1.2f,1.2f,pulseBonus));
     }
 
     private void turnFinished(boolean thisTurn) {
@@ -915,7 +923,7 @@ public class MatchController implements Initializable, BaseController {
     @Override
     public void updateView() {
         this.currentSnapshot = clientController.getSnapshot();
-        System.out.println("on update snapshot <- Match controller");
+        System.out.println("on update snapshot <- Match controller "+currentSnapshot.getCurrentUser().getUsersEmporium());
                 nobilityPathText.setText(currentSnapshot.getCurrentUser().getNobilityPathPosition().getPosition()+"");
                 richPathText.setText(currentSnapshot.getCurrentUser().getCoinPathPosition()+"");
                 helperText.setText(currentSnapshot.getCurrentUser().getHelpers().size()+"");

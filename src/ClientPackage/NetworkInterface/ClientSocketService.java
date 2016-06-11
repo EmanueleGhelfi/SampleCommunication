@@ -12,7 +12,6 @@ import Utilities.Class.InterfaceAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.LocatorEx;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -181,7 +180,7 @@ public class ClientSocketService extends ClientService implements Runnable {
                 break;
             }
             case Constants.SELECT_CITY_REWARD_BONUS:{
-                clientController.selectCityRewardBonus();
+                clientController.selectCityRewardBonus(CommunicationInfo.getSnapshot(communicationInfo.getInfo()));
                 break;
             }
         }

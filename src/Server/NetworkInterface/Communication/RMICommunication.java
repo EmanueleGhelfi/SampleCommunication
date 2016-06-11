@@ -1,23 +1,16 @@
 package Server.NetworkInterface.Communication;
 
-import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
-import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
 import RMIInterface.RMIClientInterface;
-import Server.Controller.GameController;
 import Server.Controller.GamesManager;
 import Server.Model.User;
 import java.io.Serializable;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -219,9 +212,9 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
-    public void selectCityRewardBonus() {
+    public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
         try {
-            rmiClientInterface.selectCityRewardBonus();
+            rmiClientInterface.selectCityRewardBonus(snapshotToSend);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

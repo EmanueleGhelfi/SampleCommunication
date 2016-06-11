@@ -30,5 +30,5 @@ public interface RMIClientInterface extends Remote {
 
     void selectPermitCard() throws RemoteException;
 
-    void selectCityRewardBonus() throws RemoteException;
+    void selectCityRewardBonus(SnapshotToSend snapshotToSend) throws RemoteException;
 }

@@ -90,8 +90,9 @@ public class User extends CurrentUser implements Serializable{
                 '}';
     }
 
+    // new value of helpers
     public void setHelpers(int helpers) {
-        //this.helpers = new ArrayList<>(helpers);
+        this.helpers = new ArrayList<>();
         for(int i =0; i< helpers; i++){
             this.helpers.add(new Helper() );
         }

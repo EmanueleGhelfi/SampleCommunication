@@ -16,7 +16,6 @@ import Server.Model.Map;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
 import Utilities.Exception.ActionNotPossibleException;
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.Council.Councilor;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -265,7 +264,8 @@ public class ClientController {
         baseView.selectPermitCard();
     }
 
-    public void selectCityRewardBonus() {
+    public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
+        this.snapshot=snapshotToSend;
         baseView.selectCityRewardBonus();
     }
 }

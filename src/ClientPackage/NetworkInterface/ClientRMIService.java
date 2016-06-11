@@ -200,7 +200,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     }
 
     @Override
-    public void selectCityRewardBonus() throws RemoteException {
-        clientController.selectCityRewardBonus();
+    public void selectCityRewardBonus(SnapshotToSend snapshotToSend) throws RemoteException {
+        clientController.selectCityRewardBonus(snapshotToSend);
     }
 }

@@ -2,7 +2,6 @@ package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
-import CommonModel.GameModel.City.Color;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -15,14 +14,12 @@ import Utilities.Class.InterfaceAdapter;
 import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -97,8 +94,8 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
-    public void selectCityRewardBonus() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.SELECT_CITY_REWARD_BONUS,null);
+    public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.SELECT_CITY_REWARD_BONUS,snapshotToSend);
     }
 
     @Override
