@@ -1020,6 +1020,7 @@ public class MatchController implements Initializable, BaseController {
             Set<Node> labels = region.lookupAll(".permitLabel");
             Set<Node> gridPanes = region.lookupAll(".gridPanePermitCard");
             Set<Node> imageViews = region.lookupAll(".visiblePermitCard");
+            Set<Node> bonusImages = region.lookupAll(".permitBonus");
             ArrayList<Node> labelsList = new ArrayList<>();
             labelsList.addAll(labels);
 
@@ -1029,13 +1030,30 @@ public class MatchController implements Initializable, BaseController {
             ArrayList<Node> imageViewsList = new ArrayList<>();
             imageViewsList.addAll(imageViews);
 
+            ArrayList<Node> imageViewBonusList = new ArrayList<>();
+            imageViewBonusList.addAll(bonusImages);
+
             for(int i = 0; i< labelsList.size();i++){
                 PermitCard permitCardTmp = clientController.getSnapshot().getVisibleRegionPermitCard(regionName).get(i);
                 Label label =(Label) labelsList.get(i);
                 label.setText(permitCardTmp.getCityString());
                 GridPane gridPane = (GridPane) gridPanesList.get(i);
                 gridPane.setOnMouseClicked(new PermitCardHandler(permitCardTmp,this,clientController,needToSelectPermitCard));
+                for(int j = 0; i< imageViewBonusList.size();i++){
+                    ImageView imageViewBonus = (ImageView) imageViewBonusList.get(j);
+                    if(j<permitCardTmp.getBonus().getBonusURL().size()) {
+                        imageViewBonus.setVisible(true);
+                        imageViewBonus.setImage(new Image(permitCardTmp.getBonus().getBonusURL().get(j)));
+                    }
+                    else {
+                        imageViewBonus.setVisible(false);
+                    }
+
+                }
+
             }
+
+
         }
 
 
@@ -1109,7 +1127,7 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void hidePermitCardHightLight() {
-        Set<Node> nodes =background.lookupAll(".visiblePermitCard");
+        Set<Node> nodes =bottomPane.lookupAll(".visiblePermitCard");
         nodes.forEach(node -> node.setEffect(null));
     }
 
