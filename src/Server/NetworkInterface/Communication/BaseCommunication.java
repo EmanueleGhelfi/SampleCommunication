@@ -30,4 +30,6 @@ public abstract class BaseCommunication {
     public abstract void disableMarketPhase();
 
     public abstract void selectPermitCard();
+
+    public abstract void selectCityRewardBonus(SnapshotToSend snapshotToSend);
 }

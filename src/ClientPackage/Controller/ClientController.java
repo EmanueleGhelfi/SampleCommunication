@@ -8,6 +8,7 @@ import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Market.BuyableWrapper;
@@ -16,7 +17,6 @@ import Server.Model.Map;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
 import Utilities.Exception.ActionNotPossibleException;
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.Council.Councilor;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -263,5 +263,20 @@ public class ClientController {
 
     public void selectPermitCard() {
         baseView.selectPermitCard();
+    }
+
+    public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
+        this.snapshot=snapshotToSend;
+        baseView.selectCityRewardBonus();
+    }
+
+    public void getCityRewardBonus(City city1) {
+        System.out.println("in client controller get city reward bonus");
+        clientService.getCityRewardBonus(city1);
+    }
+
+    public void onSelectPermitCard(PermitCard permitCard) {
+        clientService.onSelectPermitCard(permitCard);
+
     }
 }

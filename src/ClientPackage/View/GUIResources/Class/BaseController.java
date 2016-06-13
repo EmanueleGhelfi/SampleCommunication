@@ -26,4 +26,6 @@ public interface BaseController {
     void onResizeWidth(double width, double height);
 
     void selectPermitCard();
+
+    void selectCityRewardBonus();
 }

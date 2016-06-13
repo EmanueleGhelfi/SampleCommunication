@@ -1,8 +1,10 @@
 package Server.Controller;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Council.King;
@@ -142,9 +144,11 @@ public class GameController implements Serializable{
                 }
                 else {
                     if(turnCounter<=0){
+                        System.out.println("Starting market");
                         startMarket();
                     }
                     else{
+                        System.out.println("change round : "+nextUser);
                         changeRound(nextUser);
                     }
 
@@ -372,8 +376,40 @@ public class GameController implements Serializable{
             else {
                 buyPhase=false;
                 sendFinishMarketToAll();
+                turnCounter=users.size();
                 changeRound(nextUser);
             }
         }
+    }
+
+    public void getCityRewardBonus(City city1, User user) {
+        try {
+            System.out.println("city reward bonus in game controller");
+            City city = game.getCity(city1);
+
+            city.getBonus(user,game);
+
+            sendSnapshotToAll();
+
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onSelectPermitCard(PermitCard permitCard, User user) {
+
+        PermitDeck permitDeck = game.getPermitDeck(permitCard.getRetroType());
+        try {
+            user.getPermitCards().add(permitDeck.getAndRemovePermitCardVisible(permitCard));
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        }
+
+
+        sendSnapshotToAll();
+
+
+
+
     }
 }

@@ -1,23 +1,18 @@
 package Server.NetworkInterface.Communication;
 
-import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Market.BuyableObject;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
-import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
 import RMIInterface.RMIClientInterface;
-import Server.Controller.GameController;
 import Server.Controller.GamesManager;
 import Server.Model.User;
 import java.io.Serializable;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -109,6 +104,17 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     public void onFinishBuyPhase() throws RemoteException {
         user.getGameController().onFinishBuyPhase(user);
 
+    }
+
+    @Override
+    public void getCityRewardBonus(City city1) throws RemoteException {
+        System.out.println("get city reward bonus");
+        user.getGameController().getCityRewardBonus(city1,user);
+    }
+
+    @Override
+    public void onSelectPermitCard(PermitCard permitCard) throws RemoteException {
+        user.getGameController().onSelectPermitCard(permitCard,user);
     }
 
 
@@ -213,6 +219,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     public void selectPermitCard() {
         try {
             rmiClientInterface.selectPermitCard();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
+        try {
+            rmiClientInterface.selectCityRewardBonus(snapshotToSend);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

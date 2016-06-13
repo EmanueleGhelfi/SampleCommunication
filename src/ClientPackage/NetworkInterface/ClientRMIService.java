@@ -2,6 +2,8 @@ package ClientPackage.NetworkInterface;
 
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -132,6 +134,24 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     }
 
+    @Override
+    public void getCityRewardBonus(City city1) {
+        try {
+            rmiClientHandler.getCityRewardBonus(city1);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onSelectPermitCard(PermitCard permitCard) {
+        try {
+            rmiClientHandler.onSelectPermitCard(permitCard);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     //OLD VERSION
     private String generateName() {
         String randomSequence="";
@@ -197,5 +217,10 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     @Override
     public void selectPermitCard() throws RemoteException {
         clientController.selectPermitCard();
+    }
+
+    @Override
+    public void selectCityRewardBonus(SnapshotToSend snapshotToSend) throws RemoteException {
+        clientController.selectCityRewardBonus(snapshotToSend);
     }
 }

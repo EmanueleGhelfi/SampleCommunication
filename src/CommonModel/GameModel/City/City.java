@@ -2,6 +2,9 @@ package CommonModel.GameModel.City;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
+import Server.Model.Game;
+import Server.Model.User;
+import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
@@ -76,5 +79,9 @@ public class City implements Serializable {
 
     public CityName getCityName() {
         return cityName;
+    }
+
+    public void getBonus(User user, Game game) throws ActionNotPossibleException {
+        bonus.getBonus(user,game);
     }
 }

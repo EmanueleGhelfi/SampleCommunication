@@ -1,6 +1,8 @@
 package ClientPackage.NetworkInterface;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
@@ -29,4 +31,8 @@ import java.util.ArrayList;
     public abstract void onFinishSellPhase();
 
     public abstract void sendFinishedBuyPhase();
+
+    public abstract void getCityRewardBonus(City city1);
+
+    public abstract void onSelectPermitCard(PermitCard permitCard);
 }

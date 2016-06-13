@@ -33,4 +33,6 @@ public interface BaseView {
     void onFinishMarket();
 
     void selectPermitCard();
+
+    void selectCityRewardBonus();
 }

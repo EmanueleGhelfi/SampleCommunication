@@ -8,6 +8,7 @@ import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
+import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.beans.value.ChangeListener;
@@ -330,17 +331,23 @@ public class ShopController implements BaseController {
 
     @Override
     public void onStartMarket() {
+        Graphics.notification("Start Market");
         sellPhase = true;
         buyPhase = false;
     }
 
     @Override
     public void onStartBuyPhase() {
+        Graphics.notification("Start Buy Phase");
         buyPhase=true;
     }
 
     @Override
     public void  onFinishMarket() {
+        Graphics.notification("Finish Market");
+        buyButton.setDisable(true);
+        finishButton.setDisable(true);
+        sellButton.setDisable(true);
 
     }
 
@@ -356,6 +363,11 @@ public class ShopController implements BaseController {
 
     @Override
     public void selectPermitCard() {
+
+    }
+
+    @Override
+    public void selectCityRewardBonus() {
 
     }
 

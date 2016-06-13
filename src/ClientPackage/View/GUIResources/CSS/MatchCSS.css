@@ -79,3 +79,10 @@
     -fx-background-color: white;
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/icon/more.png");
 }
+
+.bonusLabel{
+    -fx-text-fill: white;
+    -fx-font-size: 10;
+    -fx-font-family: Verdana;
+    -fx-font-weight: bold;
+}
