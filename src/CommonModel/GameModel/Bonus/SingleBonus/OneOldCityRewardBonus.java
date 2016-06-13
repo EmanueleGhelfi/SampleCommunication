@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 public class OneOldCityRewardBonus implements Bonus,Serializable {
 
-    //TODO teso
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         user.getBaseCommunication().selectCityRewardBonus(new SnapshotToSend(game, user));

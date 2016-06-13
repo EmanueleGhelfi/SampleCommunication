@@ -3,6 +3,8 @@ package ClientPackage.NetworkInterface;
 import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -101,6 +103,16 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     @Override
+    public void getCityRewardBonus(City city1) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_CITY_REWARD_BONUS,city1);
+    }
+
+    @Override
+    public void onSelectPermitCard(PermitCard permitCard) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.SELECT_PERMITCARD_BONUS,permitCard);
+    }
+
+    @Override
     public void run() {
         System.out.println("ClientSocketService Started");
         String line;
@@ -182,6 +194,9 @@ public class ClientSocketService extends ClientService implements Runnable {
             case Constants.SELECT_CITY_REWARD_BONUS:{
                 clientController.selectCityRewardBonus(CommunicationInfo.getSnapshot(communicationInfo.getInfo()));
                 break;
+            }
+            case Constants.CODE_SELECT_PERMIT_CARD:{
+                clientController.selectPermitCard();
             }
         }
     }

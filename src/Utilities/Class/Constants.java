@@ -24,6 +24,9 @@ public class Constants {
     public static final String CODE_FINISH_BUY_PHASE = "CODE_FINISH_BUY_PHASE";
     public static final String CODE_FINISH_MARKET_PHASE = "CODE_FINISH_MARKET_PHASE";
     public static final String SELECT_CITY_REWARD_BONUS = "SELECT_CITY_REWARD_BONUS";
+    public static final String CODE_CITY_REWARD_BONUS = "CODE_CITY_REWARD_BONUS";
+    public static final String SELECT_PERMITCARD_BONUS = "SELECT_PERMITCARD_BONUS";
+    public static final String CODE_SELECT_PERMIT_CARD = "CODE_SELECT_PERMIT_CARD";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -41,6 +44,8 @@ public class Constants {
     public static final String WAITING_FXML = "/ClientPackage/View/GUIResources/FXML/WaitingFXML.fxml";
     public static final String MATCH_FXML = "/ClientPackage/View/GUIResources/FXML/MatchFXML.fxml";
     public static final String MAP_SELECTION_FXML = "/ClientPackage/View/GUIResources/FXML/MapSelectionFXML.fxml";
+    public static final String NOTIFICATION_ICON = "Icon.png";
+    public static final String NOTIFICATION_TEXT = "COFfee";
 
 
 

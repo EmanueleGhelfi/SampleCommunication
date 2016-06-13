@@ -2,6 +2,8 @@ package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -90,6 +92,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
 
     @Override
     public void selectPermitCard() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_SELECT_PERMIT_CARD,null);
 
     }
 
@@ -173,6 +176,16 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
 
                     case Constants.CODE_FINISH_BUY_PHASE:{
                         user.getGameController().onFinishBuyPhase(user);
+                        break;
+                    }
+                    case Constants.CODE_CITY_REWARD_BONUS:{
+                        City city = gson.fromJson(communicationInfo.getInfo(),City.class);
+                        user.getGameController().getCityRewardBonus(city,user);
+                        break;
+                    }
+                    case Constants.SELECT_PERMITCARD_BONUS:{
+                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(),PermitCard.class);
+                        user.getGameController().onSelectPermitCard(permitCard,user);
                         break;
                     }
                 }

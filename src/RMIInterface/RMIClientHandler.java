@@ -2,6 +2,8 @@ package RMIInterface;
 
 import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
@@ -33,4 +35,8 @@ public interface RMIClientHandler extends Remote{
     void onFinishSellPhase() throws RemoteException;
 
     void onFinishBuyPhase() throws RemoteException;
+
+    void getCityRewardBonus(City city1) throws RemoteException;
+
+    void onSelectPermitCard(PermitCard permitCard) throws RemoteException;
 }

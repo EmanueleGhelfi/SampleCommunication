@@ -1,6 +1,8 @@
 package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -102,6 +104,17 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     public void onFinishBuyPhase() throws RemoteException {
         user.getGameController().onFinishBuyPhase(user);
 
+    }
+
+    @Override
+    public void getCityRewardBonus(City city1) throws RemoteException {
+        System.out.println("get city reward bonus");
+        user.getGameController().getCityRewardBonus(city1,user);
+    }
+
+    @Override
+    public void onSelectPermitCard(PermitCard permitCard) throws RemoteException {
+        user.getGameController().onSelectPermitCard(permitCard,user);
     }
 
 

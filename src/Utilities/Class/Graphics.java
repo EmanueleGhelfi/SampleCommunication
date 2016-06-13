@@ -4,13 +4,17 @@ import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
 /**
  * Created by Giulio on 08/06/2016.
@@ -48,6 +52,7 @@ public class Graphics {
 
     public static Animation scaleTransitionEffectCycle (Node node, float toValueX, float toValueY, BooleanProperty stopTransition){
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500), node);
+        System.out.println("Scale transition effect");
         scaleTransition.setCycleCount(Animation.INDEFINITE);
         scaleTransition.setInterpolator(Interpolator.EASE_BOTH);
         scaleTransition.setFromX(node.getScaleX());
@@ -58,6 +63,7 @@ public class Graphics {
         stopTransition.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                System.out.println("Scale transition effect changed boolean to: "+newValue);
                 if(newValue){
                     scaleTransition.stop();
                     node.setScaleX(1);
@@ -65,7 +71,24 @@ public class Graphics {
                 }
             }
         });
+
         return scaleTransition;
+    }
+
+    /** Metodo di notifica, ossia quando viene chiamato in basso a destra spunta una notifica che dopo 3 secondi sparisce.
+     * @param messageOfTheMoment è il testo che sarà stampato a video nella notifica.
+     */
+    public static void notification(String messageOfTheMoment){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Image icona = new Image(Constants.IMAGE_PATH+Constants.NOTIFICATION_ICON);
+                TrayNotification tray = new TrayNotification(Constants.NOTIFICATION_TEXT, messageOfTheMoment, NotificationType.SUCCESS);
+                tray.setImage(icona);
+                tray.showAndWait();
+                tray.showAndDismiss(Duration.seconds(3));
+            }
+        });
     }
 
 }

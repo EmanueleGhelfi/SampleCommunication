@@ -35,7 +35,7 @@ public class NobilityPath implements Path, Serializable {
             }
             else {
                 user.setNobilityPathPosition(position[user.getNobilityPathPosition().getPosition()+value]);
-                position[user.getNobilityPathPosition().getPosition()+value].getBonus().getBonus(user,user.getGame());
+                position[user.getNobilityPathPosition().getPosition()].getBonus().getBonus(user,user.getGame());
             }
         }
     }

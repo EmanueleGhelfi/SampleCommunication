@@ -56,7 +56,7 @@ public class MainActionBuildWithPermitCard extends Action{
                 }
             }
             //TODO: remove
-            user.getBaseCommunication().selectCityRewardBonus(new SnapshotToSend(game,user));
+            user.getBaseCommunication().selectPermitCard();
         }
     }
 }

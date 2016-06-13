@@ -180,8 +180,12 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void turnFinished() {
+
         if(matchController!=null) {
-            matchController.setMyTurn(false, clientController.getSnapshot());
+            Platform.runLater(()->{
+                matchController.setMyTurn(false, clientController.getSnapshot());
+            });
+
         }
         myTurn=false;
         System.out.println("turn finished");
@@ -190,7 +194,9 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void isMyTurn(SnapshotToSend snapshot) {
         if(matchController!=null) {
-            matchController.setMyTurn(true,clientController.getSnapshot());
+            Platform.runLater(()-> {
+                matchController.setMyTurn(true, clientController.getSnapshot());
+            });
         }
         myTurn=true;
         System.out.println("turn initialized");

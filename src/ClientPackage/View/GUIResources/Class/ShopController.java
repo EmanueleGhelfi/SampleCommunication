@@ -7,6 +7,7 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
+import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 
@@ -147,6 +148,7 @@ public class ShopController implements BaseController, Initializable {
 
     @Override
     public void onStartMarket() {
+        Graphics.notification("Start Market");
         sellPhase = true;
         buyPhase = false;
         buyButton.setDisable(true);
@@ -156,6 +158,7 @@ public class ShopController implements BaseController, Initializable {
 
     @Override
     public void onStartBuyPhase() {
+        Graphics.notification("Start Buy Phase");
         buyPhase=true;
         buyButton.setDisable(false);
         finishButton.setDisable(false);
@@ -164,6 +167,7 @@ public class ShopController implements BaseController, Initializable {
 
     @Override
     public void  onFinishMarket() {
+        Graphics.notification("Finish Market");
         buyButton.setDisable(true);
         finishButton.setDisable(true);
         sellButton.setDisable(true);
