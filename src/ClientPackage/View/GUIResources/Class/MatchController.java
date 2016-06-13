@@ -129,9 +129,6 @@ public class MatchController implements Initializable, BaseController {
     private BooleanProperty needToSelectPermitCard = new SimpleBooleanProperty(false);
 
 
-
-
-
     private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
     private ArrayList<ImageView> kingCouncil = new ArrayList<>();
 
