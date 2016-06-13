@@ -130,6 +130,8 @@ public class MatchController implements Initializable, BaseController {
 
 
 
+
+
     private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
     private ArrayList<ImageView> kingCouncil = new ArrayList<>();
 
