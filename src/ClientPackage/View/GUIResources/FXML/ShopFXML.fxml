@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
@@ -7,17 +8,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="shop" minHeight="500.0" minWidth="500.0" style="-fx-background-color: white;" stylesheets="@../CSS/MatchCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.ShopController">
-   <center>
-      <Pane fx:id="shopBackground" stylesheets="@../CSS/ShopCSS.css">
-         <children>
-            <TilePane fx:id="buyPane" layoutX="400.0" layoutY="23.0" prefHeight="200.0" prefTileHeight="300.0" prefTileWidth="300.0" prefWidth="200.0" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <JFXButton fx:id="buyButton" layoutX="513.0" layoutY="378.0" onAction="#onBuy" styleClass="button-raised" text="COMPRA" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-            <Label layoutX="400.0" text="Label" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Label text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <JFXButton fx:id="finishButton" layoutX="300.0" layoutY="378.0" onAction="#sendOnFinishMarket" prefHeight="0.0" prefWidth="100.0" styleClass="button-raised" text="FINISH" visible="false" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.vgrow="NEVER" />
-            <JFXButton fx:id="sellButton" layoutX="122.0" layoutY="378.0" onAction="#onSell" styleClass="button-raised" text="VENDI" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-         </children>
-      </Pane>
-   </center>
-</BorderPane>
+<GridPane fx:id="shop" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.ShopController">
+   <columnConstraints>
+      <ColumnConstraints fillWidth="false" hgrow="ALWAYS" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints fillHeight="false" minHeight="10.0" vgrow="ALWAYS" />
+   </rowConstraints>
+   <children>
+      <Pane fx:id="imagePane" />
+   </children>
+</GridPane>
