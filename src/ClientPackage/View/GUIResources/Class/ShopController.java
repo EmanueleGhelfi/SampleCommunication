@@ -59,7 +59,7 @@ public class ShopController implements BaseController {
     @FXML private ScrollPane sellScroll;
     private Button innerButton;
     private PopOver innerPopOver;
-    private Pane paneWhereShowPopOver;
+    private Pane paneWhereShowPopOver = new Pane();
     private boolean confirming = true;
 
     ArrayList<BuyableWrapper> sellList = new ArrayList<>();
@@ -178,10 +178,18 @@ public class ShopController implements BaseController {
         });
         GridPane.setRowSpan(backgroundImage, 2);
         GridPane.setColumnSpan(backgroundImage, 2);
+
+        paneWhereShowPopOver = new Pane();
+        paneWhereShowPopOver.layoutXProperty().bind(imagePane.prefWidthProperty().multiply(0.4937));
+        paneWhereShowPopOver.layoutYProperty().bind(imagePane.prefHeightProperty().multiply(0.2254));
+        paneWhereShowPopOver.prefWidthProperty().bind(imagePane.prefWidthProperty().multiply(0.01));
+        paneWhereShowPopOver.prefHeightProperty().bind(imagePane.prefHeightProperty().multiply(0.01));
+        imagePane.getChildren().add(paneWhereShowPopOver);
+
         updateView();
-        onFinishMarket();
         detectClick();
         createDeck();
+        onFinishMarket();
     }
 
     private void createDeck() {
@@ -205,8 +213,6 @@ public class ShopController implements BaseController {
         permitCardDeck.fitHeightProperty().bind(imagePane.heightProperty().divide(10));
         helperDeck.fitWidthProperty().bind(imagePane.widthProperty().divide(10));
         helperDeck.fitHeightProperty().bind(imagePane.heightProperty().divide(10));
-
-        settingDeckActions();
 
         innerButton = new Button();
         innerButton.setStyle("-fx-background-color: transparent");
@@ -251,17 +257,11 @@ public class ShopController implements BaseController {
         innerPopOver = new PopOver();
         VBox innerVBox = new VBox();
         Label innerLabel = new Label("Sei sicuro?");
-        JFXButton innerButton = new JFXButton("OK");
-        paneWhereShowPopOver = new Pane();
-        paneWhereShowPopOver.layoutXProperty().bind(imagePane.prefWidthProperty().multiply(0.4937));
-        paneWhereShowPopOver.layoutYProperty().bind(imagePane.prefHeightProperty().multiply(0.2254));
-        paneWhereShowPopOver.prefWidthProperty().bind(imagePane.prefWidthProperty().multiply(0.01));
-        paneWhereShowPopOver.prefHeightProperty().bind(imagePane.prefHeightProperty().multiply(0.01));
-        imagePane.getChildren().add(paneWhereShowPopOver);
-        innerVBox.getChildren().addAll(innerLabel, innerButton);
+        JFXButton innerPopOverButton = new JFXButton("OK");
+        innerVBox.getChildren().addAll(innerLabel, innerPopOverButton);
         innerPopOver.setContentNode(innerButton);
         innerPopOver.show(paneWhereShowPopOver);
-        innerButton.setOnAction(new EventHandler<ActionEvent>() {
+        innerPopOverButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 innerPopOver.hide();
@@ -346,6 +346,7 @@ public class ShopController implements BaseController {
     @Override
     public void onStartBuyPhase() {
         goToBuyingSession();
+        settingDeckActions();
         politicCardDeck.setOnMouseClicked(null);
         permitCardDeck.setOnMouseClicked(null);
         helperDeck.setOnMouseClicked(null);
@@ -356,6 +357,9 @@ public class ShopController implements BaseController {
     @Override
     public void  onFinishMarket() {
         Graphics.notification("Finish Market");
+        politicCardDeck.setOnMouseClicked(null);
+        permitCardDeck.setOnMouseClicked(null);
+        helperDeck.setOnMouseClicked(null);
         innerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -366,12 +370,14 @@ public class ShopController implements BaseController {
     }
 
     private void nothingToDo() {
-        PopOver popOver = new PopOver();
-        Pane internalPopOverPane = new Pane();
-        internalPopOverPane.getChildren().add(new Label("Bottega chiusa, viandante!"));
-        popOver.setContentNode(new Pane());
-        popOver.show(paneWhereShowPopOver);
-        popOver.setContentNode(paneWhereShowPopOver);
+        if (paneWhereShowPopOver != null) {
+            PopOver popOverToShow = new PopOver();
+            Pane internalPopOverPane = new Pane();
+            internalPopOverPane.getChildren().add(new Label("Bottega chiusa, viandante!"));
+            popOverToShow.setContentNode(internalPopOverPane);
+
+            popOverToShow.show(paneWhereShowPopOver);
+        }
     }
 
     @Override
