@@ -13,5 +13,6 @@
     <orderEntry type="library" name="org.jfxtras:jfxtras-all:8.0-r5" level="project" />
     <orderEntry type="library" name="org.jfxtras:jfxtras-controls:8.0-r5" level="project" />
     <orderEntry type="library" name="TrayNotification" level="project" />
+    <orderEntry type="library" name="TrayNotification" level="project" />
   </component>
 </module>
