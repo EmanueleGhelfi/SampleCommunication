@@ -102,7 +102,7 @@ public class MatchController implements Initializable, BaseController {
     // Include
     @FXML private GridPane path;
     @FXML private PathController pathController;
-    @FXML private BorderPane shop;
+    @FXML private Pane shop;
     @FXML private ShopController shopController;
     private HiddenSidesPane hiddenSidesPane;
     @FXML private ImageView backgroundImage;
