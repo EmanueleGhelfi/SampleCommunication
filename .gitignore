@@ -1,1 +1,16 @@
 # Created by .ignore support plugin (hsz.mobi)
+.idea/compiler.xml
+.idea/copyright/
+.idea/encodings.xml
+.idea/libraries/lib.xml
+.idea/libraries/org_jfxtras_jfxtras_all_8_0_r5.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+lib/TrayNotification.jar
+lib/hamcrest-core-1.1.jar
+lib/json-simple-1.1.1-javadoc.jar
+lib/json-simple-1.1.1.jar
+out/
