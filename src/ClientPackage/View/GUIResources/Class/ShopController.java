@@ -59,9 +59,7 @@ public class ShopController implements BaseController {
     @FXML private ScrollPane sellScroll;
     private Button innerButton;
     private PopOver innerPopOver;
-
-    private boolean sellPhase=false;
-    private boolean buyPhase=false;
+    private Pane paneWhereShowPopOver;
     private boolean confirming = true;
 
     ArrayList<BuyableWrapper> sellList = new ArrayList<>();
@@ -208,6 +206,24 @@ public class ShopController implements BaseController {
         helperDeck.fitWidthProperty().bind(imagePane.widthProperty().divide(10));
         helperDeck.fitHeightProperty().bind(imagePane.heightProperty().divide(10));
 
+        settingDeckActions();
+
+        innerButton = new Button();
+        innerButton.setStyle("-fx-background-color: transparent");
+        innerButton.layoutXProperty().bind(imagePane.prefWidthProperty().multiply(0.3504));
+        innerButton.layoutYProperty().bind(imagePane.prefHeightProperty().multiply(0.1455));
+        innerButton.prefWidthProperty().bind(imagePane.prefWidthProperty().multiply(0.5208 - 0.3604));
+        innerButton.prefHeightProperty().bind(imagePane.prefHeightProperty().multiply(0.5530 - 0.1455));
+        innerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                talkToInnerKeeper();
+            }
+        });
+        imagePane.getChildren().addAll(innerButton);
+    }
+
+    private void settingDeckActions() {
         politicCardDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -229,19 +245,6 @@ public class ShopController implements BaseController {
                 shopPopOver(imageClicked, Helper.class);
             }
         });
-        innerButton = new Button();
-        innerButton.setStyle("-fx-background-color: transparent");
-        innerButton.layoutXProperty().bind(imagePane.prefWidthProperty().multiply(0.3504));
-        innerButton.layoutYProperty().bind(imagePane.prefHeightProperty().multiply(0.1455));
-        innerButton.prefWidthProperty().bind(imagePane.prefWidthProperty().multiply(0.5208 - 0.3604));
-        innerButton.prefHeightProperty().bind(imagePane.prefHeightProperty().multiply(0.5530 - 0.1455));
-        innerButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                talkToInnerKeeper();
-            }
-        });
-        imagePane.getChildren().addAll(innerButton);
     }
 
     private void talkToInnerKeeper() {
@@ -249,7 +252,7 @@ public class ShopController implements BaseController {
         VBox innerVBox = new VBox();
         Label innerLabel = new Label("Sei sicuro?");
         JFXButton innerButton = new JFXButton("OK");
-        Pane paneWhereShowPopOver = new Pane();
+        paneWhereShowPopOver = new Pane();
         paneWhereShowPopOver.layoutXProperty().bind(imagePane.prefWidthProperty().multiply(0.4937));
         paneWhereShowPopOver.layoutYProperty().bind(imagePane.prefHeightProperty().multiply(0.2254));
         paneWhereShowPopOver.prefWidthProperty().bind(imagePane.prefWidthProperty().multiply(0.01));
@@ -264,15 +267,11 @@ public class ShopController implements BaseController {
                 innerPopOver.hide();
                 onSell();
                 clientController.sendFinishSellPhase();
-                politicCardDeck.setOnMouseClicked(null);
-                permitCardDeck.setOnMouseClicked(null);
-                helperDeck.setOnMouseClicked(null);
-                goToBuyingSession(paneWhereShowPopOver);
             }
         });
     }
 
-    private void goToBuyingSession(Pane paneWhereShowPopOver) {
+    private void goToBuyingSession() {
         innerPopOver = new PopOver();
         GridPane buyingSessionGridPane = new GridPane();
         buyingSessionGridPane.setAlignment(Pos.CENTER);
@@ -329,26 +328,50 @@ public class ShopController implements BaseController {
 
     }
 
+
+    //TODO inizia fase vendita
     @Override
     public void onStartMarket() {
         Graphics.notification("Start Market");
-        sellPhase = true;
-        buyPhase = false;
+        settingDeckActions();
+        innerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                talkToInnerKeeper();
+            }
+        });
     }
 
+    //TODO inizia fase compraggio
     @Override
     public void onStartBuyPhase() {
+        goToBuyingSession();
+        politicCardDeck.setOnMouseClicked(null);
+        permitCardDeck.setOnMouseClicked(null);
+        helperDeck.setOnMouseClicked(null);
         Graphics.notification("Start Buy Phase");
-        buyPhase=true;
     }
 
+    //TODO finisco tutto e disabilito
     @Override
     public void  onFinishMarket() {
         Graphics.notification("Finish Market");
-        buyButton.setDisable(true);
-        finishButton.setDisable(true);
-        sellButton.setDisable(true);
+        innerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                nothingToDo();
+            }
+        });
 
+    }
+
+    private void nothingToDo() {
+        PopOver popOver = new PopOver();
+        Pane internalPopOverPane = new Pane();
+        internalPopOverPane.getChildren().add(new Label("Bottega chiusa, viandante!"));
+        popOver.setContentNode(new Pane());
+        popOver.show(paneWhereShowPopOver);
+        popOver.setContentNode(paneWhereShowPopOver);
     }
 
     @Override
@@ -381,17 +404,6 @@ public class ShopController implements BaseController {
     public void removeItemToBuy(BuyableWrapper item) {
         if(toBuy.contains(item)){
             toBuy.remove(item);
-        }
-    }
-
-    public void sendOnFinishMarket(ActionEvent actionEvent) {
-        if(sellPhase){
-            sellPhase=false;
-            clientController.sendFinishSellPhase();
-        }
-        else if(buyPhase){
-            buyPhase = false;
-            clientController.sendFinishedBuyPhase();
         }
     }
 
