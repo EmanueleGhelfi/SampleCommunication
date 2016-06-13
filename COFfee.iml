@@ -12,5 +12,6 @@
     <orderEntry type="library" name="com.googlecode.json-simple:json-simple:1.1.1" level="project" />
     <orderEntry type="library" name="org.jfxtras:jfxtras-all:8.0-r5" level="project" />
     <orderEntry type="library" name="org.jfxtras:jfxtras-controls:8.0-r5" level="project" />
+    <orderEntry type="library" name="TrayNotification" level="project" />
   </component>
 </module>
