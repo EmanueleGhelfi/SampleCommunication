@@ -151,8 +151,6 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         GUIView baseView = this;
-
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

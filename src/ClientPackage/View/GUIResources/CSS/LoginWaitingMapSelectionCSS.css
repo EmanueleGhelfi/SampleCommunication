@@ -1,15 +1,3 @@
 .background {
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/LoginBackground.jpg");
 }
-.jfx-button {
-    -fx-font-family: "Roboto";
-}
-.jfx-textfield{
-    -fx-font-family: "Roboto";
-}
-.label{
-    -fx-font-family: "Roboto";
-}
-.text{
-    -fx-font-family: "Roboto";
-}
