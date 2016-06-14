@@ -480,7 +480,7 @@ public class MatchController implements Initializable, BaseController {
 
     private void createKingImage(double x, double y) {
         kingImage = new ImageView();
-            kingImage.setImage(new Image(Constants.IMAGE_PATH+"Crown.png"));
+        kingImage.setImage(new Image(Constants.IMAGE_PATH+"Crown.png"));
         kingImage.fitHeightProperty().bind(background.heightProperty().multiply(0.07));
         kingImage.fitWidthProperty().bind(background.widthProperty().divide(25));
         DropShadow ds = new DropShadow(15, Color.BLACK);
@@ -968,28 +968,26 @@ public class MatchController implements Initializable, BaseController {
         Timeline timeline = new Timeline();
         kingImage.layoutXProperty().unbind();
         kingImage.layoutYProperty().unbind();
-        Path path = new Path();
         kingPath.forEach(city1 -> {
             System.out.println("in foreach");
-            path.getElements().add(new MoveTo(background.widthProperty().get()*CityPosition.getX(city1),background.heightProperty().get()*CityPosition.getY(city1)));
-            /*KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.widthProperty().get()*CityPosition.getX(city1));
-            KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.heightProperty().get()*CityPosition.getY(city1));
+            //path.getElements().add(new MoveTo(background.widthProperty().get()*CityPosition.getX(city1),background.heightProperty().get()*CityPosition.getY(city1)));
+            KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.getPrefWidth()*CityPosition.getX(city1));
+            KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.getPrefHeight()*CityPosition.getY(city1));
             KeyFrame keyFrame = new KeyFrame(new Duration(1000),keyValueX,keyValueY);
             timeline.getKeyFrames().add(keyFrame);
-            */
         });
 
-        /*
+
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 kingImage.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size()-1))));
-                kingImage.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size()-1))));
+                kingImage.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size()-1))).add(50));
             }
         });
 
         timeline.play();
-        */
+        /*
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(4000));
         pathTransition.setPath(path);
@@ -1003,7 +1001,9 @@ public class MatchController implements Initializable, BaseController {
             }
         });
 
+
         pathTransition.play();
+        */
 
 
 
