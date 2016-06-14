@@ -137,6 +137,7 @@ public class MatchController implements Initializable, BaseController {
     private ArrayList<City> kingPathforBuild = new ArrayList<>();
 
     private BooleanProperty buildWithKingPhase = new SimpleBooleanProperty(false);
+    private BooleanProperty pulseCity = new SimpleBooleanProperty(false);
 
 
     @Override
@@ -199,6 +200,8 @@ public class MatchController implements Initializable, BaseController {
         createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
         createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
         */
+
+        pulseCity.bind(buildWithKingPhase.not());
         createOverlay();
         initPermitButton();
         handleClick();
@@ -209,6 +212,7 @@ public class MatchController implements Initializable, BaseController {
         bottomPane.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
+
     }
 
     private void createNodeList() {
@@ -576,7 +580,7 @@ public class MatchController implements Initializable, BaseController {
         kingPathforBuild.clear();
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         for(Node node : cities){
-            Graphics.scaleTransitionEffectCycle(node,1.05f,1.05f,buildWithKingPhase);
+            Graphics.scaleTransitionEffectCycle(node,1.05f,1.05f,pulseCity);
         }
     }
 
@@ -957,15 +961,15 @@ public class MatchController implements Initializable, BaseController {
 
     @Override
     public void moveKing(ArrayList<City> kingPath) {
+        System.out.println("In move");
 
         Timeline timeline = new Timeline();
         kingImage.layoutXProperty().unbind();
         kingImage.layoutYProperty().unbind();
-
-
         kingPath.forEach(city1 -> {
-            KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.getWidth()*CityPosition.getX(city1));
-            KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.getHeight()*CityPosition.getY(city1));
+            System.out.println("in foreach");
+            KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.widthProperty().get()*CityPosition.getX(city1));
+            KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.heightProperty().get()*CityPosition.getY(city1));
             KeyFrame keyFrame = new KeyFrame(new Duration(1000),keyValueX,keyValueY);
             timeline.getKeyFrames().add(keyFrame);
         });
@@ -973,10 +977,12 @@ public class MatchController implements Initializable, BaseController {
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                kingImage.layoutYProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size()-1))));
-                kingImage.layoutXProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size()-1))));
+                kingImage.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size()-1))));
+                kingImage.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size()-1))));
             }
         });
+
+        timeline.play();
 
     }
 
@@ -1191,6 +1197,7 @@ public class MatchController implements Initializable, BaseController {
         politicCardforBuildWithKing.clear();
         kingPathforBuild.clear();
         buildWithKingPhase.set(false);
+
     }
 
     private class PermitButtonHandler implements EventHandler<MouseEvent>{

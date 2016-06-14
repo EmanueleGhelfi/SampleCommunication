@@ -27,8 +27,12 @@ public class FInishKingActionHandler implements EventHandler<ActionEvent>{
     public void handle(ActionEvent event) {
         if(matchController.getBuildWithKingPhase()){
             Action action = new MainActionBuildWithKingHelp(matchController.getKingPathforBuild(),matchController.getPoliticCardforBuildWithKing());
-            clientController.doAction(action);
+
             matchController.finishKingPhase();
+
+            new Thread(()->{
+                clientController.doAction(action);
+            }).start();
             System.out.println("Doing action");
         }
         else{
