@@ -127,6 +127,7 @@ public class ShopController implements BaseController {
         Runnable runnable = () -> {
             if (trueList.size() > 0) {
                 clientController.sendSaleItem(trueList);
+                trueList.clear();
             }
         };
         new Thread(runnable).start();
@@ -135,7 +136,6 @@ public class ShopController implements BaseController {
     @Override
     public void updateView() {
         System.out.println("On update shopController");
-        SnapshotToSend snapshotTosend = clientController.getSnapshot();
         updateList();
     }
 
@@ -167,9 +167,7 @@ public class ShopController implements BaseController {
                 itr.remove();
             }
         }
-
         populateSellAndBuyPane();
-
     }
 
     private void populateSellAndBuyPane() {
@@ -254,7 +252,6 @@ public class ShopController implements BaseController {
         innerPopOverButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //innerPopOver.hide();
                 System.out.println(trueList);
                 onSell();
                 clientController.sendFinishSellPhase();
@@ -305,6 +302,14 @@ public class ShopController implements BaseController {
     @Override
     public void onStartMarket() {
         Graphics.notification("Start Market");
+        System.out.println(sellList +  " SELL LIST");
+        System.out.println(trueList +  " TRUE LIST");
+        System.out.println(buyList +  " BUY LIST");
+        System.out.println(toBuy +  " TOBUY LIST");
+        buyList.clear();
+        sellList.clear();
+        temporarySellList.clear();
+        trueList.clear();
         settingDeckActions();
         innerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -317,6 +322,10 @@ public class ShopController implements BaseController {
     @Override
     public void onStartBuyPhase() {
         System.out.println(clientController.getSnapshot().getMarketList() + " GUARDA QUI PER FAVORE");
+        System.out.println(sellList +  " SELL LIST");
+        System.out.println(trueList +  " TRUE LIST");
+        System.out.println(buyList +  " BUY LIST");
+        System.out.println(toBuy +  " TOBUY LIST");
         createBuyingPopOver();
         settingDeckActions();
         politicCardDeck.setOnMouseClicked(null);
@@ -325,7 +334,7 @@ public class ShopController implements BaseController {
         innerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                nothingToDoPopOver();
+                createBuyingPopOver();
             }
         });
         Graphics.notification("Start Buy Phase");
@@ -334,6 +343,14 @@ public class ShopController implements BaseController {
     @Override
     public void  onFinishMarket() {
         Graphics.notification("Finish Market");
+        System.out.println(sellList +  " SELL LIST");
+        System.out.println(trueList +  " TRUE LIST");
+        System.out.println(buyList +  " BUY LIST");
+        System.out.println(toBuy +  " TOBUY LIST");
+        buyList.clear();
+        sellList.clear();
+        temporarySellList.clear();
+        trueList.clear();
         politicCardDeck.setOnMouseClicked(null);
         permitCardDeck.setOnMouseClicked(null);
         helperDeck.setOnMouseClicked(null);
@@ -504,11 +521,6 @@ public class ShopController implements BaseController {
                     buttonToSell.setText(Integer.toString(0));
             }
         });
-        /*
-        buttonToSell.setVisible(false);
-        upper.setVisible(false);
-        downer.setVisible(false);
-        */
         itemOnSaleImageView.setImage(itemOnSaleImage);
         itemOnSaleImageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -524,11 +536,6 @@ public class ShopController implements BaseController {
         baseGridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                /*
-                upper.setVisible(false);
-                downer.setVisible(false);
-                buttonToSell.setVisible(false);
-                */
                 itemOnSaleImageView.setEffect(null);
             }
         });
@@ -554,5 +561,4 @@ public class ShopController implements BaseController {
         baseGridPane.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         return baseGridPane;
     }
-
 }
