@@ -10,6 +10,8 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Giulio on 18/05/2016.
@@ -23,6 +25,7 @@ public class MainActionBuildWithKingHelp extends Action {
     public MainActionBuildWithKingHelp(ArrayList<City> kingPath, ArrayList<PoliticCard> politicCards) {
         this.kingPath = kingPath;
         this.politicCards = politicCards;
+        this.actionType=Constants.MAIN_ACTION;
     }
 
 
@@ -62,11 +65,24 @@ public class MainActionBuildWithKingHelp extends Action {
                     for (City cityToVisit : cityVisitor.visit(kingCity)) {
                         cityToVisit.getBonus().getBonus(user, game);
                     }
+                    moveKing(game,user);
                 } else {
                     throw new ActionNotPossibleException();
                 }
                 removeAction(game, user);
             }
         }
+    }
+
+    private void moveKing(Game game, User user) {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        game.getUsers().forEach(user1 -> {
+
+            Runnable runnable =()-> {
+                user1.getBaseCommunication().moveKing(kingPath);
+            };
+
+            executorService.execute(runnable);
+        });
     }
 }

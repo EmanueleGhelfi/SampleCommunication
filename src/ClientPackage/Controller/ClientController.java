@@ -279,4 +279,8 @@ public class ClientController {
         clientService.onSelectPermitCard(permitCard);
 
     }
+
+    public void onMoveKing(ArrayList<City> kingPath) {
+        baseView.onMoveKing(kingPath);
+    }
 }

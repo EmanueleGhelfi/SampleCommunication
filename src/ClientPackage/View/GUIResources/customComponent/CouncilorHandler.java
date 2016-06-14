@@ -77,6 +77,7 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
             public void handle(MouseEvent event) {
                 int index = jfxComboBox.getSelectionModel().getSelectedIndex();
                 System.out.println("selected "+index);
+                //todo check getSelected Item != null
                 System.out.println("value in combobox "+jfxComboBox.getSelectionModel().getSelectedItem().getText());
                 Councilor councilor = new Councilor(politicColors.get(index));
                 clientController.mainActionElectCouncilor(councilor,king,region);

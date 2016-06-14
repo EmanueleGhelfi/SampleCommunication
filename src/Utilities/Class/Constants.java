@@ -27,6 +27,7 @@ public class Constants {
     public static final String CODE_CITY_REWARD_BONUS = "CODE_CITY_REWARD_BONUS";
     public static final String SELECT_PERMITCARD_BONUS = "SELECT_PERMITCARD_BONUS";
     public static final String CODE_SELECT_PERMIT_CARD = "CODE_SELECT_PERMIT_CARD";
+    public static final String MOVE_KING = "MOVE_KING";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -145,7 +146,8 @@ public class Constants {
     public static final int FOUR_PARAMETER_BUY_PERMIT_CARD = 4;
     public static final int ONE_PARAMETER_BUY_PERMIT_CARD = 1;
     public static final int MONEY_EARNED_ELECT_COUNCILOR = 4;
-    public static final int KING_PRICE = 2;
+    //todo: it was 2
+    public static final int KING_PRICE = 0;
     public static final int EMPORIUMS_BUILDABLE = 10;
     public static final int KING_CARDS = 6;
     public static final int INITIAL_POSITION_ON_NOBILITY_PATH = 0;

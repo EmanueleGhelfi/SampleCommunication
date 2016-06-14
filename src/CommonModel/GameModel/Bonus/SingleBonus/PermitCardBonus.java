@@ -18,7 +18,6 @@ public class PermitCardBonus implements Bonus, Serializable {
     public PermitCardBonus() {
     }
 
-    //TODO teso
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         user.getBaseCommunication().selectPermitCard();

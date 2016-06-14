@@ -4,6 +4,7 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
@@ -190,6 +191,11 @@ public class ShopController implements BaseController, Initializable {
 
     @Override
     public void selectCityRewardBonus() {
+
+    }
+
+    @Override
+    public void moveKing(ArrayList<City> baseController) {
 
     }
 

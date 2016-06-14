@@ -5,26 +5,22 @@ import ClientPackage.View.GUIResources.customComponent.*;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.*;
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import Utilities.Exception.CouncilNotFoundException;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import com.jfoenix.controls.JFXComboBox;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -46,8 +42,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
+import java.security.Key;
 import java.util.*;
 
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -119,6 +117,9 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
 
+    //Images
+    @FXML private ImageView kingImage;
+
     private JFXComboBox<String> usersComboBox;
 
     private BooleanProperty pulseBonus;
@@ -132,6 +133,11 @@ public class MatchController implements Initializable, BaseController {
     private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
     private ArrayList<ImageView> kingCouncil = new ArrayList<>();
 
+    private ArrayList<PoliticCard> politicCardforBuildWithKing = new ArrayList<>();
+    private ArrayList<City> kingPathforBuild = new ArrayList<>();
+
+    private BooleanProperty buildWithKingPhase = new SimpleBooleanProperty(false);
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -142,7 +148,7 @@ public class MatchController implements Initializable, BaseController {
         this.clientController = clientController;
         this.guiView = guiView;
         hiddenSidesPane = new HiddenSidesPane();
-        mainActionBuildWithPermitCard();
+
         currentSnapshot = clientController.getSnapshot();
         guiView.registerBaseController(this);
         initController();
@@ -201,6 +207,31 @@ public class MatchController implements Initializable, BaseController {
         populateHamburgerMenu();
         initHamburgerIcon();
         bottomPane.setVisible(false);
+        kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
+        createNodeList();
+    }
+
+    private void createNodeList() {
+
+        JFXButton finishKing = new JFXButton("FINISH");
+        finishKing.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),null,null)));
+        finishKing.setTextFill(Paint.valueOf("WHITE"));
+        finishKing.setOnAction(new FInishKingActionHandler(clientController,this));
+        finishKing.disableProperty().bind(buildWithKingPhase.not());
+        finishKing.setVisible(false);
+        buildWithKingPhase.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue){
+                    finishKing.setVisible(true);
+                }
+                else{
+                    finishKing.setVisible(false);
+                }
+            }
+        });
+        gridPane.add(finishKing,2,2);
+        //GridPane.setColumnSpan(finishKing,2);
     }
 
     private void populateHamburgerMenu() {
@@ -441,42 +472,118 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void createKingImage(double x, double y) {
-        ImageView imageView = new ImageView();
-            imageView.setImage(new Image(Constants.IMAGE_PATH+"Crown.png"));
-        imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.07));
-        imageView.fitWidthProperty().bind(background.widthProperty().divide(25));
+        kingImage = new ImageView();
+            kingImage.setImage(new Image(Constants.IMAGE_PATH+"Crown.png"));
+        kingImage.fitHeightProperty().bind(background.heightProperty().multiply(0.07));
+        kingImage.fitWidthProperty().bind(background.widthProperty().divide(25));
         DropShadow ds = new DropShadow(15, Color.BLACK);
-        imageView.setEffect(ds);
-        background.getChildren().add(imageView);
-        imageView.layoutXProperty().bind(background.widthProperty().multiply(x));
-        imageView.layoutYProperty().bind(background.heightProperty().multiply(y).add(50));
-        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        kingImage.setEffect(ds);
+        background.getChildren().add(kingImage);
+        kingImage.layoutXProperty().bind(background.widthProperty().multiply(x));
+        kingImage.layoutYProperty().bind(background.heightProperty().multiply(y).add(50));
+        kingImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                imageView.setScaleX(1.2);
-                imageView.setScaleY(1.2);
+                kingImage.setScaleX(1.2);
+                kingImage.setScaleY(1.2);
             }
         });
-        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+        kingImage.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                imageView.setScaleY(1);
-                imageView.setScaleX(1);
+                kingImage.setScaleY(1);
+                kingImage.setScaleX(1);
             }
         });
 
-        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        kingImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 //showPopoverOnCity(city,imageView);
+                showKingPopover(kingImage);
             }
         });
 
     }
 
+    private void showKingPopover(ImageView imageView) {
+        PopOver popOver = new PopOver();
+        VBox vBox = new VBox();
+        //KING
+        HBox kingHBox = new HBox();
+        ArrayList<Councilor> kingCouncilors = new ArrayList<>(currentSnapshot.getKing().getCouncil().getCouncil());
+        for (Councilor councilor: kingCouncilors) {
+            ImageView coucilorImage = new ImageView();
+            try {
+                coucilorImage.setImage(new Image(councilor.getColor().getImageUrl()));
+                coucilorImage.fitWidthProperty().bind(popOver.prefWidthProperty().divide(10));
+                coucilorImage.fitHeightProperty().bind(popOver.prefHeightProperty().divide(3));
+                coucilorImage.setPreserveRatio(true);
+            } catch (IllegalArgumentException e) {
+            }
+            kingHBox.getChildren().add(coucilorImage);
+        }
+        JFXCheckBox politicCardsCheckBox;
+        VBox politicVBox = new VBox();
+        for (PoliticCard politicCard : clientController.getSnapshot().getCurrentUser().getPoliticCards()) {
+            politicCardsCheckBox = new JFXCheckBox();
+            String stringa;
+            if (politicCard.getPoliticColor() == null) {
+                stringa = "MULTICOLOR";
+            } else {
+                stringa = politicCard.getPoliticColor().getColor();
+            }
+            politicCardsCheckBox.setText(stringa);
+            politicCardsCheckBox.setId("JFXCheckBox");
+            politicCardsCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    if(newValue){
+                        politicCardforBuildWithKing.add(politicCard);
+                    }
+                    else{
+                        politicCardforBuildWithKing.remove(politicCard);
+                    }
+                }
+            });
+            politicVBox.getChildren().add(politicCardsCheckBox);
+        }
+        politicVBox.setSpacing(10);
+        JFXButton jfxButton = new JFXButton();
+        jfxButton.setButtonType(JFXButton.ButtonType.FLAT);
+        jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),null,null)));
+        jfxButton.setText("OK MAN");
+        jfxButton.setTextFill(Paint.valueOf("WHITE"));
+        jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buildWithKingPhase.setValue(true);
+                startBuildWithKing();
+            }
+        });
+
+        vBox.getChildren().addAll(kingHBox,politicVBox,jfxButton);
+        vBox.setSpacing(20);
+        vBox.setPadding(new Insets(20,20,20,20));
+        kingHBox.setAlignment(Pos.CENTER);
+        popOver.setContentNode(vBox);
+        popOver.show(imageView);
+
+    }
+
+    private void startBuildWithKing() {
+        Set<Node> cities = background.lookupAll(".cityImage");
+        kingPathforBuild.clear();
+        kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
+        for(Node node : cities){
+            Graphics.scaleTransitionEffectCycle(node,1.05f,1.05f,buildWithKingPhase);
+        }
+    }
+
     private void CreateSingleCity(double layoutX, double layoutY, City city) {
         //Circle castrum = new Circle();
         ImageView imageView = new ImageView();
+        imageView.getStyleClass().add("cityImage");
 
         //castrum.setFill(Paint.valueOf("BLACK"));
         //castrum.radiusProperty().bind(background.widthProperty().divide(20));
@@ -510,9 +617,36 @@ public class MatchController implements Initializable, BaseController {
         imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                showPopoverOnCity(city,imageView);
+                if(!buildWithKingPhase.get()) {
+                    showPopoverOnCity(city, imageView);
+                }
+                else {
+
+                    highlightCity(imageView,city);
+                }
             }
+
+
         });
+    }
+
+    private void highlightCity(ImageView imageView, City city) {
+        if(imageView.getEffect()==null) {
+            int depth = 70; //Setting the uniform variable for the glow width and height
+            DropShadow borderGlow = new DropShadow();
+            borderGlow.setOffsetY(0f);
+            borderGlow.setOffsetX(0f);
+            borderGlow.setColor(Color.YELLOW);
+            borderGlow.setWidth(depth);
+            borderGlow.setHeight(depth);
+            imageView.setEffect(borderGlow);
+            kingPathforBuild.add(city);
+        }
+        else {
+
+            kingPathforBuild.remove(city);
+            imageView.setEffect(null);
+        }
     }
 
     private void showPopoverOnCity(City city, ImageView imageView) {
@@ -660,6 +794,7 @@ public class MatchController implements Initializable, BaseController {
         hbox1.setAlignment(Pos.CENTER);
 
 
+        //KING
         HBox kingHBox = new HBox();
         ArrayList<Councilor> kingCouncilors = new ArrayList<>(currentSnapshot.getKing().getCouncil().getCouncil());
         for (Councilor councilor: kingCouncilors){
@@ -755,114 +890,7 @@ public class MatchController implements Initializable, BaseController {
 
     }
 
-    /*
-    private void createPermitCard(HBox regionHBox, HashMap<RegionName,ArrayList<PermitCard>> permitDeck,RegionName regionName) {
-        Set<Node> imageViews = regionHBox.lookupAll("#permitCard");
-        int i = 0;
-        for (Node node: imageViews) {
-            node.setOnMouseClicked(new PermitCardHandler(permitDeck.get(regionName).get(i),this,clientController, needToSelectPermitCard));
-            i++;
-        }
 
-        i=0;
-        for (Node node: regionHBox.lookupAll("#cityNames")){
-            Label label = (Label) node;
-            label.setText(permitDeck.get(regionName).get(i).getCityString());
-            i++;
-        }
-
-    }
-    */
-
-
-
-
-
-    public void mainActionElectCouncilor(){
-
-        ArrayList<String> colorList = new ArrayList<>();
-        colorList.add("WHITE");
-        colorList.add("BLACK");
-
-        ObservableList<String> observableColorList = FXCollections.observableArrayList(colorList);
-        councilorColorToChoose.setItems(observableColorList);
-
-        paneOfPopup.getChildren().addAll(councilorColorToChoose);
-        popOver.show(imageTest);
-
-        /*
-        String parameter = null;
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("ELEGGI IL CONSIGLIERE");
-        alert.setHeaderText(null);
-        alert.setContentText("Dai");
-        ButtonType buttonBlack = new ButtonType("BLACK");
-        ButtonType buttonWhite = new ButtonType("WHITE");
-        alert.getButtonTypes().setAll(buttonBlack, buttonWhite);
-        Optional<ButtonType> result = alert.showAndWait();
-        switch (result.get().getText()){
-            case "BLACK":
-                parameter = "BLACK";
-                break;
-            case "WHITE":
-                parameter = "WHITE";
-                break;
-        }
-        clientController.mainActionElectCouncilor(parameter);
-        */
-    }
-
-
-
-    public void mainActionBuildWithPermitCard(){
-        for (City city: clientController.getSnapshot().getMap().getCity()) {
-            Pane cityPane = (Pane) background.lookup("#"+city.getCityName().getCityName());
-            System.out.println(city.getCityName().getCityName());
-            if (cityPane != null) {
-                CityButton cityButton = new CityButton(city, this);
-                cityPane.getChildren().add(cityButton);
-                cityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-
-                        popOver = new PopOver();
-                        paneOfPopup.getChildren().add(new Text("TESTING.."));
-                        JFXListView<String> list = new JFXListView<String>();
-                        ArrayList<String> ehehe = new ArrayList<String>();
-                        for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()) {
-                            String temporaryChar = null;
-                            for (Character character : permitCard.getCityAcronimous()) {
-                                if (character.equals(city.getCityName().getCityName().charAt(0))) {
-                                    temporaryChar = temporaryChar + permitCard.getCityAcronimous().toString();
-                                }
-                            }
-                        }
-                        list.setItems(FXCollections.observableArrayList(ehehe));
-                        paneOfPopup.getChildren().add(list);
-                        popOver.setContentNode(paneOfPopup);
-                        popOver.show(cityPane);
-                    }
-                });
-            }
-        }
-
-    }
-
-    public void mainActionBuildWithKingHelp(){
-
-    }
-
-    public void fastActionChangePermitCardWithHelper(){
-    }
-
-
-    public void fastActionMoneyForHelper(){
-
-    }
-
-    public void fastActionNewMainAction(){
-
-    }
 
     public void setMyTurn(boolean value, SnapshotToSend snapshot) {
 
@@ -925,6 +953,31 @@ public class MatchController implements Initializable, BaseController {
         System.out.println("Select city reward bonus");
         needToSelectOldBonus=true;
         clientController.getSnapshot().getCurrentUser().getUsersEmporium().forEach(this::pulseBonus);
+    }
+
+    @Override
+    public void moveKing(ArrayList<City> kingPath) {
+
+        Timeline timeline = new Timeline();
+        kingImage.layoutXProperty().unbind();
+        kingImage.layoutYProperty().unbind();
+
+
+        kingPath.forEach(city1 -> {
+            KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.getWidth()*CityPosition.getX(city1));
+            KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.getHeight()*CityPosition.getY(city1));
+            KeyFrame keyFrame = new KeyFrame(new Duration(1000),keyValueX,keyValueY);
+            timeline.getKeyFrames().add(keyFrame);
+        });
+
+        timeline.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                kingImage.layoutYProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size()-1))));
+                kingImage.layoutXProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size()-1))));
+            }
+        });
+
     }
 
     private void pulseBonus(City city1) {
@@ -1130,6 +1183,16 @@ public class MatchController implements Initializable, BaseController {
         nodes.forEach(node -> node.setEffect(null));
     }
 
+    public void finishKingPhase() {
+        Set<Node> nodes = background.lookupAll(".cityImage");
+        nodes.forEach(node->{
+            node.setEffect(null);
+        });
+        politicCardforBuildWithKing.clear();
+        kingPathforBuild.clear();
+        buildWithKingPhase.set(false);
+    }
+
     private class PermitButtonHandler implements EventHandler<MouseEvent>{
 
         private RegionName regionName;
@@ -1147,5 +1210,26 @@ public class MatchController implements Initializable, BaseController {
 
     public void setPermitCardSelected(PermitCard permitCardSelected) {
         this.permitCardSelected = permitCardSelected;
+    }
+
+
+    public boolean getBuildWithKingPhase() {
+        return buildWithKingPhase.get();
+    }
+
+    public BooleanProperty buildWithKingPhaseProperty() {
+        return buildWithKingPhase;
+    }
+
+    public boolean isMyTurn() {
+        return myTurn;
+    }
+
+    public ArrayList<City> getKingPathforBuild() {
+        return kingPathforBuild;
+    }
+
+    public ArrayList<PoliticCard> getPoliticCardforBuildWithKing() {
+        return politicCardforBuildWithKing;
     }
 }

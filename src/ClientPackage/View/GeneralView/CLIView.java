@@ -1,6 +1,7 @@
 package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
+import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 
@@ -76,6 +77,11 @@ public class CLIView implements BaseView {
 
     @Override
     public void selectCityRewardBonus() {
+
+    }
+
+    @Override
+    public void onMoveKing(ArrayList<City> kingPath) {
 
     }
 
