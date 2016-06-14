@@ -1,12 +1,10 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.CircularArrayList;
@@ -120,6 +118,11 @@ public class PathController implements Initializable, BaseController{
 
     @Override
     public void selectCityRewardBonus() {
+
+    }
+
+    @Override
+    public void moveKing(ArrayList<City> baseController) {
 
     }
 

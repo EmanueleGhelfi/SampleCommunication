@@ -55,8 +55,6 @@ public class MainActionBuildWithPermitCard extends Action{
                     throw new ActionNotPossibleException();
                 }
             }
-            //TODO: remove
-            user.getBaseCommunication().selectPermitCard();
         }
     }
 }

@@ -233,6 +233,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
+    @Override
+    public void moveKing(ArrayList<City> kingPath) {
+        try {
+            rmiClientInterface.moveKing(kingPath);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void setUser(User user) {

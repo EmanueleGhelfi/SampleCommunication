@@ -148,7 +148,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         try {
             rmiClientHandler.onSelectPermitCard(permitCard);
         } catch (RemoteException e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -222,5 +222,10 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     @Override
     public void selectCityRewardBonus(SnapshotToSend snapshotToSend) throws RemoteException {
         clientController.selectCityRewardBonus(snapshotToSend);
+    }
+
+    @Override
+    public void moveKing(ArrayList<City> kingPath) throws RemoteException {
+        clientController.onMoveKing(kingPath);
     }
 }

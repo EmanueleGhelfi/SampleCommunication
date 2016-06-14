@@ -102,6 +102,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void moveKing(ArrayList<City> kingPath) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.MOVE_KING,kingPath);
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())

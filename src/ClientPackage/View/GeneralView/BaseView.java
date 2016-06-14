@@ -1,5 +1,6 @@
 package ClientPackage.View.GeneralView;
 
+import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 
@@ -35,4 +36,6 @@ public interface BaseView {
     void selectPermitCard();
 
     void selectCityRewardBonus();
+
+    void onMoveKing(ArrayList<City> kingPath);
 }

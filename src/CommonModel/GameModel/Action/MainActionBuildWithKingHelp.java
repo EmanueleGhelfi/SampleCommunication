@@ -10,6 +10,8 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Giulio on 18/05/2016.
@@ -23,6 +25,7 @@ public class MainActionBuildWithKingHelp extends Action {
     public MainActionBuildWithKingHelp(ArrayList<City> kingPath, ArrayList<PoliticCard> politicCards) {
         this.kingPath = kingPath;
         this.politicCards = politicCards;
+        this.actionType=Constants.MAIN_ACTION;
     }
 
 
@@ -36,7 +39,7 @@ public class MainActionBuildWithKingHelp extends Action {
         int newPositionInMoneyPath = 0;
         //true if the emporiums are not ten and i haven't build in that city
         if(super.checkActionCounter(user)) {
-            if (checkEmporiumsAreNotTen(user) && checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
+            if (checkEmporiumsAreNotTen(user) && kingPath.size()>0 && checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
                 // city where king goes
                 City kingCity = kingPath.get(kingPath.size() - 1);
                 // calculate correct politic card
@@ -62,11 +65,27 @@ public class MainActionBuildWithKingHelp extends Action {
                     for (City cityToVisit : cityVisitor.visit(kingCity)) {
                         cityToVisit.getBonus().getBonus(user, game);
                     }
+                    moveKing(game,user);
                 } else {
                     throw new ActionNotPossibleException();
                 }
                 removeAction(game, user);
             }
+            else{
+                throw new ActionNotPossibleException();
+            }
         }
+    }
+
+    private void moveKing(Game game, User user) {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        game.getUsers().forEach(user1 -> {
+
+            Runnable runnable =()-> {
+                user1.getBaseCommunication().moveKing(kingPath);
+            };
+
+            executorService.execute(runnable);
+        });
     }
 }

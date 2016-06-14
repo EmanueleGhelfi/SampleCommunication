@@ -1,5 +1,6 @@
 package RMIInterface;
 
+import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 
@@ -31,4 +32,6 @@ public interface RMIClientInterface extends Remote {
     void selectPermitCard() throws RemoteException;
 
     void selectCityRewardBonus(SnapshotToSend snapshotToSend) throws RemoteException;
+
+    void moveKing(ArrayList<City> kingPath) throws RemoteException;
 }

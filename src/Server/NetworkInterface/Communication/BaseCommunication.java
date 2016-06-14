@@ -1,5 +1,6 @@
 package Server.NetworkInterface.Communication;
 
+import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Server.Model.User;
@@ -32,4 +33,6 @@ public abstract class BaseCommunication {
     public abstract void selectPermitCard();
 
     public abstract void selectCityRewardBonus(SnapshotToSend snapshotToSend);
+
+    public abstract void moveKing(ArrayList<City> kingPath);
 }

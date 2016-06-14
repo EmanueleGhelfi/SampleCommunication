@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -197,6 +198,14 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_SELECT_PERMIT_CARD:{
                 clientController.selectPermitCard();
+                break;
+            }
+            case Constants.MOVE_KING:{
+                ArrayList<City> kingPath = new ArrayList<>();
+                Type listType = new TypeToken<ArrayList<City>>(){}.getType();
+               kingPath = gson.fromJson(communicationInfo.getInfo(),listType);
+                clientController.onMoveKing(kingPath);
+                break;
             }
         }
     }

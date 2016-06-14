@@ -2,6 +2,7 @@ package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.*;
+import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -150,8 +151,6 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         GUIView baseView = this;
-
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -250,6 +249,13 @@ public class GUIView extends Application implements BaseView {
             baseControllerList.forEach(BaseController::selectCityRewardBonus);
         });
 
+    }
+
+    @Override
+    public void onMoveKing(ArrayList<City> kingPath) {
+        Platform.runLater(()->{
+            baseControllerList.forEach(baseController-> baseController.moveKing(kingPath));
+        });
     }
 
     public void registerBaseController(BaseController baseController){
