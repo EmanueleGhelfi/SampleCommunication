@@ -54,6 +54,7 @@ public class MainActionBuildWithKingHelp extends Action {
                 System.out.println("POLITICS CARD" + politicCards.size());
                 System.out.println("USER CARD" + user.getPoliticCards().size());
                 removePoliticCard(politicCards, user);
+                //
                 if (kingPath.size() * Constants.KING_PRICE < user.getCoinPathPosition()) {
                     for (City city : kingPath) {
                         user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
