@@ -16,6 +16,6 @@
       <RowConstraints fillHeight="false" minHeight="10.0" vgrow="ALWAYS" />
    </rowConstraints>
    <children>
-      <Pane fx:id="imagePane" />
+      <Pane fx:id="paneBackground" />
    </children>
 </GridPane>
