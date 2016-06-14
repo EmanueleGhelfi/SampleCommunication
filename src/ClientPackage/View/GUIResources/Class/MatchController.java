@@ -106,6 +106,7 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Pane shop;
     @FXML private ShopController shopController;
     private HiddenSidesPane hiddenSidesPane;
+    private HiddenSidesPane nobilityHiddenSidesPane;
     @FXML private ImageView backgroundImage;
     @FXML private GridPane gridPane;
     @FXML private TabPane tabPane;
@@ -119,6 +120,11 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Label helperLabel;
     @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
+
+    @FXML private ImageView backgroundNobility;
+    @FXML private GridPane nobilityPathGridPane;
+
+
 
     //Images
     @FXML private ImageView kingImage;
@@ -215,6 +221,23 @@ public class MatchController implements Initializable, BaseController {
         bottomPane.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
+
+
+        createNobilityPathPane();
+    }
+
+    private void createNobilityPathPane() {
+
+        backgroundImage.setImage(new Image(Constants.IMAGE_PATH + "/NobilityPathSmall.png"));
+        backgroundImage.fitWidthProperty().bind(nobilityPathGridPane.widthProperty());
+        backgroundImage.fitHeightProperty().bind(nobilityPathGridPane.heightProperty());
+
+        nobilityPathGridPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("event x and y "+event.getX()/nobilityPathGridPane.getWidth()+" "+event.getY()/nobilityPathGridPane.getHeight());
+            }
+        });
 
     }
 
