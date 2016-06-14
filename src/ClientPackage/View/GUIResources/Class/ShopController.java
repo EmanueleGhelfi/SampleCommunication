@@ -17,10 +17,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
+import javafx.geometry.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -116,9 +113,10 @@ public class ShopController implements BaseController {
     }
 
 
-    public void onBuy() {
+    public void onBuy()
+    {
         Runnable runnable = () -> {
-            clientController.onBuy(toBuy);
+            clientController.onBuy((ArrayList<BuyableWrapper>)toBuy.clone());
             toBuy.clear();
         };
         new Thread(runnable).start();
@@ -271,7 +269,7 @@ public class ShopController implements BaseController {
             @Override
             public void handle(MouseEvent event) {
                 onBuy();
-                toBuy.clear();
+                //toBuy.clear();
                 clientController.sendFinishedBuyPhase();
             }
         });
@@ -280,7 +278,7 @@ public class ShopController implements BaseController {
             @Override
             public void handle(MouseEvent event) {
                 onBuy();
-                toBuy.clear();
+                //toBuy.clear();
             }
         });
         buyingSessionGridPane.add(finishShop, 0, 1);
@@ -294,8 +292,8 @@ public class ShopController implements BaseController {
             PopOver popOverToShow = new PopOver();
             Pane internalPopOverPane = new Pane();
             internalPopOverPane.getChildren().add(new Label("Bottega chiusa, viandante!"));
+            internalPopOverPane.setPadding(new Insets(20,20,20,20));
             popOverToShow.setContentNode(internalPopOverPane);
-
             popOverToShow.show(paneWhereShowPopOver);
         }
     }
@@ -435,6 +433,8 @@ public class ShopController implements BaseController {
         JFXButton button = new JFXButton();
         button.setTextFill(Paint.valueOf("WHITE"));
         button.setText(Integer.toString(information.getCost()));
+        button.setBackground(new Background(new BackgroundFill(Paint.valueOf("3D4248"),new CornerRadii(20),null)));
+        button.setStyle("-fx-background-radius: 20");
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -464,6 +464,8 @@ public class ShopController implements BaseController {
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
         JFXButton buttonToSell = new JFXButton();
         buttonToSell.setTextFill(Paint.valueOf("WHITE"));
+        buttonToSell.setBackground(new Background(new BackgroundFill(Paint.valueOf("3D4248"),new CornerRadii(20),null)));
+        buttonToSell.setStyle("-fx-background-radius: 20");
         if (information.isOnSale()){
             buttonToSell.setText("REMOVE");
             System.out.println(information.getBuyableObject().getUrl() + " ADDED");
@@ -475,8 +477,10 @@ public class ShopController implements BaseController {
             @Override
             public void handle(ActionEvent event) {
                 if (!buttonToSell.getText().equals("REMOVE")) {
-                    trueList.add(information);
+
                     information.setOnSale(true);
+                    information.setCost(Integer.parseInt(buttonToSell.getText()));
+                    trueList.add(information);
                     buttonToSell.setText("REMOVE");
                 }
                 else{
