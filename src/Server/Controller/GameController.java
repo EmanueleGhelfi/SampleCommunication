@@ -166,9 +166,15 @@ public class GameController implements Serializable{
 
     private void startMarket() {
         sellPhase = true;
-        for(int i = 0; i<users.size();i++){
-            sendStartMarket(users.get(i));
-        }
+
+
+        users.forEach(user -> {
+            Runnable runnable = ()-> {
+                sendStartMarket(user);
+            };
+            new Thread(runnable).start();
+
+        });
 
     }
 
@@ -331,7 +337,7 @@ public class GameController implements Serializable{
                     .filter(java.util.Map.Entry::getValue)
                     .count();
 
-            if (finishedUser == marketHashMap.size()) {
+            if (finishedUser == users.size()) {
                 sellPhase=false;
                 startBuyPhase();
             }

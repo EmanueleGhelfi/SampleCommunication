@@ -17,6 +17,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -46,6 +47,8 @@ import java.security.Key;
 import java.util.*;
 
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -647,7 +650,6 @@ public class MatchController implements Initializable, BaseController {
             kingPathforBuild.add(city);
         }
         else {
-
             kingPathforBuild.remove(city);
             imageView.setEffect(null);
         }
@@ -966,14 +968,18 @@ public class MatchController implements Initializable, BaseController {
         Timeline timeline = new Timeline();
         kingImage.layoutXProperty().unbind();
         kingImage.layoutYProperty().unbind();
+        Path path = new Path();
         kingPath.forEach(city1 -> {
             System.out.println("in foreach");
-            KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.widthProperty().get()*CityPosition.getX(city1));
+            path.getElements().add(new MoveTo(background.widthProperty().get()*CityPosition.getX(city1),background.heightProperty().get()*CityPosition.getY(city1)));
+            /*KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.widthProperty().get()*CityPosition.getX(city1));
             KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.heightProperty().get()*CityPosition.getY(city1));
             KeyFrame keyFrame = new KeyFrame(new Duration(1000),keyValueX,keyValueY);
             timeline.getKeyFrames().add(keyFrame);
+            */
         });
 
+        /*
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -983,6 +989,23 @@ public class MatchController implements Initializable, BaseController {
         });
 
         timeline.play();
+        */
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(4000));
+        pathTransition.setPath(path);
+        pathTransition.setNode(kingImage);
+
+        pathTransition.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                kingImage.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size()-1))));
+                kingImage.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size()-1))));
+            }
+        });
+
+        pathTransition.play();
+
+
 
     }
 

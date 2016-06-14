@@ -39,7 +39,7 @@ public class MainActionBuildWithKingHelp extends Action {
         int newPositionInMoneyPath = 0;
         //true if the emporiums are not ten and i haven't build in that city
         if(super.checkActionCounter(user)) {
-            if (checkEmporiumsAreNotTen(user) && checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
+            if (checkEmporiumsAreNotTen(user) && kingPath.size()>0 && checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
                 // city where king goes
                 City kingCity = kingPath.get(kingPath.size() - 1);
                 // calculate correct politic card
@@ -70,6 +70,9 @@ public class MainActionBuildWithKingHelp extends Action {
                     throw new ActionNotPossibleException();
                 }
                 removeAction(game, user);
+            }
+            else{
+                throw new ActionNotPossibleException();
             }
         }
     }
