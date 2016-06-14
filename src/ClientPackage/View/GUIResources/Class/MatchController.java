@@ -24,8 +24,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -43,14 +41,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
-import java.security.Key;
 import java.util.*;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import org.controlsfx.control.HiddenSidesPane;
@@ -104,7 +100,8 @@ public class MatchController implements Initializable, BaseController {
     @FXML private GridPane path;
     @FXML private PathController pathController;
     @FXML private Pane shop;
-    @FXML private ShopController shopController;
+    private ShopController shopController;
+    private NobilityPathController nobilityPathController;
     private HiddenSidesPane hiddenSidesPane;
     private HiddenSidesPane nobilityHiddenSidesPane;
     @FXML private ImageView backgroundImage;
@@ -121,8 +118,7 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
 
-    @FXML private ImageView backgroundNobility;
-    @FXML private GridPane nobilityPathGridPane;
+
 
 
 
@@ -181,7 +177,6 @@ public class MatchController implements Initializable, BaseController {
 
             }
         });
-
         /*
         backgroundImage.boundsInLocalProperty().addListener(new ChangeListener<Bounds>() {
             @Override
@@ -221,25 +216,8 @@ public class MatchController implements Initializable, BaseController {
         bottomPane.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
-
-
-        createNobilityPathPane();
     }
 
-    private void createNobilityPathPane() {
-
-        backgroundImage.setImage(new Image(Constants.IMAGE_PATH + "/NobilityPathSmall.png"));
-        backgroundImage.fitWidthProperty().bind(nobilityPathGridPane.widthProperty());
-        backgroundImage.fitHeightProperty().bind(nobilityPathGridPane.heightProperty());
-
-        nobilityPathGridPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                System.out.println("event x and y "+event.getX()/nobilityPathGridPane.getWidth()+" "+event.getY()/nobilityPathGridPane.getHeight());
-            }
-        });
-
-    }
 
     private void createNodeList() {
 
@@ -770,6 +748,8 @@ public class MatchController implements Initializable, BaseController {
     private void initController() {
         pathController.setClientController(clientController,guiView);
         shopController.setClientController(clientController,guiView);
+        nobilityPathController.setClientController(clientController, guiView);
+        nobilityPathController.setMatchController(this);
     }
 
     private void initPermitButton() {
@@ -1264,6 +1244,15 @@ public class MatchController implements Initializable, BaseController {
     public void setPermitCardSelected(PermitCard permitCardSelected) {
         this.permitCardSelected = permitCardSelected;
     }
+
+    public Pane getBackground() {
+        return background;
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
+    }
+
 
 
     public boolean getBuildWithKingPhase() {
