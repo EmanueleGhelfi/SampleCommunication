@@ -33,7 +33,7 @@ public class FastActionChangePermitCardWithHelper extends Action {
                 game.getPermitDeck(region).changePermitCardVisibile();
                 removeAction(game, user);
             } else {
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException("You don't have enough helper");
             }
         }
     }

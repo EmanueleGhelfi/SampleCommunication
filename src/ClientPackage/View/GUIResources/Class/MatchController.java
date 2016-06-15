@@ -839,6 +839,7 @@ public class MatchController implements Initializable, BaseController {
                 gridPane.prefHeightProperty().bind(bottomPane.prefHeightProperty().divide(2));
                 Label label = new Label(permitCard.getCityString());
                 label.getStyleClass().add("permitLabel");
+                label.setTextFill(Paint.valueOf("WHITE"));
                 ImageView imageView = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png"));
                 imageView.setPreserveRatio(true);
                 gridPane.add(imageView,0,0);

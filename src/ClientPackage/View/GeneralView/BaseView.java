@@ -3,6 +3,7 @@ package ClientPackage.View.GeneralView;
 import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
+import Utilities.Exception.ActionNotPossibleException;
 
 import java.util.ArrayList;
 
@@ -38,4 +39,6 @@ public interface BaseView {
     void selectCityRewardBonus();
 
     void onMoveKing(ArrayList<City> kingPath);
+
+    void onActionNotPossibleException(ActionNotPossibleException e);
 }

@@ -26,17 +26,17 @@ public abstract class Action implements Serializable {
         switch (actionType){
             case Constants.FAST_ACTION:
                 if(user.getFastActionCounter()<=0){
-                    throw new ActionNotPossibleException();
+                    throw new ActionNotPossibleException("You don't have fast action!");
                 }
                 else return true;
             case Constants.MAIN_ACTION:
                 if(user.getMainActionCounter()<=0){
                     System.out.println("Not your turn");
-                    throw new ActionNotPossibleException();
+                    throw new ActionNotPossibleException("You don't have main action!");
                 }
                 else return true;
             default:
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException("Action type unknown");
         }
 
     }
@@ -114,7 +114,7 @@ public abstract class Action implements Serializable {
             newPositionInMoneyPath+=bonusCounter;
         }
         else {
-            throw new ActionNotPossibleException();
+            throw new ActionNotPossibleException("Politic card not correct!");
         }
         System.out.println("NUOVA POS "+correctPoliticCard);
         return newPositionInMoneyPath;
@@ -148,7 +148,7 @@ public abstract class Action implements Serializable {
      */
     protected boolean checkEmporiumsAreNotTen(User user) throws ActionNotPossibleException {
         if (user.getUsersEmporium().size()>=Constants.EMPORIUMS_BUILDABLE){
-            throw new ActionNotPossibleException();
+            throw new ActionNotPossibleException("Ten emporiums!!!");
         }
         return true;
     }
@@ -156,7 +156,7 @@ public abstract class Action implements Serializable {
     protected boolean checkEmporiumsIsAlreadyPresent(User user, City cityWantToBuildIn) throws  ActionNotPossibleException{
         for(City city: user.getUsersEmporium()){
             if (cityWantToBuildIn.equals(city))
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException("Emporiums already present!");
         }
         return true;
     }
