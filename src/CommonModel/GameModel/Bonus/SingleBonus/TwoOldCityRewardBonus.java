@@ -30,7 +30,7 @@ public class TwoOldCityRewardBonus implements Bonus, Serializable {
     @Override
     public ArrayList<String> getBonusURL() {
         ArrayList<String> toReturn = new ArrayList<String>();
-        toReturn.add(Constants.IMAGE_PATH+"TwoOldBonusCard.png");
+        toReturn.add(Constants.IMAGE_PATH+"TwoOldCityRewardBonus.png");
         return toReturn;
 
     }

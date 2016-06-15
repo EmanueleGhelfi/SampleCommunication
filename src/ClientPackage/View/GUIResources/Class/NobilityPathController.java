@@ -53,22 +53,27 @@ public class NobilityPathController implements BaseController {
     }
 
     private void createPath() {
-        double relativeHeightPosition = 0.0125;
-        double relativeWidthPosition = 0.3656;
+        double relativeHeightPosition = 0.3656;
+        double relativeWidthPosition = 0.0125;
         for (Position position : clientController.getSnapshot().getNobilityPathPosition()) {
             HBox positionHBox = new HBox();
+            positionHBox.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(relativeWidthPosition));
+            positionHBox.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(relativeHeightPosition));
+            positionHBox.prefWidthProperty().bind(nobilityPath.prefWidthProperty().multiply(0.036));
+            positionHBox.prefHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.3));
             positionHBox.setAlignment(Pos.CENTER);
-            //nobilityPath.prefHeightProperty().bind(nobilityPath.prefHeightProperty().divide(20));
-            //nobilityPath.prefWidthProperty().bind(nobilityPath.prefWidthProperty().multiply(20));
-            //nobilityPath.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(relativeWidthPosition));
-            //nobilityPath.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(relativeHeightPosition));
             if (position != null) {
                 for (String bonusURL : position.getBonus().getBonusURL()) {
+                    System.out.println(position.getPosition() + " E' LA POSITION CON " + position.getBonus().getBonusURL().size() + " BONUS");
                     ImageView bonusImage = new ImageView(new Image(bonusURL));
+                    bonusImage.setPreserveRatio(true);
+                    bonusImage.fitWidthProperty().bind(positionHBox.prefWidthProperty().divide(position.getBonus().getBonusURL().size()));
+                    bonusImage.fitHeightProperty().bind(positionHBox.prefHeightProperty());
                     positionHBox.getChildren().add(bonusImage);
                 }
             }
-            relativeWidthPosition += 0.036;
+            nobilityPath.getChildren().add(positionHBox);
+            relativeWidthPosition += 0.0351;
         }
     }
 
