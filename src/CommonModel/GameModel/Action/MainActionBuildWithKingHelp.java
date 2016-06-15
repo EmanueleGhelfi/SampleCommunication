@@ -29,6 +29,7 @@ public class MainActionBuildWithKingHelp extends Action {
     }
 
 
+    //TODO: restore previous state in catch
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // count number of correct politic card
@@ -54,6 +55,7 @@ public class MainActionBuildWithKingHelp extends Action {
                 System.out.println("POLITICS CARD" + politicCards.size());
                 System.out.println("USER CARD" + user.getPoliticCards().size());
                 removePoliticCard(politicCards, user);
+
                 if (kingPath.size() * Constants.KING_PRICE < user.getCoinPathPosition()) {
                     for (City city : kingPath) {
                         user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);

@@ -6,6 +6,7 @@ import Server.Controller.GamesManager;
 import Server.Model.Game;
 import Server.Model.User;
 import Server.NetworkInterface.Communication.RMICommunication;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.ArrayComparisonFailure;
