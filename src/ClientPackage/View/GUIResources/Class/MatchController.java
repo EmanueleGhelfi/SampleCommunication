@@ -765,7 +765,6 @@ public class MatchController implements Initializable, BaseController {
         VBox vbox= new VBox();
         HBox hbox1 = new HBox();
         HBox hbox2 = new HBox();
-        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         for(RegionName regionName: RegionName.values()) {
             HBox hBox = new HBox();
             try {
@@ -855,17 +854,23 @@ public class MatchController implements Initializable, BaseController {
                 imageView.fitWidthProperty().bind(gridPane.prefWidthProperty());
                 imageView.fitHeightProperty().bind(gridPane.prefHeightProperty());
 
-                // image left
+                // bonus
 
                 for(int i = 0 ; i< permitCard.getBonus().getBonusURL().size();i++){
                     ImageView imageViewBonus = new ImageView(new Image(permitCard.getBonus().getBonusURL().get(i)));
                     imageViewBonus.getStyleClass().add("permitBonus");
+                    Label bonusInfo = new Label(permitCard.getBonus().getBonusInfo().get(i));
+                    bonusInfo.setTextFill(Paint.valueOf("WHITE"));
+                    bonusInfo.setWrapText(true);
                     gridPane.add(imageViewBonus,i,2);
+                    gridPane.add(bonusInfo,i,2);
                     imageViewBonus.fitWidthProperty().bind(imageView.fitWidthProperty().divide(3));
                     imageViewBonus.fitHeightProperty().bind(imageView.fitHeightProperty().divide(3));
                     imageViewBonus.setPreserveRatio(true);
                     GridPane.setHalignment(imageViewBonus,HPos.CENTER);
                     GridPane.setValignment(imageViewBonus,VPos.CENTER);
+                    GridPane.setHalignment(bonusInfo,HPos.CENTER);
+                    GridPane.setValignment(bonusInfo,VPos.CENTER);
                 }
                 gridPane.setOnMouseClicked(new PermitCardHandler(permitCard,this,clientController,needToSelectPermitCard));
                 hboxTmp.getChildren().add(gridPane);

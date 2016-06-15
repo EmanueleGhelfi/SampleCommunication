@@ -94,7 +94,7 @@ public class MainActionBuildWithKingHelp extends Action {
         for(int i = 0; i<kingPath.size()-1;i++){
             NeighborIndex<City,DefaultEdge> neighborIndex = new NeighborIndex(mapGraph);
             if(!(neighborIndex.neighborListOf(kingPath.get(i)).contains(kingPath.get(i+1)))){
-                System.out.println("PATH NOT CORRECT");
+                System.out.println("PATH NOT CORRECT because of "+kingPath.get(i).getCityName() +" and "+kingPath.get(i+1).getCityName());
                 return false;
             }
         }
