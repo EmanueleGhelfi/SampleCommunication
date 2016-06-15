@@ -99,9 +99,10 @@ public class MatchController implements Initializable, BaseController {
     // Include
     @FXML private GridPane path;
     @FXML private PathController pathController;
-    @FXML private Pane shop;
-    private ShopController shopController;
-    private NobilityPathController nobilityPathController;
+    @FXML private GridPane shop;
+    @FXML private Pane nobilityPath;
+    @FXML private ShopController shopController;
+    @FXML private NobilityPathController nobilityPathController;
     private HiddenSidesPane hiddenSidesPane;
     private HiddenSidesPane nobilityHiddenSidesPane;
     @FXML private ImageView backgroundImage;
@@ -748,7 +749,7 @@ public class MatchController implements Initializable, BaseController {
     private void initController() {
         pathController.setClientController(clientController,guiView);
         shopController.setClientController(clientController,guiView);
-        nobilityPathController.setClientController(clientController, guiView);
+
         nobilityPathController.setMatchController(this);
     }
 
@@ -1253,7 +1254,9 @@ public class MatchController implements Initializable, BaseController {
         return gridPane;
     }
 
-
+    public ImageView getBackgroundImage() {
+        return backgroundImage;
+    }
 
     public boolean getBuildWithKingPhase() {
         return buildWithKingPhase.get();
