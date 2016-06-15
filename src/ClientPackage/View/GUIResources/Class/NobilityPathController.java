@@ -30,39 +30,46 @@ public class NobilityPathController implements BaseController {
     private ClientController clientController;
     private ImageView backgroundImage = new ImageView();
     private NobilityPathController nobilityPathController = this;
-    private MatchController matchController = new MatchController();
+    private MatchController matchController;
     private GUIView guiView = new GUIView();
 
 
     private void createGridPane() {
         backgroundImage.setImage(new Image(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png"));
-        backgroundImage.fitWidthProperty().bind(nobilityPath.widthProperty());
-        backgroundImage.fitHeightProperty().bind(nobilityPath.heightProperty());
+        backgroundImage.fitWidthProperty().bind(nobilityPath.prefWidthProperty());
+        backgroundImage.fitHeightProperty().bind(nobilityPath.prefHeightProperty());
         nobilityPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("event x and y "+event.getX()/ nobilityPath.getWidth()+" "+event.getY()/ nobilityPath.getHeight());
+                System.out.println("event x and y "+event.getX()/ backgroundImage.getFitWidth()+" "+event.getY()/ backgroundImage.getFitHeight());
             }
         });
         nobilityPath.setOpacity(0.8);
         nobilityPath.prefHeightProperty().bind(matchController.getBackground().prefHeightProperty().divide(4));
         nobilityPath.prefWidthProperty().bind(matchController.getBackground().prefWidthProperty());
-
+        nobilityPath.getChildren().add(backgroundImage);
         createPath();
 
     }
 
     private void createPath() {
-        /*
+        double relativeHeightPosition = 0.0125;
+        double relativeWidthPosition = 0.3656;
         for (Position position : clientController.getSnapshot().getNobilityPathPosition()) {
             HBox positionHBox = new HBox();
             positionHBox.setAlignment(Pos.CENTER);
-            for (Bonus bonus : ) {
-
+            //nobilityPath.prefHeightProperty().bind(nobilityPath.prefHeightProperty().divide(20));
+            //nobilityPath.prefWidthProperty().bind(nobilityPath.prefWidthProperty().multiply(20));
+            //nobilityPath.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(relativeWidthPosition));
+            //nobilityPath.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(relativeHeightPosition));
+            if (position != null) {
+                for (String bonusURL : position.getBonus().getBonusURL()) {
+                    ImageView bonusImage = new ImageView(new Image(bonusURL));
+                    positionHBox.getChildren().add(bonusImage);
+                }
             }
+            relativeWidthPosition += 0.036;
         }
-        */
-
     }
 
 

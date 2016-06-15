@@ -217,6 +217,7 @@ public class MatchController implements Initializable, BaseController {
         bottomPane.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
+        GridPane.setValignment(nobilityPath, VPos.BOTTOM);
     }
 
 
@@ -749,7 +750,7 @@ public class MatchController implements Initializable, BaseController {
     private void initController() {
         pathController.setClientController(clientController,guiView);
         shopController.setClientController(clientController,guiView);
-
+        nobilityPathController.setClientController(clientController, guiView);
         nobilityPathController.setMatchController(this);
     }
 
