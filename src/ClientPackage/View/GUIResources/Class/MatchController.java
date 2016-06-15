@@ -858,6 +858,26 @@ public class MatchController implements Initializable, BaseController {
                 imageView.fitWidthProperty().bind(gridPane.prefWidthProperty());
                 imageView.fitHeightProperty().bind(gridPane.prefHeightProperty());
 
+                //PopOver
+
+                GridPane popOverGridPane = new GridPane();
+                Label popOverLabel = new Label(permitCard.getCityString());
+                popOverLabel.getStyleClass().add("permitLabel");
+                ImageView popOverImageView = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png"));
+                popOverImageView.setPreserveRatio(true);
+                popOverGridPane.add(popOverImageView, 0, 0);
+                popOverGridPane.add(popOverLabel, 0, 0);
+                GridPane.setColumnSpan(popOverLabel,3);
+                GridPane.setHalignment(popOverLabel,HPos.CENTER);
+                GridPane.setValignment(popOverLabel,VPos.CENTER);
+                GridPane.setRowSpan(popOverImageView,3);
+                GridPane.setColumnSpan(popOverImageView,3);
+                popOverImageView.getStyleClass().add("visiblePermitCard");
+                popOverGridPane.getStyleClass().add("gridPanePermitCard");
+                popOverImageView.fitWidthProperty().bind(popOverGridPane.prefWidthProperty());
+                popOverImageView.fitHeightProperty().bind(popOverGridPane.prefHeightProperty());
+
+
                 // bonus
 
                 for(int i = 0 ; i< permitCard.getBonus().getBonusURL().size();i++){
@@ -875,8 +895,51 @@ public class MatchController implements Initializable, BaseController {
                     GridPane.setValignment(imageViewBonus,VPos.CENTER);
                     GridPane.setHalignment(bonusInfo,HPos.CENTER);
                     GridPane.setValignment(bonusInfo,VPos.CENTER);
+
+                    ImageView imageViewBonusPopOver = new ImageView(new Image(permitCard.getBonus().getBonusURL().get(i)));
+                    imageViewBonusPopOver.getStyleClass().add("permitBonus");
+                    Label bonusInfoPopOver = new Label(permitCard.getBonus().getBonusInfo().get(i));
+                    bonusInfoPopOver.setTextFill(Paint.valueOf("WHITE"));
+                    bonusInfoPopOver.setWrapText(true);
+                    popOverGridPane.add(imageViewBonusPopOver,i,2);
+                    popOverGridPane.add(bonusInfoPopOver,i,2);
+                    imageViewBonusPopOver.fitWidthProperty().bind(popOverImageView.fitWidthProperty().divide(3));
+                    imageViewBonusPopOver.fitHeightProperty().bind(popOverImageView.fitHeightProperty().divide(3));
+                    imageViewBonusPopOver.setPreserveRatio(true);
+                    GridPane.setHalignment(imageViewBonusPopOver,HPos.CENTER);
+                    GridPane.setValignment(imageViewBonusPopOver,VPos.CENTER);
+                    GridPane.setHalignment(bonusInfoPopOver,HPos.CENTER);
+                    GridPane.setValignment(bonusInfoPopOver,VPos.CENTER);
                 }
+
                 gridPane.setOnMouseClicked(new PermitCardHandler(permitCard,this,clientController,needToSelectPermitCard));
+
+                PopOver popOverZoom = new PopOver();
+                gridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        popOverZoom.setContentNode(popOverGridPane);
+                        popOverZoom.show(gridPane);
+                        /*
+                        new Timer().schedule(
+                                new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        System.out.println("IN THE TIMER");
+                                        popOverZoom.show(gridPane);
+                                    }
+                                },
+                                2000
+                        );
+                        */
+                    }
+                });
+                gridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        popOverZoom.hide();
+                    }
+                });
                 hboxTmp.getChildren().add(gridPane);
             });
 

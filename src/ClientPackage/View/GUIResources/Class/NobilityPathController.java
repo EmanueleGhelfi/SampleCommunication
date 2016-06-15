@@ -37,7 +37,6 @@ public class NobilityPathController implements BaseController {
 
 
     private void createGridPane() {
-
         backgroundImage.setImage(new Image(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png"));
         backgroundImage.fitWidthProperty().bind(nobilityPath.prefWidthProperty());
         backgroundImage.fitHeightProperty().bind(nobilityPath.prefHeightProperty());
