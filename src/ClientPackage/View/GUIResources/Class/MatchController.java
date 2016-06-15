@@ -215,6 +215,8 @@ public class MatchController implements Initializable, BaseController {
         nobilityPath.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
+
+        GridPane.setHalignment(nobilityPath, HPos.CENTER);
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
     }
 
