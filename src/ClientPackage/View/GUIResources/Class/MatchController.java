@@ -15,10 +15,7 @@ import Utilities.Class.Graphics;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -224,7 +221,8 @@ public class MatchController implements Initializable, BaseController {
     private void createNodeList() {
 
         JFXButton finishKing = new JFXButton("FINISH");
-        finishKing.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),null,null)));
+        finishKing.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(20),null)));
+        finishKing.setButtonType(JFXButton.ButtonType.FLAT);
         finishKing.setTextFill(Paint.valueOf("WHITE"));
         finishKing.setOnAction(new FInishKingActionHandler(clientController,this));
         finishKing.disableProperty().bind(buildWithKingPhase.not());
@@ -973,12 +971,13 @@ public class MatchController implements Initializable, BaseController {
         Timeline timeline = new Timeline();
         kingImage.layoutXProperty().unbind();
         kingImage.layoutYProperty().unbind();
+
         kingPath.forEach(city1 -> {
             System.out.println("in foreach");
             //path.getElements().add(new MoveTo(background.widthProperty().get()*CityPosition.getX(city1),background.heightProperty().get()*CityPosition.getY(city1)));
-            KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.getPrefWidth()*CityPosition.getX(city1));
-            KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.getPrefHeight()*CityPosition.getY(city1));
-            KeyFrame keyFrame = new KeyFrame(new Duration(1000),keyValueX,keyValueY);
+            KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.getWidth()*CityPosition.getX(city1), Interpolator.EASE_BOTH);
+            KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.getHeight()*CityPosition.getY(city1),Interpolator.EASE_BOTH);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(500*kingPath.indexOf(city1)),keyValueX,keyValueY);
             timeline.getKeyFrames().add(keyFrame);
         });
 
