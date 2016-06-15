@@ -149,12 +149,13 @@ public class Map implements Serializable {
         links.add(new Link(dorful,graden));
         links.add(new Link(hellar,esti));
         links.add(new Link(framek,indur));
-        links.add(new Link(graden,juvelar));
+        links.add(new Link(framek,graden));
+        links.add(new Link(graden,hellar));
+        links.add(new Link(graden,indur));
         links.add(new Link(hellar,juvelar));
-        links.add(new Link(indur,juvelar));
         links.add(new Link(indur,kultos));
         links.add(new Link(juvelar,lyram));
-        links.add(new Link(hellar,merkatim));
+        links.add(new Link(juvelar,merkatim));
         links.add(new Link(merkatim,osium));
         links.add(new Link(osium,lyram));
         links.add(new Link(osium,naris));
@@ -181,7 +182,7 @@ public class Map implements Serializable {
         map.setCity(cities);
         map.setLinks(links);
         map.setMapName("prima mappa");
-        map.setMapPreview("/ClientPackage/View/GUIResources/Image/Map1v3.jpg");
+        map.setMapPreview("/ClientPackage/View/GUIResources/Image/Map1v3.png");
 
         System.out.println(map);
         Gson gson = new Gson();

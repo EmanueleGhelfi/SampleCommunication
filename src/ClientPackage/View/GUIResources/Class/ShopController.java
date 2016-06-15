@@ -4,6 +4,7 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
@@ -235,8 +236,8 @@ public class ShopController implements BaseController {
         populateSellAndBuyPane();
         PopOver popOver = new PopOver();
         popOver.setContentNode(sellPane);
-        popOver.prefWidthProperty().bind(paneBackground.prefHeightProperty().divide(10));
-        popOver.prefHeightProperty().bind(paneBackground.prefWidthProperty().divide(10));
+        sellPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
+        sellPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
         popOver.show(imageClicked);
     }
 
@@ -246,14 +247,16 @@ public class ShopController implements BaseController {
         Label innerLabel = new Label("Sei sicuro?");
         JFXButton innerPopOverButton = new JFXButton("OK");
         innerVBox.getChildren().addAll(innerLabel, innerPopOverButton);
+        innerVBox.setPadding(new Insets(20,20,20,20));
         innerPopOver.setContentNode(innerVBox);
         innerPopOver.show(paneWhereShowPopOver);
         innerPopOverButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println(trueList);
+                innerPopOver.hide();
                 onSell();
                 clientController.sendFinishSellPhase();
+
             }
         });
     }
@@ -264,17 +267,24 @@ public class ShopController implements BaseController {
         buyingSessionGridPane.setAlignment(Pos.CENTER);
         buyingSessionGridPane.add(buyPane, 0, 0);
         GridPane.setColumnSpan(buyPane, 2);
+
         ImageView finishShop = new ImageView(new Image(Constants.IMAGE_PATH + "/Check.png"));
-        finishShop.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        JFXButton finishShopButton = new JFXButton();
+        finishShopButton.setGraphic(finishShop);
+        finishShopButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                innerPopOver.hide();
                 onBuy();
                 //toBuy.clear();
                 clientController.sendFinishedBuyPhase();
             }
         });
+
         ImageView buyIt = new ImageView(new Image(Constants.IMAGE_PATH + "/Cart.png"));
-        buyIt.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        JFXButton buyItButton = new JFXButton("");
+        buyItButton.setGraphic(buyIt);
+        buyItButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 onBuy();
@@ -282,11 +292,15 @@ public class ShopController implements BaseController {
             }
         });
 
-        buyIt.fitWidthProperty().bind(innerPopOver.widthProperty().divide(10));
+        buyIt.setFitHeight(40);
+        buyIt.setFitWidth(40);
         buyIt.setPreserveRatio(true);
-        finishShop.fitWidthProperty().bind(innerPopOver.widthProperty().divide(10));
-        buyingSessionGridPane.add(finishShop, 0, 1);
-        buyingSessionGridPane.add(buyIt, 1, 1);
+        finishShop.setFitWidth(40);
+        finishShop.setFitHeight(40);
+        buyingSessionGridPane.add(finishShopButton, 0, 1);
+        buyingSessionGridPane.add(buyItButton, 1, 1);
+        buyingSessionGridPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(10));
+        buyingSessionGridPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(10));
         innerPopOver.setContentNode(buyingSessionGridPane);
         innerPopOver.show(paneWhereShowPopOver);
     }
@@ -424,9 +438,7 @@ public class ShopController implements BaseController {
         rowConstraints3.setPercentHeight(20);
         baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3);
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
-        ImageView itemBackground = new ImageView();
-        itemBackground = new ImageView(new Image(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
-        itemBackground.fitWidthProperty().bind(innerPopOver.widthProperty().divide(10));
+        ImageView itemBackground = new ImageView(new Image(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
         baseGridPane.getChildren().add(itemBackground);
         GridPane.setColumnSpan(itemBackground, 3);
         GridPane.setRowSpan(itemBackground, 3);
@@ -442,13 +454,30 @@ public class ShopController implements BaseController {
             }
         });
         baseGridPane.add(button, 1, 1);
-
+        Label label = new Label(information.getBuyableObject().getInfo());
         if(information.getBuyableObject() instanceof PermitCard){
-            Label label = new Label(information.getBuyableObject().getInfo());
             baseGridPane.add(label,0,1);
             GridPane.setHalignment(label,HPos.CENTER);
             GridPane.setValignment(label,VPos.CENTER);
         }
+        label.setVisible(false);
+        baseGridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                label.setVisible(true);
+                ColorAdjust colorAdjust = new ColorAdjust();
+                colorAdjust.setBrightness(-0.5);
+                itemBackground.setEffect(colorAdjust);
+            }
+        });
+
+        baseGridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                label.setVisible(false);
+                itemBackground.setEffect(null);
+            }
+        });
         return baseGridPane;
     }
 
@@ -503,6 +532,7 @@ public class ShopController implements BaseController {
         ImageView itemOnSaleImageView = new ImageView();
 
         Label label = new Label("");
+        label.setTextFill(Paint.valueOf("WHITE"));
         itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
         if (information.getBuyableObject() instanceof PermitCard){
             upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
@@ -513,20 +543,25 @@ public class ShopController implements BaseController {
                 upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusBlack.png");
                 downerImage = new Image("/ClientPackage/View/GUIResources/Image/minusBlack.png");
             } else {
-                upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
-                downerImage = new Image ("/ClientPackage/View/GUIResources/Image/minusWhite.png");
+                    upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
+                    downerImage = new Image("/ClientPackage/View/GUIResources/Image/minusWhite.png");
             }
         }
         ImageView upper = new ImageView(upperImage);
         ImageView downer = new ImageView(downerImage);
-        upper.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        JFXButton plusButton = new JFXButton("");
+        plusButton.setGraphic(upper);
+        JFXButton minusButton = new JFXButton("");
+        minusButton.setGraphic(downer);
+        plusButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (Integer.parseInt(buttonToSell.getText()) - 1 < 19)
                     buttonToSell.setText(Integer.toString(Integer.parseInt(buttonToSell.getText()) + 1));
             }
         });
-        downer.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        minusButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (Integer.parseInt(buttonToSell.getText()) - 1 > 0)
@@ -536,12 +571,13 @@ public class ShopController implements BaseController {
             }
         });
         itemOnSaleImageView.setImage(itemOnSaleImage);
-        itemOnSaleImageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        baseGridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                upper.setVisible(true);
-                downer.setVisible(true);
+                plusButton.setVisible(true);
+                minusButton.setVisible(true);
                 buttonToSell.setVisible(true);
+                label.setVisible(true);
                 ColorAdjust colorAdjust = new ColorAdjust();
                 colorAdjust.setBrightness(-0.5);
                 itemOnSaleImageView.setEffect(colorAdjust);
@@ -551,20 +587,27 @@ public class ShopController implements BaseController {
             @Override
             public void handle(MouseEvent event) {
                 itemOnSaleImageView.setEffect(null);
+                plusButton.setVisible(false);
+                minusButton.setVisible(false);
+                buttonToSell.setVisible(false);
+                plusButton.setVisible(false);
+                minusButton.setVisible(false);
+                label.setVisible(false);
             }
         });
         baseGridPane.add(itemOnSaleImageView, 0, 0);
         GridPane.setColumnSpan(itemOnSaleImageView, 3);
         GridPane.setRowSpan(itemOnSaleImageView, 3);
-        baseGridPane.add(upper, 0, 1);
+
+        baseGridPane.add(plusButton, 0, 1);
         baseGridPane.add(buttonToSell, 1, 1);
-        baseGridPane.add(downer, 2, 1);
+        baseGridPane.add(minusButton, 2, 1);
         upper.setPreserveRatio(false);
-        upper.setFitWidth(40);
-        upper.setFitHeight(40);
+        upper.setFitWidth(30);
+        upper.setFitHeight(30);
         downer.setPreserveRatio(false);
-        downer.setFitWidth(40);
-        downer.setFitHeight(40);
+        downer.setFitWidth(30);
+        downer.setFitHeight(30);
         GridPane.setHalignment(upper, HPos.CENTER);
         GridPane.setHalignment(downer, HPos.CENTER);
         GridPane.setHalignment(buttonToSell, HPos.CENTER);
@@ -574,7 +617,13 @@ public class ShopController implements BaseController {
         baseGridPane.add(label,1, 0);
         GridPane.setValignment(label,VPos.CENTER);
         GridPane.setHalignment(label,HPos.CENTER);
-        itemOnSaleImageView.fitWidthProperty().bind(innerPopOver.widthProperty().divide(10));
+        itemOnSaleImageView.setEffect(null);
+        plusButton.setVisible(false);
+        minusButton.setVisible(false);
+        buttonToSell.setVisible(false);
+        plusButton.setVisible(false);
+        minusButton.setVisible(false);
+        label.setVisible(false);
         baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         baseGridPane.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         return baseGridPane;

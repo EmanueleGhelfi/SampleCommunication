@@ -44,7 +44,12 @@ public class MainActionBuildWithPermitCard extends Action{
                     // get bonus to old city near the city in wich the user wants to build
                     CityVisitor cityVisitor = new CityVisitor(game.getGraph(), user.getUsersEmporium());
                     for (City cityToVisit : cityVisitor.visit(gameCity)) {
-                        cityToVisit.getBonus().getBonus(user, game);
+                        if(cityToVisit!=null && cityToVisit.getBonus()!=null) {
+                            cityToVisit.getBonus().getBonus(user, game);
+                        }
+                        else{
+                            System.out.println(" "+cityToVisit+" has null bonus or is null");
+                        }
                     }
                     checkRegionBonus(gameCity, user, game);
                     checkColorBonus(gameCity, user, game);
