@@ -11,10 +11,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 
@@ -49,31 +51,39 @@ public class NobilityPathController implements BaseController {
         nobilityPath.prefWidthProperty().bind(matchController.getBackground().prefWidthProperty());
         nobilityPath.getChildren().add(backgroundImage);
         createPath();
-
     }
 
     private void createPath() {
         double relativeHeightPosition = 0.3656;
         double relativeWidthPosition = 0.0125;
         for (Position position : clientController.getSnapshot().getNobilityPathPosition()) {
-            HBox positionHBox = new HBox();
+            VBox positionHBox = new VBox();
             positionHBox.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(relativeWidthPosition));
             positionHBox.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(relativeHeightPosition));
             positionHBox.prefWidthProperty().bind(nobilityPath.prefWidthProperty().multiply(0.036));
-            positionHBox.prefHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.3));
+            positionHBox.prefHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.2694));
             positionHBox.setAlignment(Pos.CENTER);
             if (position != null) {
-                for (String bonusURL : position.getBonus().getBonusURL()) {
+                for (int i = 0; i < position.getBonus().getBonusURL().size(); i++) {
+                    StackPane internalStackPane = new StackPane();
                     System.out.println(position.getPosition() + " E' LA POSITION CON " + position.getBonus().getBonusURL().size() + " BONUS");
-                    ImageView bonusImage = new ImageView(new Image(bonusURL));
+                    ImageView bonusImage = new ImageView(new Image(position.getBonus().getBonusURL().get(i)));
+                    internalStackPane.getChildren().add(bonusImage);
                     bonusImage.setPreserveRatio(true);
                     bonusImage.fitWidthProperty().bind(positionHBox.prefWidthProperty().divide(position.getBonus().getBonusURL().size()));
                     bonusImage.fitHeightProperty().bind(positionHBox.prefHeightProperty());
-                    positionHBox.getChildren().add(bonusImage);
+                    internalStackPane.prefWidthProperty().bind(bonusImage.fitWidthProperty());
+                    internalStackPane.prefHeightProperty().bind(bonusImage.fitHeightProperty());
+                    Label price = new Label(position.getBonus().getBonusInfo().get(i));
+                    price.setTextFill(Paint.valueOf("WHITE"));
+                    internalStackPane.getChildren().add(price);
+                    StackPane.setAlignment(internalStackPane, Pos.CENTER);
+                    StackPane.setAlignment(price, Pos.CENTER);
+                    positionHBox.getChildren().add(internalStackPane);
                 }
             }
             nobilityPath.getChildren().add(positionHBox);
-            relativeWidthPosition += 0.0351;
+            relativeWidthPosition += 0.0352;
         }
     }
 

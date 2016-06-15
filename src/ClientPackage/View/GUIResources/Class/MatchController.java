@@ -212,6 +212,7 @@ public class MatchController implements Initializable, BaseController {
         populateHamburgerMenu();
         initHamburgerIcon();
         bottomPane.setVisible(false);
+        nobilityPath.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
@@ -1201,6 +1202,15 @@ public class MatchController implements Initializable, BaseController {
         }
         else {
             bottomPane.setVisible(true);
+        }
+    }
+
+    public void showLess (ActionEvent actionEvent) {
+        if(nobilityPath.isVisible()){
+            nobilityPath.setVisible(false);
+        }
+        else {
+            nobilityPath.setVisible(true);
         }
     }
 

@@ -80,6 +80,11 @@
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/icon/more.png");
 }
 
+.lessImg{
+    -fx-background-color: white;
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/icon/less.png");
+}
+
 .bonusLabel{
     -fx-text-fill: white;
     -fx-font-size: 10;

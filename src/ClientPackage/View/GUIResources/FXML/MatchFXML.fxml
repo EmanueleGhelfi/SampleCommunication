@@ -470,7 +470,16 @@
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </Button>
-                   <fx:include fx:id="nobilityPath" source="NobilityPathFXML.fxml" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                   <fx:include fx:id="nobilityPath" source="NobilityPathFXML.fxml" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#showLess" styleClass="lessImg" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <effect>
+                        <ImageInput>
+                           <source>
+                              <Image url="/ClientPackage/View/GUIResources/Image/icon/less.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                  </Button>
                </children>
             </GridPane>
          </content>
