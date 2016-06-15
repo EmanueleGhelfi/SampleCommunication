@@ -116,7 +116,7 @@ public class ShopController implements BaseController {
     }
 
 
-    public void onBuy() {
+    private void onBuy() {
         Runnable runnable = () -> {
             clientController.onBuy(toBuy);
             toBuy.clear();
@@ -124,7 +124,7 @@ public class ShopController implements BaseController {
         new Thread(runnable).start();
     }
 
-    public void onSell() {
+    private void onSell() {
         Runnable runnable = () -> {
             if (trueList.size() > 0) {
                 clientController.sendSaleItem(trueList);
@@ -489,15 +489,14 @@ public class ShopController implements BaseController {
         Image itemOnSaleImage = null;
         Image upperImage;
         Image downerImage;
-        ImageView itemOnSaleImageView = new ImageView(itemOnSaleImage);
+        ImageView itemOnSaleImageView = new ImageView();
         if (information.getBuyableObject() instanceof PermitCard){
             Label label = new Label();
-            label.setText(information.getBuyableObject().getUrl());
-            baseGridPane.add(label, 0, 1);
+            label.setText(information.getBuyableObject().getInfo());
+            baseGridPane.add(label, 1, 0);
             itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png");
             upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
             downerImage = new Image ("/ClientPackage/View/GUIResources/Image/minusWhite.png");
-
         } else {
             if (information.getBuyableObject() instanceof Helper) {
                 itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
