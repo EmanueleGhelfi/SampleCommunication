@@ -281,6 +281,10 @@ public class ShopController implements BaseController {
                 //toBuy.clear();
             }
         });
+
+        buyIt.fitWidthProperty().bind(innerPopOver.widthProperty().divide(10));
+        buyIt.setPreserveRatio(true);
+        finishShop.fitWidthProperty().bind(innerPopOver.widthProperty().divide(10));
         buyingSessionGridPane.add(finishShop, 0, 1);
         buyingSessionGridPane.add(buyIt, 1, 1);
         innerPopOver.setContentNode(buyingSessionGridPane);
@@ -421,12 +425,8 @@ public class ShopController implements BaseController {
         baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3);
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
         ImageView itemBackground = new ImageView();
-        if (information.getBuyableObject() instanceof PermitCard)
-            itemBackground = new ImageView(new Image(Constants.IMAGE_PATH + "/PermitCard.png"));
-        else if (information.getBuyableObject() instanceof Helper)
-            itemBackground = new ImageView(new Image(Constants.IMAGE_PATH + "/Helper.png"));
-        else if (information.getBuyableObject() instanceof  PoliticCard)
-            itemBackground = new ImageView(new Image(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
+        itemBackground = new ImageView(new Image(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
+        itemBackground.fitWidthProperty().bind(innerPopOver.widthProperty().divide(10));
         baseGridPane.getChildren().add(itemBackground);
         GridPane.setColumnSpan(itemBackground, 3);
         GridPane.setRowSpan(itemBackground, 3);
@@ -442,6 +442,13 @@ public class ShopController implements BaseController {
             }
         });
         baseGridPane.add(button, 1, 1);
+
+        if(information.getBuyableObject() instanceof PermitCard){
+            Label label = new Label(information.getBuyableObject().getInfo());
+            baseGridPane.add(label,0,1);
+            GridPane.setHalignment(label,HPos.CENTER);
+            GridPane.setValignment(label,VPos.CENTER);
+        }
         return baseGridPane;
     }
 
@@ -493,22 +500,19 @@ public class ShopController implements BaseController {
         Image itemOnSaleImage = null;
         Image upperImage;
         Image downerImage;
-        ImageView itemOnSaleImageView = new ImageView(itemOnSaleImage);
+        ImageView itemOnSaleImageView = new ImageView();
+
+        Label label = new Label("");
+        itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
         if (information.getBuyableObject() instanceof PermitCard){
-            Label label = new Label();
-            label.setText(information.getBuyableObject().getUrl());
-            baseGridPane.add(label, 0, 1);
-            itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/PermitCard.png");
             upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
             downerImage = new Image ("/ClientPackage/View/GUIResources/Image/minusWhite.png");
-
+            label.setText(information.getBuyableObject().getInfo());
         } else {
             if (information.getBuyableObject() instanceof Helper) {
-                itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
                 upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusBlack.png");
                 downerImage = new Image("/ClientPackage/View/GUIResources/Image/minusBlack.png");
             } else {
-                itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
                 upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
                 downerImage = new Image ("/ClientPackage/View/GUIResources/Image/minusWhite.png");
             }
@@ -567,6 +571,10 @@ public class ShopController implements BaseController {
         GridPane.setValignment(upper, VPos.CENTER);
         GridPane.setValignment(downer, VPos.CENTER);
         GridPane.setValignment(buttonToSell, VPos.CENTER);
+        baseGridPane.add(label,1, 0);
+        GridPane.setValignment(label,VPos.CENTER);
+        GridPane.setHalignment(label,HPos.CENTER);
+        itemOnSaleImageView.fitWidthProperty().bind(innerPopOver.widthProperty().divide(10));
         baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         baseGridPane.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         return baseGridPane;

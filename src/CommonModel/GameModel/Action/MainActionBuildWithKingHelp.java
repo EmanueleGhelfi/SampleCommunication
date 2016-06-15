@@ -8,6 +8,10 @@ import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.alg.NeighborIndex;
+import org.jgrapht.graph.DefaultEdge;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
@@ -39,7 +43,7 @@ public class MainActionBuildWithKingHelp extends Action {
         //this is the new position of the user in money path
         int newPositionInMoneyPath = 0;
         //true if the emporiums are not ten and i haven't build in that city
-        if(super.checkActionCounter(user)) {
+        if(super.checkActionCounter(user) && pathIsCorrect(game)) {
             if (checkEmporiumsAreNotTen(user) && kingPath.size()>0 && checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
                 // city where king goes
                 City kingCity = kingPath.get(kingPath.size() - 1);
@@ -77,6 +81,24 @@ public class MainActionBuildWithKingHelp extends Action {
                 throw new ActionNotPossibleException();
             }
         }
+        else{
+            throw new ActionNotPossibleException();
+        }
+    }
+
+    private boolean pathIsCorrect(Game game) {
+        UndirectedGraph<City,DefaultEdge> mapGraph = game.getMap().getMapGraph();
+        if(!kingPath.get(0).equals(game.getKing().getCurrentCity())){
+            return false;
+        }
+        for(int i = 0; i<kingPath.size()-1;i++){
+            NeighborIndex<City,DefaultEdge> neighborIndex = new NeighborIndex(mapGraph);
+            if(!(neighborIndex.neighborListOf(kingPath.get(i)).contains(kingPath.get(i+1)))){
+                System.out.println("PATH NOT CORRECT");
+                return false;
+            }
+        }
+        return true;
     }
 
     private void moveKing(Game game, User user) {
