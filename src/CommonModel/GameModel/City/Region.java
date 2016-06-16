@@ -3,6 +3,7 @@ package CommonModel.GameModel.City;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+import CommonModel.GameModel.Council.Bank;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
@@ -26,9 +27,14 @@ public class Region implements Serializable, GotCouncil {
     private RegionName region;
     private int cityNumber;
     private Council council;
+    private Bank bank;
 
     //default
-    public Region() {
+    public Region(RegionName regionName, int cityNumber, Bank bank) {
+        this.region = regionName;
+        this.cityNumber = cityNumber;
+        this.bank = bank;
+        createRandomCouncil();
 
     }
 
@@ -40,12 +46,19 @@ public class Region implements Serializable, GotCouncil {
 
     private void createRandomCouncil(){
         if(council==null) {
-            council = new Council();
+            council = new Council(bank);
             Random random = new Random();
             for (int i = 0; i < Constants.COUNCILOR_DIMENSION; i++) {
-                PoliticColor[] politicColors = PoliticColor.values();
-                int value = random.nextInt(5);
-                council.add(new Councilor(politicColors[value]));
+                ArrayList<PoliticColor> availablePoliticColors = bank.showCouncilor();
+                int value = random.nextInt(availablePoliticColors.size());
+                Councilor toAdd = bank.getCouncilor(availablePoliticColors.get(value));
+                if(toAdd!=null) {
+                    council.add(toAdd);
+                }
+                else {
+                    // retry random
+                    i--;
+                }
             }
         }
     }

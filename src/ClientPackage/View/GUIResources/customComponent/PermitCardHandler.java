@@ -83,6 +83,7 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
                             politicCardSelected.add(findPoliticCard(jfxCheckBoxTempTemp.getText()));
                         }
                     }
+                    popOver.hide();
                     clientController.mainActionBuyPermitCard(permitCard, politicCardSelected);
                 }
             });

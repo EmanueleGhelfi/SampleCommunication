@@ -201,7 +201,7 @@ public class GameController implements Serializable{
             System.out.println("MAP PRESENT");
             Map mapToFind = findMap(map);
             game.setMap(mapToFind);
-            game.setKing(new King(map.getCity().get(0)));
+            game.setKing(new King(map.getCity().get(0),game.getBank()));
             for (User user: game.getUsers()) {
                 SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
                 // init game

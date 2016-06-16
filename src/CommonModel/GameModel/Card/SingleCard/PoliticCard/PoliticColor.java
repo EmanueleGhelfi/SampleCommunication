@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Created by Giulio on 14/05/2016.
  */
-public enum PoliticColor implements Serializable {
+public enum PoliticColor implements Serializable, Cloneable {
 
     VIOLET(Constants.VIOLET), BLACK(Constants.BLACK), ORANGE(Constants.ORANGE), PURPLE(Constants.PURPLE), BLUE(Constants.BLUE), WHITE(Constants.WHITE);
 
@@ -28,4 +28,6 @@ public enum PoliticColor implements Serializable {
     public String getImageUrl() {
         return imageUrl;
     }
+
+
 }
