@@ -64,7 +64,7 @@ public class MainActionBuildWithKingHelp extends Action {
                         cityToVisit.getBonus().getBonus(user, game);
                     }
                 } else {
-                    throw new ActionNotPossibleException("You don't have enough money!");
+                    throw new ActionNotPossibleException(Constants.MONEY_EXCEPTION);
                 }
                 // go ahead in money path
                 game.getMoneyPath().goAhead(user, - newPositionInMoneyPath);
@@ -77,11 +77,11 @@ public class MainActionBuildWithKingHelp extends Action {
                 removeAction(game, user);
             }
             else{
-                throw new ActionNotPossibleException("Emporium already present!");
+                throw new ActionNotPossibleException(Constants.EMPORIUM_PRESENT_EXCEPTION);
             }
         }
         else{
-            throw new ActionNotPossibleException("Path is incorrect, check it!");
+            throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);
         }
     }
 

@@ -57,7 +57,7 @@ public class MainActionBuildWithPermitCard extends Action{
                     user.removePermitCard(permitCard);
                     removeAction(game, user);
                 } else {
-                    throw new ActionNotPossibleException();
+                    throw new ActionNotPossibleException(Constants.HELPER_EXCEPTION);
                 }
             }
         }

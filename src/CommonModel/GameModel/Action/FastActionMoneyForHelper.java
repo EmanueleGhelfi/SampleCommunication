@@ -23,7 +23,7 @@ public class FastActionMoneyForHelper extends Action {
                 user.addHelper();
                 removeAction(game, user);
             } else {
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException(Constants.MONEY_EXCEPTION);
             }
         }
     }

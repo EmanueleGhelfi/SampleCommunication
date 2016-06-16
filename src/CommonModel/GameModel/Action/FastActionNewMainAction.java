@@ -22,7 +22,7 @@ public class FastActionNewMainAction extends Action {
                 user.setMainActionCounter(user.getMainActionCounter() + Constants.MAIN_ACTION_ADDED);
                 removeAction(game, user);
             } else {
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException(Constants.HELPER_EXCEPTION);
             }
         }
     }

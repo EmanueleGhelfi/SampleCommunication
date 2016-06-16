@@ -145,7 +145,9 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                             user.getGame().getGameController().doAction(action,user);
                         } catch (ActionNotPossibleException e) {
                             //printing exception
-                            System.out.println(e);
+                            System.out.println(e.getMessage());
+                            // send exception to client
+                            CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e);
                             //TODO: manage exception
                         }
                         break;

@@ -71,7 +71,7 @@ public class PermitDeck implements Deck,Serializable {
                 }
             }
         }
-        throw new ActionNotPossibleException();
+        throw new ActionNotPossibleException(Constants.PERMIT_CARD_NOT_PRESENT_EXCEPTION);
     }
 
     public PermitCard getPermitCardVisible(int num){

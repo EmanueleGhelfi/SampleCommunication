@@ -22,7 +22,7 @@ public class MoneyPath implements Path, Serializable {
         }
         else{
             if(user.getCoinPathPosition()+value<0){
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException(Constants.MONEY_PATH_EXCEPTION);
             }
             else {
                 user.setCoinPathPosition(user.getCoinPathPosition()+value);

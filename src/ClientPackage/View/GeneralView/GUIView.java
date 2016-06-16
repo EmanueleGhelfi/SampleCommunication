@@ -264,14 +264,16 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void onActionNotPossibleException(ActionNotPossibleException e) {
-        Alert dlg = createAlert(Alert.AlertType.ERROR);
-        dlg.setTitle("ERRORE NELLA MOSSA!");
-        dlg.getDialogPane().setContentText(e.getMessage());
-        configureSampleDialog(dlg, "");
-        showDialog(dlg);
+        Platform.runLater(()->{
+            Alert dlg = createAlert(Alert.AlertType.ERROR);
+            dlg.setTitle("ERRORE NELLA MOSSA!");
+            dlg.getDialogPane().setContentText(e.getMessage());
+            configureSampleDialog(dlg, "");
+            showDialog(dlg);
+        });
     }
 
-    public void registerBaseController(BaseController baseController){
+    public synchronized void registerBaseController(BaseController baseController){
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);
         }
@@ -344,6 +346,7 @@ public class GUIView extends Application implements BaseView {
     }
 
     private Alert createAlert(Alert.AlertType type) {
+
         return new Alert(type, "");
     }
 
