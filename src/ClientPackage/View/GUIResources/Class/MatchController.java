@@ -228,7 +228,7 @@ public class MatchController implements Initializable, BaseController {
         handHBox.prefWidthProperty().bind(gridPane.prefWidthProperty());
         handHBox.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(7));
         handHBox.setMouseTransparent(true);
-        handHBox.setAlignment(Pos.BOTTOM_CENTER);
+        handHBox.setAlignment(Pos.CENTER);
         for (PoliticCard politicCard : clientController.getSnapshot().getCurrentUser().getPoliticCards()) {
             ImageView politicCardImageView = new ImageView();
             politicCardImageView.setImage(new Image(Constants.IMAGE_PATH + "/" + politicCard.getUrl() + ".png"));
@@ -667,7 +667,6 @@ public class MatchController implements Initializable, BaseController {
                     showPopoverOnCity(city, imageView);
                 }
                 else {
-
                     highlightCity(imageView,city);
                 }
             }
@@ -1342,7 +1341,6 @@ public class MatchController implements Initializable, BaseController {
         politicCardforBuildWithKing.clear();
         kingPathforBuild.clear();
         buildWithKingPhase.set(false);
-
     }
 
     private class PermitButtonHandler implements EventHandler<MouseEvent>{
