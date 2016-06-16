@@ -114,6 +114,9 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
         vBox.setSpacing(20);
         double targetX = event.getScreenX();
         double targetY = event.getScreenY();
+        if(targetX/matchController.getBackground().getWidth()>0.5){
+            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+        }
         popOver.hide();
         popOver.setContentNode(vBox);
         popOver.show(hBoxSource,targetX,targetY);

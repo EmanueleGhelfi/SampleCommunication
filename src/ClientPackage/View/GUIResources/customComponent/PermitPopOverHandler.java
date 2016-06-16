@@ -78,6 +78,9 @@ public class PermitPopOverHandler implements EventHandler<MouseEvent> {
 
         HBox hBox = new HBox(popOverGridPane);
         hBox.setPadding(new Insets(20,20,20,20));
+        if(event.getX()/matchController.getBackground().getWidth()>0.5){
+            popOverZoom.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+        }
         popOverZoom.prefWidthProperty().bind(hBox.widthProperty());
         popOverZoom.setContentNode(hBox);
         popOverZoom.show((Node)event.getSource());
