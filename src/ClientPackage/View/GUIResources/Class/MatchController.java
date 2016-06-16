@@ -119,7 +119,7 @@ public class MatchController implements Initializable, BaseController {
 
 
 
-    private HBox handHBox;
+    private HBox handHBox = new HBox();
 
     //Images
     @FXML private ImageView kingImage;
@@ -209,6 +209,7 @@ public class MatchController implements Initializable, BaseController {
         initPermitButton();
         handleClick();
         createCity();
+        gridPane.add(handHBox, 0, 2);
         createHand();
 
         populateHamburgerMenu();
@@ -223,7 +224,7 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void createHand() {
-        handHBox = new HBox();
+        handHBox.getChildren().clear();
         handHBox.prefWidthProperty().bind(gridPane.prefWidthProperty());
         handHBox.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(7));
         handHBox.setMouseTransparent(true);
@@ -247,7 +248,7 @@ public class MatchController implements Initializable, BaseController {
             permitStackPane.getChildren().addAll(permitCardImageView, labelOfPermitCard);
             handHBox.getChildren().add(permitStackPane);
         }
-        gridPane.add(handHBox, 0, 2);
+
         GridPane.setValignment(handHBox, VPos.BOTTOM);
         GridPane.setHalignment(handHBox, HPos.CENTER);
         GridPane.setHalignment(handHBox, HPos.CENTER);
