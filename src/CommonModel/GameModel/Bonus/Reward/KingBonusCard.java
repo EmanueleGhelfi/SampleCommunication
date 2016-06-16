@@ -68,4 +68,8 @@ public class KingBonusCard implements Bonus,Serializable {
         toReturn.addAll(victoryPointBonus.getBonusInfo());
         return toReturn;
     }
+
+    public int getOrder() {
+        return order;
+    }
 }

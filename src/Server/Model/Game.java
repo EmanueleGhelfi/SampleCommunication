@@ -6,6 +6,7 @@ import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
 import CommonModel.GameModel.City.*;
+import CommonModel.GameModel.Council.Bank;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.MoneyPath;
@@ -51,6 +52,7 @@ public class Game implements Serializable{
     private NobilityPath nobilityPath;
     private MoneyPath moneyPath;
     private GameController gameController;
+    private Bank bank;
 
     // PERMIT DECK
     private HashMap<RegionName,PermitDeck> permitDecks;
@@ -69,6 +71,7 @@ public class Game implements Serializable{
         gameController = new GameController(this);
         gameController.startTimer();
         //create Region
+        bank = new Bank();
         createRegion();
         // create permit card decks
         createDecks();
@@ -321,5 +324,9 @@ public class Game implements Serializable{
         }
         */
         marketList.remove(buyableWrapper);
+    }
+
+    public Bank getBank() {
+        return bank;
     }
 }

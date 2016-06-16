@@ -1,7 +1,8 @@
 .matchBackground{
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/MatchPattern.png");
     -fx-background-repeat: stretch;
     -fx-background-position: center;
-    -fx-background-size: 95%;
+    -fx-background-size: cover;
 }
 
 
@@ -78,6 +79,11 @@
 .moreImg{
     -fx-background-color: white;
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/icon/more.png");
+}
+
+.lessImg{
+    -fx-background-color: white;
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/icon/less.png");
 }
 
 .bonusLabel{

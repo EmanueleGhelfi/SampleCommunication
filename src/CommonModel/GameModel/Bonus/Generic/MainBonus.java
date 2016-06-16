@@ -1,7 +1,6 @@
 package CommonModel.GameModel.Bonus.Generic;
 
 import CommonModel.GameModel.Bonus.SingleBonus.*;
-import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
@@ -44,9 +43,19 @@ public class MainBonus implements Bonus,Serializable {
         else {
             sequenceLength = randomGenerator.nextInt(maxBonus) + minBonus;
         }
+        ArrayList<Integer> randomIntArray = new ArrayList<>();
         for (int cont = 0; cont < sequenceLength; ++cont) {
             int randomInt = randomGenerator.nextInt(possibleBonus-1);
+            if (!randomIntArray.contains(randomInt)) {
+                randomIntArray.add(randomInt);
+                //se è già dentro e l'intero è uno di quelli allora -1 altrimenti ok
+            } else if ((checkBadIntIsIn(randomIntArray) && intIsBadInt(randomInt)) || checkIsAlreadyIn(randomIntArray, randomInt)){
+                randomInt = -1;
+            }
             switch (randomInt) {
+                case -1:
+                    cont--;
+                    break;
                 case 0:
                     bonus = new CoinBonus();
                     bonusArrayList.add(bonus);
@@ -89,6 +98,25 @@ public class MainBonus implements Bonus,Serializable {
                     break;
             }
         }
+    }
+
+    private boolean checkIsAlreadyIn(ArrayList<Integer> randomIntArray, int randomInt) {
+        if (randomIntArray.contains(randomInt))
+            return true;
+        return false;
+    }
+
+    private boolean intIsBadInt(int randomInt) {
+        if (randomInt == 7 || randomInt == 8 || randomInt == 9)
+            return true;
+        return false;
+    }
+
+    private boolean checkBadIntIsIn(ArrayList<Integer> randomIntArray) {
+        if (randomIntArray.contains(7) || randomIntArray.contains(8) || randomIntArray.contains(9)) {
+            return true;
+        }
+        return false;
     }
 
     /**
