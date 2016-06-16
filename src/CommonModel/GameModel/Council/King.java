@@ -27,7 +27,6 @@ public class King implements Serializable, GotCouncil {
         this.currentCity = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
     }
 
-
     public King(City currentCity) {
         this.council = new Council();
         Random random = new Random();
