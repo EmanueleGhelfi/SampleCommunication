@@ -4,6 +4,7 @@ import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
+import Utilities.Exception.ActionNotPossibleException;
 
 import java.util.ArrayList;
 
@@ -82,6 +83,11 @@ public class CLIView implements BaseView {
 
     @Override
     public void onMoveKing(ArrayList<City> kingPath) {
+
+    }
+
+    @Override
+    public void onActionNotPossibleException(ActionNotPossibleException e) {
 
     }
 

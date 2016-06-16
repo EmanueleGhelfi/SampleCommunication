@@ -283,4 +283,9 @@ public class ClientController {
     public void onMoveKing(ArrayList<City> kingPath) {
         baseView.onMoveKing(kingPath);
     }
+
+    public void onActionNotPossible(ActionNotPossibleException e) {
+        baseView.onActionNotPossibleException(e);
+
+    }
 }

@@ -90,7 +90,7 @@ public class Game implements Serializable{
 
     private void createRegion() {
         for (RegionName regionName:RegionName.values()) {
-            Region region = new Region(regionName,5);
+            Region region = new Region(regionName,5,bank);
             regions.put(region.getRegion(),region);
         }
     }
@@ -284,6 +284,7 @@ public class Game implements Serializable{
     public void setPoliticCards(PoliticDeck politicCards) {
         this.politicCards = politicCards;
     }
+
 
     public void setMap(Map map) {
         this.map = map;

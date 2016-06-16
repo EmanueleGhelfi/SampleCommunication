@@ -21,6 +21,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -33,6 +35,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     private String rmiHandlerName;
     private RMIClientHandler rmiClientHandler;
     private ClientController clientController;
+    private ExecutorService executorService = Executors.newCachedThreadPool();
 
     ClientRMIService(String serverName, String serverIP, ClientController clientController) throws RemoteException, NotBoundException {
         this.serverName = serverName;
@@ -74,7 +77,20 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onAction(Action action) throws ActionNotPossibleException, RemoteException {
-        rmiClientHandler.test(action);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    rmiClientHandler.test(action);
+                } catch (ActionNotPossibleException e) {
+                    clientController.onActionNotPossible(e);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        executorService.execute(runnable);
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
 import Utilities.Class.Constants;
 import Utilities.Class.InterfaceAdapter;
+import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -205,6 +206,12 @@ public class ClientSocketService extends ClientService implements Runnable {
                 Type listType = new TypeToken<ArrayList<City>>(){}.getType();
                kingPath = gson.fromJson(communicationInfo.getInfo(),listType);
                 clientController.onMoveKing(kingPath);
+                break;
+            }
+            case Constants.CODE_EXCEPTION:{
+                ActionNotPossibleException actionNotPossibleException;
+                actionNotPossibleException = gson.fromJson(communicationInfo.getInfo(),ActionNotPossibleException.class);
+                clientController.onActionNotPossible(actionNotPossibleException);
                 break;
             }
         }

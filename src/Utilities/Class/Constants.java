@@ -28,6 +28,7 @@ public class Constants {
     public static final String SELECT_PERMITCARD_BONUS = "SELECT_PERMITCARD_BONUS";
     public static final String CODE_SELECT_PERMIT_CARD = "CODE_SELECT_PERMIT_CARD";
     public static final String MOVE_KING = "MOVE_KING";
+    public static final String CODE_EXCEPTION = "CODE_EXCEPTION";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -165,6 +166,22 @@ public class Constants {
 
     // Folder
     public  static String IMAGE_PATH= "/ClientPackage/View/GUIResources/Image/";
+
+    //ERROR MESSAGE
+    public static final String MONEY_EXCEPTION= "You don't have enough money!";
+    public static final String HELPER_EXCEPTION= "You don't have enough helper!";
+    public static final String MAIN_ACTION_EXCEPTION= "You don't have enough main action!";
+    public static final String FAST_ACTION_EXCEPTION= "You don't have enough fast action!";
+    public static final String TURN_EXCEPTION= "This is't your turn!";
+    public static final String EMPORIUM_PRESENT_EXCEPTION= "You have this emporium!";
+    public static final String INCORRECT_PATH_EXCEPTION= "The path is incorrect, check it!";
+    public static final String COUNCIL_NOT_PRESENT_EXCEPTION= "Council not present!";
+    public static final String NOBILITY_PATH_EXCEPTION = "You can't go back in nobility path!";
+    public static final String VICTORY_PATH_EXCEPTION = "You can't go back in victory path!";
+    public static final String MONEY_PATH_EXCEPTION = "You can't go back in money path!";
+    public static final String PERMIT_CARD_NOT_PRESENT_EXCEPTION = "This permit card is not present!";
+
+
 
 
 }

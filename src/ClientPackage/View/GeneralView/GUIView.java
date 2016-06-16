@@ -6,6 +6,7 @@ import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -14,8 +15,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
@@ -258,7 +262,18 @@ public class GUIView extends Application implements BaseView {
         });
     }
 
-    public void registerBaseController(BaseController baseController){
+    @Override
+    public void onActionNotPossibleException(ActionNotPossibleException e) {
+        Platform.runLater(()->{
+            Alert dlg = createAlert(Alert.AlertType.ERROR);
+            dlg.setTitle("ERRORE NELLA MOSSA!");
+            dlg.getDialogPane().setContentText(e.getMessage());
+            configureSampleDialog(dlg, "");
+            showDialog(dlg);
+        });
+    }
+
+    public synchronized void registerBaseController(BaseController baseController){
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);
         }
@@ -314,44 +329,6 @@ public class GUIView extends Application implements BaseView {
             }
         };
 
-        /*
-        stage.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                System.out.println("Prima height: "+stage.getHeight()+" e deve essere "+newSceneWidth.doubleValue()*0.56);
-                if(!(stage.getHeight()<newSceneWidth.doubleValue()*0.56+5 && stage.getHeight()>newSceneWidth.doubleValue()*0.56-5)) {
-                    stage.setHeight(newSceneWidth.doubleValue() * 0.56);
-                }
-                //stage.heightProperty().multiply((newSceneWidth.doubleValue()-oldSceneWidth.doubleValue())*0.56);
-                for (BaseController baseController : baseControllerList) {
-                    baseController.onResizeWidth(newSceneWidth,stage.getHeight());
-                    //baseController.onResizeHeight(newSceneWidth.doubleValue()*0.5623);
-                }
-                System.out.println("Height :"+stage.getHeight());
-                System.out.println("Width: "+stage.getWidth());
-            }
-        });
-        stage.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-                System.out.println("called on resize height");
-                if(!(stage.getWidth()<newSceneHeight.doubleValue()/0.56+5 && stage.getWidth()>newSceneHeight.doubleValue()/0.56-5)) {
-                    stage.setWidth(newSceneHeight.doubleValue() / 0.56);
-                }
-               // stage.widthProperty().multiply((newSceneHeight.doubleValue()-oldSceneHeight.doubleValue())*1.7);
-                for (BaseController baseController : baseControllerList) {
-                    baseController.onResizeHeight(newSceneHeight,scene.getWidth());
-                    //baseController.onResizeWidth(newSceneHeight.doubleValue()*1.7784);
-                }
-                System.out.println("Height :"+stage.getHeight());
-                System.out.println("Width: "+stage.getWidth());
-            }
-        });
-        stage.resizableProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                System.out.println("RESIZE "+newValue);
-            }
-        });
-        */
         stage.widthProperty().addListener(listener);
         stage.heightProperty().addListener(listener);
 
@@ -367,4 +344,21 @@ public class GUIView extends Application implements BaseView {
     public Stage getStage() {
         return stage;
     }
+
+    private Alert createAlert(Alert.AlertType type) {
+
+        return new Alert(type, "");
+    }
+
+    private void configureSampleDialog(Dialog<?> dlg, String header) {
+
+        dlg.initStyle(StageStyle.UNDECORATED);
+    }
+
+    private void showDialog(Dialog<?> dlg) {
+            dlg.show();
+            dlg.resultProperty().addListener(o -> System.out.println("Result is: " + dlg.getResult()));
+            System.out.println("This println is _after_ the show method - we're non-blocking!");
+        }
+
 }

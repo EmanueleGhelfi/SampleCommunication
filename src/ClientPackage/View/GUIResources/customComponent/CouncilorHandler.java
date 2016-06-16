@@ -65,7 +65,14 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
         JFXButton fastActionButton = new JFXButton();
         HBox hBoxSource = (HBox)event.getSource();
 
+        /*
         for (PoliticColor politicColor: PoliticColor.values()){
+            politicColors.add(politicColor);
+            jfxComboBox.getItems().add(new Label(politicColor.getColor()));
+        }
+        */
+
+        for(PoliticColor politicColor: clientController.getSnapshot().getBank().showCouncilor()){
             politicColors.add(politicColor);
             jfxComboBox.getItems().add(new Label(politicColor.getColor()));
         }

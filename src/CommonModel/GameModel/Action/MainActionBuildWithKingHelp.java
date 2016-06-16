@@ -51,14 +51,6 @@ public class MainActionBuildWithKingHelp extends Action {
                 correctPoliticCard = countCorrectPoliticCard(king, politicCards, bonusCounter);
                 // calculate money to spend
                 newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
-                // go ahead in money path
-                game.getMoneyPath().goAhead(user, - newPositionInMoneyPath);
-                // re-add to game deck
-                game.getPoliticCards().addToQueue(new HashSet<>(politicCards));
-                // remove cards from user
-                System.out.println("POLITICS CARD" + politicCards.size());
-                System.out.println("USER CARD" + user.getPoliticCards().size());
-                removePoliticCard(politicCards, user);
 
                 if (kingPath.size() * Constants.KING_PRICE < user.getCoinPathPosition()) {
                     for (City city : kingPath) {
@@ -71,18 +63,25 @@ public class MainActionBuildWithKingHelp extends Action {
                     for (City cityToVisit : cityVisitor.visit(kingCity)) {
                         cityToVisit.getBonus().getBonus(user, game);
                     }
-                    moveKing(game,user);
                 } else {
-                    throw new ActionNotPossibleException();
+                    throw new ActionNotPossibleException(Constants.MONEY_EXCEPTION);
                 }
+                // go ahead in money path
+                game.getMoneyPath().goAhead(user, - newPositionInMoneyPath);
+                // re-add to game deck
+                game.getPoliticCards().addToQueue(new HashSet<>(politicCards));
+                // remove cards from user
+                removePoliticCard(politicCards, user);
+
+                moveKing(game,user);
                 removeAction(game, user);
             }
             else{
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException(Constants.EMPORIUM_PRESENT_EXCEPTION);
             }
         }
         else{
-            throw new ActionNotPossibleException();
+            throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);
         }
     }
 

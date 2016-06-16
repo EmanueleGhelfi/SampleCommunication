@@ -22,7 +22,7 @@ public class VictoryPath implements Path, Serializable {
         }
         else{
             if(user.getVictoryPathPosition()+value<0){
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException(Constants.VICTORY_PATH_EXCEPTION);
             }
             else {
                 user.setVictoryPathPosition(user.getVictoryPathPosition()+value);

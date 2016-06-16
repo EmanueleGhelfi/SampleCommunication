@@ -44,7 +44,8 @@ public class MainActionElectCouncilor extends Action implements Serializable {
                 council = game.getKing().getCouncil();
             }
             // and councilor to councilor to council (and remove the first councilor)
-            council.add(councilorToAdd);
+            Councilor councilor = game.getBank().getCouncilor(councilorToAdd.getColor());
+            council.add(councilor);
             game.getMoneyPath().goAhead(user, Constants.MONEY_EARNED_ELECT_COUNCILOR);
             removeAction(game, user);
         }

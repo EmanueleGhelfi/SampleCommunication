@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class Councilor implements Serializable{
+public class Councilor implements Serializable, Cloneable{
 
     private PoliticColor color;
 
@@ -29,5 +29,10 @@ public class Councilor implements Serializable{
 
     public PoliticColor getColor() {
         return color;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

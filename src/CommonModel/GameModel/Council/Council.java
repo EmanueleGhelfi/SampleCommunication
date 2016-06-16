@@ -12,7 +12,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class Council implements Serializable {
 
     private Queue<Councilor> councilorQueue;
-    public Council() {
+    private Bank bank;
+    public Council(Bank bank) {
+        this.bank = bank;
         this.councilorQueue = new ArrayBlockingQueue<>(Constants.COUNCILOR_DIMENSION);
     }
 
@@ -21,7 +23,7 @@ public class Council implements Serializable {
             councilorQueue.add(councilorToAdd);
         }
         catch (IllegalStateException e){
-            councilorQueue.remove();
+            bank.addCouncilor(councilorQueue.remove());
             councilorQueue.add(councilorToAdd);
             System.out.println(councilorQueue);
         }

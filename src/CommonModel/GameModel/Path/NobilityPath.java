@@ -31,7 +31,7 @@ public class NobilityPath implements Path, Serializable {
         }
         else{
             if(user.getNobilityPathPosition().getPosition()+value<0){
-                throw new ActionNotPossibleException();
+                throw new ActionNotPossibleException(Constants.NOBILITY_PATH_EXCEPTION);
             }
             else {
                 user.setNobilityPathPosition(position[user.getNobilityPathPosition().getPosition()+value]);
