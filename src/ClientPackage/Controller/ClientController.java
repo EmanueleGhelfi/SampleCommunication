@@ -288,4 +288,8 @@ public class ClientController {
         baseView.onActionNotPossibleException(e);
 
     }
+
+    public void sendMatchFinishedWithWin(boolean win) {
+        baseView.sendMatchFinishedWithWin(win);
+    }
 }

@@ -204,7 +204,7 @@ public class ClientSocketService extends ClientService implements Runnable {
             case Constants.MOVE_KING:{
                 ArrayList<City> kingPath = new ArrayList<>();
                 Type listType = new TypeToken<ArrayList<City>>(){}.getType();
-               kingPath = gson.fromJson(communicationInfo.getInfo(),listType);
+                kingPath = gson.fromJson(communicationInfo.getInfo(),listType);
                 clientController.onMoveKing(kingPath);
                 break;
             }
@@ -212,6 +212,10 @@ public class ClientSocketService extends ClientService implements Runnable {
                 ActionNotPossibleException actionNotPossibleException;
                 actionNotPossibleException = gson.fromJson(communicationInfo.getInfo(),ActionNotPossibleException.class);
                 clientController.onActionNotPossible(actionNotPossibleException);
+                break;
+            }
+            case Constants.CODE_FINISH:{
+                clientController.sendMatchFinishedWithWin(Boolean.parseBoolean(communicationInfo.getInfo()));
                 break;
             }
         }

@@ -5,6 +5,7 @@ import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Bank;
 import CommonModel.GameModel.Council.King;
@@ -329,5 +330,9 @@ public class Game implements Serializable{
 
     public Bank getBank() {
         return bank;
+    }
+
+    public HashMap<RegionName, PermitDeck> getPermitDecks() {
+        return permitDecks;
     }
 }

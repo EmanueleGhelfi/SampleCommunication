@@ -603,8 +603,10 @@ public class MatchController implements Initializable, BaseController {
         jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                buildWithKingPhase.setValue(true);
-                startBuildWithKing();
+                if (!buildWithKingPhase.getValue()) {
+                    buildWithKingPhase.setValue(true);
+                    startBuildWithKing();
+                }
             }
         });
 

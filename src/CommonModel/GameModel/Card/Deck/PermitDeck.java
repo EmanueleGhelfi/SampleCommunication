@@ -60,6 +60,10 @@ public class PermitDeck implements Deck,Serializable {
         permitCardsVisible.add(permitDeck.remove());
     }
 
+    public PermitCard getAndRemoveRandomPermitCard () {
+        return permitDeck.remove();
+    }
+
     public PermitCard getAndRemovePermitCardVisible(PermitCard permitCard) throws ActionNotPossibleException{
         if(permitCardsVisible.contains(permitCard)) {
             for (int i = 0; i < permitCardsVisible.size(); i++) {
@@ -86,4 +90,5 @@ public class PermitDeck implements Deck,Serializable {
     public ArrayList<PermitCard> getVisibleArray(){
         return permitCardsVisible;
     }
+
 }

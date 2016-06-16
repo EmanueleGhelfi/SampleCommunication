@@ -35,4 +35,6 @@ public abstract class BaseCommunication {
     public abstract void selectCityRewardBonus(SnapshotToSend snapshotToSend);
 
     public abstract void moveKing(ArrayList<City> kingPath);
+
+    public abstract void sendMatchFinishedWithWin(boolean win);
 }

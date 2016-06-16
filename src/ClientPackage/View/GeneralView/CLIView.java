@@ -91,4 +91,9 @@ public class CLIView implements BaseView {
 
     }
 
+    @Override
+    public void sendMatchFinishedWithWin(boolean win) {
+
+    }
+
 }

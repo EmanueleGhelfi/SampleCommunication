@@ -273,6 +273,11 @@ public class GUIView extends Application implements BaseView {
         });
     }
 
+    @Override
+    public void sendMatchFinishedWithWin(boolean win) {
+        //TODO
+    }
+
     public synchronized void registerBaseController(BaseController baseController){
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);
