@@ -221,6 +221,8 @@ public class MatchController implements Initializable, BaseController {
     }
 
 
+
+
     private void createNodeList() {
 
         JFXButton finishKing = new JFXButton("FINISH");

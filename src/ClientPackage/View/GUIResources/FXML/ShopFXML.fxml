@@ -16,6 +16,6 @@
       <RowConstraints fillHeight="false" minHeight="10.0" vgrow="ALWAYS" />
    </rowConstraints>
    <children>
-      <Pane fx:id="paneBackground" />
+      <Pane fx:id="paneBackground" styleClass="shopBackground" stylesheets="@../CSS/ShopCSS.css" />
    </children>
-</GridPane >
+</GridPane>

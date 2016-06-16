@@ -32,7 +32,7 @@
    <tabs>
       <Tab text="Game">
          <content>
-            <GridPane fx:id="gridPane" minHeight="0.0" minWidth="0.0" style="-fx-background-color: white;">
+            <GridPane fx:id="gridPane" minHeight="0.0" minWidth="0.0" styleClass="matchBackground" stylesheets="@../CSS/MatchCSS.css">
                <columnConstraints>
                   <ColumnConstraints fillWidth="false" hgrow="ALWAYS" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints fillWidth="false" hgrow="ALWAYS" minWidth="10.0" percentWidth="80.0" />
@@ -470,7 +470,7 @@
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </Button>
-                   <fx:include fx:id="nobilityPath" source="NobilityPathFXML.fxml" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="3" GridPane.rowSpan="2"/>
+                   <fx:include fx:id="nobilityPath" source="NobilityPathFXML.fxml" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2" />
                   <Button mnemonicParsing="false" onAction="#showLess" styleClass="lessImg" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <effect>
                         <ImageInput>

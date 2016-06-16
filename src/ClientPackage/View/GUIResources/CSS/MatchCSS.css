@@ -1,7 +1,8 @@
 .matchBackground{
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/MatchPattern.png");
     -fx-background-repeat: stretch;
     -fx-background-position: center;
-    -fx-background-size: 95%;
+    -fx-background-size: cover;
 }
 
 

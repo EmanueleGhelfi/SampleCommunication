@@ -9,6 +9,7 @@ import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
@@ -17,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.transform.Rotate;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class NobilityPathController implements BaseController {
     @FXML private Pane nobilityPath;
     @FXML private GridPane nobilityGridPane;
 
+    private ImageView kingBonus;
     private ClientController clientController;
     private ImageView backgroundImage = new ImageView();
     private NobilityPathController nobilityPathController = this;
@@ -51,6 +54,56 @@ public class NobilityPathController implements BaseController {
         nobilityPath.prefWidthProperty().bind(matchController.getBackground().prefWidthProperty());
         nobilityPath.getChildren().add(backgroundImage);
         createPath();
+        placeBonusCard();
+    }
+
+    private void placeBonusCard() {
+        ImageView greyBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/GreyBonusCard.png"));
+        ImageView orangeBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/PinkBonusCard.png"));
+        ImageView blueBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/BlueBonusCard.png"));
+        ImageView yellowBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/YellowBonusCard.png"));
+        kingBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/KingBonus1.png"));
+
+        greyBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
+        orangeBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
+        blueBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
+        yellowBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
+        kingBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
+
+        /*
+        greyBonus.setRotate(45);
+        orangeBonus.setRotate(45);
+        blueBonus.setRotate(45);
+        yellowBonus.setRotate(45);
+        kingBonus.setRotate(45);
+        */
+
+
+        greyBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.7908));
+        orangeBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.8458));
+        blueBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.8983));
+        yellowBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.9491));
+        kingBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.9391));
+
+        greyBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.552));
+        orangeBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.5167));
+        blueBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.4769));
+        yellowBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.4284));
+        kingBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.0));
+
+        greyBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
+        orangeBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
+        blueBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
+        yellowBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
+        kingBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
+
+        greyBonus.setPreserveRatio(true);
+        orangeBonus.setPreserveRatio(true);
+        blueBonus.setPreserveRatio(true);
+        yellowBonus.setPreserveRatio(true);
+        kingBonus.setPreserveRatio(true);
+
+        nobilityPath.getChildren().addAll(greyBonus, orangeBonus, blueBonus, yellowBonus, kingBonus);
     }
 
     private void createPath() {
@@ -95,7 +148,7 @@ public class NobilityPathController implements BaseController {
 
     @Override
     public void updateView() {
-
+        kingBonus.setImage(new Image(Constants.IMAGE_PATH + "KingBonus" + clientController.getSnapshot().getKingBonusCards().firstElement().getOrder() + ".png"));
     }
 
     @Override

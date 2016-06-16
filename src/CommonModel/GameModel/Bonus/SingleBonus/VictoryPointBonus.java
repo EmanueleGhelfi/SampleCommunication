@@ -58,4 +58,5 @@ public class VictoryPointBonus implements Bonus,Serializable {
         toReturn.add(victoryPoint+"");
         return toReturn;
     }
+
 }
