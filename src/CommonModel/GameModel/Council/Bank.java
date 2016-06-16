@@ -6,17 +6,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by Giulio on 16/06/2016.
  */
 public class Bank {
 
-    private HashMap<PoliticColor, ArrayList<Councilor>> hashMapArrayList;
+    private HashMap<PoliticColor, ArrayBlockingQueue<Councilor>> hashMapArrayList;
 
     public Bank() {
         for (PoliticColor politicColor : PoliticColor.values()) {
-            ArrayList<Councilor> politicColorArrayList = new ArrayList<>();
+            ArrayBlockingQueue<Councilor> politicColorArrayList = new ArrayBlockingQueue<>(4);
             for (int i = 0; i < 4; i++) {
                 politicColorArrayList.add(new Councilor(politicColor));
             }
@@ -43,7 +44,7 @@ public class Bank {
 
     public ArrayList<PoliticColor> showCouncilor(){
         ArrayList<PoliticColor> colorToShow = new ArrayList<>();
-        for (Map.Entry<PoliticColor, ArrayList<Councilor>> entry : hashMapArrayList.entrySet()) {
+        for (Map.Entry<PoliticColor, ArrayBlockingQueue<Councilor>> entry : hashMapArrayList.entrySet()) {
             if (entry.getValue().size()>0)
                 colorToShow.add(entry.getKey());
         }
