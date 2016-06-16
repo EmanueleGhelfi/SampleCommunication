@@ -147,7 +147,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                             //printing exception
                             System.out.println(e.getMessage());
                             // send exception to client
-                            CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e);
+                            CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e.getMessage());
                             //TODO: manage exception
                         }
                         break;

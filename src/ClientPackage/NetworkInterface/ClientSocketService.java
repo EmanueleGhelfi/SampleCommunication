@@ -209,8 +209,7 @@ public class ClientSocketService extends ClientService implements Runnable {
                 break;
             }
             case Constants.CODE_EXCEPTION:{
-                ActionNotPossibleException actionNotPossibleException;
-                actionNotPossibleException = gson.fromJson(communicationInfo.getInfo(),ActionNotPossibleException.class);
+                ActionNotPossibleException actionNotPossibleException = new ActionNotPossibleException(communicationInfo.getInfo());
                 clientController.onActionNotPossible(actionNotPossibleException);
                 break;
             }

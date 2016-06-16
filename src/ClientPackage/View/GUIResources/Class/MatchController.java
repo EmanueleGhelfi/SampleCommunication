@@ -304,19 +304,19 @@ public class MatchController implements Initializable, BaseController {
         hamburgerIcon.setTranslateX(0);
         //hamburgerIcon.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLACK"),null,null)));
         final Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1500),
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000),
                 new KeyValue(hamburgerMenu.prefWidthProperty(), 0)));
 
         List<Node> nodes = hamburgerMenu.getChildren();
         nodes.forEach(node -> {
             if(node instanceof ImageView) {
                 ImageView imageView = (ImageView) node;
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.scaleXProperty(), 0)));
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.scaleYProperty(), 0)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(imageView.scaleXProperty(), 0)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(imageView.scaleYProperty(), 0)));
             }
             else{
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(node.scaleXProperty(), 0)));
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(node.scaleYProperty(), 0)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(node.scaleXProperty(), 0)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(node.scaleYProperty(), 0)));
             }
         });
 
@@ -338,7 +338,7 @@ public class MatchController implements Initializable, BaseController {
         hamburgerMenu.setPrefWidth(0);
         final Timeline timeline = new Timeline();
         hamburgerMenu.setPrefHeight(backgroundImage.getFitHeight());
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000),
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),
                 new KeyValue(hamburgerMenu.prefWidthProperty(), backgroundImage.getFitWidth()/5)));
 
         List<Node> nodes = hamburgerMenu.getChildren();
@@ -349,16 +349,16 @@ public class MatchController implements Initializable, BaseController {
                 imageView.setScaleY(1);
                 imageView.setFitHeight(0);
                 imageView.setFitWidth(0);
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.fitWidthProperty(), 40)));
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.fitHeightProperty(), 40)));
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.scaleXProperty(), 1)));
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(imageView.scaleYProperty(), 1)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(imageView.fitWidthProperty(), 40)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(imageView.fitHeightProperty(), 40)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(imageView.scaleXProperty(), 1)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(imageView.scaleYProperty(), 1)));
             }
             else{
                 node.setScaleX(0);
                 node.setScaleY(0);
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(node.scaleXProperty(), 1)));
-                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new KeyValue(node.scaleYProperty(), 1)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(node.scaleXProperty(), 1)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500), new KeyValue(node.scaleYProperty(), 1)));
             }
         });
 
@@ -846,101 +846,66 @@ public class MatchController implements Initializable, BaseController {
                 Label label = new Label(permitCard.getCityString());
                 label.getStyleClass().add("permitLabel");
                 label.setTextFill(Paint.valueOf("WHITE"));
-                ImageView imageView = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png"));
-                imageView.setPreserveRatio(true);
-                gridPane.add(imageView,0,0);
+                ImageView permitImageView = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png"));
+                permitImageView.setPreserveRatio(true);
+                gridPane.add(permitImageView,0,0);
                 gridPane.add(label,0,0);
                 label.setFont(Font.font(8));
                 GridPane.setColumnSpan(label,3);
                 GridPane.setHalignment(label,HPos.CENTER);
                 GridPane.setValignment(label,VPos.CENTER);
-                GridPane.setRowSpan(imageView,3);
-                GridPane.setColumnSpan(imageView,3);
-                imageView.getStyleClass().add("visiblePermitCard");
+                GridPane.setRowSpan(permitImageView,3);
+                GridPane.setColumnSpan(permitImageView,3);
+                permitImageView.getStyleClass().add("visiblePermitCard");
                 gridPane.getStyleClass().add("gridPanePermitCard");
-                imageView.fitWidthProperty().bind(gridPane.prefWidthProperty());
-                imageView.fitHeightProperty().bind(gridPane.prefHeightProperty());
-
-                //PopOver
-
-                GridPane popOverGridPane = new GridPane();
-                Label popOverLabel = new Label(permitCard.getCityString());
-                popOverLabel.getStyleClass().add("permitLabel");
-                ImageView popOverImageView = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png"));
-                popOverImageView.setPreserveRatio(true);
-                popOverGridPane.add(popOverImageView, 0, 0);
-                popOverGridPane.add(popOverLabel, 0, 0);
-                GridPane.setColumnSpan(popOverLabel,3);
-                GridPane.setHalignment(popOverLabel,HPos.CENTER);
-                GridPane.setValignment(popOverLabel,VPos.CENTER);
-                GridPane.setRowSpan(popOverImageView,3);
-                GridPane.setColumnSpan(popOverImageView,3);
-                popOverImageView.getStyleClass().add("visiblePermitCard");
-                popOverGridPane.getStyleClass().add("gridPanePermitCard");
-                popOverImageView.fitWidthProperty().bind(popOverGridPane.prefWidthProperty());
-                popOverImageView.fitHeightProperty().bind(popOverGridPane.prefHeightProperty());
-
-
+                permitImageView.fitWidthProperty().bind(gridPane.prefWidthProperty());
+                permitImageView.fitHeightProperty().bind(gridPane.prefHeightProperty());
+                ArrayList<ImageView> imageViewArrayList = new ArrayList<ImageView>();
+                ArrayList<Label> labelArrayList = new ArrayList<Label>();
+                for(int i = 0; i<3; i++){
+                    Label label1 = new Label();
+                    ImageView imageView = new ImageView();
+                    imageView.getStyleClass().add("permitCardBonus");
+                    gridPane.add(imageView,i,2);
+                    gridPane.add(label1,i,2);
+                    imageViewArrayList.add(imageView);
+                    labelArrayList.add(label1);
+                    imageView.setVisible(false);
+                    label1.setTextFill(Paint.valueOf("WHITE"));
+                    label1.getStyleClass().add("bonusInfoLabel");
+                    label1.setWrapText(true);
+                    imageView.fitWidthProperty().bind(permitImageView.fitWidthProperty().divide(3));
+                    imageView.fitHeightProperty().bind(permitImageView.fitHeightProperty().divide(3));
+                    imageView.setPreserveRatio(true);
+                    GridPane.setHalignment(imageView,HPos.CENTER);
+                    GridPane.setValignment(imageView,VPos.CENTER);
+                    GridPane.setHalignment(label1,HPos.CENTER);
+                    GridPane.setValignment(label1,VPos.CENTER);
+                }
                 // bonus
 
                 for(int i = 0 ; i< permitCard.getBonus().getBonusURL().size();i++){
-                    ImageView imageViewBonus = new ImageView(new Image(permitCard.getBonus().getBonusURL().get(i)));
-                    imageViewBonus.getStyleClass().add("permitBonus");
-                    Label bonusInfo = new Label(permitCard.getBonus().getBonusInfo().get(i));
-                    bonusInfo.setTextFill(Paint.valueOf("WHITE"));
-                    bonusInfo.setWrapText(true);
-                    gridPane.add(imageViewBonus,i,2);
-                    gridPane.add(bonusInfo,i,2);
-                    imageViewBonus.fitWidthProperty().bind(imageView.fitWidthProperty().divide(3));
-                    imageViewBonus.fitHeightProperty().bind(imageView.fitHeightProperty().divide(3));
-                    imageViewBonus.setPreserveRatio(true);
-                    GridPane.setHalignment(imageViewBonus,HPos.CENTER);
-                    GridPane.setValignment(imageViewBonus,VPos.CENTER);
-                    GridPane.setHalignment(bonusInfo,HPos.CENTER);
-                    GridPane.setValignment(bonusInfo,VPos.CENTER);
+                    // style class for change image
+                    ImageView imageViewBonus = imageViewArrayList.get(i);
+                    imageViewBonus.setImage(new Image(permitCard.getBonus().getBonusURL().get(i)));
+                    imageViewBonus.setVisible(true);
+                    Label bonusInfo = labelArrayList.get(i);
+                    bonusInfo.setText(permitCard.getBonus().getBonusInfo().get(i));
+                    bonusInfo.setVisible(true);
 
-                    ImageView imageViewBonusPopOver = new ImageView(new Image(permitCard.getBonus().getBonusURL().get(i)));
-                    imageViewBonusPopOver.getStyleClass().add("permitBonus");
-                    Label bonusInfoPopOver = new Label(permitCard.getBonus().getBonusInfo().get(i));
-                    bonusInfoPopOver.setTextFill(Paint.valueOf("WHITE"));
-                    bonusInfoPopOver.setWrapText(true);
-                    popOverGridPane.add(imageViewBonusPopOver,i,2);
-                    popOverGridPane.add(bonusInfoPopOver,i,2);
-                    imageViewBonusPopOver.fitWidthProperty().bind(popOverImageView.fitWidthProperty().divide(3));
-                    imageViewBonusPopOver.fitHeightProperty().bind(popOverImageView.fitHeightProperty().divide(3));
-                    imageViewBonusPopOver.setPreserveRatio(true);
-                    GridPane.setHalignment(imageViewBonusPopOver,HPos.CENTER);
-                    GridPane.setValignment(imageViewBonusPopOver,VPos.CENTER);
-                    GridPane.setHalignment(bonusInfoPopOver,HPos.CENTER);
-                    GridPane.setValignment(bonusInfoPopOver,VPos.CENTER);
                 }
 
                 gridPane.setOnMouseClicked(new PermitCardHandler(permitCard,this,clientController,needToSelectPermitCard));
 
-                PopOver popOverZoom = new PopOver();
-                gridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        popOverZoom.setContentNode(popOverGridPane);
-                        popOverZoom.show(gridPane);
-                        /*
-                        new Timer().schedule(
-                                new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        System.out.println("IN THE TIMER");
-                                        popOverZoom.show(gridPane);
-                                    }
-                                },
-                                2000
-                        );
-                        */
-                    }
-                });
+                PermitPopOverHandler permitPopOverHandler =
+                        new PermitPopOverHandler(clientController,regionName,currentSnapshot
+                                .getVisibleRegionPermitCard(regionName)
+                                .indexOf(permitCard),this);
+                gridPane.setOnMouseEntered(permitPopOverHandler);
                 gridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        popOverZoom.hide();
+                        permitPopOverHandler.hide();
                     }
                 });
                 hboxTmp.getChildren().add(gridPane);
@@ -1045,6 +1010,8 @@ public class MatchController implements Initializable, BaseController {
         Timeline timeline = new Timeline();
         kingImage.layoutXProperty().unbind();
         kingImage.layoutYProperty().unbind();
+        // remove current king city
+        kingPath.remove(0);
 
         kingPath.forEach(city1 -> {
             System.out.println("in foreach");
@@ -1145,7 +1112,6 @@ public class MatchController implements Initializable, BaseController {
     @Override
     public void updateView() {
         this.currentSnapshot = clientController.getSnapshot();
-        System.out.println("on update snapshot <- Match controller "+currentSnapshot.getCurrentUser().getUsersEmporium());
                 nobilityPathText.setText(currentSnapshot.getCurrentUser().getNobilityPathPosition().getPosition()+"");
                 richPathText.setText(currentSnapshot.getCurrentUser().getCoinPathPosition()+"");
                 helperText.setText(currentSnapshot.getCurrentUser().getHelpers().size()+"");
@@ -1179,33 +1145,56 @@ public class MatchController implements Initializable, BaseController {
             Set<Node> labels = region.lookupAll(".permitLabel");
             Set<Node> gridPanes = region.lookupAll(".gridPanePermitCard");
             Set<Node> imageViews = region.lookupAll(".visiblePermitCard");
-            Set<Node> bonusImages = region.lookupAll(".permitBonus");
+
+
             ArrayList<Node> labelsList = new ArrayList<>();
             labelsList.addAll(labels);
 
             ArrayList<Node> gridPanesList = new ArrayList<>();
             gridPanesList.addAll(gridPanes);
 
-            ArrayList<Node> imageViewsList = new ArrayList<>();
+            /*ArrayList<Node> imageViewsList = new ArrayList<>();
             imageViewsList.addAll(imageViews);
+            */
 
-            ArrayList<Node> imageViewBonusList = new ArrayList<>();
-            imageViewBonusList.addAll(bonusImages);
+
 
             for(int i = 0; i< labelsList.size();i++){
+                Set<Node> bonusImages = gridPanesList.get(i).lookupAll(".permitCardBonus");
+                Set<Node> bonusLabels = gridPanesList.get(i).lookupAll(".bonusInfoLabel");
+
+                ArrayList<Node> bonusInfoArray = new ArrayList<>();
+                bonusInfoArray.addAll(bonusLabels);
+
+                ArrayList<Node> imageViewBonusList = new ArrayList<>();
+                imageViewBonusList.addAll(bonusImages);
+
+
                 PermitCard permitCardTmp = clientController.getSnapshot().getVisibleRegionPermitCard(regionName).get(i);
                 Label label =(Label) labelsList.get(i);
                 label.setText(permitCardTmp.getCityString());
                 GridPane gridPane = (GridPane) gridPanesList.get(i);
                 gridPane.setOnMouseClicked(new PermitCardHandler(permitCardTmp,this,clientController,needToSelectPermitCard));
-                for(int j = 0; i< imageViewBonusList.size();i++){
+                PermitPopOverHandler permitPopOverHandler = new PermitPopOverHandler(clientController,regionName,i,this);
+                gridPane.setOnMouseEntered(permitPopOverHandler);
+                gridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        permitPopOverHandler.hide();
+                    }
+                });
+                for(int j = 0; j< imageViewBonusList.size();j++){
+                    Label bonusLabel = (Label) bonusInfoArray.get(j);
                     ImageView imageViewBonus = (ImageView) imageViewBonusList.get(j);
                     if(j<permitCardTmp.getBonus().getBonusURL().size()) {
                         imageViewBonus.setVisible(true);
                         imageViewBonus.setImage(new Image(permitCardTmp.getBonus().getBonusURL().get(j)));
+                        bonusLabel.setText(permitCardTmp.getBonus().getBonusInfo().get(j));
+                        bonusLabel.setVisible(true);
                     }
                     else {
                         imageViewBonus.setVisible(false);
+                        bonusLabel.setVisible(false);
                     }
 
                 }
