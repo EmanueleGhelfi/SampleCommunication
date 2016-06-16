@@ -80,6 +80,13 @@ public class ShopController implements BaseController {
         backgroundImage.fitWidthProperty().bind(shop.widthProperty());
         shop.prefWidthProperty().bind(paneBackground.prefWidthProperty());
         shop.prefHeightProperty().bind(paneBackground.prefHeightProperty());
+
+        paneBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("event x and y "+event.getX()/paneBackground.getWidth()+" "+event.getY()/paneBackground.getHeight());
+            }
+        });
         backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -99,8 +106,8 @@ public class ShopController implements BaseController {
         GridPane.setRowSpan(backgroundImage, 2);
         GridPane.setColumnSpan(backgroundImage, 2);
         paneWhereShowPopOver = new Pane();
-        paneWhereShowPopOver.layoutXProperty().bind(paneBackground.prefWidthProperty().multiply(0.4937));
-        paneWhereShowPopOver.layoutYProperty().bind(paneBackground.prefHeightProperty().multiply(0.2254));
+        paneWhereShowPopOver.layoutXProperty().bind(paneBackground.prefWidthProperty().multiply(0.4957));
+        paneWhereShowPopOver.layoutYProperty().bind(paneBackground.prefHeightProperty().multiply(0.3045));
         paneWhereShowPopOver.prefWidthProperty().bind(paneBackground.prefWidthProperty().multiply(0.01));
         paneWhereShowPopOver.prefHeightProperty().bind(paneBackground.prefHeightProperty().multiply(0.01));
         paneBackground.getChildren().add(paneWhereShowPopOver);
@@ -188,11 +195,11 @@ public class ShopController implements BaseController {
         permitCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png"));
         helperDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/HelperDistorted.png"));
         paneBackground.getChildren().addAll(politicCardDeck, permitCardDeck, helperDeck);
-        politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3883));
+        politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3973));
         politicCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5612));
-        permitCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.4591));
+        permitCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.4691));
         permitCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5552));
-        helperDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.535));
+        helperDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.545));
         helperDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5597));
         politicCardDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(10));
         politicCardDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));

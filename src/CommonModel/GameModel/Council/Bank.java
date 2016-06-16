@@ -13,7 +13,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class Bank {
 
-    private HashMap<PoliticColor, ArrayBlockingQueue<Councilor>> hashMapArrayList;
+    private HashMap<PoliticColor, ArrayBlockingQueue<Councilor>> hashMapArrayList = new HashMap<>();
 
     public Bank() {
         for (PoliticColor politicColor : PoliticColor.values()) {

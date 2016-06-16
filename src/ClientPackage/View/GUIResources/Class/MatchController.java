@@ -29,6 +29,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -118,7 +119,7 @@ public class MatchController implements Initializable, BaseController {
 
 
 
-
+    private HBox handHBox;
 
     //Images
     @FXML private ImageView kingImage;
@@ -208,6 +209,7 @@ public class MatchController implements Initializable, BaseController {
         initPermitButton();
         handleClick();
         createCity();
+        createHand();
 
         populateHamburgerMenu();
         initHamburgerIcon();
@@ -220,7 +222,37 @@ public class MatchController implements Initializable, BaseController {
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
     }
 
-
+    private void createHand() {
+        handHBox = new HBox();
+        handHBox.prefWidthProperty().bind(gridPane.prefWidthProperty());
+        handHBox.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(7));
+        handHBox.setMouseTransparent(true);
+        handHBox.setAlignment(Pos.BOTTOM_CENTER);
+        for (PoliticCard politicCard : clientController.getSnapshot().getCurrentUser().getPoliticCards()) {
+            ImageView politicCardImageView = new ImageView();
+            politicCardImageView.setImage(new Image(Constants.IMAGE_PATH + "/" + politicCard.getUrl() + ".png"));
+            politicCardImageView.fitHeightProperty().bind(handHBox.prefHeightProperty());
+            politicCardImageView.setPreserveRatio(true);
+            handHBox.getChildren().add(politicCardImageView);
+        }
+        for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()){
+            StackPane permitStackPane = new StackPane();
+            permitStackPane.setAlignment(Pos.CENTER);
+            ImageView permitCardImageView = new ImageView();
+            permitCardImageView.setImage(new Image(Constants.IMAGE_PATH + "/PermitCard.png"));
+            permitCardImageView.fitHeightProperty().bind(handHBox.prefHeightProperty());
+            permitCardImageView.setPreserveRatio(true);
+            Label labelOfPermitCard = new Label();
+            labelOfPermitCard.setText(permitCard.getCityString());
+            permitStackPane.getChildren().addAll(permitCardImageView, labelOfPermitCard);
+            handHBox.getChildren().add(permitStackPane);
+        }
+        gridPane.add(handHBox, 0, 2);
+        GridPane.setValignment(handHBox, VPos.BOTTOM);
+        GridPane.setHalignment(handHBox, HPos.CENTER);
+        GridPane.setHalignment(handHBox, HPos.CENTER);
+        GridPane.setColumnSpan(handHBox, 3);
+    }
 
 
     private void createNodeList() {
@@ -1166,7 +1198,7 @@ public class MatchController implements Initializable, BaseController {
                 createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
                 createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
                 */
-
+        createHand();
     }
 
     private void reprintPermitCard() {
@@ -1279,9 +1311,12 @@ public class MatchController implements Initializable, BaseController {
 
     public void showLess (ActionEvent actionEvent) {
         if(nobilityPath.isVisible()){
+            handHBox.setVisible(true);
             nobilityPath.setVisible(false);
+
         }
         else {
+            handHBox.setVisible(false);
             nobilityPath.setVisible(true);
         }
     }
