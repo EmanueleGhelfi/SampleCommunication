@@ -1265,7 +1265,6 @@ public class MatchController implements Initializable, BaseController {
 
         String buttonText = "Compra aiutanti";
         String infoLabel = "Azione veloce: Compra un aiutante per tre monete!";
-
         showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
     }
 
