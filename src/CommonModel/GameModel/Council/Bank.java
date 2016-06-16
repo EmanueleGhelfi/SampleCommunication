@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
  */
 public class Bank implements Serializable, Cloneable {
 
-    private HashMap<PoliticColor, ArrayBlockingQueue<Councilor>> hashMapArrayList = new HashMap<>();
+    private HashMap<PoliticColor, ArrayList<Councilor>> hashMapArrayList = new HashMap<>();
 
     public Bank() {
         for (PoliticColor politicColor : PoliticColor.values()) {
-            ArrayBlockingQueue<Councilor> politicColorArrayList = new ArrayBlockingQueue<>(4);
+            ArrayList<Councilor> politicColorArrayList = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
                 politicColorArrayList.add(new Councilor(politicColor));
             }
@@ -38,7 +38,7 @@ public class Bank implements Serializable, Cloneable {
 
     public synchronized Councilor getCouncilor(PoliticColor politicColor){
         if(checkCouncilor(politicColor)) {
-            return hashMapArrayList.get(politicColor).remove();
+            return hashMapArrayList.get(politicColor).remove(hashMapArrayList.get(politicColor).size()-1);
         }
         return null;
     }
@@ -48,12 +48,20 @@ public class Bank implements Serializable, Cloneable {
     }
 
     public synchronized ArrayList<PoliticColor> showCouncilor(){
-        ArrayList<PoliticColor> colorToShow = hashMapArrayList.entrySet()
+        ArrayList<PoliticColor> colorToShow = new ArrayList<>();
+                /*hashMapArrayList.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().size() > 0)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toCollection(ArrayList::new));
         System.out.println(colorToShow);
+        */
+
+        for(PoliticColor politicColor: PoliticColor.values()){
+            if(hashMapArrayList.get(politicColor).size()>0){
+                colorToShow.add(politicColor);
+            }
+        }
         return colorToShow;
     }
 

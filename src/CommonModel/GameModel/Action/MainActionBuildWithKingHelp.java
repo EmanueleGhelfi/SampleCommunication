@@ -52,11 +52,12 @@ public class MainActionBuildWithKingHelp extends Action {
                 // calculate money to spend
                 newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
 
-                if (kingPath.size() * Constants.KING_PRICE < user.getCoinPathPosition()) {
+                if ((kingPath.size()-1) * Constants.KING_PRICE < user.getCoinPathPosition()) {
                     for (City city : kingPath) {
                         user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
                         king.setCurrentCity(city);
                     }
+                    user.setCoinPathPosition(user.getCoinPathPosition()+Constants.KING_PRICE);
                     user.addEmporium(kingCity);
                     kingCity.getBonus().getBonus(user, game);
                     CityVisitor cityVisitor = new CityVisitor(game.getGraph(), user.getUsersEmporium());
@@ -66,7 +67,7 @@ public class MainActionBuildWithKingHelp extends Action {
                 } else {
                     throw new ActionNotPossibleException(Constants.MONEY_EXCEPTION);
                 }
-                // go ahead in money path
+                // go ahead in money path for politic card
                 game.getMoneyPath().goAhead(user, - newPositionInMoneyPath);
                 // re-add to game deck
                 game.getPoliticCards().addToQueue(new HashSet<>(politicCards));

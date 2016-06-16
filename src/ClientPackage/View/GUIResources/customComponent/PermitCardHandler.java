@@ -84,6 +84,8 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
                         }
                     }
                     popOver.hide();
+
+
                     clientController.mainActionBuyPermitCard(permitCard, politicCardSelected);
                 }
             });
@@ -91,7 +93,9 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
             vBox.setSpacing(10.0);
             vBox.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
             paneOfPopup.getChildren().add(vBox);
-
+            if(event.getX()/matchController.getBackground().getWidth()>0.5){
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+            }
             popOver.setContentNode(paneOfPopup);
             popOver.show(imageView, targetX, targetY);
         }

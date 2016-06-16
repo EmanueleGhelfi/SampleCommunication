@@ -4,6 +4,7 @@ import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -67,12 +68,16 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendName(String name) {
-        try {
-            boolean result = rmiClientHandler.tryToSetName(name);
-            clientController.onNameReceived(result);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+
+        Runnable runnable = ()-> {
+            try {
+                boolean result = rmiClientHandler.tryToSetName(name);
+                clientController.onNameReceived(result);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        };
+        executorService.execute(runnable);
     }
 
     @Override
@@ -95,77 +100,102 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendMap(Map map) {
-        try {
-            rmiClientHandler.sendMap(map);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        Runnable runnable = ()-> {
+            try {
+                rmiClientHandler.sendMap(map);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        };
+        executorService.execute(runnable);
     }
 
     @Override
     public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
-        try {
-            if(rmiClientHandler.sendBuyableObject(realSaleList)){
-                System.out.println("OK messi in vendita");
+
+        Runnable runnable = ()-> {
+            try {
+                if (rmiClientHandler.sendBuyableObject(realSaleList)) {
+                    System.out.println("OK messi in vendita");
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
             }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        };
+        executorService.execute(runnable);
     }
 
     @Override
     public void onBuy(ArrayList<BuyableWrapper> buyList) {
-        try {
-            rmiClientHandler.buyObject(buyList);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        Runnable runnable = ()-> {
+            try {
+                rmiClientHandler.buyObject(buyList);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        };
+        executorService.execute(runnable);
     }
 
     @Override
     public void onRemoveItemFromMarket(BuyableWrapper item) {
-        try {
-            rmiClientHandler.onRemoveItem(item);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        Runnable runnable = ()-> {
+            try {
+                rmiClientHandler.onRemoveItem(item);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        };
+        executorService.execute(runnable);
     }
 
     @Override
     public void onFinishSellPhase() {
-        try {
-            rmiClientHandler.onFinishSellPhase();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        Runnable runnable = ()-> {
+            try {
+                rmiClientHandler.onFinishSellPhase();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        };
+        executorService.execute(runnable);
     }
 
     @Override
     public void sendFinishedBuyPhase() {
-        try {
-            rmiClientHandler.onFinishBuyPhase();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
+        Runnable runnable = ()-> {
+            try {
+                rmiClientHandler.onFinishBuyPhase();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        };
+        executorService.execute(runnable);
     }
 
     @Override
     public void getCityRewardBonus(City city1) {
+        Runnable runnable = () ->{
         try {
             rmiClientHandler.getCityRewardBonus(city1);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    };
+        executorService.execute(runnable);
+
     }
 
     @Override
     public void onSelectPermitCard(PermitCard permitCard) {
-        try {
-            rmiClientHandler.onSelectPermitCard(permitCard);
-        } catch (RemoteException e) {
+        Runnable runnable = ()-> {
+            try {
+                rmiClientHandler.onSelectPermitCard(permitCard);
+            } catch (RemoteException e) {
 
-        }
+            }
+        };
+        executorService.execute(runnable);
     }
 
     //OLD VERSION
@@ -188,9 +218,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         return IP.getHostAddress();
     }
 
+
+    /*** REGION OF METHODS CALLED BY SERVER **/
+
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException {
-        System.out.println("CLIENTRMISERVICE sendSnapshot");
         clientController.setSnapshot(snapshotToSend);
     }
 

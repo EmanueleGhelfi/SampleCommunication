@@ -39,6 +39,7 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
     King king;
     Node node;
     String councilType;
+    PopOver popOver = new PopOver();
 
 
     public CouncilorHandler(Node node, RegionName region, MatchController matchController, ClientController clientController, King king) {
@@ -57,7 +58,7 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        PopOver popOver = new PopOver();
+
         VBox vBox = new VBox();
 
         JFXComboBox<Label> jfxComboBox = new JFXComboBox<Label>();
@@ -113,6 +114,10 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
         vBox.setSpacing(20);
         double targetX = event.getScreenX();
         double targetY = event.getScreenY();
+        if(targetX/matchController.getBackground().getWidth()>0.5){
+            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+        }
+        popOver.hide();
         popOver.setContentNode(vBox);
         popOver.show(hBoxSource,targetX,targetY);
     }

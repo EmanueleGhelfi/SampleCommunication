@@ -168,7 +168,6 @@ public class GUIView extends Application implements BaseView {
                 }
                 matchController = loader.getController();
                 matchController.setClientController(clientController, baseView);
-                System.out.println("called my turn "+myTurn);
                 matchController.setMyTurn(myTurn, snapshotToSend);
                 Scene scene = new Scene(screen);
                 //stage= new Stage();
@@ -191,7 +190,6 @@ public class GUIView extends Application implements BaseView {
 
         }
         myTurn=false;
-        System.out.println("turn finished");
     }
 
     @Override
@@ -202,7 +200,6 @@ public class GUIView extends Application implements BaseView {
             });
         }
         myTurn=true;
-        System.out.println("turn initialized");
     }
 
     @Override
@@ -267,8 +264,8 @@ public class GUIView extends Application implements BaseView {
         Platform.runLater(()->{
             Alert dlg = createAlert(Alert.AlertType.ERROR);
             dlg.setTitle("ERRORE NELLA MOSSA!");
-            dlg.getDialogPane().setContentText(e.getMessage());
-            configureSampleDialog(dlg, "");
+            dlg.getDialogPane().setContentText("Azione non possibile!");
+            configureSampleDialog(dlg, e.getMessage());
             showDialog(dlg);
         });
     }
@@ -356,14 +353,13 @@ public class GUIView extends Application implements BaseView {
     }
 
     private void configureSampleDialog(Dialog<?> dlg, String header) {
-
         dlg.initStyle(StageStyle.UNDECORATED);
+        dlg.setHeaderText(header);
     }
 
     private void showDialog(Dialog<?> dlg) {
             dlg.show();
             dlg.resultProperty().addListener(o -> System.out.println("Result is: " + dlg.getResult()));
-            System.out.println("This println is _after_ the show method - we're non-blocking!");
         }
 
 }

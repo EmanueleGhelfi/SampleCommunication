@@ -38,6 +38,8 @@ public class Map implements Serializable {
 
     private String mapPreview;
 
+    private String realMap;
+
 
     private transient SimpleGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
 
@@ -120,6 +122,14 @@ public class Map implements Serializable {
         return result;
     }
 
+    public void setRealMap(String realMap) {
+        this.realMap = realMap;
+    }
+
+    public String getRealMap() {
+        return realMap;
+    }
+
     public static void write(){
         //
         City arkon = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
@@ -183,6 +193,9 @@ public class Map implements Serializable {
         map.setLinks(links);
         map.setMapName("prima mappa");
         map.setMapPreview("/ClientPackage/View/GUIResources/Image/Map1v3.png");
+        //TODO: add url
+        map.setRealMap("");
+
 
         System.out.println(map);
         Gson gson = new Gson();
