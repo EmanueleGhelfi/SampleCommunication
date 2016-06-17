@@ -92,11 +92,26 @@ public class User extends CurrentUser implements Serializable{
 
     // new value of helpers
     public void setHelpers(int helpers) {
+        /*
         this.helpers = new ArrayList<>();
         for(int i =0; i< helpers; i++){
             this.helpers.add(new Helper() );
         }
         System.out.println(this.getHelpers().size());
+        */
+
+        if(helpers<this.helpers.size()){
+            while (helpers<this.helpers.size()) {
+                Helper helperToRemove = this.helpers.get(this.helpers.size() - 1);
+                game.removeFromMarketList(new BuyableWrapper(helperToRemove, username));
+                this.helpers.remove(helperToRemove);
+            }
+        }
+        else{
+            while (this.helpers.size()<helpers) {
+                this.helpers.add(new Helper());
+            }
+        }
     }
 
     public int getPoliticCardSize(){
@@ -187,5 +202,11 @@ public class User extends CurrentUser implements Serializable{
         }
         return null;
 
+    }
+
+    public void drawCard() {
+        PoliticCard politicCard = game.getPoliticCards().drawACard();
+        politicCards.add(politicCard);
+        politicCardNumber++;
     }
 }

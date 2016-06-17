@@ -5,6 +5,7 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
@@ -54,7 +55,7 @@ public abstract class Action implements Serializable {
         game.getGameController().sendSnapshotToAll();
     }
 
-    protected void removePoliticCard(ArrayList<PoliticCard> politicCards, User user){
+    protected void removePoliticCard(ArrayList<PoliticCard> politicCards, User user, Game game){
         int cont2 =0;
         /*
         for(int cont1 = 0; cont1< politicCards.size();cont1++){
@@ -72,6 +73,8 @@ public abstract class Action implements Serializable {
         for(int i = 0; i < politicCards.size(); i++){
             for(int j = 0; j< user.getPoliticCards().size();j++){
                 if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
+                    //TODO: test
+                    game.removeFromMarketList(new BuyableWrapper(user.getPoliticCards().get(j),user.getUsername()));
                     user.getPoliticCards().remove(j);
                     user.decrementPoliticCardNumber();
                     System.out.println("Decrementing politic card number");

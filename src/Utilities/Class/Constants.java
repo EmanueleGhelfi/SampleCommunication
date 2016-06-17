@@ -29,6 +29,7 @@ public class Constants {
     public static final String CODE_SELECT_PERMIT_CARD = "CODE_SELECT_PERMIT_CARD";
     public static final String MOVE_KING = "MOVE_KING";
     public static final String CODE_EXCEPTION = "CODE_EXCEPTION";
+    public static final String CODE_FINISH_TURN = "CODE_FINISH_TURN";
 
     //GENERAL STRING
     public static final String GUI = "GUI";

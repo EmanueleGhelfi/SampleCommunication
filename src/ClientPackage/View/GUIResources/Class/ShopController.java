@@ -114,7 +114,7 @@ public class ShopController implements BaseController {
     }
 
 
-    public void onBuy()
+    private void onBuy()
     {
         Runnable runnable = () -> {
             clientController.onBuy((ArrayList<BuyableWrapper>)toBuy.clone());
@@ -123,10 +123,10 @@ public class ShopController implements BaseController {
         new Thread(runnable).start();
     }
 
-    public void onSell() {
+    private void onSell() {
         Runnable runnable = () -> {
             if (trueList.size() > 0) {
-                clientController.sendSaleItem(trueList);
+                clientController.sendSaleItem((ArrayList<BuyableWrapper>) trueList.clone());
                 trueList.clear();
             }
         };
@@ -143,6 +143,7 @@ public class ShopController implements BaseController {
         sellList = new ArrayList<>();
         SnapshotToSend snapshotTosend = clientController.getSnapshot();
         buyList = snapshotTosend.getMarketList();
+
 
         for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
             BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
@@ -167,6 +168,9 @@ public class ShopController implements BaseController {
                 itr.remove();
             }
         }
+
+        System.out.println("In shop controller buylist: "+buyList);
+        System.out.println("In shop controller selllist: "+sellList);
         populateSellAndBuyPane();
     }
 
@@ -444,16 +448,16 @@ public class ShopController implements BaseController {
         GridPane.setRowSpan(itemBackground, 3);
         JFXButton button = new JFXButton();
         button.setTextFill(Paint.valueOf("WHITE"));
+        button.setButtonType(JFXButton.ButtonType.FLAT);
         button.setText(Integer.toString(information.getCost()));
-        button.setBackground(new Background(new BackgroundFill(Paint.valueOf("3D4248"),new CornerRadii(20),null)));
-        button.setStyle("-fx-background-radius: 20");
+        button.setBackground(new Background(new BackgroundFill(Paint.valueOf("4F6161"),new CornerRadii(20),null)));
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 toBuy.add(information);
             }
         });
-        baseGridPane.add(button, 1, 1);
+
         Label label = new Label(information.getBuyableObject().getInfo());
         if(information.getBuyableObject() instanceof PermitCard){
             baseGridPane.add(label,0,1);
@@ -465,6 +469,7 @@ public class ShopController implements BaseController {
             @Override
             public void handle(MouseEvent event) {
                 label.setVisible(true);
+                button.setVisible(true);
                 ColorAdjust colorAdjust = new ColorAdjust();
                 colorAdjust.setBrightness(-0.5);
                 itemBackground.setEffect(colorAdjust);
@@ -474,10 +479,12 @@ public class ShopController implements BaseController {
         baseGridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                button.setVisible(false);
                 label.setVisible(false);
                 itemBackground.setEffect(null);
             }
         });
+        baseGridPane.add(button, 1, 1);
         return baseGridPane;
     }
 
