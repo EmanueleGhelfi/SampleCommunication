@@ -28,9 +28,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -96,7 +94,6 @@ public class MatchController implements Initializable, BaseController {
 
     // Include
     @FXML private GridPane path;
-    @FXML private PathController pathController;
     @FXML private GridPane shop;
     @FXML private Pane nobilityPath;
     @FXML private ShopController shopController;
@@ -116,6 +113,8 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Label helperLabel;
     @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
+
+    @FXML private Button helpButton;
 
 
 
@@ -211,6 +210,7 @@ public class MatchController implements Initializable, BaseController {
         createCity();
         gridPane.add(handHBox, 0, 2);
         createHand();
+        help();
 
         populateHamburgerMenu();
         initHamburgerIcon();
@@ -785,7 +785,6 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void initController() {
-        pathController.setClientController(clientController,guiView);
         shopController.setClientController(clientController,guiView);
         nobilityPathController.setClientController(clientController, guiView);
         nobilityPathController.setMatchController(this);
@@ -1332,6 +1331,44 @@ public class MatchController implements Initializable, BaseController {
         politicCardforBuildWithKing.clear();
         kingPathforBuild.clear();
         buildWithKingPhase.set(false);
+    }
+
+    public void help(){
+        RotateTransition rotateTransition = new RotateTransition(Duration.millis(3000), helpButton);
+        helpButton.prefWidthProperty().bind(gridPane.prefWidthProperty().divide(10));
+        helpButton.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(10));
+        helpButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                helpButton.setScaleX(1.2);
+                helpButton.setScaleY(1.2);
+            }
+        });
+        helpButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rotateTransition.stop();
+                helpButton.setScaleX(1);
+                helpButton.setScaleY(1);
+            }
+        });
+        helpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+                selectionModel.selectNext();
+                shopController.displayHelp();
+            }
+        });
+        helpButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rotateTransition.setFromAngle(helpButton.getRotate());
+                rotateTransition.setByAngle(helpButton.getRotate()+360);
+                rotateTransition.setCycleCount(Animation.INDEFINITE);
+                rotateTransition.play();
+            }
+        });
     }
 
     private class PermitButtonHandler implements EventHandler<MouseEvent>{

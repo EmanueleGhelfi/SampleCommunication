@@ -5,6 +5,7 @@ import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Council.King;
@@ -86,8 +87,8 @@ public class GameController implements Serializable{
         }
         FakeUser fakeUser = new FakeUser();
         for (PermitCard permitCard : permitCardArray) {
-            for (Character character : permitCard.getCityAcronimous(){
-
+            for (Character character : permitCard.getCityAcronimous()){
+                //TODO regola
             }
         }
 

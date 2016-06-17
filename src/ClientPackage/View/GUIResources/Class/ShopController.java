@@ -28,6 +28,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
 import java.util.ArrayList;
@@ -634,5 +638,34 @@ public class ShopController implements BaseController {
         baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         baseGridPane.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         return baseGridPane;
+    }
+
+    public void displayHelp() {
+        PopOver helpPopOver = new PopOver();
+        String helpString = "Benvenuto!\n" +
+                "In basso puoi osservare quali carte politiche hai in mano e le tue carte permesso.\n" +
+                "Le info personali sono posizionate a sinistra.\n" +
+                "Le info avversarie sono visibili dal menù a destra\n" +
+                "Per compiere un'azione principale o veloce basta selezionare l'oggetto inerente. Per esempio:\n" +
+                "puoi acquistare una nuova azione principale cliccando sulla stella nelle tue info,\n" +
+                "se invece vuoi cambiare le carte permesso visibili basta cliccarci sopra.\n" +
+                /*
+                "Per scalzare un consigliere puoi cliccare sopra il consiglio.\n" +
+                "Per acquistare una tessera permesso scegli quella che vuoi e clicca." +
+                "Per costruire un emporio basta cliccare sulla città.\n" +
+                "Per costruire con l'aiuto del Re basta cliccare sopra la corona." +
+                */
+                "Io sono il mercante, e nella fase di mercato gestirò il mercato.\n" +
+                "Per vendere clicca sulle immagini sul bancone e poi dimmelo. Per comprare chiedi a me.\n" +
+                "Buon proseguimento!";
+        StackPane stackPaneForHelp = new StackPane();
+        Text textForHelp = new Text();
+        textForHelp.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15));
+        textForHelp.setText(helpString);
+        stackPaneForHelp.getChildren().add(textForHelp);
+        StackPane.setAlignment(textForHelp, Pos.CENTER);
+        stackPaneForHelp.setPadding(new Insets(20));
+        helpPopOver.setContentNode(stackPaneForHelp);
+        helpPopOver.show(paneWhereShowPopOver);
     }
 }
