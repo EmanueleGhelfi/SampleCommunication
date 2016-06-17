@@ -276,7 +276,7 @@ public class MatchController implements Initializable, BaseController {
         changeTurnAction.setRotate(180);
         jfxNodesList.setSpacing(10);
         jfxNodesList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
-                new KeyValue(showMore.rotateProperty(), expanded? 360:0 ,
+                new KeyValue(showMore.rotateProperty(), expanded? 540:180 ,
                 Interpolator.EASE_BOTH));}});
 
         jfxNodesList.addAnimatedNode(changeTurnAction);
@@ -287,6 +287,7 @@ public class MatchController implements Initializable, BaseController {
             jfxNodesList.addAnimatedNode(getChangePermitCardButton(regionName));
         }
         //jfxNodesList.animateList();
+
 
         gridPane.add(jfxNodesList,0,2);
         GridPane.setHalignment(jfxNodesList,HPos.RIGHT);

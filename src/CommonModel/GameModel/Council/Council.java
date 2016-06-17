@@ -13,6 +13,7 @@ public class Council implements Serializable {
 
     private Queue<Councilor> councilorQueue;
     private Bank bank;
+
     public Council(Bank bank) {
         this.bank = bank;
         this.councilorQueue = new ArrayBlockingQueue<>(Constants.COUNCILOR_DIMENSION);
