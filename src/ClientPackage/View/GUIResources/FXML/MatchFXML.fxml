@@ -327,7 +327,7 @@
                      </GridPane.margin>
                   </HBox>
                   <StackPane fx:id="bottomPane" alignment="TOP_CENTER" style="-fx-background-color: white;" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="TOP" />
-                  <Button fx:id="moreImg" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#showMore" prefHeight="48.0" prefWidth="47.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowSpan="2" GridPane.valignment="TOP">
+                  <Button fx:id="moreImg" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#showMore" prefHeight="48.0" prefWidth="47.0" text="Button" GridPane.halignment="RIGHT" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                      <effect>
                         <ImageInput>
                            <source>
