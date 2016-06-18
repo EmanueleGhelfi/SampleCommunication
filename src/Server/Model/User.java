@@ -62,6 +62,7 @@ public class User extends CurrentUser implements Serializable{
             PermitCard permitCard = itr.next();
             if (permitCard.equals(permitCardToRemove)) {
                 oldPermitCards.add(permitCard);
+                game.removeFromMarketList(new BuyableWrapper(permitCard,username));
                 itr.remove();
             }
         }

@@ -23,6 +23,7 @@ import Utilities.Exception.AlreadyPresentException;
 import Utilities.Exception.MapsNotFoundException;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.*;
 
 /**
@@ -43,6 +44,7 @@ public class GameController implements Serializable{
     private boolean buyPhase = false;
     private int nextUser;
     private int lastUser = -1;
+    private Timer roundTimer = new Timer();
 
     public GameController() {
     }
@@ -150,6 +152,7 @@ public class GameController implements Serializable{
      * @param user user that has finished round
      */
     public void onFinishRound(User user) {
+        cancelTimer();
         turnCounter--;
         System.out.println("on finish round called");
         user.getBaseCommunication().finishTurn();
@@ -184,17 +187,31 @@ public class GameController implements Serializable{
         }
     }
 
+    private void cancelTimer() {
+        if(roundTimer!=null){
+            roundTimer.cancel();
+        }
+    }
+
     private void changeRound(int nextUser) {
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         userArrayList.get((nextUser) % game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
         userArrayList.get((nextUser) % game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
         userArrayList.get((nextUser)%game.getUsers().size()).drawCard();
         userArrayList.get((nextUser) % game.getUsers().size()).getBaseCommunication().changeRound();
-        startRoundTimer();
+        startRoundTimer(userArrayList.get((nextUser)%game.getUsers().size()));
     }
 
-    private void startRoundTimer() {
+    private void startRoundTimer(User user) {
         //// TODO: 17/06/2016 start timer for user round
+        roundTimer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                onUserPass(user);
+            }
+        };
+        roundTimer.schedule(timerTask, Constants.ROUND_DURATION);
     }
 
     private void startMarket() {
@@ -297,6 +314,7 @@ public class GameController implements Serializable{
         }).start();
     }
 
+    // called when receive an object to sell
     public boolean onReceiveBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) {
         for (BuyableWrapper buyableWrapper: buyableWrappers) {
             try {
@@ -305,11 +323,13 @@ public class GameController implements Serializable{
                 System.out.println("L'oggetto è già in vendita!");
             }
         }
-        sendSnapshotToAll();
+        //TODO: check if it's ok
+        //sendSnapshotToAll();
         return true;
 
     }
 
+    // called when receive object to buy
     public boolean onBuyObject(User user, ArrayList<BuyableWrapper> buyableWrappers) {
         int counter = 0;
         for (BuyableWrapper buyableWrapper : buyableWrappers) {
@@ -318,17 +338,14 @@ public class GameController implements Serializable{
                 game.getMoneyPath().goAhead(game.getUser(buyableWrapper.getUsername()),buyableWrapper.getCost());
                 game.removeFromMarketList(buyableWrapper);
                 if(buyableWrapper.getBuyableObject() instanceof PermitCard){
-                    System.out.println("found permit card");
                     game.getUser(buyableWrapper.getUsername()).removePermitCardDefinitevely((PermitCard) buyableWrapper.getBuyableObject());
                     user.addPermitCard((PermitCard) buyableWrapper.getBuyableObject());
                 }
                 else if(buyableWrapper.getBuyableObject() instanceof PoliticCard){
-                    System.out.println("found politic card");
                     game.getUser(buyableWrapper.getUsername()).removePoliticCard((PoliticCard) buyableWrapper.getBuyableObject());
                     user.addPoliticCard((PoliticCard)buyableWrapper.getBuyableObject());
                 }
                 else if(buyableWrapper.getBuyableObject() instanceof Helper){
-                    System.out.println("found helper");
                     game.getUser(buyableWrapper.getUsername()).removeHelper((Helper)buyableWrapper.getBuyableObject());
                     user.addHelper();
                 }
@@ -338,7 +355,6 @@ public class GameController implements Serializable{
             }
         }
         sendSnapshotToAll();
-        System.out.println("after starting thread in game controller");
 
         if(counter==buyableWrappers.size()){
             return true;
@@ -356,20 +372,18 @@ public class GameController implements Serializable{
         if(sellPhase) {
             marketHashMap.put(user, true);
 
-            for (Boolean value : marketHashMap.values()) {
-                if (value) {
-                    finishedUser++;
-                }
-            }
             finishedUser = marketHashMap.entrySet().stream()
                     .filter(java.util.Map.Entry::getValue)
                     .count();
 
-            if (finishedUser == users.size()) {
+            long connectedUser = users.stream()
+                    .filter(BaseUser::isConnected)
+                    .count();
+
+            if (finishedUser >= connectedUser) {
                 sellPhase=false;
                 marketHashMap.clear();
                 startBuyPhase();
-
             }
         }
     }
@@ -386,7 +400,7 @@ public class GameController implements Serializable{
         boolean found = false;
         while (!found) {
             userNumber = random.nextInt(users.size());
-            if(!marketHashMap.containsKey(users.get(userNumber)) || !marketHashMap.get(users.get(userNumber))){
+            if((!marketHashMap.containsKey(users.get(userNumber)) || !marketHashMap.get(users.get(userNumber)) && users.get(userNumber).isConnected())){
                 found = true;
             }
         }
@@ -401,7 +415,12 @@ public class GameController implements Serializable{
             long finishedUser = marketHashMap.entrySet().stream()
                     .filter(java.util.Map.Entry::getValue)
                     .count();
-            if(finishedUser<users.size()) {
+
+            long connectedUser = users.stream()
+                    .filter(BaseUser::isConnected)
+                    .count();
+
+            if(finishedUser<connectedUser) {
                 selectRandomUser();
             }
             else {

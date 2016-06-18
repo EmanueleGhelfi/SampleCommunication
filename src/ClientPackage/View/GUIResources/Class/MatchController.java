@@ -1098,7 +1098,14 @@ public class MatchController implements Initializable, BaseController {
         myTurn = value;
         this.currentSnapshot = snapshot;
         turnFinished(myTurn);
+        disableAllEffect();
         updateView();
+    }
+
+    private void disableAllEffect() {
+        pulseBonus.setValue(false);
+        pulseCity.setValue(false);
+        needToSelectPermitCard.setValue(false);
     }
 
     @Override
