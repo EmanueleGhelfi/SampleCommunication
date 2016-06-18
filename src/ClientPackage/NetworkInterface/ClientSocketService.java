@@ -115,6 +115,11 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     @Override
+    public void onFinishTurn() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_TURN,null);
+    }
+
+    @Override
     public void run() {
         System.out.println("ClientSocketService Started");
         String line;

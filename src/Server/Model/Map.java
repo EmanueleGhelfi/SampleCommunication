@@ -29,12 +29,9 @@ public class Map implements Serializable {
 
     private ArrayList<Link> links;
 
-
     private ArrayList<City> city;
 
-
     private String mapName;
-
 
     private String mapPreview;
 
@@ -42,8 +39,6 @@ public class Map implements Serializable {
 
 
     private transient SimpleGraph<City,DefaultEdge> mapGraph= new SimpleGraph<>(DefaultEdge.class);
-
-
 
 
     public Map() {
@@ -122,7 +117,7 @@ public class Map implements Serializable {
         return result;
     }
 
-    public void setRealMap(String realMap) {
+    private void setRealMap(String realMap) {
         this.realMap = realMap;
     }
 

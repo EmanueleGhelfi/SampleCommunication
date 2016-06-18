@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -103,7 +104,25 @@ public class NobilityPathController implements BaseController {
         yellowBonus.setPreserveRatio(true);
         kingBonus.setPreserveRatio(true);
 
+
+
+        bringUpImages(greyBonus,orangeBonus,yellowBonus,blueBonus,kingBonus);
+
+
         nobilityPath.getChildren().addAll(greyBonus, orangeBonus, blueBonus, yellowBonus, kingBonus);
+    }
+
+    private void bringUpImages(Node... nodes) {
+        for (Node node: nodes) {
+            BringUpHandler greyBonusHandler = new BringUpHandler(node);
+            node.setOnMouseEntered(greyBonusHandler);
+            node.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    greyBonusHandler.setNormalPosition();
+                }
+            });
+        }
     }
 
     private void createPath() {

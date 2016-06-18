@@ -195,6 +195,12 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                         user.getGameController().onSelectPermitCard(permitCard,user);
                         break;
                     }
+                    case Constants.CODE_FINISH_TURN:{
+                        user.setFastActionCounter(0);
+                        user.setMainActionCounter(0);
+
+                        break;
+                    }
                 }
             }
         }catch (IOException e) {

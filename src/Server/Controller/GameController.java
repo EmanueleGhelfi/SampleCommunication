@@ -10,6 +10,7 @@ import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.Map;
@@ -70,7 +71,12 @@ public class GameController implements Serializable{
         game.setStarted(true);
         setDefaultStuff();
         // send map to first user
-        sendAvailableMap(users.get(0));
+        for(User user: users) {
+            if(user.isConnected()) {
+                sendAvailableMap(user);
+                break;
+            }
+        }
 
     }
 
@@ -124,6 +130,8 @@ public class GameController implements Serializable{
      * @param user user that has finished round
      */
     public void onFinishRound(User user) {
+        // reset action counter
+
         turnCounter--;
         System.out.println("on finish round called");
         user.getBaseCommunication().finishTurn();
@@ -134,7 +142,7 @@ public class GameController implements Serializable{
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
             if(user.equals(users.get(cont))){
                 nextUser = cont+1;
-                while (!users.get((nextUser)%game.getUsers().size()).isConnected() || nextUser%game.getUsers().size()==cont){
+                while (!users.get((nextUser)%game.getUsers().size()).isConnected() && nextUser%game.getUsers().size()!=cont){
                     System.out.println("user not connected "+ users.get((nextUser)%game.getUsers().size()));
                     turnCounter--;
                     nextUser++;
@@ -161,7 +169,13 @@ public class GameController implements Serializable{
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         userArrayList.get((nextUser) % game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
         userArrayList.get((nextUser) % game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
+        userArrayList.get((nextUser)%game.getUsers().size()).drawCard();
         userArrayList.get((nextUser) % game.getUsers().size()).getBaseCommunication().changeRound();
+        startRoundTimer();
+    }
+
+    private void startRoundTimer() {
+        //// TODO: 17/06/2016 start timer for user round
     }
 
     private void startMarket() {
@@ -198,7 +212,6 @@ public class GameController implements Serializable{
     /* set map and init game*/
     public void setMap(Map map) {
         if(availableMaps.contains(map)){
-            System.out.println("MAP PRESENT");
             Map mapToFind = findMap(map);
             game.setMap(mapToFind);
             game.setKing(new King(map.getCity().get(0),game.getBank()));
@@ -209,8 +222,6 @@ public class GameController implements Serializable{
             }
             sendFinishMarketToAll();
             selectFirstPlayer();
-
-
         }
         else{
             System.out.println("MAP NOT PRESENT");
@@ -240,10 +251,15 @@ public class GameController implements Serializable{
 
         ArrayList<User> users = new ArrayList<>(game.getUsers());
         turnCounter=users.size();
-       // users.get(0).getBaseCommunication().send
-        users.get(0).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
-        users.get(0).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
-        users.get(0).getBaseCommunication().changeRound();
+       // select first user
+
+        for(User user: users){
+            if(user.isConnected()){
+                changeRound(users.indexOf(user));
+                nextUser = users.indexOf(user)+1;
+                break;
+            }
+        }
 
 
         for(int i = 1;i< users.size();i++){
@@ -253,7 +269,7 @@ public class GameController implements Serializable{
         sendSnapshotToAll();
     }
 
-    public void sendSnapshotToAll() {
+    public synchronized void sendSnapshotToAll() {
         new Thread(()-> {
             for (User user : game.getUsers()) {
                 SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
@@ -263,6 +279,7 @@ public class GameController implements Serializable{
     }
 
     public boolean onReceiveBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) {
+        System.out.println("Received "+buyableWrappers);
         for (BuyableWrapper buyableWrapper: buyableWrappers) {
             try {
                 game.addBuyableWrapper(buyableWrapper);
@@ -270,6 +287,7 @@ public class GameController implements Serializable{
                 System.out.println("L'oggetto è già in vendita!");
             }
         }
+        System.out.println(" MARKET LIST :"+ game.getMarketList());
         sendSnapshotToAll();
         return true;
 
@@ -301,9 +319,7 @@ public class GameController implements Serializable{
             } catch (ActionNotPossibleException e) {
 
             }
-
         }
-
         sendSnapshotToAll();
         System.out.println("after starting thread in game controller");
 
@@ -320,7 +336,6 @@ public class GameController implements Serializable{
 
     public void onFinishSellPhase(User user) {
         long finishedUser=0;
-
         if(sellPhase) {
             marketHashMap.put(user, true);
 
@@ -328,9 +343,7 @@ public class GameController implements Serializable{
                 if (value) {
                     finishedUser++;
                 }
-
             }
-
             finishedUser = marketHashMap.entrySet().stream()
                     .filter(java.util.Map.Entry::getValue)
                     .count();
@@ -404,7 +417,6 @@ public class GameController implements Serializable{
     }
 
     public void onSelectPermitCard(PermitCard permitCard, User user) {
-
         PermitDeck permitDeck = game.getPermitDeck(permitCard.getRetroType());
         try {
             PermitCard permitCardTrue = permitDeck.getAndRemovePermitCardVisible(permitCard);
@@ -413,12 +425,15 @@ public class GameController implements Serializable{
         } catch (ActionNotPossibleException e) {
             e.printStackTrace();
         }
-
-
         sendSnapshotToAll();
+    }
 
-
-
-
+    public void changeMasterUser() {
+        // send map to first user
+        for(User user: users) {
+            if(user.isConnected()) {
+                sendAvailableMap(user);
+            }
+        }
     }
 }

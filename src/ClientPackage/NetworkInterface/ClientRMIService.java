@@ -198,6 +198,18 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         executorService.execute(runnable);
     }
 
+    @Override
+    public void onFinishTurn() {
+        Runnable runnable = ()->{
+            try {
+                rmiClientHandler.finishRound();
+            } catch (RemoteException e) {
+
+            }
+        };
+        executorService.execute(runnable);
+    }
+
     //OLD VERSION
     private String generateName() {
         String randomSequence="";

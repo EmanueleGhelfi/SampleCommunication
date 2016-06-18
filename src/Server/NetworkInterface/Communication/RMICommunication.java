@@ -117,6 +117,12 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         user.getGameController().onSelectPermitCard(permitCard,user);
     }
 
+    @Override
+    public void finishRound() throws RemoteException {
+        user.setMainActionCounter(0);
+        user.setFastActionCounter(0);
+    }
+
 
     /** Overriding BaseCommunication
      *
@@ -146,6 +152,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         } catch (RemoteException e) {
             e.printStackTrace();
             user.setConnected(false);
+            user.getGameController().onFinishRound(user);
         }
     }
 
@@ -162,6 +169,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         } catch (RemoteException e) {
             e.printStackTrace();
             user.setConnected(false);
+            user.getGameController().changeMasterUser();
         }
     }
 

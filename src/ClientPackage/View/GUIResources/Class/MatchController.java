@@ -7,6 +7,7 @@ import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.*;
+import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
@@ -30,6 +31,7 @@ import javafx.geometry.*;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -245,6 +247,70 @@ public class MatchController implements Initializable, BaseController {
         });
         gridPane.add(finishKing,2,2);
         //GridPane.setColumnSpan(finishKing,2);
+
+
+        //NODE LIST
+        JFXNodesList jfxNodesList = new JFXNodesList();
+
+        JFXButton showMore = new JFXButton();
+
+        showMore.setText("More");
+        showMore.setPrefHeight(40);
+        showMore.setPrefWidth(80);
+        showMore.setTextFill(Paint.valueOf("White"));
+        showMore.setRotate(180);
+
+        showMore.setButtonType(JFXButton.ButtonType.RAISED);
+
+        //change turn
+        JFXButton changeTurnAction = new JFXButton();
+        changeTurnAction.setText("Passa");
+        changeTurnAction.setPrefHeight(30);
+        changeTurnAction.setPrefWidth(80);
+        changeTurnAction.setTextFill(Paint.valueOf("WHITE"));
+        changeTurnAction.setButtonType(JFXButton.ButtonType.RAISED);
+        changeTurnAction.setOnAction(new ChangeTurnHandler());
+        showMore.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
+        changeTurnAction.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
+
+        changeTurnAction.setRotate(180);
+        jfxNodesList.setSpacing(10);
+        jfxNodesList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
+                new KeyValue(showMore.rotateProperty(), expanded? 540:180 ,
+                Interpolator.EASE_BOTH));}});
+
+        jfxNodesList.addAnimatedNode(changeTurnAction);
+
+        jfxNodesList.setRotate(180);
+
+        for(RegionName regionName : RegionName.values()){
+            jfxNodesList.addAnimatedNode(getChangePermitCardButton(regionName));
+        }
+        //jfxNodesList.animateList();
+
+
+        gridPane.add(jfxNodesList,0,2);
+        GridPane.setHalignment(jfxNodesList,HPos.RIGHT);
+        GridPane.setValignment(jfxNodesList,VPos.TOP);
+    }
+
+    private JFXButton getChangePermitCardButton(RegionName regionName) {
+        JFXButton jfxButton = new JFXButton(""+regionName);
+        jfxButton.setTooltip(new Tooltip("Change permit card of "+regionName));
+        jfxButton.setPrefHeight(30);
+        jfxButton.setPrefWidth(80);
+        jfxButton.setTextFill(Paint.valueOf("WHITE"));
+        jfxButton.setButtonType(JFXButton.ButtonType.RAISED);
+        jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
+        jfxButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Action action = new FastActionChangePermitCardWithHelper(regionName);
+                clientController.doAction(action);
+            }
+        });
+        jfxButton.setRotate(180);
+        return jfxButton;
     }
 
     private void populateHamburgerMenu() {
@@ -615,8 +681,8 @@ public class MatchController implements Initializable, BaseController {
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                imageView.setScaleX(1.1);
-                imageView.setScaleY(1.1);
+                imageView.setScaleX(1.05);
+                imageView.setScaleY(1.05);
             }
         });
         imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -733,6 +799,22 @@ public class MatchController implements Initializable, BaseController {
         //treeView.setPrefHeight(backgroundImage.getFitHeight()/7);
         grid.setPrefSize(backgroundImage.getFitWidth()/3,backgroundImage.getFitHeight()/3);
 
+        if(CityPosition.getX(city)>0.5){
+            if(CityPosition.getY(city)>0.5) {
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
+            }
+            else{
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+            }
+        }
+        else{
+            if(CityPosition.getY(city)>0.5) {
+                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
+            }
+            else{
+                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
+            }
+        }
         popOver.setContentNode(grid);
         popOver.show(imageView);
 
