@@ -73,38 +73,49 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
         }
         */
 
+        politicColors.clear();
         for(PoliticColor politicColor: clientController.getSnapshot().getBank().showCouncilor()){
             politicColors.add(politicColor);
             jfxComboBox.getItems().add(new Label(politicColor.getColor()));
         }
         jfxComboBox.setPromptText("Scegli il consigliere che vuoi aggiungere");
         mainActionButton.getStyleClass().add("button-raised");
-        mainActionButton.setText("SCALZA GUADAGNANDO SOLDI!!!!");
+        mainActionButton.setText("SCALZA GUADAGNANDO SOLDI!");
         mainActionButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 int index = jfxComboBox.getSelectionModel().getSelectedIndex();
                 System.out.println("selected "+index);
                 //todo check getSelected Item != null
-                System.out.println("value in combobox "+jfxComboBox.getSelectionModel().getSelectedItem().getText());
-                Councilor councilor = new Councilor(politicColors.get(index));
-                clientController.mainActionElectCouncilor(councilor,king,region);
+                if(index!=-1) {
+                    System.out.println("value in combobox " + jfxComboBox.getSelectionModel().getSelectedItem().getText());
+                    Councilor councilor = new Councilor(politicColors.get(index));
+                    clientController.mainActionElectCouncilor(councilor, king, region);
+                }
             }
         });
 
 
         fastActionButton.getStyleClass().add("button-raised");
-        fastActionButton.setText("SCALZA CON AIUTANTI!!!");
+        fastActionButton.setText("SCALZA CON AIUTANTI!");
         fastActionButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 int index = jfxComboBox.getSelectionModel().getSelectedIndex();
                 System.out.println("selected "+index);
-                System.out.println("value in combobox "+jfxComboBox.getSelectionModel().getSelectedItem().getText());
-                Councilor councilor = new Councilor(politicColors.get(index));
-                clientController.fastActionElectCouncilorWithHelper(councilor,king,region,councilType);
+                if(index!=-1) {
+                    System.out.println("value in combobox " + jfxComboBox.getSelectionModel().getSelectedItem().getText());
+
+                    Councilor councilor = new Councilor(politicColors.get(index));
+                    clientController.fastActionElectCouncilorWithHelper(councilor, king, region, councilType);
+                }
             }
         });
+
+        fastActionButton.setPrefHeight(30);
+        fastActionButton.setPrefWidth(120);
+        mainActionButton.setPrefHeight(30);
+        mainActionButton.setPrefWidth(120);
 
         HBox hBox = new HBox(mainActionButton,fastActionButton);
         hBox.setSpacing(5);

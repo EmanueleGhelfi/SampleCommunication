@@ -60,7 +60,7 @@ public class MainActionBuildWithKingHelp extends Action {
                     user.setCoinPathPosition(user.getCoinPathPosition()+Constants.KING_PRICE);
                     user.addEmporium(kingCity);
                     kingCity.getBonus().getBonus(user, game);
-                    CityVisitor cityVisitor = new CityVisitor(game.getGraph(), user.getUsersEmporium());
+                    CityVisitor cityVisitor = new CityVisitor(game.getMap().getMapGraph(), user.getUsersEmporium());
                     for (City cityToVisit : cityVisitor.visit(kingCity)) {
                         cityToVisit.getBonus().getBonus(user, game);
                     }
@@ -72,7 +72,7 @@ public class MainActionBuildWithKingHelp extends Action {
                 // re-add to game deck
                 game.getPoliticCards().addToQueue(new HashSet<>(politicCards));
                 // remove cards from user
-                removePoliticCard(politicCards, user);
+                removePoliticCard(politicCards, user,game);
 
                 moveKing(game,user);
                 removeAction(game, user);

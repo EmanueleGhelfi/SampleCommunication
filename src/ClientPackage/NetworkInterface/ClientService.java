@@ -35,4 +35,6 @@ import java.util.ArrayList;
     public abstract void getCityRewardBonus(City city1);
 
     public abstract void onSelectPermitCard(PermitCard permitCard);
+
+    public abstract void onFinishTurn();
 }

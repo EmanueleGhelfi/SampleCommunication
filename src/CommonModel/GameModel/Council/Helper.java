@@ -10,13 +10,12 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Helper implements BuyableObject{
 
     private String type = "Helper";
-
-    public Helper() {
-    }
-
     // for equals, id of the object
     static final AtomicLong NEXT_ID = new AtomicLong(0);
     final long id = NEXT_ID.getAndIncrement();
+
+    public Helper() {
+    }
 
     @Override
     public String getInfo() {

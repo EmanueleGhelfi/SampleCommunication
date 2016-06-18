@@ -53,7 +53,7 @@ public class MainActionBuyPermitCard extends Action {
             game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(politicCards));
             // remove cards from user
             int cont2 = 0;
-            removePoliticCard(politicCards, user);
+            removePoliticCard(politicCards, user, game);
             // buy permit card, here you can buy permit
             PermitDeck permitDeck = game.getPermitDeck(region.getRegion());
             PermitCard permitCardToBuy = permitDeck.getAndRemovePermitCardVisible(permitCard);

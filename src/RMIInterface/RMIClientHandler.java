@@ -39,4 +39,6 @@ public interface RMIClientHandler extends Remote{
     void getCityRewardBonus(City city1) throws RemoteException;
 
     void onSelectPermitCard(PermitCard permitCard) throws RemoteException;
+
+    void finishRound() throws RemoteException;
 }
