@@ -107,12 +107,14 @@ public class ShopController implements BaseController {
         buyScrollPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(3));
         buyScrollPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(3));
         //buyScrollPane.setPadding(new Insets(20));
-        buyScrollPane.setContent(sellPane);
+        buyScrollPane.setContent(buyPane);
         finishShop = new ImageView(new Image(Constants.IMAGE_PATH + "/Check.png"));
         buyIt = new ImageView(new Image(Constants.IMAGE_PATH + "/Cart.png"));
+        finishShopButton.setGraphic(finishShop);
+        buyItButton.setGraphic(buyIt);
         HBox bottomHBox = new HBox();
         bottomHBox.setAlignment(Pos.CENTER);
-        bottomHBox.getChildren().addAll(finishShop, buyIt);
+        bottomHBox.getChildren().addAll(finishShopButton, buyItButton);
         buyVBox.getChildren().addAll(buyScrollPane, bottomHBox);
     }
 
