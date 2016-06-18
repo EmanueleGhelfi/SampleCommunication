@@ -11,6 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Giulio on 14/05/2016.
  */
+//TODO
 public class TwoOldCityRewardBonus implements Bonus, Serializable {
 
     @Override
@@ -40,7 +41,6 @@ public class TwoOldCityRewardBonus implements Bonus, Serializable {
         ArrayList<String> toReturn = new ArrayList<String>();
         toReturn.add("");
         return toReturn;
-
     }
 
 }

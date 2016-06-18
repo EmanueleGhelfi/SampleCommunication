@@ -421,10 +421,11 @@ public class GameController implements Serializable{
 
     public void getCityRewardBonus(City city1, User user) {
         try {
-            System.out.println("city reward bonus in game controller");
             City city = game.getCity(city1);
 
             city.getBonus(user,game);
+
+            user.decrementOptionalActionCounter();
 
             sendSnapshotToAll();
 
@@ -447,13 +448,12 @@ public class GameController implements Serializable{
 
     public void changeMasterUser() {
         // send map to first user
-        for(User user: users) {
-            if(user.isConnected()) {
+        for (User user : users) {
+            if (user.isConnected()) {
                 sendAvailableMap(user);
             }
         }
     }
-
     public void startingLastRound() {
         lastUser = nextUser;
     }

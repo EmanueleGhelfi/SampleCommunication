@@ -182,8 +182,5 @@ public class Constants {
     public static final String VICTORY_PATH_EXCEPTION = "You can\'t go back in victory path!";
     public static final String MONEY_PATH_EXCEPTION = "You can\'t go back in money path!";
     public static final String PERMIT_CARD_NOT_PRESENT_EXCEPTION = "This permit card is not present!";
-
-
-
-
+    public static final String CITY_NOT_CORRECT_EXCEPTION = "City not correct exception";
 }
