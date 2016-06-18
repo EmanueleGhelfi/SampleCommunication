@@ -1259,8 +1259,6 @@ public class MatchController implements Initializable, BaseController {
     }
 
 
-
-
     @Override
     public void updateView() {
         this.currentSnapshot = clientController.getSnapshot();

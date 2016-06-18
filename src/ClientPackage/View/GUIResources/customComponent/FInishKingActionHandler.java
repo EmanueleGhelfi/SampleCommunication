@@ -10,7 +10,6 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import jfxtras.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
