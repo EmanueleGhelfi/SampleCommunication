@@ -452,6 +452,8 @@ public class GameController implements Serializable{
                 sendAvailableMap(user);
             }
         }
+    }
+
     public void startingLastRound() {
         lastUser = nextUser;
     }
