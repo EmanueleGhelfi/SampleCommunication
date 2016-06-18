@@ -384,7 +384,7 @@ public class MatchController implements Initializable, BaseController {
 
     private void initHamburgerIcon() {
         hamburgerMenu.setVisible(false);
-        hamburgerMenu.setPrefHeight(0);
+        //hamburgerMenu.setPrefHeight(0);
         hamburgerMenu.setPrefWidth(0);
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburgerIcon);
         burgerTask.setRate(-1);
@@ -439,7 +439,6 @@ public class MatchController implements Initializable, BaseController {
         hamburgerMenu.setScaleX(1);
         hamburgerMenu.setPrefWidth(0);
         final Timeline timeline = new Timeline();
-        hamburgerMenu.setPrefHeight(backgroundImage.getFitHeight());
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),
                 new KeyValue(hamburgerMenu.prefWidthProperty(), backgroundImage.getFitWidth()/5)));
 
