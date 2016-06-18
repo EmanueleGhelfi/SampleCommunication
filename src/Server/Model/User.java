@@ -38,6 +38,7 @@ public class User extends CurrentUser implements Serializable{
         politicCardNumber = politicCards.size();
         mainActionCounter = 0;
         fastActionCounter = 0;
+        optionalActionCounter=0;
     }
 
     public void addEmporium(City cityEmporium) {
@@ -121,7 +122,7 @@ public class User extends CurrentUser implements Serializable{
     public void setFastActionCounter(int fastActionCounter) {
         System.out.println("Set fast action counter called");
         this.fastActionCounter = fastActionCounter;
-        if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
+        if (this.fastActionCounter == 0 && this.mainActionCounter == 0 && this.optionalActionCounter==0){
             game.getGameController().onFinishRound(this);
         }
     }
@@ -129,7 +130,7 @@ public class User extends CurrentUser implements Serializable{
     public void setMainActionCounter(int mainActionCounter) {
         System.out.println("Set main action counter called");
         this.mainActionCounter = mainActionCounter;
-        if (this.fastActionCounter == 0 && this.mainActionCounter == 0){
+        if (this.fastActionCounter == 0 && this.mainActionCounter == 0 && this.optionalActionCounter==0){
             game.getGameController().onFinishRound(this);
         }
     }
@@ -209,4 +210,22 @@ public class User extends CurrentUser implements Serializable{
         politicCards.add(politicCard);
         politicCardNumber++;
     }
+
+    public void addOptionalActionCounter(){
+        this.optionalActionCounter++;
+        if (this.fastActionCounter == 0 && this.mainActionCounter == 0 && this.optionalActionCounter==0){
+            game.getGameController().onFinishRound(this);
+        }
+
+    }
+
+    public void decrementOptionalActionCounter(){
+        this.optionalActionCounter--;
+        if (this.fastActionCounter == 0 && this.mainActionCounter == 0 && this.optionalActionCounter==0){
+            game.getGameController().onFinishRound(this);
+        }
+
+    }
+
+
 }

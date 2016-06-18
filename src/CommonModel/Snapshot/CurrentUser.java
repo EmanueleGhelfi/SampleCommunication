@@ -13,6 +13,7 @@ public class CurrentUser extends BaseUser implements Serializable{
     protected ArrayList<PoliticCard> politicCards;
     protected int mainActionCounter = 0;
     protected int fastActionCounter = 0;
+    protected int optionalActionCounter=0;
 
     public CurrentUser() {
     }
@@ -41,5 +42,9 @@ public class CurrentUser extends BaseUser implements Serializable{
     }
     public int getFastActionCounter() {
         return fastActionCounter;
+    }
+
+    public int getOptionalActionCounter() {
+        return optionalActionCounter;
     }
 }

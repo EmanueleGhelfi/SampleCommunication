@@ -17,6 +17,7 @@ public class OneOldCityRewardBonus implements Bonus,Serializable {
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
+        user.addOptionalActionCounter();
         user.getBaseCommunication().selectCityRewardBonus(new SnapshotToSend(game, user));
     }
 

@@ -364,6 +364,7 @@ public class MatchController implements Initializable, BaseController {
             }
         });
         usersComboBox.getSelectionModel().select(0);
+        hamburgerMenu.prefHeightProperty().bind(gridPane.heightProperty());
     }
 
     private void populateField(BaseUser baseUser) {
