@@ -275,7 +275,7 @@ public class GameController implements Serializable{
         for(User user: users){
             if(user.isConnected()){
                 changeRound(users.indexOf(user));
-                nextUser = users.indexOf(user)+1;
+                nextUser = users.indexOf(user);
                 break;
             }
         }
@@ -371,12 +371,7 @@ public class GameController implements Serializable{
                 startBuyPhase();
 
             }
-
-
         }
-
-
-
     }
 
     private void startBuyPhase() {
@@ -536,4 +531,12 @@ public class GameController implements Serializable{
     }
 
 
+    public void onUserPass(User user) {
+
+        if(users.indexOf(user) == (nextUser%users.size()) && !buyPhase && !sellPhase) {
+            user.setMainActionCounter(0);
+            user.setFastActionCounter(0);
+            user.decrementOptionalActionCounter();
+        }
+    }
 }

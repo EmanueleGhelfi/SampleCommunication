@@ -119,8 +119,8 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void finishRound() throws RemoteException {
-        user.setMainActionCounter(0);
-        user.setFastActionCounter(0);
+        user.getGameController().onUserPass(user);
+
     }
 
 

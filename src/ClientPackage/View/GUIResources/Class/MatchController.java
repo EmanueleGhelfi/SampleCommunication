@@ -146,6 +146,9 @@ public class MatchController implements Initializable, BaseController {
     private BooleanProperty buildWithKingPhase = new SimpleBooleanProperty(false);
     private BooleanProperty pulseCity = new SimpleBooleanProperty(false);
 
+    //node list for more and other button
+    private JFXNodesList jfxNodesList = new JFXNodesList();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -285,7 +288,6 @@ public class MatchController implements Initializable, BaseController {
 
 
         //NODE LIST
-        JFXNodesList jfxNodesList = new JFXNodesList();
 
         JFXButton showMore = new JFXButton();
 
@@ -321,12 +323,29 @@ public class MatchController implements Initializable, BaseController {
         for(RegionName regionName : RegionName.values()){
             jfxNodesList.addAnimatedNode(getChangePermitCardButton(regionName));
         }
-        //jfxNodesList.animateList();
+        // HELP
+        JFXButton helpButton = new JFXButton();
+        ImageView helpImage = new ImageView(new Image(Constants.IMAGE_PATH+"QuestionMark.png"));
+        helpImage.setFitHeight(50);
+        helpImage.setFitWidth(50);
+        helpButton.setPrefHeight(50);
+        helpButton.setPrefWidth(50);
+        helpButton.setGraphic(helpImage);
+
+        helpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+                selectionModel.selectNext();
+                shopController.displayHelp();
+            }
+        });
 
 
         gridPane.add(jfxNodesList,0,2);
         GridPane.setHalignment(jfxNodesList,HPos.RIGHT);
         GridPane.setValignment(jfxNodesList,VPos.TOP);
+        jfxNodesList.visibleProperty().bind(nobilityPath.visibleProperty().not());
     }
 
     private JFXButton getChangePermitCardButton(RegionName regionName) {
@@ -1504,5 +1523,13 @@ public class MatchController implements Initializable, BaseController {
 
     public ArrayList<PoliticCard> getPoliticCardforBuildWithKing() {
         return politicCardforBuildWithKing;
+    }
+
+    public void hideNodeList(){
+        jfxNodesList.setVisible(false);
+    }
+
+    public void showNodeList(){
+        jfxNodesList.setVisible(true);
     }
 }

@@ -114,12 +114,12 @@ public class NobilityPathController implements BaseController {
 
     private void bringUpImages(Node... nodes) {
         for (Node node: nodes) {
-            BringUpHandler greyBonusHandler = new BringUpHandler(node);
-            node.setOnMouseEntered(greyBonusHandler);
+            BringUpHandler bringUpHandler = new BringUpHandler(node);
+            node.setOnMouseEntered(bringUpHandler);
             node.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    greyBonusHandler.setNormalPosition();
+                    bringUpHandler.setNormalPosition();
                 }
             });
         }

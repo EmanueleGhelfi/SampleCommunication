@@ -220,9 +220,11 @@ public class User extends CurrentUser implements Serializable{
     }
 
     public void decrementOptionalActionCounter(){
-        this.optionalActionCounter--;
-        if (this.fastActionCounter == 0 && this.mainActionCounter == 0 && this.optionalActionCounter==0){
-            game.getGameController().onFinishRound(this);
+        if(this.optionalActionCounter!=0) {
+            this.optionalActionCounter--;
+            if (this.fastActionCounter == 0 && this.mainActionCounter == 0 && this.optionalActionCounter == 0) {
+                game.getGameController().onFinishRound(this);
+            }
         }
 
     }
