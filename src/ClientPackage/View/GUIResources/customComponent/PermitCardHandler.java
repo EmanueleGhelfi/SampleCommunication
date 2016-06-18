@@ -113,7 +113,7 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
                 }
             }
             else{
-                if (politicCard.getPoliticColor().getColor().equals(politicCardType)){
+                if (politicCard.getPoliticColor()!=null && politicCard.getPoliticColor().getColor().equals(politicCardType)){
                     politicCards.remove(politicCard);
                     return politicCard;
                 }
