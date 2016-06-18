@@ -32,6 +32,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -97,7 +98,6 @@ public class MatchController implements Initializable, BaseController {
 
     // Include
     @FXML private GridPane path;
-    @FXML private PathController pathController;
     @FXML private GridPane shop;
     @FXML private Pane nobilityPath;
     @FXML private ShopController shopController;
@@ -118,9 +118,11 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
 
+    @FXML private Button helpButton;
 
 
 
+    private HBox handHBox = new HBox();
 
     //Images
     @FXML private ImageView kingImage;
@@ -210,6 +212,9 @@ public class MatchController implements Initializable, BaseController {
         initPermitButton();
         handleClick();
         createCity();
+        gridPane.add(handHBox, 0, 2);
+        createHand();
+        help();
 
         populateHamburgerMenu();
         initHamburgerIcon();
@@ -222,7 +227,37 @@ public class MatchController implements Initializable, BaseController {
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
     }
 
+    private void createHand() {
+        handHBox.getChildren().clear();
+        handHBox.prefWidthProperty().bind(gridPane.prefWidthProperty());
+        handHBox.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(7));
+        handHBox.setMouseTransparent(true);
+        handHBox.setAlignment(Pos.CENTER);
+        for (PoliticCard politicCard : clientController.getSnapshot().getCurrentUser().getPoliticCards()) {
+            ImageView politicCardImageView = new ImageView();
+            politicCardImageView.setImage(new Image(Constants.IMAGE_PATH + "/" + politicCard.getUrl() + ".png"));
+            politicCardImageView.fitHeightProperty().bind(handHBox.prefHeightProperty());
+            politicCardImageView.setPreserveRatio(true);
+            handHBox.getChildren().add(politicCardImageView);
+        }
+        for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()){
+            StackPane permitStackPane = new StackPane();
+            permitStackPane.setAlignment(Pos.CENTER);
+            ImageView permitCardImageView = new ImageView();
+            permitCardImageView.setImage(new Image(Constants.IMAGE_PATH + "/PermitCard.png"));
+            permitCardImageView.fitHeightProperty().bind(handHBox.prefHeightProperty());
+            permitCardImageView.setPreserveRatio(true);
+            Label labelOfPermitCard = new Label();
+            labelOfPermitCard.setText(permitCard.getCityString());
+            permitStackPane.getChildren().addAll(permitCardImageView, labelOfPermitCard);
+            handHBox.getChildren().add(permitStackPane);
+        }
 
+        GridPane.setValignment(handHBox, VPos.BOTTOM);
+        GridPane.setHalignment(handHBox, HPos.CENTER);
+        GridPane.setHalignment(handHBox, HPos.CENTER);
+        GridPane.setColumnSpan(handHBox, 3);
+    }
 
 
     private void createNodeList() {
@@ -636,8 +671,10 @@ public class MatchController implements Initializable, BaseController {
         jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                buildWithKingPhase.setValue(true);
-                startBuildWithKing();
+                if (!buildWithKingPhase.getValue()) {
+                    buildWithKingPhase.setValue(true);
+                    startBuildWithKing();
+                }
             }
         });
 
@@ -700,7 +737,6 @@ public class MatchController implements Initializable, BaseController {
                     showPopoverOnCity(city, imageView);
                 }
                 else {
-
                     highlightCity(imageView,city);
                 }
             }
@@ -833,7 +869,6 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void initController() {
-        pathController.setClientController(clientController,guiView);
         shopController.setClientController(clientController,guiView);
         nobilityPathController.setClientController(clientController, guiView);
         nobilityPathController.setMatchController(this);
@@ -1215,7 +1250,7 @@ public class MatchController implements Initializable, BaseController {
                 createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
                 createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
                 */
-
+        createHand();
     }
 
     private void reprintPermitCard() {
@@ -1304,7 +1339,6 @@ public class MatchController implements Initializable, BaseController {
 
         String buttonText = "Compra aiutanti";
         String infoLabel = "Azione veloce: Compra un aiutante per tre monete!";
-
         showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
     }
 
@@ -1351,9 +1385,12 @@ public class MatchController implements Initializable, BaseController {
 
     public void showLess (ActionEvent actionEvent) {
         if(nobilityPath.isVisible()){
+            handHBox.setVisible(true);
             nobilityPath.setVisible(false);
+
         }
         else {
+            handHBox.setVisible(false);
             nobilityPath.setVisible(true);
         }
     }
@@ -1378,7 +1415,44 @@ public class MatchController implements Initializable, BaseController {
         politicCardforBuildWithKing.clear();
         kingPathforBuild.clear();
         buildWithKingPhase.set(false);
+    }
 
+    public void help(){
+        RotateTransition rotateTransition = new RotateTransition(Duration.millis(3000), helpButton);
+        helpButton.prefWidthProperty().bind(gridPane.prefWidthProperty().divide(10));
+        helpButton.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(10));
+        helpButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                helpButton.setScaleX(1.2);
+                helpButton.setScaleY(1.2);
+            }
+        });
+        helpButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rotateTransition.stop();
+                helpButton.setScaleX(1);
+                helpButton.setScaleY(1);
+            }
+        });
+        helpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+                selectionModel.selectNext();
+                shopController.displayHelp();
+            }
+        });
+        helpButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rotateTransition.setFromAngle(helpButton.getRotate());
+                rotateTransition.setByAngle(helpButton.getRotate()+360);
+                rotateTransition.setCycleCount(Animation.INDEFINITE);
+                rotateTransition.play();
+            }
+        });
     }
 
     private class PermitButtonHandler implements EventHandler<MouseEvent>{

@@ -56,6 +56,9 @@ public class MainActionBuildWithPermitCard extends Action{
                     // add to old permit card
                     user.removePermitCard(permitCard);
                     removeAction(game, user);
+                    if (user.getUsersEmporium().size()==10){
+                        game.getGameController().startingLastRound();
+                    }
                 } else {
                     throw new ActionNotPossibleException(Constants.HELPER_EXCEPTION);
                 }

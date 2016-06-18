@@ -48,4 +48,5 @@
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/ShopPattern.png");
     -fx-background-size: 100%;
     -fx-background-repeat: stretch;
+    -fx-background-size: cover;
 }

@@ -250,6 +250,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
+    @Override
+    public void sendMatchFinishedWithWin(boolean win) {
+        try {
+            rmiClientInterface.sendMatchFinishedWithWin(win);
+        } catch (RemoteException e){
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void setUser(User user) {

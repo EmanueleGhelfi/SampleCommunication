@@ -28,6 +28,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
 import java.util.ArrayList;
@@ -80,6 +84,13 @@ public class ShopController implements BaseController {
         backgroundImage.fitWidthProperty().bind(shop.widthProperty());
         shop.prefWidthProperty().bind(paneBackground.prefWidthProperty());
         shop.prefHeightProperty().bind(paneBackground.prefHeightProperty());
+
+        paneBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("event x and y "+event.getX()/paneBackground.getWidth()+" "+event.getY()/paneBackground.getHeight());
+            }
+        });
         backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -99,8 +110,8 @@ public class ShopController implements BaseController {
         GridPane.setRowSpan(backgroundImage, 2);
         GridPane.setColumnSpan(backgroundImage, 2);
         paneWhereShowPopOver = new Pane();
-        paneWhereShowPopOver.layoutXProperty().bind(paneBackground.prefWidthProperty().multiply(0.4937));
-        paneWhereShowPopOver.layoutYProperty().bind(paneBackground.prefHeightProperty().multiply(0.2254));
+        paneWhereShowPopOver.layoutXProperty().bind(paneBackground.prefWidthProperty().multiply(0.4957));
+        paneWhereShowPopOver.layoutYProperty().bind(paneBackground.prefHeightProperty().multiply(0.3045));
         paneWhereShowPopOver.prefWidthProperty().bind(paneBackground.prefWidthProperty().multiply(0.01));
         paneWhereShowPopOver.prefHeightProperty().bind(paneBackground.prefHeightProperty().multiply(0.01));
         paneBackground.getChildren().add(paneWhereShowPopOver);
@@ -192,11 +203,11 @@ public class ShopController implements BaseController {
         permitCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png"));
         helperDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/HelperDistorted.png"));
         paneBackground.getChildren().addAll(politicCardDeck, permitCardDeck, helperDeck);
-        politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3883));
+        politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3973));
         politicCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5612));
-        permitCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.4591));
+        permitCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.4691));
         permitCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5552));
-        helperDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.535));
+        helperDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.545));
         helperDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5597));
         politicCardDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(10));
         politicCardDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
@@ -634,5 +645,34 @@ public class ShopController implements BaseController {
         baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         baseGridPane.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         return baseGridPane;
+    }
+
+    public void displayHelp() {
+        PopOver helpPopOver = new PopOver();
+        String helpString = "Benvenuto!\n" +
+                "In basso puoi osservare quali carte politiche hai in mano e le tue carte permesso.\n" +
+                "Le info personali sono posizionate a sinistra.\n" +
+                "Le info avversarie sono visibili dal menù a destra\n" +
+                "Per compiere un'azione principale o veloce basta selezionare l'oggetto inerente. Per esempio:\n" +
+                "puoi acquistare una nuova azione principale cliccando sulla stella nelle tue info,\n" +
+                "se invece vuoi cambiare le carte permesso visibili basta cliccarci sopra.\n" +
+                /*
+                "Per scalzare un consigliere puoi cliccare sopra il consiglio.\n" +
+                "Per acquistare una tessera permesso scegli quella che vuoi e clicca." +
+                "Per costruire un emporio basta cliccare sulla città.\n" +
+                "Per costruire con l'aiuto del Re basta cliccare sopra la corona." +
+                */
+                "Io sono il mercante, e nella fase di mercato gestirò il mercato.\n" +
+                "Per vendere clicca sulle immagini sul bancone e poi dimmelo. Per comprare chiedi a me.\n" +
+                "Buon proseguimento!";
+        StackPane stackPaneForHelp = new StackPane();
+        Text textForHelp = new Text();
+        textForHelp.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15));
+        textForHelp.setText(helpString);
+        stackPaneForHelp.getChildren().add(textForHelp);
+        StackPane.setAlignment(textForHelp, Pos.CENTER);
+        stackPaneForHelp.setPadding(new Insets(20));
+        helpPopOver.setContentNode(stackPaneForHelp);
+        helpPopOver.show(paneWhereShowPopOver);
     }
 }

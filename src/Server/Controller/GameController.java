@@ -5,6 +5,7 @@ import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Council.King;
@@ -12,6 +13,7 @@ import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.FakeUser;
 import Server.Model.Game;
 import Server.Model.Map;
 import Server.Model.User;
@@ -40,6 +42,7 @@ public class GameController implements Serializable{
     private boolean sellPhase=false;
     private boolean buyPhase = false;
     private int nextUser;
+    private int lastUser = -1;
 
     public GameController() {
     }
@@ -70,11 +73,28 @@ public class GameController implements Serializable{
         users = new ArrayList<>(game.getUsers());
         game.setStarted(true);
         setDefaultStuff();
+        if (game.getUsers().size() == 2){
+            configurationForTwoPlayers();
+        }
         // send map to first user
         for(User user: users) {
             if(user.isConnected()) {
                 sendAvailableMap(user);
                 break;
+            }
+        }
+
+    }
+
+    private void configurationForTwoPlayers() {
+        ArrayList<PermitCard> permitCardArray = new ArrayList<>();
+        for (java.util.Map.Entry<RegionName, PermitDeck> permitDeck : game.getPermitDecks().entrySet()) {
+            permitCardArray.add(permitDeck.getValue().getAndRemoveRandomPermitCard());
+        }
+        FakeUser fakeUser = new FakeUser();
+        for (PermitCard permitCard : permitCardArray) {
+            for (Character character : permitCard.getCityAcronimous()){
+                //TODO regola
             }
         }
 
@@ -130,8 +150,6 @@ public class GameController implements Serializable{
      * @param user user that has finished round
      */
     public void onFinishRound(User user) {
-        // reset action counter
-
         turnCounter--;
         System.out.println("on finish round called");
         user.getBaseCommunication().finishTurn();
@@ -147,19 +165,20 @@ public class GameController implements Serializable{
                     turnCounter--;
                     nextUser++;
                 }
-                if((nextUser%game.getUsers().size())==cont){
-                    onAllUserDisconnected();
-                }
-                else {
-                    if(turnCounter<=0){
-                        System.out.println("Starting market");
-                        startMarket();
+                if (lastUser != nextUser) {
+                    if ((nextUser % game.getUsers().size()) == cont) {
+                        onAllUserDisconnected();
+                    } else {
+                        if (turnCounter <= 0) {
+                            System.out.println("Starting market");
+                            startMarket();
+                        } else {
+                            System.out.println("change round : " + nextUser);
+                            changeRound(nextUser);
+                        }
                     }
-                    else{
-                        System.out.println("change round : "+nextUser);
-                        changeRound(nextUser);
-                    }
-
+                } else {
+                    checkUserWhoWin();
                 }
             }
         }
@@ -279,7 +298,6 @@ public class GameController implements Serializable{
     }
 
     public boolean onReceiveBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) {
-        System.out.println("Received "+buyableWrappers);
         for (BuyableWrapper buyableWrapper: buyableWrappers) {
             try {
                 game.addBuyableWrapper(buyableWrapper);
@@ -287,7 +305,6 @@ public class GameController implements Serializable{
                 System.out.println("L'oggetto è già in vendita!");
             }
         }
-        System.out.println(" MARKET LIST :"+ game.getMarketList());
         sendSnapshotToAll();
         return true;
 
@@ -435,5 +452,85 @@ public class GameController implements Serializable{
                 sendAvailableMap(user);
             }
         }
+    public void startingLastRound() {
+        lastUser = nextUser;
     }
+
+    public void checkUserWhoWin(){
+        ArrayList<User> firstNobilityPathUserToReward = new ArrayList<>();
+        ArrayList<User> secondNobilityPathUserToReward = new ArrayList<>();
+        User userToRewardMaxPermitCard = new User();
+        User userWithMaxHelperAndPoliticCard = new User();
+        for (User user : users) {
+            if (user.getNobilityPathPosition().getPosition() > firstNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition()){
+                firstNobilityPathUserToReward.clear();
+                firstNobilityPathUserToReward.add(user);
+            }
+            if (user.getNobilityPathPosition().getPosition() == firstNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition()){
+                firstNobilityPathUserToReward.add(user);
+            } else {
+                if (user.getNobilityPathPosition().getPosition() > secondNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition())
+                    secondNobilityPathUserToReward.clear();
+                    secondNobilityPathUserToReward.add(user);
+                if (user.getNobilityPathPosition().getPosition() == secondNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition())
+                    secondNobilityPathUserToReward.add(user);
+            }
+            if (user.getPermitCards().size() > userToRewardMaxPermitCard.getPermitCards().size()){
+                userToRewardMaxPermitCard = user;
+            }
+            if (user.getHelpers().size() + user.getPoliticCardSize() > userWithMaxHelperAndPoliticCard.getHelpers().size() + userWithMaxHelperAndPoliticCard.getPoliticCardSize()){
+                userWithMaxHelperAndPoliticCard = user;
+            }
+        }
+        firstNobilityPathUserToReward.forEach(user -> user.setVictoryPathPosition(user.getVictoryPathPosition()+5));
+        secondNobilityPathUserToReward.forEach(user -> user.setVictoryPathPosition(user.getVictoryPathPosition() + 2));
+        userToRewardMaxPermitCard.setVictoryPathPosition(userToRewardMaxPermitCard.getVictoryPathPosition()+3);
+        ArrayList<User> userWhoWin = new ArrayList<>();
+        userWhoWin = checkFirst();
+
+        if (userWhoWin.size()>1){
+            for (User user : users) {
+                if (user.equals(userWithMaxHelperAndPoliticCard)){
+                    user.setVictoryPathPosition(user.getVictoryPathPosition()+3);
+                }
+            }
+        }
+        userWhoWin.clear();
+        userWhoWin = checkFirst();
+        users.forEach(user -> {
+
+        });
+
+        ArrayList<User> finalUserWhoWin = userWhoWin;
+        users.forEach(user -> {
+            if(isAWinner(finalUserWhoWin, user))
+                user.getBaseCommunication().sendMatchFinishedWithWin(true);
+            else
+                user.getBaseCommunication().sendMatchFinishedWithWin(false);
+        });
+    }
+
+    private boolean isAWinner(ArrayList<User> userWhoWin, User userToCheck){
+        for (User user : userWhoWin) {
+            if (user.equals(userToCheck))
+                return true;
+        }
+        return false;
+    }
+
+    private ArrayList<User> checkFirst() {
+        ArrayList<User> userWhoWin = new ArrayList<>();
+        users.forEach(user -> {
+            if (user.getVictoryPathPosition() > userWhoWin.get(0).getVictoryPathPosition()) {
+                userWhoWin.clear();
+                userWhoWin.add(user);
+            }
+            if (user.getVictoryPathPosition() == userWhoWin.get(0).getVictoryPathPosition()) {
+                userWhoWin.add(user);
+            }
+        });
+        return userWhoWin;
+    }
+
+
 }

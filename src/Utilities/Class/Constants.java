@@ -30,6 +30,7 @@ public class Constants {
     public static final String MOVE_KING = "MOVE_KING";
     public static final String CODE_EXCEPTION = "CODE_EXCEPTION";
     public static final String CODE_FINISH_TURN = "CODE_FINISH_TURN";
+    public static final String CODE_FINISH = "CODE_FINISH";
 
     //GENERAL STRING
     public static final String GUI = "GUI";

@@ -288,4 +288,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     public void moveKing(ArrayList<City> kingPath) throws RemoteException {
         clientController.onMoveKing(kingPath);
     }
+
+    @Override
+    public void sendMatchFinishedWithWin(boolean win) throws RemoteException {
+        clientController.sendMatchFinishedWithWin(win);
+    }
 }

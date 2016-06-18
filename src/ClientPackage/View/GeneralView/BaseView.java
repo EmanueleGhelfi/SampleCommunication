@@ -41,4 +41,6 @@ public interface BaseView {
     void onMoveKing(ArrayList<City> kingPath);
 
     void onActionNotPossibleException(ActionNotPossibleException e);
+
+    void sendMatchFinishedWithWin(boolean win);
 }

@@ -292,4 +292,8 @@ public class ClientController {
     public void onFinishTurn() {
         clientService.onFinishTurn();
     }
+
+    public void sendMatchFinishedWithWin(boolean win) {
+        baseView.sendMatchFinishedWithWin(win);
+    }
 }

@@ -107,6 +107,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void sendMatchFinishedWithWin(boolean win) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH, win);
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())

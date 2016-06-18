@@ -458,7 +458,7 @@
                      </GridPane.margin>
                   </HBox>
                   <StackPane fx:id="bottomPane" alignment="TOP_CENTER" style="-fx-background-color: white;" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="TOP" />
-                  <Button fx:id="moreImg" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#showMore" prefHeight="48.0" prefWidth="47.0" styleClass="moreImg" text="Button" GridPane.columnIndex="1" GridPane.rowSpan="2" GridPane.valignment="TOP">
+                  <Button fx:id="moreImg" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#showMore" prefHeight="48.0" prefWidth="47.0" text="Button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowSpan="2" GridPane.valignment="TOP">
                      <effect>
                         <ImageInput>
                            <source>
@@ -471,7 +471,7 @@
                      </GridPane.margin>
                   </Button>
                    <fx:include fx:id="nobilityPath" source="NobilityPathFXML.fxml" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-                  <Button mnemonicParsing="false" onAction="#showLess" styleClass="lessImg" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showLess" text="Button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                      <effect>
                         <ImageInput>
                            <source>
@@ -480,13 +480,17 @@
                         </ImageInput>
                      </effect>
                   </Button>
+                  <Button fx:id="helpButton" mnemonicParsing="false" text="Button" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <effect>
+                        <ImageInput>
+                           <source>
+                              <Image url="/ClientPackage/View/GUIResources/Image/QuestionMark.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                  </Button>
                </children>
             </GridPane>
-         </content>
-      </Tab>
-       <Tab text="Paths">
-         <content>
-             <fx:include fx:id="path" source="PathFXML.fxml" />
          </content>
       </Tab>
       <Tab text="Shop">
