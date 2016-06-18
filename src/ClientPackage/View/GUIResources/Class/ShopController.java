@@ -256,9 +256,13 @@ public class ShopController implements BaseController {
                 innerPopOver.hide();
                 onSell();
                 clientController.sendFinishSellPhase();
-
+                waitingForBuying();
             }
         });
+    }
+
+    private void waitingForBuying() {
+        innerPopOver.setContentNode(new Pane(new Label("Aspetta il tuo turno, villano.")));
     }
 
     private void createBuyingPopOver() {
