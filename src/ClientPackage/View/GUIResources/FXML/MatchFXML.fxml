@@ -480,15 +480,6 @@
                         </ImageInput>
                      </effect>
                   </Button>
-                  <Button fx:id="helpButton" mnemonicParsing="false" text="Button" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                     <effect>
-                        <ImageInput>
-                           <source>
-                              <Image url="/ClientPackage/View/GUIResources/Image/QuestionMark.png" />
-                           </source>
-                        </ImageInput>
-                     </effect>
-                  </Button>
                </children>
             </GridPane>
          </content>

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Giulio on 14/05/2016.
+ * Get two city bonus (also the ones used) but not the ones with nobility bonus
  */
 //TODO
 public class TwoOldCityRewardBonus implements Bonus, Serializable {

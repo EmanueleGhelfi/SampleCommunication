@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Get two city bonus (also the ones used) but not the ones with nobility bonus
+
  * Created by Giulio on 13/05/2016.
  */
 public class OldPermitCardBonus implements Bonus,Serializable {
