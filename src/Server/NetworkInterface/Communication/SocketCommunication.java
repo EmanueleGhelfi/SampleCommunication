@@ -112,6 +112,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void ping() {
+
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
@@ -214,6 +219,7 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         }catch (IOException e) {
             e.printStackTrace();
             user.setConnected(false);
+            user.getGameController().onUserDisconnected(user);
         }
     }
 

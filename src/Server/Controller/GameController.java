@@ -86,6 +86,8 @@ public class GameController implements Serializable{
             }
         }
 
+        startConnectedTimer();
+
     }
 
     private void configurationForTwoPlayers() {
@@ -226,6 +228,19 @@ public class GameController implements Serializable{
 
         });
 
+
+
+    }
+
+    private void startConnectedTimer() {
+        Timer checkUserTimer = new Timer();
+        TimerTask checkUserTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                users.forEach(user -> user.getBaseCommunication().ping());
+            }
+        };
+        checkUserTimer.scheduleAtFixedRate(checkUserTimerTask,0,5000);
     }
 
     private void sendStartMarket(User user) {
@@ -556,6 +571,16 @@ public class GameController implements Serializable{
             user.setMainActionCounter(0);
             user.setFastActionCounter(0);
             user.decrementOptionalActionCounter();
+        }
+    }
+
+    public void onUserDisconnected(User user) {
+        if(buyPhase){
+            onFinishBuyPhase(user);
+        }
+        else{
+            if(sellPhase)
+                onFinishSellPhase(user);
         }
     }
 }

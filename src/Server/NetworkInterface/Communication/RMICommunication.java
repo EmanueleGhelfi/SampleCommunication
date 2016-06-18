@@ -200,7 +200,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         try {
             rmiClientInterface.onStartMarket();
         } catch (RemoteException e) {
-            e.printStackTrace();
             user.setConnected(false);
         }
     }
@@ -210,7 +209,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         try {
             rmiClientInterface.onStartBuyPhase();
         } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 
@@ -219,7 +217,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         try {
             rmiClientInterface.disableMarketPhase();
         } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 
@@ -256,6 +253,16 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             rmiClientInterface.sendMatchFinishedWithWin(win);
         } catch (RemoteException e){
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void ping() {
+        try {
+            rmiClientInterface.ping();
+        } catch (RemoteException e) {
+            user.setConnected(false);
+            user.getGameController().onUserDisconnected(user);
         }
     }
 
