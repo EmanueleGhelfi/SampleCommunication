@@ -120,6 +120,7 @@ public class MatchController implements Initializable, BaseController {
 
     @FXML private Button helpButton;
 
+    private SingleSelectionModel<Tab> selectionModel;
 
 
     private HBox handHBox = new HBox();
@@ -215,6 +216,8 @@ public class MatchController implements Initializable, BaseController {
         gridPane.add(handHBox, 0, 2);
         createHand();
         help();
+
+        selectionModel = tabPane.getSelectionModel();
 
         populateHamburgerMenu();
         initHamburgerIcon();
@@ -1067,7 +1070,7 @@ public class MatchController implements Initializable, BaseController {
 
     @Override
     public void onStartMarket() {
-
+        selectionModel.selectNext();
     }
 
     @Override
@@ -1439,7 +1442,6 @@ public class MatchController implements Initializable, BaseController {
         helpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                 selectionModel.selectNext();
                 shopController.displayHelp();
             }

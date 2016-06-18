@@ -50,6 +50,11 @@ public class ShopController implements BaseController {
     private ImageView helperDeck = new ImageView();
     private TilePane buyPane = new TilePane();
     private TilePane sellPane = new TilePane();
+    private ScrollPane buyScrollPane = new ScrollPane();
+    private ScrollPane sellScrollPane = new ScrollPane();
+    private VBox buyVBox = new VBox();
+    private VBox sellVBox = new VBox();
+
     private Button innerButton;
     private PopOver innerPopOver;
     private Pane paneWhereShowPopOver = new Pane();
@@ -60,6 +65,11 @@ public class ShopController implements BaseController {
     private ArrayList<BuyableWrapper> toBuy = new ArrayList<>();
     private ArrayList<BuyableWrapper> trueList = new ArrayList<>();
     private ShopController shopController = this;
+
+    private ImageView buyIt = new ImageView();
+    private ImageView finishShop = new ImageView();
+    JFXButton finishShopButton = new JFXButton();
+    JFXButton buyItButton = new JFXButton("");
 
     @FXML private GridPane shop;
     @FXML private Pane paneBackground;
@@ -75,6 +85,34 @@ public class ShopController implements BaseController {
         updateView();
         createDeck();
         onFinishMarket();
+
+
+        setMarketPane();
+
+    }
+
+    private void setMarketPane() {
+        sellPane.setPrefColumns(2);
+        sellPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
+        sellPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
+        sellScrollPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(1.3));
+        sellScrollPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(1.3));
+        //sellScrollPane.setPadding(new Insets(20));
+        sellScrollPane.setContent(sellPane);
+
+        buyPane.setPrefColumns(2);
+        buyPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
+        buyPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
+        buyScrollPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(3));
+        buyScrollPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(3));
+        //buyScrollPane.setPadding(new Insets(20));
+        buyScrollPane.setContent(sellPane);
+        finishShop = new ImageView(new Image(Constants.IMAGE_PATH + "/Check.png"));
+        buyIt = new ImageView(new Image(Constants.IMAGE_PATH + "/Cart.png"));
+        HBox bottomHBox = new HBox();
+        bottomHBox.setAlignment(Pos.CENTER);
+        bottomHBox.getChildren().addAll(finishShop, buyIt);
+        buyVBox.getChildren().addAll(buyScrollPane, bottomHBox);
     }
 
     private void setBackground() {
@@ -250,9 +288,7 @@ public class ShopController implements BaseController {
         });
         populateSellAndBuyPane();
         PopOver popOver = new PopOver();
-        popOver.setContentNode(sellPane);
-        sellPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
-        sellPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
+        popOver.setContentNode(sellScrollPane);
         popOver.show(imageClicked);
     }
 
@@ -277,18 +313,19 @@ public class ShopController implements BaseController {
     }
 
     private void waitingForBuying() {
-        innerPopOver.setContentNode(new Pane(new Label("Aspetta il tuo turno, villano.")));
+        innerPopOver = new PopOver();
+        innerPopOver.setContentNode(new StackPane(new Label("Aspetta il tuo turno, villano.")));
     }
 
     private void createBuyingPopOver() {
         innerPopOver = new PopOver();
+        /*
         GridPane buyingSessionGridPane = new GridPane();
         buyingSessionGridPane.setAlignment(Pos.CENTER);
         buyingSessionGridPane.add(buyPane, 0, 0);
         GridPane.setColumnSpan(buyPane, 2);
+        */
 
-        ImageView finishShop = new ImageView(new Image(Constants.IMAGE_PATH + "/Check.png"));
-        JFXButton finishShopButton = new JFXButton();
         finishShopButton.setGraphic(finishShop);
         finishShopButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -300,8 +337,6 @@ public class ShopController implements BaseController {
             }
         });
 
-        ImageView buyIt = new ImageView(new Image(Constants.IMAGE_PATH + "/Cart.png"));
-        JFXButton buyItButton = new JFXButton("");
         buyItButton.setGraphic(buyIt);
         buyItButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -316,11 +351,14 @@ public class ShopController implements BaseController {
         buyIt.setPreserveRatio(true);
         finishShop.setFitWidth(40);
         finishShop.setFitHeight(40);
+        /*
         buyingSessionGridPane.add(finishShopButton, 0, 1);
         buyingSessionGridPane.add(buyItButton, 1, 1);
         buyingSessionGridPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(10));
         buyingSessionGridPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(10));
         innerPopOver.setContentNode(buyingSessionGridPane);
+        */
+        innerPopOver.setContentNode(buyVBox);
         innerPopOver.show(paneWhereShowPopOver);
     }
 
@@ -337,6 +375,7 @@ public class ShopController implements BaseController {
 
     @Override
     public void onStartMarket() {
+
         Graphics.notification("Start Market");
         System.out.println(sellList +  " SELL LIST");
         System.out.println(trueList +  " TRUE LIST");
@@ -344,9 +383,11 @@ public class ShopController implements BaseController {
         System.out.println(toBuy +  " TOBUY LIST");
         buyList.clear();
         sellList.clear();
+        toBuy.clear();
         temporarySellList.clear();
         trueList.clear();
         settingDeckActions();
+        updateView();
         innerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -557,10 +598,12 @@ public class ShopController implements BaseController {
         label.setTextFill(Paint.valueOf("WHITE"));
         itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
         if (information.getBuyableObject() instanceof PermitCard){
+            sellPane.setVgap(20);
             upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
             downerImage = new Image ("/ClientPackage/View/GUIResources/Image/minusWhite.png");
             label.setText(information.getBuyableObject().getInfo());
         } else {
+            sellPane.setVgap(0);
             if (information.getBuyableObject() instanceof Helper) {
                 upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusBlack.png");
                 downerImage = new Image("/ClientPackage/View/GUIResources/Image/minusBlack.png");
