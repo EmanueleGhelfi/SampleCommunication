@@ -100,6 +100,7 @@ public class ShopController implements BaseController {
         //sellScrollPane.setPadding(new Insets(20));
         sellScrollPane.setContent(sellPane);
 
+
         buyPane.setPrefColumns(2);
         buyPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
         buyPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
