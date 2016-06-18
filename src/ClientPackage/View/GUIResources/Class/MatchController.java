@@ -147,6 +147,9 @@ public class MatchController implements Initializable, BaseController {
     private BooleanProperty buildWithKingPhase = new SimpleBooleanProperty(false);
     private BooleanProperty pulseCity = new SimpleBooleanProperty(false);
 
+    //node list for more and other button
+    private JFXNodesList jfxNodesList = new JFXNodesList();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -215,7 +218,7 @@ public class MatchController implements Initializable, BaseController {
         createCity();
         gridPane.add(handHBox, 0, 2);
         createHand();
-        help();
+        //help();
 
         selectionModel = tabPane.getSelectionModel();
 
@@ -288,58 +291,90 @@ public class MatchController implements Initializable, BaseController {
 
 
         //NODE LIST
-        JFXNodesList jfxNodesList = new JFXNodesList();
 
         JFXButton showMore = new JFXButton();
-
-        showMore.setText("More");
-        showMore.setPrefHeight(40);
-        showMore.setPrefWidth(80);
-        showMore.setTextFill(Paint.valueOf("White"));
+        ImageView imageMore = new ImageView(new Image(Constants.IMAGE_PATH+"plusMenu.png"));
+        showMore.setGraphic(imageMore);
+        showMore.setPrefHeight(50);
+        showMore.setPrefWidth(50);
+        imageMore.setFitHeight(30);
+        imageMore.setFitWidth(30);
         showMore.setRotate(180);
-
         showMore.setButtonType(JFXButton.ButtonType.RAISED);
+        showMore.setTooltip(new Tooltip("Show more action"));
 
         //change turn
         JFXButton changeTurnAction = new JFXButton();
-        changeTurnAction.setText("Passa");
-        changeTurnAction.setPrefHeight(30);
-        changeTurnAction.setPrefWidth(80);
-        changeTurnAction.setTextFill(Paint.valueOf("WHITE"));
+        ImageView imageChange = new ImageView(new Image(Constants.IMAGE_PATH+"change.png"));
+        imageChange.setFitHeight(50);
+        imageChange.setFitWidth(50);
+        changeTurnAction.setPrefHeight(50);
+        changeTurnAction.setPrefWidth(50);
+        changeTurnAction.setGraphic(imageChange);
         changeTurnAction.setButtonType(JFXButton.ButtonType.RAISED);
         changeTurnAction.setOnAction(new ChangeTurnHandler());
         showMore.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
-        changeTurnAction.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
-
         changeTurnAction.setRotate(180);
+        changeTurnAction.setTooltip(new Tooltip("Chage turn"));
+
+        // HELP
+        JFXButton helpButton = new JFXButton();
+        ImageView helpImage = new ImageView(new Image(Constants.IMAGE_PATH+"QuestionMark.png"));
+        helpImage.setFitHeight(50);
+        helpImage.setFitWidth(50);
+        helpImage.setFitHeight(50);
+        helpImage.setFitWidth(50);
+        helpButton.setPrefHeight(50);
+        helpButton.setPrefWidth(50);
+        helpButton.setGraphic(helpImage);
+        helpButton.setRotate(180);
+        helpButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("WHITE"),new CornerRadii(30),null)));
+
+        helpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+                selectionModel.selectNext();
+                shopController.displayHelp();
+            }
+        });
+        helpButton.setTooltip(new Tooltip("Help"));
+
+
         jfxNodesList.setSpacing(10);
         jfxNodesList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
-                new KeyValue(showMore.rotateProperty(), expanded? 540:180 ,
+                new KeyValue(showMore.rotateProperty(), expanded? 225:180 ,
                 Interpolator.EASE_BOTH));}});
 
         jfxNodesList.addAnimatedNode(changeTurnAction);
 
         jfxNodesList.setRotate(180);
 
+
+        // REGION
+
         for(RegionName regionName : RegionName.values()){
             jfxNodesList.addAnimatedNode(getChangePermitCardButton(regionName));
         }
-        //jfxNodesList.animateList();
 
 
+        jfxNodesList.addAnimatedNode(helpButton);
         gridPane.add(jfxNodesList,0,2);
         GridPane.setHalignment(jfxNodesList,HPos.RIGHT);
         GridPane.setValignment(jfxNodesList,VPos.TOP);
+        jfxNodesList.visibleProperty().bind(nobilityPath.visibleProperty().not());
     }
 
     private JFXButton getChangePermitCardButton(RegionName regionName) {
-        JFXButton jfxButton = new JFXButton(""+regionName);
+        JFXButton jfxButton = new JFXButton();
         jfxButton.setTooltip(new Tooltip("Change permit card of "+regionName));
-        jfxButton.setPrefHeight(30);
-        jfxButton.setPrefWidth(80);
-        jfxButton.setTextFill(Paint.valueOf("WHITE"));
+        jfxButton.setPrefHeight(50);
+        jfxButton.setPrefWidth(50);
+        ImageView regionImage = new ImageView(new Image(Constants.IMAGE_PATH+""+regionName+".png"));
+        jfxButton.setGraphic(regionImage);
+        //jfxButton.setTextFill(Paint.valueOf("WHITE"));
         jfxButton.setButtonType(JFXButton.ButtonType.RAISED);
-        jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
+        //jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
         jfxButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -693,7 +728,7 @@ public class MatchController implements Initializable, BaseController {
     private void startBuildWithKing() {
         Set<Node> cities = background.lookupAll(".cityImage");
         kingPathforBuild.clear();
-        kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
+       // kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         for(Node node : cities){
             Graphics.scaleTransitionEffectCycle(node,1.05f,1.05f,pulseCity);
         }
@@ -743,8 +778,6 @@ public class MatchController implements Initializable, BaseController {
                     highlightCity(imageView,city);
                 }
             }
-
-
         });
     }
 
@@ -1125,33 +1158,32 @@ public class MatchController implements Initializable, BaseController {
 
     @Override
     public void moveKing(ArrayList<City> kingPath) {
-        System.out.println("In move");
+        if(kingPath.size()>1) {
+            Timeline timeline = new Timeline();
+            kingImage.layoutXProperty().unbind();
+            kingImage.layoutYProperty().unbind();
+            // remove current king city
+            kingPath.remove(0);
 
-        Timeline timeline = new Timeline();
-        kingImage.layoutXProperty().unbind();
-        kingImage.layoutYProperty().unbind();
-        // remove current king city
-        kingPath.remove(0);
-
-        kingPath.forEach(city1 -> {
-            System.out.println("in foreach");
-            //path.getElements().add(new MoveTo(background.widthProperty().get()*CityPosition.getX(city1),background.heightProperty().get()*CityPosition.getY(city1)));
-            KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(),background.getWidth()*CityPosition.getX(city1), Interpolator.EASE_BOTH);
-            KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(),background.getHeight()*CityPosition.getY(city1),Interpolator.EASE_BOTH);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(500*kingPath.indexOf(city1)),keyValueX,keyValueY);
-            timeline.getKeyFrames().add(keyFrame);
-        });
+            kingPath.forEach(city1 -> {
+                //path.getElements().add(new MoveTo(background.widthProperty().get()*CityPosition.getX(city1),background.heightProperty().get()*CityPosition.getY(city1)));
+                KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(), background.getWidth() * CityPosition.getX(city1), Interpolator.EASE_BOTH);
+                KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(), background.getHeight() * CityPosition.getY(city1), Interpolator.EASE_BOTH);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(500 * kingPath.indexOf(city1)), keyValueX, keyValueY);
+                timeline.getKeyFrames().add(keyFrame);
+            });
 
 
-        timeline.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                kingImage.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size()-1))));
-                kingImage.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size()-1))).add(50));
-            }
-        });
+            timeline.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    kingImage.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size() - 1))));
+                    kingImage.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size() - 1))).add(50));
+                }
+            });
 
-        timeline.play();
+            timeline.play();
+        }
         /*
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(4000));
@@ -1420,7 +1452,7 @@ public class MatchController implements Initializable, BaseController {
         buildWithKingPhase.set(false);
     }
 
-    public void help(){
+    /*public void help(){
         RotateTransition rotateTransition = new RotateTransition(Duration.millis(3000), helpButton);
         helpButton.prefWidthProperty().bind(gridPane.prefWidthProperty().divide(10));
         helpButton.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(10));
@@ -1442,6 +1474,7 @@ public class MatchController implements Initializable, BaseController {
         helpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                 selectionModel.selectNext();
                 shopController.displayHelp();
             }
@@ -1456,6 +1489,7 @@ public class MatchController implements Initializable, BaseController {
             }
         });
     }
+    */
 
     private class PermitButtonHandler implements EventHandler<MouseEvent>{
 
@@ -1506,5 +1540,13 @@ public class MatchController implements Initializable, BaseController {
 
     public ArrayList<PoliticCard> getPoliticCardforBuildWithKing() {
         return politicCardforBuildWithKing;
+    }
+
+    public void hideNodeList(){
+        jfxNodesList.setVisible(false);
+    }
+
+    public void showNodeList(){
+        jfxNodesList.setVisible(true);
     }
 }

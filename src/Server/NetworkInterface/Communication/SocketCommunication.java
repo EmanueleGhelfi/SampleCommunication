@@ -201,8 +201,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                         break;
                     }
                     case Constants.CODE_FINISH_TURN:{
+                        user.getGameController().onUserPass(user);
+                        /*
                         user.setFastActionCounter(0);
                         user.setMainActionCounter(0);
+                        */
 
                         break;
                     }

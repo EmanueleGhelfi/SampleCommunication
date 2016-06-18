@@ -10,6 +10,7 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import jfxtras.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,18 @@ public class FInishKingActionHandler implements EventHandler<ActionEvent>{
     @Override
     public void handle(ActionEvent event) {
         if(matchController.getBuildWithKingPhase()){
-            Action action = new MainActionBuildWithKingHelp((ArrayList<City>)matchController.getKingPathforBuild().clone(),(ArrayList<PoliticCard>)matchController.getPoliticCardforBuildWithKing().clone());
+            //Action action = new MainActionBuildWithKingHelp((ArrayList<City>)matchController.getKingPathforBuild().clone(),(ArrayList<PoliticCard>)matchController.getPoliticCardforBuildWithKing().clone());
+
+            ArrayList<City> citiesForBuildWithKing = (ArrayList<City>) matchController.getKingPathforBuild().clone();
+            if((citiesForBuildWithKing.size())>0){
+                if(!citiesForBuildWithKing.get(0).equals(clientController.getSnapshot().getKing().getCurrentCity())){
+                    citiesForBuildWithKing.add(0,clientController.getSnapshot().getKing().getCurrentCity());
+                }
+            }
+
+            Action action = new MainActionBuildWithKingHelp((ArrayList<City>)matchController.getKingPathforBuild()
+                    .clone(),(ArrayList<PoliticCard>)matchController.getPoliticCardforBuildWithKing().clone());
+
 
             System.out.println("KING PATH "+matchController.getKingPathforBuild());
 
