@@ -440,6 +440,7 @@ public class GameController implements Serializable{
             PermitCard permitCardTrue = permitDeck.getAndRemovePermitCardVisible(permitCard);
             permitCardTrue.getBonus().getBonus(user,game);
             user.addPermitCard(permitCardTrue);
+            user.decrementOptionalActionCounter();
         } catch (ActionNotPossibleException e) {
             e.printStackTrace();
         }
