@@ -258,11 +258,13 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void ping() {
-        try {
-            rmiClientInterface.ping();
-        } catch (RemoteException e) {
-            user.setConnected(false);
-            user.getGameController().onUserDisconnected(user);
+        if(user.isConnected()) {
+            try {
+                rmiClientInterface.ping();
+            } catch (RemoteException e) {
+                user.setConnected(false);
+                user.getGameController().onUserDisconnected(user);
+            }
         }
     }
 
