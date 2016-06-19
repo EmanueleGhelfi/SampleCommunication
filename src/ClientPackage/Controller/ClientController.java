@@ -189,7 +189,7 @@ public class ClientController {
         }
     }
 
-    public void setBaseView(GUIView baseView) {
+    public void setBaseView(BaseView baseView) {
         this.baseView = baseView;
     }
 
