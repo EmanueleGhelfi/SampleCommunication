@@ -197,7 +197,7 @@ public class MatchCliController {
         }
 
         System.out.println("Azioni Principali:  "+currentUser.getMainActionCounter());
-        System.out.println("Azioni veloci : "+currentUser.getFastActionCounter());
+        System.out.println("Azioni veloci :"+currentUser.getFastActionCounter());
         System.out.println("Aiutanti : "+currentUser.getHelpers().size());
 
 

@@ -103,6 +103,8 @@ public class CLIView implements BaseView {
     @Override
     public void updateSnapshot() {
 
+        System.out.println("On update snapshot");
+        cliPrinterInterface.toStringFormatted(clientController.getSnapshot());
     }
 
     @Override
