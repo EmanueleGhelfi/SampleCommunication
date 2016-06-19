@@ -89,6 +89,7 @@ public class CLIView implements BaseView {
 
     @Override
     public void turnFinished() {
+        System.out.println(" "+CLIColor.ANSI_RED+" Turno finito "+CLIColor.ANSI_RESET);
 
     }
 
@@ -106,6 +107,7 @@ public class CLIView implements BaseView {
 
     @Override
     public void onStartMarket() {
+        shopCliController.onStartMarket();
 
     }
 

@@ -7,11 +7,14 @@ package ClientPackage.View.CLIResources;
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GeneralView.CLIView;
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
+import CommonModel.GameModel.Action.FastActionNewMainAction;
 import CommonModel.GameModel.Action.MainActionElectCouncilor;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.CurrentUser;
@@ -84,10 +87,45 @@ public class MatchCliController {
             if(commandLine.hasOption("politicColor")){
                 System.out.println(clientController.getSnapshot().getBank().showCouncilor());
             }
+            if(commandLine.hasOption("permit")){
+                showPermitCard();
+            }
+            if(commandLine.hasOption("finish")){
+                clientController.onFinishTurn();
+            }
+            if(commandLine.hasOption("changePermit")){
+                String arg = commandLine.getOptionValue("changePermit");
+                changePermitAction(arg);
+            }
+            if(commandLine.hasOption("buyAction")){
+                Action action = new FastActionNewMainAction();
+                clientController.doAction(action);
+            }
             getInput();
         } catch (ParseException e) {
             System.out.println("Syntax error!");
             getInput();
+        }
+    }
+
+    private void changePermitAction(String arg) {
+        try {
+            RegionName regionName = RegionName.valueOf(arg);
+            Action action = new FastActionChangePermitCardWithHelper(regionName);
+            clientController.doAction(action);
+        }
+        catch (Exception e){
+            System.out.println("Error in region Name");
+        }
+
+    }
+
+    private void showPermitCard() {
+        for(RegionName regionName: RegionName.values()) {
+            System.out.println(CLIColor.ANSI_RED+" "+regionName+" "+CLIColor.ANSI_RESET);
+            for (PermitCard permitCard: clientController.getSnapshot().getVisibleRegionPermitCard(regionName)){
+                System.out.println(cliPrinter.toStringFormatted(permitCard));
+            }
         }
     }
 
@@ -157,6 +195,11 @@ public class MatchCliController {
         for (City city: currentUser.getUsersEmporium()){
             System.out.println(cliPrinter.toStringFormatted(city));
         }
+
+        System.out.println("Azioni Principali:  "+currentUser.getMainActionCounter());
+        System.out.println("Azioni veloci : "+currentUser.getFastActionCounter());
+        System.out.println("Aiutanti : "+currentUser.getHelpers().size());
+
 
         System.out.println("Fine status\n ");
     }

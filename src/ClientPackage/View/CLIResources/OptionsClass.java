@@ -27,19 +27,29 @@ public class OptionsClass {
         final Options standardOptions = new Options();
         standardOptions.addOption("status",false,"Show user status");
         standardOptions.addOption("help",false,"Show help");
-        standardOptions.addOption("permit",false,"Show Permit Card");
+        standardOptions.addOption("permit",false,"Show Visible Permit Card");
         Option councilorOption = new Option("elect",true,"Elect councilor. First param is money or helper, second" +
                 "is politicColor, third is king or region");
         councilorOption.setArgs(3);
         councilorOption.setArgName("Type");
         standardOptions.addOption(councilorOption);
-        Option option = new Option("changePermit",true,"Change permit card, param is permitType");
+        Option option = new Option("changePermit",true,"Change permit card with helpers, param is permitType");
         option.setArgName("permitType");
         standardOptions.addOption(option);
         standardOptions.addOption("finish",false,"Change Turn");
         standardOptions.addOption("politicColor",false,"Show available color");
+        standardOptions.addOption("buyAction",false,"Buy main Action");
 
         return standardOptions;
+
+    }
+
+    public static Options getMarketOptions() {
+        final Options standardOptions = new Options();
+        standardOptions.addOption("showList",false,"Show Your sell List");
+        standardOptions.addOption("help",false,"Show help");
+        return standardOptions;
+
 
     }
 }

@@ -91,10 +91,12 @@ public class CityPosition {
                 return 0.65;
             }
             case INDUR: {
-                return 0.2;
+                //return 0.2;
+                return 0.17;
             }
             case JUVELAR: {
-                return 0.48;
+                //return 0.48;
+                return 0.44;
             }
             case KULTOS: {
                 return 0.17;

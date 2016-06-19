@@ -860,6 +860,18 @@ public class MatchController implements Initializable, BaseController {
                 }
             }
         });
+
+        ImageView cityName = new ImageView(new Image(Constants.IMAGE_PATH+"City/Names/"+city.
+                getCityName().getCityName()+""+city.getColor().getColor()+".png"));
+
+        background.getChildren().add(cityName);
+        cityName.layoutXProperty().bind(imageView.layoutXProperty());
+        cityName.layoutYProperty().bind(imageView.layoutYProperty().subtract(50));
+
+        cityName.fitWidthProperty().bind(imageView.fitWidthProperty());
+        cityName.setPreserveRatio(true);
+        Graphics.addShadow(cityName);
+
     }
 
     private void highlightCity(ImageView imageView, City city) {

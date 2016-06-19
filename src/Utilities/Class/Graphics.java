@@ -9,9 +9,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -37,6 +39,17 @@ public class Graphics {
         fadeTransition.setToValue(toValue);
         fadeTransition.setAutoReverse(true);
         fadeTransition.play();
+    }
+
+    public static void addShadow(Node node){
+        int depth = 70; //Setting the uniform variable for the glow width and height
+        DropShadow borderGlow= new DropShadow();
+        borderGlow.setOffsetY(0f);
+        borderGlow.setOffsetX(0f);
+        borderGlow.setColor(Color.BLACK);
+        borderGlow.setWidth(depth);
+        borderGlow.setHeight(depth);
+        node.setEffect(borderGlow);
     }
 
     public static void scaleTransition(Node node, float toValueX, float toValueY, int duration) {
