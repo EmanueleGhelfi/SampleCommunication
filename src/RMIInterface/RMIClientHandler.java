@@ -41,4 +41,6 @@ public interface RMIClientHandler extends Remote{
     void onSelectPermitCard(PermitCard permitCard) throws RemoteException;
 
     void finishRound() throws RemoteException;
+
+    void onSelectOldPermitCard(PermitCard permitCard) throws RemoteException;
 }

@@ -123,6 +123,13 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     }
 
+    @Override
+    public void onSelectOldPermitCard(PermitCard permitCard) {
+        user.getGameController().onSelectOldPermitCard(user,permitCard);
+    }
+
+
+
 
     /** Overriding BaseCommunication
      *
@@ -265,6 +272,15 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
                 user.setConnected(false);
                 user.getGameController().onUserDisconnected(user);
             }
+        }
+    }
+
+    @Override
+    public void selectOldPermitCard() {
+        try {
+            rmiClientInterface.selectOldPermiCard();
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 

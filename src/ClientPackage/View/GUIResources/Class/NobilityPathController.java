@@ -220,4 +220,9 @@ public class NobilityPathController implements BaseController {
     public void moveKing(ArrayList<City> kingPath) {
 
     }
+
+    @Override
+    public void selectOldPermitCardBonus() {
+
+    }
 }

@@ -31,6 +31,7 @@ public class Constants {
     public static final String CODE_EXCEPTION = "CODE_EXCEPTION";
     public static final String CODE_FINISH_TURN = "CODE_FINISH_TURN";
     public static final String CODE_FINISH = "CODE_FINISH";
+    public static final String CODE_OLD_PERMIT_CARD_BONUS = "CODE_OLD_PERMIT_CARD_BONUS";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -167,7 +168,7 @@ public class Constants {
     public static final String POLITIC_CARD = "POLITIC_CARD";
 
     //ROUND
-    public static final long ROUND_DURATION = 20000;
+    public static final long ROUND_DURATION = 60000;
 
     // Folder
     public  static String IMAGE_PATH= "/ClientPackage/View/GUIResources/Image/";

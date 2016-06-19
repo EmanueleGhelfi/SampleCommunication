@@ -210,6 +210,18 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         executorService.execute(runnable);
     }
 
+    @Override
+    public void onSelectOldPermitCard(PermitCard permitCard) {
+        Runnable runnable = ()->{
+            try {
+                rmiClientHandler.onSelectOldPermitCard(permitCard);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        };
+        executorService.execute(runnable);
+    }
+
     //OLD VERSION
     private String generateName() {
         String randomSequence="";
@@ -297,5 +309,10 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     @Override
     public void ping() throws RemoteException {
         System.out.println("I'm connected, sir!");
+    }
+
+    @Override
+    public void selectOldPermiCard() throws RemoteException {
+        clientController.selectOldPermitCardBonus();
     }
 }
