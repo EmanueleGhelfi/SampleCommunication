@@ -829,7 +829,8 @@ public class MatchController implements Initializable, BaseController {
             imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/City/blue.png"));
         }
         imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.17));
-        imageView.fitWidthProperty().bind(background.widthProperty().divide(9));
+        //imageView.fitWidthProperty().bind(background.widthProperty().divide(9));
+        imageView.fitWidthProperty().bind(background.widthProperty().divide(11));
         background.getChildren().add(imageView);
         imageView.layoutXProperty().bind(background.widthProperty().multiply(layoutX));
         imageView.layoutYProperty().bind(background.heightProperty().multiply(layoutY));

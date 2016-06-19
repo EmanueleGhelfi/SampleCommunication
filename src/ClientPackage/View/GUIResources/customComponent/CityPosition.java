@@ -72,13 +72,14 @@ public class CityPosition {
             }
             case CASTRUM: {
                 //return 0.25;
-                return 0.22;
+                return 0.16;
             }
             case DORFUL: {
                 return 0.49;
             }
             case ESTI:{
-                return 0.69;
+                //return 0.69;
+                return 0.65;
             }
             case FRAMEK: {
                 return 0.19;
