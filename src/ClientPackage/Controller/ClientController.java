@@ -77,8 +77,8 @@ public class ClientController {
     private String getUIMethod(BufferedReader inKeyboard) throws IOException {
         String method = "";
         System.out.println("Quale UI vuoi utilizzare? \n 1. GUI \n 2. CLI");
-        int choice = Integer.parseInt(inKeyboard.readLine());
         while(method.equals("")) {
+            int choice = Integer.parseInt(inKeyboard.readLine());
             switch (choice) {
                 case 1:
                     method = Constants.GUI;
@@ -137,7 +137,6 @@ public class ClientController {
 
     public void setSnapshot(SnapshotToSend snapshot) {
         this.snapshot = snapshot;
-        System.out.println("CLIENTCONTROLLER <- "+snapshot);
         baseView.updateSnapshot();
     }
 
@@ -153,17 +152,14 @@ public class ClientController {
 
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         snapshot = snapshotToSend;
-        System.out.println(snapshot + " <- SNAP");
         baseView.gameInitialization(snapshotToSend);
     }
 
     public void isMyTurn() {
         baseView.isMyTurn(snapshot);
-        System.out.println("Client BaseController: is my turn");
     }
 
     public void mainActionElectCouncilor(Councilor councilor, King king, RegionName regionName) {
-        System.out.println("Elect councilor in client controller");
         Action action = new MainActionElectCouncilor(councilor, king, regionName);
         try {
             clientService.onAction(action);
@@ -202,7 +198,6 @@ public class ClientController {
     }
 
     public void mainActionBuyPermitCard(PermitCard permitCard, ArrayList<PoliticCard> politicCards) {
-        System.out.println("called main action in client controller "+permitCard+" "+politicCards);
         Action action = new MainActionBuyPermitCard(politicCards,permitCard.getRetroType(),permitCard);
         try {
             clientService.onAction(action);
@@ -271,7 +266,6 @@ public class ClientController {
     }
 
     public void getCityRewardBonus(City city1) {
-        System.out.println("in client controller get city reward bonus");
         clientService.getCityRewardBonus(city1);
     }
 
@@ -303,6 +297,5 @@ public class ClientController {
 
     public void onSelectOldPermitCard(PermitCard permitCard) {
         clientService.onSelectOldPermitCard(permitCard);
-
     }
 }

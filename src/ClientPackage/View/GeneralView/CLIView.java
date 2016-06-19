@@ -1,9 +1,8 @@
 package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.CLIResources.CLIParser;
-import ClientPackage.View.CLIResources.CLIPrinter;
-import ClientPackage.View.CLIResources.CLIPrinterInterface;
+import ClientPackage.View.CLIResources.*;
+import ClientPackage.View.GUIResources.Class.MatchController;
 import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -25,37 +24,38 @@ public class CLIView implements BaseView {
 
     private Scanner reader = new Scanner(System.in);
     private CLIPrinterInterface cliPrinterInterface = new CLIPrinter();
-    private CLIParser cliParser = CLIParser.getInstance();
+    private CLIParser cliParser = new CLIParser(OptionsClass.constructOptions());
     private ClientController clientController;
-    private GameStatus gameStatus = GameStatus.getInstance();
+    // for showing help
+    private boolean first = true;
+    private MatchCliController matchCliController;
+    private ShopCliController shopCliController;
+    private SnapshotToSend currentSnapshot;
+
 
     public CLIView(ClientController clientController) {
         // to implement
         this.clientController = clientController;
         this.clientController.setBaseView(this);
+        matchCliController= new MatchCliController(this,clientController);
+        shopCliController = new ShopCliController(this,clientController);
     }
 
     @Override
     public void initView() {
-        System.out.println("CLI Started correctly");
         String input="";
-        boolean first = true;
-        do{
-            if(first) {
-                cliPrinterInterface.printHelp();
-                first=false;
-            }
-            input=reader.nextLine();
-            cliParser.parseLine(input,this);
-
-
-        }while (!input.equals("exit"));
-
+        if(first) {
+            cliPrinterInterface.printHelp(OptionsClass.constructOptions());
+            first=false;
+        }
+        input=reader.nextLine();
+        cliParser.parseLine(input,this);
     }
 
     @Override
     public void showLoginError() {
-        System.out.println("Name is already used!");
+        System.out.println("Name is already used! Insert another name!");
+        initView();
     }
 
     @Override
@@ -69,12 +69,21 @@ public class CLIView implements BaseView {
         for(Map map : mapArrayList){
             System.out.println(cliPrinterInterface.toStringFormatted(map)+"\n");
         }
-
+        int scelta;
+        do{
+            scelta=reader.nextInt();
+            if(scelta>=0 && scelta<mapArrayList.size()){
+                clientController.sendMap(mapArrayList.get(scelta));
+            }
+        }while (scelta<0 || scelta>=mapArrayList.size());
 
     }
 
     @Override
     public void gameInitialization(SnapshotToSend snapshotToSend) {
+        System.out.println("Game Started Correctly\n");
+        this.currentSnapshot = snapshotToSend;
+        matchCliController.onGameStart();
 
     }
 
@@ -85,6 +94,8 @@ public class CLIView implements BaseView {
 
     @Override
     public void isMyTurn(SnapshotToSend snapshot) {
+        System.out.println("Is your turn, make you choice: ");
+        matchCliController.onYourTurn();
 
     }
 
@@ -150,6 +161,10 @@ public class CLIView implements BaseView {
     }
 
     public void printHelp() {
-        cliPrinterInterface.printHelp();
+        cliPrinterInterface.printHelp(OptionsClass.constructOptions());
+    }
+
+    public SnapshotToSend getSnapshot() {
+        return currentSnapshot;
     }
 }

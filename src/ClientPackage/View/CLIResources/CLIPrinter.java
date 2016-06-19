@@ -1,6 +1,10 @@
 package ClientPackage.View.CLIResources;
 
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.Snapshot.BaseUser;
+import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Link;
 import Server.Model.Map;
 import org.apache.commons.cli.HelpFormatter;
@@ -14,6 +18,16 @@ import static ClientPackage.View.CLIResources.CLIColor.*;
  * Created by Emanuele on 19/06/2016.
  */
 public class CLIPrinter implements CLIPrinterInterface {
+
+    public static CLIPrinter cliPrinter;
+
+    private static CLIPrinter getInstance(){
+        if(cliPrinter==null){
+            cliPrinter= new CLIPrinter();
+        }
+        return cliPrinter;
+    }
+
 
     /**
      * Print usage information to provided OutputStream.
@@ -60,9 +74,10 @@ public class CLIPrinter implements CLIPrinterInterface {
                 displayUsage);
     }
 
+
     @Override
-    public void printHelp() {
-        printHelp(OptionsClass.constructOptions(),80,"COFfee", "Select your Option" , 0, 0, true, System.out);
+    public void printHelp(Options options) {
+        printHelp(options,80,"COFfee", "Select your Option" , 0, 0, true, System.out);
     }
 
     @Override
@@ -83,6 +98,39 @@ public class CLIPrinter implements CLIPrinterInterface {
         }
         toReturn+="END MAP";
         return toReturn;
+    }
+
+    @Override
+    public String toStringFormatted(SnapshotToSend snapshotToSend) {
+        String toReturn="";
+        toReturn+= "Users: \n";
+        for(BaseUser baseUser: snapshotToSend.getUsersInGame().values()){
+            toReturn+=baseUser.toString();
+        }
+        return toReturn;
+    }
+
+    @Override
+    public String toStringFormatted(PoliticCard politicCard) {
+        if(politicCard.isMultiColor()){
+            return "MULTICOLOR";
+        }
+        else{
+            return politicCard.getPoliticColor().getColor();
+        }
+
+    }
+
+    @Override
+    public String toStringFormatted(PermitCard permitCard) {
+        return permitCard.toString();
+
+    }
+
+    @Override
+    public String toStringFormatted(City city) {
+
+        return city.getCityName()+" "+city.getRegion()+" "+city.getColor();
     }
 
 

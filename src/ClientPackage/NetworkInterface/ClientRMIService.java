@@ -116,7 +116,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         Runnable runnable = ()-> {
             try {
                 if (rmiClientHandler.sendBuyableObject(realSaleList)) {
-                    System.out.println("OK messi in vendita");
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -229,7 +228,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         int sequenceLength = 5;
         for (int idx = 1; idx <= sequenceLength; ++idx) {
             int randomInt = randomGenerator.nextInt(10);
-            System.out.println("Generated : " + randomInt);
+
             randomSequence = randomSequence + randomInt;
         }
         return randomSequence;
@@ -238,7 +237,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     //OLD VERSION
     public String getIP() throws UnknownHostException {
         InetAddress IP=InetAddress.getLocalHost();
-        System.out.println("IP of my system is := "+IP.getHostAddress());
+
         return IP.getHostAddress();
     }
 
@@ -308,7 +307,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void ping() throws RemoteException {
-        System.out.println("I'm connected, sir!");
+
     }
 
     @Override
