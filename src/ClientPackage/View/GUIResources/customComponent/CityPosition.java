@@ -10,13 +10,15 @@ public class CityPosition {
     public static double getX(City city) {
         switch (city.getCityName()){
             case ARKON:{
-                return 0.15;
+                //return 0.15;
+                return 0.12;
             }
             case BURGEN:{
                 return 0.11;
             }
             case CASTRUM:{
-                return 0.27;
+                //return 0.27;
+                return 0.22;
             }
             case DORFUL:{
                 return 0.27;
@@ -69,7 +71,8 @@ public class CityPosition {
                 return 0.43;
             }
             case CASTRUM: {
-                return 0.25;
+                //return 0.25;
+                return 0.22;
             }
             case DORFUL: {
                 return 0.49;
