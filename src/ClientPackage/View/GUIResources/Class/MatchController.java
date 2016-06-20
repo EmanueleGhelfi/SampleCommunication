@@ -166,7 +166,7 @@ public class MatchController implements Initializable, BaseController {
         initController();
 
         System.out.println("setting image");
-        backgroundImage.setImage(new Image(currentSnapshot.getMap().getMapPreview()));
+        backgroundImage.setImage(new Image(currentSnapshot.getMap().getRealMap()));
         backgroundImage.setPreserveRatio(true);
         backgroundImage.fitHeightProperty().bind(gridPane.heightProperty());
         backgroundImage.fitWidthProperty().bind(gridPane.widthProperty());
@@ -829,7 +829,8 @@ public class MatchController implements Initializable, BaseController {
             imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/City/blue.png"));
         }
         imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.17));
-        imageView.fitWidthProperty().bind(background.widthProperty().divide(9));
+        //imageView.fitWidthProperty().bind(background.widthProperty().divide(9));
+        imageView.fitWidthProperty().bind(background.widthProperty().divide(11));
         background.getChildren().add(imageView);
         imageView.layoutXProperty().bind(background.widthProperty().multiply(layoutX));
         imageView.layoutYProperty().bind(background.heightProperty().multiply(layoutY));
@@ -859,6 +860,18 @@ public class MatchController implements Initializable, BaseController {
                 }
             }
         });
+
+        ImageView cityName = new ImageView(new Image(Constants.IMAGE_PATH+"City/Names/"+city.
+                getCityName().getCityName()+""+city.getColor().getColor()+".png"));
+
+        background.getChildren().add(cityName);
+        cityName.layoutXProperty().bind(imageView.layoutXProperty());
+        cityName.layoutYProperty().bind(imageView.layoutYProperty());
+
+        cityName.fitWidthProperty().bind(imageView.fitWidthProperty());
+        cityName.setPreserveRatio(true);
+        Graphics.addShadow(cityName);
+
     }
 
     private void highlightCity(ImageView imageView, City city) {

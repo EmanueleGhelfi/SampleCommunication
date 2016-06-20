@@ -196,6 +196,7 @@ public class GameController implements Serializable{
     }
 
     private void changeRound(int nextUser) {
+        System.out.println("Change round");
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         userArrayList.get((nextUser) % game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
         userArrayList.get((nextUser) % game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);

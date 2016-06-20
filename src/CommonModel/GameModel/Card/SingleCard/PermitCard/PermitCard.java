@@ -99,4 +99,16 @@ public class PermitCard implements Serializable,BuyableObject{
     public String getUrl() {
         return "PermitCard";
     }
+
+    @Override
+    public String toString() {
+        String bonusInfo = "";
+        for(Bonus singleBonus: bonus.getBonusArrayList()){
+            bonusInfo+= singleBonus.getBonusName()+" "+singleBonus.getBonusInfo()+"\n";
+        }
+        return "PermitCard \n" +
+                "cityAcronimous=" + cityAcronimous +
+                ",\n retroType=" + retroType +
+                ",\n bonus=" + bonusInfo+" \n";
+    }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import com.jfoenix.controls.*?>
@@ -8,11 +9,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../CSS/LoginWaitingMapSelectionCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MapSelectionController">
+<BorderPane fx:id="borderPaneBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../CSS/LoginWaitingMapSelectionCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MapSelectionController">
    <bottom>
       <VBox alignment="CENTER" layoutX="289.0" layoutY="16.0">
          <children>
-            <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" text="Choose" onAction="#chooseMap" />
+            <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" onAction="#chooseMap" text="Choose" />
          </children>
          <padding>
             <Insets bottom="25.0" />
@@ -56,17 +57,7 @@
       </GridPane>
    </center>
    <left>
-      <ImageView fitHeight="70.0" fitWidth="66.0" onMouseClicked="#prevVisibleMap" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../Image/Left.png" />
-         </image>
-      </ImageView>
    </left>
    <right>
-      <ImageView fitHeight="70.0" fitWidth="66.0" onMouseClicked="#nextVisibleMap" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../Image/Right.png" />
-         </image>
-      </ImageView>
    </right>
 </BorderPane>
