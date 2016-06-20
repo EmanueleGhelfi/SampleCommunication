@@ -36,7 +36,6 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
         this.matchController = matchController;
         this.clientController = clientController;
         this.needToSelectPermitCard= needToSelectPermitCard;
-
     }
 
     @Override
