@@ -44,19 +44,28 @@ public class MapSelectionController implements Initializable {
         for (Map map : mapArrayList) {
             this.mapArrayList.add(map);
         }
-        thisImage = new Image(mapArrayList.get(0).getMapPreview());
+        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
+        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
+        nextImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
+        prevImageView.setImage(prevImage);
         thisImageView.setImage(thisImage);
+        nextImageView.setImage(nextImage);
     }
 
     public void nextVisibleMap(){
         mapCounter++;
-        System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
-        System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
-        System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
+        showThreeMaps();
     }
 
     public void prevVisibleMap(){
         mapCounter--;
+        showThreeMaps();
+    }
+
+    private void showThreeMaps() {
+        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
+        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
+        nextImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
         System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
         System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
         System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
