@@ -2,6 +2,7 @@ package ClientPackage.View.CLIResources;
 
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.CityName;
+import CommonModel.GameModel.City.RegionName;
 
 import java.util.ArrayList;
 
@@ -28,5 +29,15 @@ public class Validator {
             }
         }
         return null;
+    }
+
+    public static boolean isValidRegion(String buyPermit) {
+        try {
+            RegionName regionName = RegionName.valueOf(buyPermit);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 }

@@ -16,13 +16,13 @@ import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.CurrentUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import Utilities.Exception.CouncilNotFoundException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import sun.util.resources.cldr.ebu.CurrencyNames_ebu;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 
 import static ClientPackage.View.CLIResources.CLIColor.*;
@@ -108,7 +108,7 @@ public class MatchCliController {
             }
 
             if(commandLine.hasOption("buyPermit")){
-
+                buyPermit(commandLine.getOptionValues("buyPermit"));
             }
 
 
@@ -119,37 +119,119 @@ public class MatchCliController {
         }
     }
 
+    private void buyPermit(String[] buyPermits) {
+        if(buyPermits.length>1 && Validator.isValidRegion(buyPermits[0])){
+            cliPrinter.printBlue("Select a permit card: ");
+            RegionName regionName = RegionName.valueOf(buyPermits[0]);
+            for(PermitCard permitCard: clientController.getSnapshot().getVisibleRegionPermitCard(regionName)){
+                System.out.println(" "+clientController.getSnapshot().getVisibleRegionPermitCard(regionName)
+                        .indexOf(permitCard)+". "+cliPrinter.toStringFormatted(permitCard));
+            }
+
+            CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
+            PermitCard permitCardSelected = selectPermitCard(clientController.getSnapshot().getVisibleRegionPermitCard(regionName));
+
+            cliPrinter.printBlue("Select politic card for: "+regionName);
+
+            try {
+                cliPrinter.printCouncil(clientController.getSnapshot().getCouncil(regionName));
+                selectPoliticCard(currentUser.getPoliticCards());
+            } catch (CouncilNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
+    private ArrayList<PoliticCard> selectPoliticCard(ArrayList<PoliticCard> politicCards) {
+        boolean done = false;
+        boolean correct = false;
+        ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
+        String[] selectedArray= {};
+        while (!done && !correct) {
+            cliPrinter.printBlue("Inserisci i numeri delle carte separati da uno spazio: ");
+            for (int i = 0; i < politicCards.size(); i++) {
+                System.out.println(" " + i + ". " + cliPrinter.toStringFormatted(politicCards.get(i)));
+            }
+
+            String selected = scanner.nextLine();
+
+            selectedArray = selected.split(" ");
+            done= checkDuplicate(selectedArray);
+            correct = checkInteger(selectedArray,politicCards);
+        }
+
+        for(int i = 0; i<selectedArray.length;i++){
+            politicCardArrayList.add(politicCards.get(i));
+        }
+        return null;
+
+    }
+
+    private boolean checkInteger(String[] selectedArray, ArrayList<PoliticCard> politicCards) {
+        for(String string: selectedArray){
+            try {
+                int integer = Integer.parseInt(string);
+                if(integer<0 || integer>=politicCards.size()){
+                    return false;
+                }
+            }
+            catch (Exception e){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkDuplicate(String[] selectedArray) {
+        //set does not allow duplicate
+        Set<String> set = new HashSet<>();
+        for (String s: selectedArray){
+
+            if(!set.add(s)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private PermitCard selectPermitCard(ArrayList<PermitCard> permitCards) {
+        int scelta = -2;
+        while ((scelta<0 || scelta>permitCards.size()) && (scelta!=-1)){
+            try{
+                scelta=scanner.nextInt();
+                if(scelta>0 && scelta< permitCards.size()){
+
+                    return permitCards.get(scelta);
+                }
+            }
+            catch (Exception e){
+                System.out.println("Invalid input!");
+            }
+
+        }
+        return null;
+
+
+    }
+
     private void buildEmporium(String[] buildEmporia) {
 
         if(buildEmporia.length>0 && Validator.isValidCity(buildEmporia[0])) {
             System.out.println(ANSI_BLUE + " Select a permit card for build in " + buildEmporia[0] + ": " + ANSI_RESET);
+            System.out.println("(-1 for cancel)");
             CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
             for(int i=0; i< currentUser.getPermitCards().size();i++){
                 System.out.println(""+i+". "+cliPrinter.toStringFormatted(currentUser.getPermitCards().get(i)));
             }
-
-            int scelta = -2;
-
-            while (scelta<0 || scelta>currentUser.getPermitCards().size()){
-                try{
-                    scelta=scanner.nextInt();
-                    if(scelta>0 && scelta< currentUser.getPermitCards().size()){
-
-                        // find city with selected name
-                        City selectedCity = Validator.getCity(buildEmporia[0],clientController.getSnapshot().getMap().getCity());
-                        Action action = new MainActionBuildWithPermitCard(selectedCity,currentUser.getPermitCards().get(scelta));
-                        clientController.doAction(action);
-                    }
-                }
-                catch (Exception e){
-                    System.out.println("Invalid input!");
-                }
-
+            PermitCard permitCard = selectPermitCard(currentUser.getPermitCards());
+            City selectedCity = Validator.getCity(buildEmporia[0],clientController.getSnapshot().getMap().getCity());
+            Action action = new MainActionBuildWithPermitCard(selectedCity,permitCard);
+            clientController.doAction(action);
             }
 
         }
-
-    }
 
     private void changePermitAction(String arg) {
         try {

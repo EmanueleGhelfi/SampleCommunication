@@ -135,12 +135,13 @@ public class CLIView implements BaseView {
 
     @Override
     public void onMoveKing(ArrayList<City> kingPath) {
-
+            cliPrinterInterface.printBlue(" King moved to "+kingPath.get(kingPath.size()-1));
     }
 
     @Override
     public void onActionNotPossibleException(ActionNotPossibleException e) {
-
+        cliPrinterInterface.printError("AZIONE NON POSSIBILE!");
+        System.out.println(CLIColor.ANSI_RED+" "+e.getMessage()+" "+CLIColor.ANSI_RESET);
     }
 
     @Override
