@@ -36,4 +36,6 @@ public interface RMIClientInterface extends Remote {
     void moveKing(ArrayList<City> kingPath) throws RemoteException;
 
     void sendMatchFinishedWithWin(boolean win) throws RemoteException;
+
+    void ping() throws RemoteException;
 }

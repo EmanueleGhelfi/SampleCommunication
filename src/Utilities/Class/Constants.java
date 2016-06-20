@@ -150,7 +150,7 @@ public class Constants {
     public static final int ONE_PARAMETER_BUY_PERMIT_CARD = 1;
     public static final int MONEY_EARNED_ELECT_COUNCILOR = 4;
     //todo: it was 2
-    public static final int KING_PRICE = 0;
+    public static final int KING_PRICE = 2;
     public static final int EMPORIUMS_BUILDABLE = 10;
     public static final int KING_CARDS = 6;
     public static final int INITIAL_POSITION_ON_NOBILITY_PATH = 0;
@@ -165,6 +165,9 @@ public class Constants {
     //MARKET NAME
     public static final String PERMIT_CARD = "PERMIT_CARD";
     public static final String POLITIC_CARD = "POLITIC_CARD";
+
+    //ROUND
+    public static final long ROUND_DURATION = 20000;
 
     // Folder
     public  static String IMAGE_PATH= "/ClientPackage/View/GUIResources/Image/";

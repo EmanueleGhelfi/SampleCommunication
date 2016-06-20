@@ -4,6 +4,7 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.*;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.*;
@@ -255,7 +256,19 @@ public class MatchController implements Initializable, BaseController {
             permitCardImageView.setPreserveRatio(true);
             Label labelOfPermitCard = new Label();
             labelOfPermitCard.setText(permitCard.getCityString());
+            labelOfPermitCard.setTextFill(Paint.valueOf("WHITE"));
             permitStackPane.getChildren().addAll(permitCardImageView, labelOfPermitCard);
+            for(int i = 0; i < permitCard.getBonus().getBonusURL().size();i++){
+                ImageView bonusImage = new ImageView(new Image(permitCard.getBonus().getBonusURL().get(i)));
+                bonusImage.fitWidthProperty().bind(permitCardImageView.fitHeightProperty().divide(4));
+                Label label = new Label(permitCard.getBonus().getBonusInfo().get(i));
+                label.setTextFill(Paint.valueOf("WHITE"));
+                permitStackPane.getChildren().addAll(bonusImage,label);
+                bonusImage.layoutXProperty().bind(permitCardImageView.fitWidthProperty()
+                        .divide(permitCard.getBonus().getBonusURL().size())
+                        .multiply(i));
+                label.layoutXProperty().bind(bonusImage.layoutXProperty().multiply(1.1));
+            }
             handHBox.getChildren().add(permitStackPane);
         }
 
@@ -1098,7 +1111,16 @@ public class MatchController implements Initializable, BaseController {
         myTurn = value;
         this.currentSnapshot = snapshot;
         turnFinished(myTurn);
+        disableAllEffect();
         updateView();
+    }
+
+    private void disableAllEffect() {
+        if(pulseBonus!=null && pulseCity!=null && needToSelectPermitCard!=null) {
+            pulseBonus.setValue(false);
+            pulseCity.setValue(false);
+            needToSelectPermitCard.setValue(false);
+        }
     }
 
     @Override

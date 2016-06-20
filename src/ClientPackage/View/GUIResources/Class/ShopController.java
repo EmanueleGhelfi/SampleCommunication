@@ -625,17 +625,21 @@ public class ShopController implements BaseController {
         plusButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (Integer.parseInt(buttonToSell.getText()) - 1 < 19)
-                    buttonToSell.setText(Integer.toString(Integer.parseInt(buttonToSell.getText()) + 1));
+                if(buttonToSell.getText()!="REMOVE") {
+                    if (Integer.parseInt(buttonToSell.getText()) - 1 < 19)
+                        buttonToSell.setText(Integer.toString(Integer.parseInt(buttonToSell.getText()) + 1));
+                }
             }
         });
         minusButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (Integer.parseInt(buttonToSell.getText()) - 1 > 0)
-                    buttonToSell.setText(Integer.toString(Integer.parseInt(buttonToSell.getText()) - 1));
-                else
-                    buttonToSell.setText(Integer.toString(0));
+                if(buttonToSell.getText()!="REMOVE") {
+                    if (Integer.parseInt(buttonToSell.getText()) - 1 > 0)
+                        buttonToSell.setText(Integer.toString(Integer.parseInt(buttonToSell.getText()) - 1));
+                    else
+                        buttonToSell.setText(Integer.toString(0));
+                }
             }
         });
         itemOnSaleImageView.setImage(itemOnSaleImage);

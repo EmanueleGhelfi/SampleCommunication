@@ -316,16 +316,10 @@ public class Game implements Serializable{
         return (ArrayList<BuyableWrapper>) marketList.clone();
     }
 
-    public void removeFromMarketList(BuyableWrapper buyableWrapper) {
-        /*
-        for(int i = 0; i< marketList.size();i++){
-            if(marketList.get(i).equals(buyableWrapper)){
-                marketList.remove(i);
-                break;
-            }
-        }
-        */
+    public synchronized void removeFromMarketList(BuyableWrapper buyableWrapper) {
+        System.out.println("Before remove : " + marketList.size());
         marketList.remove(buyableWrapper);
+        System.out.println("After remove :" +marketList.size());
     }
 
     public Bank getBank() {

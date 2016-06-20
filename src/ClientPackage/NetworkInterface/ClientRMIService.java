@@ -293,4 +293,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     public void sendMatchFinishedWithWin(boolean win) throws RemoteException {
         clientController.sendMatchFinishedWithWin(win);
     }
+
+    @Override
+    public void ping() throws RemoteException {
+        System.out.println("I'm connected, sir!");
+    }
 }

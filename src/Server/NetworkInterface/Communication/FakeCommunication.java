@@ -75,4 +75,9 @@ public class FakeCommunication extends BaseCommunication {
     public void sendMatchFinishedWithWin(boolean win) {
 
     }
+
+    @Override
+    public void ping() {
+
+    }
 }

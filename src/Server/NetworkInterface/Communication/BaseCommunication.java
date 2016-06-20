@@ -37,4 +37,6 @@ public abstract class BaseCommunication {
     public abstract void moveKing(ArrayList<City> kingPath);
 
     public abstract void sendMatchFinishedWithWin(boolean win);
+
+    public abstract void ping();
 }
