@@ -60,6 +60,9 @@ public class MainActionBuildWithPermitCard extends Action{
                         // add to old permit card
                         user.removePermitCard(permitCard);
                         removeAction(game, user);
+                        // todo: remove
+                        user.addOptionalActionCounter();
+                        user.getBaseCommunication().selectOldPermitCard();
                         if (user.getUsersEmporium().size() == 10) {
                             game.getGameController().startingLastRound();
                         }

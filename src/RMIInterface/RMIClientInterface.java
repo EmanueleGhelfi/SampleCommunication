@@ -38,4 +38,6 @@ public interface RMIClientInterface extends Remote {
     void sendMatchFinishedWithWin(boolean win) throws RemoteException;
 
     void ping() throws RemoteException;
+
+    void selectOldPermiCard() throws RemoteException;
 }

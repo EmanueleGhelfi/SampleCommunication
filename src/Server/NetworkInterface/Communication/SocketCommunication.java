@@ -117,6 +117,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
+    public void selectOldPermitCard() {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_OLD_PERMIT_CARD_BONUS,null);
+    }
+
+    @Override
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
@@ -207,11 +212,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                     }
                     case Constants.CODE_FINISH_TURN:{
                         user.getGameController().onUserPass(user);
-                        /*
-                        user.setFastActionCounter(0);
-                        user.setMainActionCounter(0);
-                        */
-
+                        break;
+                    }
+                    case Constants.CODE_OLD_PERMIT_CARD_BONUS:{
+                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(),PermitCard.class);
+                        user.getGameController().onSelectOldPermitCard(user,permitCard);
                         break;
                     }
                 }

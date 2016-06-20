@@ -296,4 +296,13 @@ public class ClientController {
     public void sendMatchFinishedWithWin(boolean win) {
         baseView.sendMatchFinishedWithWin(win);
     }
+
+    public void selectOldPermitCardBonus() {
+        baseView.selectOldPermitCardBonus();
+    }
+
+    public void onSelectOldPermitCard(PermitCard permitCard) {
+        clientService.onSelectOldPermitCard(permitCard);
+
+    }
 }

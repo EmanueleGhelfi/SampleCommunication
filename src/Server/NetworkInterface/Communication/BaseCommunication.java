@@ -39,4 +39,6 @@ public abstract class BaseCommunication {
     public abstract void sendMatchFinishedWithWin(boolean win);
 
     public abstract void ping();
+
+    public abstract void selectOldPermitCard();
 }

@@ -120,6 +120,11 @@ public class ClientSocketService extends ClientService implements Runnable {
     }
 
     @Override
+    public void onSelectOldPermitCard(PermitCard permitCard) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_OLD_PERMIT_CARD_BONUS,permitCard);
+    }
+
+    @Override
     public void run() {
         System.out.println("ClientSocketService Started");
         String line;
@@ -220,6 +225,10 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_FINISH:{
                 clientController.sendMatchFinishedWithWin(Boolean.parseBoolean(communicationInfo.getInfo()));
+                break;
+            }
+            case Constants.CODE_OLD_PERMIT_CARD_BONUS:{
+                clientController.selectOldPermitCardBonus();
                 break;
             }
         }

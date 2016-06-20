@@ -80,4 +80,9 @@ public class FakeCommunication extends BaseCommunication {
     public void ping() {
 
     }
+
+    @Override
+    public void selectOldPermitCard() {
+
+    }
 }

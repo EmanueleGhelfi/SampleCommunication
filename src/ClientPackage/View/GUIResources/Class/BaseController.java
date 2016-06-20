@@ -33,4 +33,6 @@ public interface BaseController {
     void selectCityRewardBonus();
 
     void moveKing(ArrayList<City> kingPath);
+
+    void selectOldPermitCardBonus();
 }

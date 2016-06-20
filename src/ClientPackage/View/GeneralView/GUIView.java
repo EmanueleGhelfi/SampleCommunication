@@ -275,6 +275,11 @@ public class GUIView extends Application implements BaseView {
         //TODO
     }
 
+    @Override
+    public void selectOldPermitCardBonus() {
+        baseControllerList.forEach(baseController -> baseController.selectOldPermitCardBonus());
+    }
+
     public synchronized void registerBaseController(BaseController baseController){
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);

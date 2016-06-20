@@ -583,4 +583,17 @@ public class GameController implements Serializable{
                 onFinishSellPhase(user);
         }
     }
+
+    public void onSelectOldPermitCard(User user, PermitCard permitCard) {
+        try {
+            System.out.println("on select old permit card");
+            permitCard.getBonus().getBonus(user,game);
+            user.decrementOptionalActionCounter();
+
+        } catch (ActionNotPossibleException e) {
+            e.printStackTrace();
+        }
+        sendSnapshotToAll();
+
+    }
 }

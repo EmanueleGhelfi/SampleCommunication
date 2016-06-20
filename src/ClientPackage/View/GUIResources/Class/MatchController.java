@@ -4,11 +4,9 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.*;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
-import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.*;
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
@@ -45,10 +43,7 @@ import java.net.URL;
 import java.util.*;
 
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
-import javafx.stage.Screen;
 import javafx.util.Duration;
 import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
@@ -133,10 +128,12 @@ public class MatchController implements Initializable, BaseController {
 
     private BooleanProperty pulseBonus;
     private BooleanProperty stopPulsePermitCard = new SimpleBooleanProperty(false);
+    private BooleanProperty stopPulseOldPermitCard = new SimpleBooleanProperty(false);
 
     //Phase
     private boolean needToSelectOldBonus = false;
     private BooleanProperty needToSelectPermitCard = new SimpleBooleanProperty(false);
+    private BooleanProperty needToSelectOldPermitCard = new SimpleBooleanProperty(false);
 
 
     private HashMap<RegionName,ArrayList<ImageView>> councilHashMap = new HashMap<>();
@@ -149,7 +146,9 @@ public class MatchController implements Initializable, BaseController {
     private BooleanProperty pulseCity = new SimpleBooleanProperty(false);
 
     //node list for more and other button
-    private JFXNodesList jfxNodesList = new JFXNodesList();
+    private JFXNodesList moreActionNodeList = new JFXNodesList();
+    // node list for old permit card
+    private JFXNodesList oldPermitCardNodeList = new JFXNodesList();
 
 
     @Override
@@ -219,6 +218,9 @@ public class MatchController implements Initializable, BaseController {
         createCity();
         gridPane.add(handHBox, 0, 2);
         createHand();
+        creteOldPermitCard();
+        gridPane.add(oldPermitCardNodeList,2,2);
+        oldPermitCardNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not().and(hamburgerMenu.visibleProperty().not()));
         //help();
 
         selectionModel = tabPane.getSelectionModel();
@@ -234,11 +236,83 @@ public class MatchController implements Initializable, BaseController {
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
     }
 
+    private void creteOldPermitCard() {
+        oldPermitCardNodeList.getChildren().clear();
+        ImageView bagImage = new ImageView(new Image(Constants.IMAGE_PATH+"bag.png"));
+        bagImage.setFitHeight(50);
+        bagImage.setFitWidth(50);
+        JFXButton bagButton = new JFXButton();
+        bagButton.setGraphic(bagImage);
+        bagButton.setPrefWidth(50);
+        bagButton.setPrefHeight(50);
+        bagButton.setButtonType(JFXButton.ButtonType.RAISED);
+        bagButton.setBackground(new Background(new BackgroundFill(null,new CornerRadii(40),null)));
+        bagButton.setTooltip(new Tooltip("Show old permit card"));
+        bagButton.setRotate(180);
+        oldPermitCardNodeList.addAnimatedNode(bagButton, (expanded) -> new ArrayList<KeyValue>(){{ add(
+                new KeyValue(bagButton.rotateProperty(), expanded? 540:180 ,
+                        Interpolator.EASE_BOTH));}});
+
+        for(PermitCard permitCard: clientController.getSnapshot().getCurrentUser().getOldPermitCards()){
+            StackPane permitStackPane = new StackPane();
+            ImageView permitImage = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png"));
+            permitImage.setFitHeight(80);
+            permitImage.setFitWidth(80);
+            Label infoLabel= new Label(permitCard.getInfo());
+            infoLabel.setTextFill(Paint.valueOf("WHITE"));
+            permitStackPane.getChildren().addAll(permitImage,infoLabel);
+            StackPane.setAlignment(infoLabel,Pos.TOP_CENTER);
+            createPermitCardBonusInStackPane(permitCard,permitStackPane,permitImage);
+            permitStackPane.setRotate(180);
+            permitImage.getStyleClass().add("myPermitCard");
+            permitStackPane.setOnMouseClicked(new OldPermitCardHandler(permitCard,needToSelectOldPermitCard,clientController,this));
+            oldPermitCardNodeList.addAnimatedNode(permitStackPane);
+        }
+
+        oldPermitCardNodeList.setRotate(180);
+
+    }
+
+    private void createPermitCardBonusInStackPane(PermitCard permitCard, StackPane permitStackPane,ImageView permitImage) {
+        for (int i = 0; i < permitCard.getBonus().getBonusURL().size(); i++) {
+            ImageView bonusImage = new ImageView(new Image(permitCard.getBonus().getBonusURL().get(i)));
+            bonusImage.fitHeightProperty().bind(permitImage.fitHeightProperty().divide(4));
+            bonusImage.setPreserveRatio(true);
+            Label bonusLabel = new Label(permitCard.getBonus().getBonusInfo().get(i));
+            bonusLabel.setTextFill(Paint.valueOf("WHITE"));
+            permitStackPane.getChildren().addAll(bonusImage, bonusLabel);
+            Pos bonusPosition;
+            Insets insets;
+            switch (i) {
+                case 0:
+                    bonusPosition = Pos.CENTER_LEFT;
+                    insets = new Insets(0, 0, 0, 5);
+                    break;
+                case 1:
+                    bonusPosition = Pos.CENTER;
+                    insets = new Insets(0);
+                    break;
+                case 2:
+                    bonusPosition = Pos.CENTER_RIGHT;
+                    insets = new Insets(0, 5, 0, 0);
+
+                    break;
+                default:
+                    bonusPosition = Pos.CENTER;
+                    insets = new Insets(0);
+            }
+            StackPane.setAlignment(bonusImage, bonusPosition);
+            StackPane.setAlignment(bonusLabel, bonusPosition);
+            StackPane.setMargin(bonusLabel, insets);
+
+        }
+    }
+
     private void createHand() {
         handHBox.getChildren().clear();
         handHBox.prefWidthProperty().bind(gridPane.prefWidthProperty());
         handHBox.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(7));
-        handHBox.setMouseTransparent(true);
+        //handHBox.setMouseTransparent(true);
         handHBox.setAlignment(Pos.CENTER);
         for (PoliticCard politicCard : clientController.getSnapshot().getCurrentUser().getPoliticCards()) {
             ImageView politicCardImageView = new ImageView();
@@ -258,17 +332,10 @@ public class MatchController implements Initializable, BaseController {
             labelOfPermitCard.setText(permitCard.getCityString());
             labelOfPermitCard.setTextFill(Paint.valueOf("WHITE"));
             permitStackPane.getChildren().addAll(permitCardImageView, labelOfPermitCard);
-            for(int i = 0; i < permitCard.getBonus().getBonusURL().size();i++){
-                ImageView bonusImage = new ImageView(new Image(permitCard.getBonus().getBonusURL().get(i)));
-                bonusImage.fitWidthProperty().bind(permitCardImageView.fitHeightProperty().divide(4));
-                Label label = new Label(permitCard.getBonus().getBonusInfo().get(i));
-                label.setTextFill(Paint.valueOf("WHITE"));
-                permitStackPane.getChildren().addAll(bonusImage,label);
-                bonusImage.layoutXProperty().bind(permitCardImageView.fitWidthProperty()
-                        .divide(permitCard.getBonus().getBonusURL().size())
-                        .multiply(i));
-                label.layoutXProperty().bind(bonusImage.layoutXProperty().multiply(1.1));
-            }
+            StackPane.setAlignment(labelOfPermitCard,Pos.TOP_CENTER);
+            createPermitCardBonusInStackPane(permitCard,permitStackPane,permitCardImageView);
+            permitCardImageView.getStyleClass().add("myPermitCard");
+            permitStackPane.setOnMouseClicked(new OldPermitCardHandler(permitCard,needToSelectOldPermitCard,clientController, this));
             handHBox.getChildren().add(permitStackPane);
         }
 
@@ -281,6 +348,8 @@ public class MatchController implements Initializable, BaseController {
 
     private void createNodeList() {
 
+
+        // FINISH KING
         JFXButton finishKing = new JFXButton("FINISH");
         finishKing.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(20),null)));
         finishKing.setButtonType(JFXButton.ButtonType.FLAT);
@@ -354,28 +423,28 @@ public class MatchController implements Initializable, BaseController {
         helpButton.setTooltip(new Tooltip("Help"));
 
 
-        jfxNodesList.setSpacing(10);
-        jfxNodesList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
+        moreActionNodeList.setSpacing(10);
+        moreActionNodeList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
                 new KeyValue(showMore.rotateProperty(), expanded? 225:180 ,
                 Interpolator.EASE_BOTH));}});
 
-        jfxNodesList.addAnimatedNode(changeTurnAction);
+        moreActionNodeList.addAnimatedNode(changeTurnAction);
 
-        jfxNodesList.setRotate(180);
+        moreActionNodeList.setRotate(180);
 
 
         // REGION
 
         for(RegionName regionName : RegionName.values()){
-            jfxNodesList.addAnimatedNode(getChangePermitCardButton(regionName));
+            moreActionNodeList.addAnimatedNode(getChangePermitCardButton(regionName));
         }
 
 
-        jfxNodesList.addAnimatedNode(helpButton);
-        gridPane.add(jfxNodesList,0,2);
-        GridPane.setHalignment(jfxNodesList,HPos.RIGHT);
-        GridPane.setValignment(jfxNodesList,VPos.TOP);
-        jfxNodesList.visibleProperty().bind(nobilityPath.visibleProperty().not());
+        moreActionNodeList.addAnimatedNode(helpButton);
+        gridPane.add(moreActionNodeList,0,2);
+        GridPane.setHalignment(moreActionNodeList,HPos.RIGHT);
+        GridPane.setValignment(moreActionNodeList,VPos.TOP);
+        moreActionNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not());
     }
 
     private JFXButton getChangePermitCardButton(RegionName regionName) {
@@ -477,15 +546,13 @@ public class MatchController implements Initializable, BaseController {
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //hamburgerMenu.setVisible(false);
+                hamburgerMenu.setVisible(false);
             }
         });
 
     }
 
     private void openSlider() {
-
-
         hamburgerMenu.setVisible(true);
         hamburgerMenu.setScaleX(1);
         hamburgerMenu.setPrefWidth(0);
@@ -1120,6 +1187,12 @@ public class MatchController implements Initializable, BaseController {
             pulseBonus.setValue(false);
             pulseCity.setValue(false);
             needToSelectPermitCard.setValue(false);
+            needToSelectOldPermitCard.setValue(false);
+            stopPulseOldPermitCard.setValue(true);
+            stopPulsePermitCard.setValue(true);
+
+            onSelectOldPermitCard();
+            hidePermitCardHightLight(".visiblePermitCard",bottomPane);
         }
     }
 
@@ -1153,14 +1226,12 @@ public class MatchController implements Initializable, BaseController {
         needToSelectPermitCard.setValue(true);
         stopPulsePermitCard.setValue(false);
         Set<Node> nodes =bottomPane.lookupAll(".visiblePermitCard");
-        nodes.forEach(this::highlightPermitCard);
+        nodes.forEach(node -> highlightPermitCard(node,stopPulsePermitCard));
         bottomPane.setVisible(true);
-
     }
 
-    private void highlightPermitCard(Node node) {
+    private void highlightPermitCard(Node node,BooleanProperty stopEffect) {
         int depth = 70; //Setting the uniform variable for the glow width and height
-
         DropShadow borderGlow= new DropShadow();
         borderGlow.setOffsetY(0f);
         borderGlow.setOffsetX(0f);
@@ -1168,7 +1239,7 @@ public class MatchController implements Initializable, BaseController {
         borderGlow.setWidth(depth);
         borderGlow.setHeight(depth);
         node.setEffect(borderGlow);
-        Graphics.scaleTransitionEffectCycle(node,1.1f,1.1f,stopPulsePermitCard);
+        Graphics.scaleTransitionEffectCycle(node,1.1f,1.1f,stopEffect);
     }
 
     @Override
@@ -1226,6 +1297,16 @@ public class MatchController implements Initializable, BaseController {
 
 
 
+    }
+
+    @Override
+    public void selectOldPermitCardBonus() {
+        needToSelectOldPermitCard.setValue(true);
+        stopPulsePermitCard.setValue(false);
+        Set<Node> permitCards = gridPane.lookupAll(".myPermitCard");
+        permitCards.forEach(node-> highlightPermitCard(node,stopPulseOldPermitCard));
+        hamburgerMenu.setVisible(false);
+        nobilityPath.setVisible(false);
     }
 
     private void pulseBonus(City city1) {
@@ -1306,7 +1387,12 @@ public class MatchController implements Initializable, BaseController {
                 createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
                 */
         createHand();
+        creteOldPermitCard();
+        if(needToSelectOldPermitCard.get())
+            selectOldPermitCardBonus();
+
     }
+
 
     private void reprintPermitCard() {
 
@@ -1451,14 +1537,14 @@ public class MatchController implements Initializable, BaseController {
     }
 
     public void onSelectPermitCard(PermitCard permitCard) {
-        hidePermitCardHightLight();
+        hidePermitCardHightLight(".visiblePermitCard",bottomPane);
         needToSelectPermitCard.setValue(false);
         stopPulsePermitCard.setValue(true);
         clientController.onSelectPermitCard(permitCard);
     }
 
-    private void hidePermitCardHightLight() {
-        Set<Node> nodes =bottomPane.lookupAll(".visiblePermitCard");
+    private void hidePermitCardHightLight(String selector,Pane container) {
+        Set<Node> nodes =container.lookupAll(selector);
         nodes.forEach(node -> node.setEffect(null));
     }
 
@@ -1470,6 +1556,13 @@ public class MatchController implements Initializable, BaseController {
         politicCardforBuildWithKing.clear();
         kingPathforBuild.clear();
         buildWithKingPhase.set(false);
+    }
+
+    public void onSelectOldPermitCard() {
+        needToSelectOldPermitCard.setValue(false);
+        stopPulsePermitCard.setValue(false);
+        stopPulseOldPermitCard.setValue(true);
+        hidePermitCardHightLight(".myPermitCard",gridPane);
     }
 
     /*public void help(){
@@ -1563,10 +1656,10 @@ public class MatchController implements Initializable, BaseController {
     }
 
     public void hideNodeList(){
-        jfxNodesList.setVisible(false);
+        moreActionNodeList.setVisible(false);
     }
 
     public void showNodeList(){
-        jfxNodesList.setVisible(true);
+        moreActionNodeList.setVisible(true);
     }
 }

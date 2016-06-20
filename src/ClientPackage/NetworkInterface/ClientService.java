@@ -37,4 +37,6 @@ import java.util.ArrayList;
     public abstract void onSelectPermitCard(PermitCard permitCard);
 
     public abstract void onFinishTurn();
+
+    public abstract void onSelectOldPermitCard(PermitCard permitCard);
 }

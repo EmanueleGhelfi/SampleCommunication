@@ -43,4 +43,6 @@ public interface BaseView {
     void onActionNotPossibleException(ActionNotPossibleException e);
 
     void sendMatchFinishedWithWin(boolean win);
+
+    void selectOldPermitCardBonus();
 }
