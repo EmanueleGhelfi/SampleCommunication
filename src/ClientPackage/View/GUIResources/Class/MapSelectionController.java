@@ -24,6 +24,7 @@ public class MapSelectionController implements Initializable {
 
     private ClientController clientController;
     private CircularArrayList<Map> mapArrayList = new CircularArrayList<>();
+    private CircularArrayList<Image> mapArrayListImage = new CircularArrayList<>();
     private int mapCounter;
 
     @FXML private Text jsonTest;
@@ -77,13 +78,29 @@ public class MapSelectionController implements Initializable {
     public void showMap(ArrayList<Map> mapArrayList) {
         for (Map map : mapArrayList) {
             this.mapArrayList.add(map);
+            this.mapArrayListImage.add(new Image(map.getMapPreview()));
         }
-        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
-        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
-        nextImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
+        prevImageView.fitHeightProperty().bind(borderPaneBackground.heightProperty().divide(5));
+        prevImageView.setPreserveRatio(true);
+        thisImageView.fitHeightProperty().bind(borderPaneBackground.heightProperty().divide(4));
+        thisImageView.setPreserveRatio(true);
+        nextImageView.fitHeightProperty().bind(borderPaneBackground.heightProperty().divide(5));
+        nextImageView.setPreserveRatio(true);
+        prevImage = this.mapArrayListImage.get(mapCounter - 1);
+        thisImage = this.mapArrayListImage.get(mapCounter);
+        nextImage = this.mapArrayListImage.get(mapCounter + 1);
+        prevImageView.toBack();
+        thisImageView.toFront();
+        nextImageView.toBack();
         prevImageView.setImage(prevImage);
         thisImageView.setImage(thisImage);
         nextImageView.setImage(nextImage);
+
+        /*
+        prevImage = new Image(this.mapArrayList.get(mapCounter - 1).getMapPreview());
+        thisImage = new Image(this.mapArrayList.get(mapCounter).getMapPreview());
+        nextImage = new Image(this.mapArrayList.get(mapCounter + 1).getMapPreview());
+        */
     }
 
     public void nextVisibleMap(){
@@ -97,9 +114,20 @@ public class MapSelectionController implements Initializable {
     }
 
     private void showThreeMaps() {
+        prevImage = this.mapArrayListImage.get(mapCounter - 1);
+        thisImage = this.mapArrayListImage.get(mapCounter);
+        nextImage = this.mapArrayListImage.get(mapCounter + 1);
+        prevImageView.setImage(prevImage);
+        thisImageView.setImage(thisImage);
+        nextImageView.setImage(nextImage);
+        /*
         prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
         thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
         nextImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
+        prevImageView.setImage(prevImage);
+        thisImageView.setImage(thisImage);
+        nextImageView.setImage(nextImage);
+        */
         System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
         System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
         System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
