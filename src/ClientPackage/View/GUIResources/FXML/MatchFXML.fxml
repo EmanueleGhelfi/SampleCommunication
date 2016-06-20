@@ -339,7 +339,7 @@
                         <Insets top="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <HBox alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="511.0" spacing="30.0" style="-fx-background-color: transparent;" stylesheets="@../CSS/MatchCSS.css" translateZ="10.0" GridPane.columnIndex="1" GridPane.valignment="TOP">
+                  <HBox fx:id="infoHBox" alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="511.0" spacing="30.0" style="-fx-background-color: transparent;" stylesheets="@../CSS/MatchCSS.css" translateZ="10.0" GridPane.columnIndex="1" GridPane.valignment="TOP">
                      <children>
                         <GridPane alignment="CENTER">
                            <columnConstraints>

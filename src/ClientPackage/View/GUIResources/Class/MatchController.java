@@ -114,11 +114,15 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
 
+    @FXML private HBox infoHBox;
+
     @FXML private Button helpButton;
+
+    @FXML private Button moreImg;
 
     private SingleSelectionModel<Tab> selectionModel;
 
-
+    private ImageView turnImage = new ImageView();
     private HBox handHBox = new HBox();
 
     //Images
@@ -149,6 +153,8 @@ public class MatchController implements Initializable, BaseController {
     private JFXNodesList moreActionNodeList = new JFXNodesList();
     // node list for old permit card
     private JFXNodesList oldPermitCardNodeList = new JFXNodesList();
+
+    private ImageView boardImageView;
 
 
     @Override
@@ -231,9 +237,28 @@ public class MatchController implements Initializable, BaseController {
         nobilityPath.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
-
+        setBoard();
         GridPane.setHalignment(nobilityPath, HPos.CENTER);
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
+    }
+
+    private void setBoard() {
+        boardImageView = new ImageView(new Image(Constants.IMAGE_PATH + "/Board.png"));
+        boardImageView.fitWidthProperty().bind(gridPane.widthProperty());
+        boardImageView.fitHeightProperty().bind(background.heightProperty().divide(13));
+        gridPane.add(boardImageView, 0, 0);
+        GridPane.setValignment(boardImageView, VPos.TOP);
+        GridPane.setColumnSpan(boardImageView, 3);
+        //boardImageView.toBack();
+        GridPane.setValignment(infoHBox, VPos.TOP);
+        infoHBox.toFront();
+        hamburgerIcon.toFront();
+        gridPane.add(turnImage, 0, 0);
+        turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty());
+        turnImage.setPreserveRatio(true);
+        GridPane.setValignment(turnImage, VPos.TOP);
+        GridPane.setHalignment(turnImage, HPos.CENTER);
+        turnImage.toFront();
     }
 
     private void creteOldPermitCard() {
@@ -508,6 +533,7 @@ public class MatchController implements Initializable, BaseController {
         hamburgerMenu.setPrefWidth(0);
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburgerIcon);
         burgerTask.setRate(-1);
+        hamburgerIcon.toFront();
         hamburgerIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
 
             burgerTask.setRate(burgerTask.getRate()*-1);
@@ -1339,11 +1365,11 @@ public class MatchController implements Initializable, BaseController {
             public void run() {
                 if(thisTurn){
                     Graphics.notification("E' il tuo turno!");
-                    turnText.setText("E' il tuo turno!");
+                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes.png"));
                 }
                 else{
-                    turnText.setText("Non è il tuo turno!");
                     Graphics.notification("Turno finito!");
+                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo.png"));
                 }
 
             }
@@ -1531,9 +1557,16 @@ public class MatchController implements Initializable, BaseController {
     public void showMore(ActionEvent actionEvent) {
         if(bottomPane.isVisible()){
             bottomPane.setVisible(false);
+            boardImageView.toFront();
+            infoHBox.toFront();
+            hamburgerIcon.toFront();
         }
         else {
             bottomPane.setVisible(true);
+            bottomPane.toFront();
+            boardImageView.toBack();
+            infoHBox.toBack();
+            hamburgerIcon.toBack();
         }
     }
 
