@@ -166,7 +166,7 @@ public class MatchController implements Initializable, BaseController {
         initController();
 
         System.out.println("setting image");
-        backgroundImage.setImage(new Image(currentSnapshot.getMap().getMapPreview()));
+        backgroundImage.setImage(new Image(currentSnapshot.getMap().getRealMap()));
         backgroundImage.setPreserveRatio(true);
         backgroundImage.fitHeightProperty().bind(gridPane.heightProperty());
         backgroundImage.fitWidthProperty().bind(gridPane.widthProperty());
@@ -866,7 +866,7 @@ public class MatchController implements Initializable, BaseController {
 
         background.getChildren().add(cityName);
         cityName.layoutXProperty().bind(imageView.layoutXProperty());
-        cityName.layoutYProperty().bind(imageView.layoutYProperty().subtract(50));
+        cityName.layoutYProperty().bind(imageView.layoutYProperty());
 
         cityName.fitWidthProperty().bind(imageView.fitWidthProperty());
         cityName.setPreserveRatio(true);

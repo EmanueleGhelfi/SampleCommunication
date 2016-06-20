@@ -126,79 +126,16 @@ public class Map implements Serializable {
     }
 
     public static void writeMap1(){
-        //
-        City arkon = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
-        City burgen = new City(Color.YELLOW,CityName.BURGEN,RegionName.COAST);
-        City castrum = new City(Color.GREY,CityName.CASTRUM,RegionName.COAST);
-        City dorful = new City(Color.GREY,CityName.DORFUL,RegionName.COAST);
-        City esti = new City(Color.ORANGE,CityName.ESTI,RegionName.COAST);
-        City framek = new City(Color.YELLOW,CityName.FRAMEK,RegionName.HILL);
-        City graden = new City(Color.PURPLE,CityName.GRADEN,RegionName.HILL);
-        City hellar = new City(Color.YELLOW,CityName.HELLAR,RegionName.HILL);
-        City indur = new City(Color.ORANGE,CityName.INDUR,RegionName.HILL);
 
-        City juvelar = new City(Color.GREY,CityName.JUVELAR,RegionName.HILL);
 
-        City kultos = new City(Color.YELLOW,CityName.KULTOS,RegionName.MOUNTAIN);
-        City lyram = new City(Color.GREY,CityName.LYRAM,RegionName.MOUNTAIN);
-        City merkatim = new City(Color.BLUE,CityName.MERKATIM,RegionName.MOUNTAIN);
-        City naris = new City(Color.ORANGE,CityName.NARIS,RegionName.MOUNTAIN);
-        City osium = new City(Color.YELLOW,CityName.OSIUM,RegionName.MOUNTAIN);
-
-        ArrayList<Link> links = new ArrayList<>();
-        links.add(new Link(arkon,castrum));
-        links.add(new Link(arkon,burgen));
-        links.add(new Link(burgen,dorful));
-        links.add(new Link(burgen,esti));
-        links.add(new Link(castrum,framek));
-        links.add(new Link(dorful,graden));
-        links.add(new Link(hellar,esti));
-        links.add(new Link(framek,indur));
-        links.add(new Link(framek,graden));
-        links.add(new Link(graden,hellar));
-        links.add(new Link(graden,indur));
-        links.add(new Link(hellar,juvelar));
-        links.add(new Link(indur,kultos));
-        links.add(new Link(juvelar,lyram));
-        links.add(new Link(juvelar,merkatim));
-        links.add(new Link(merkatim,osium));
-        links.add(new Link(osium,lyram));
-        links.add(new Link(osium,naris));
-        links.add(new Link(naris,kultos));
-
-        ArrayList<City> cities = new ArrayList<>();
-        cities.add(arkon);
-        cities.add(burgen);
-        cities.add(castrum);
-        cities.add(dorful);
-        cities.add(esti);
-        cities.add(framek);
-        cities.add(graden);
-        cities.add(hellar);
-        cities.add(indur);
-        cities.add(juvelar);
-        cities.add(kultos);
-        cities.add(lyram);
-        cities.add(merkatim);
-        cities.add(naris);
-        cities.add(osium);
-
-        Map map = new Map();
-        map.setCity(cities);
-        map.setLinks(links);
-        map.setMapName("prima mappa");
-        map.setMapPreview("/ClientPackage/View/GUIResources/Image/Map1v3.png");
-        //TODO: add url
-        map.setRealMap("");
-
-        // second Map
-        Map map2 = writeGenericMap(2,2,2,"Seconda Mappa","/ClientPackage/View/GUIResources/Image/Map/BBB.png");
-        Map map3 = writeGenericMap(1,2,2,"Terza Mappa", "/ClientPackage/View/GUIResources/Image/Map/ABB.png");
-        Map map4 = writeGenericMap(1,1,2,"Quarta Mappa","/ClientPackage/View/GUIResources/Image/Map/AAB.png");
-        Map map5 = writeGenericMap(1,2,1,"Quinta Mappa", "/ClientPackage/View/GUIResources/Image/Map/ABA.png");
-        Map map6 = writeGenericMap(2,1,1,"Sesta Mappa", "/ClientPackage/View/GUIResources/Image/Map/BAA.png");
-        Map map7 = writeGenericMap(2,1,2,"Settima mappa", "/ClientPackage/View/GUIResources/Image/Map/BAB.png");
-        Map map8 = writeGenericMap(2,2,1,"Ottava Mappa","/ClientPackage/View/GUIResources/Image/Map/BBA.png");
+        Map map = writeGenericMap(1,1,1,"Prima Mappa","/ClientPackage/View/GUIResources/Image/Map/AAA.png","/ClientPackage/View/GUIResources/Image/MapPreview/AAA.png");
+        Map map2 = writeGenericMap(2,2,2,"Seconda Mappa","/ClientPackage/View/GUIResources/Image/Map/BBB.png","/ClientPackage/View/GUIResources/Image/MapPreview/BBB.png");
+        Map map3 = writeGenericMap(1,2,2,"Terza Mappa", "/ClientPackage/View/GUIResources/Image/Map/ABB.png", "/ClientPackage/View/GUIResources/Image/MapPreview/ABB.png");
+        Map map4 = writeGenericMap(1,1,2,"Quarta Mappa","/ClientPackage/View/GUIResources/Image/Map/AAB.png","/ClientPackage/View/GUIResources/Image/MapPreview/AAB.png");
+        Map map5 = writeGenericMap(1,2,1,"Quinta Mappa", "/ClientPackage/View/GUIResources/Image/Map/ABA.png","/ClientPackage/View/GUIResources/Image/MapPreview/AAB.png");
+        Map map6 = writeGenericMap(2,1,1,"Sesta Mappa", "/ClientPackage/View/GUIResources/Image/Map/BAA.png","/ClientPackage/View/GUIResources/Image/MapPreview/AAB.png");
+        Map map7 = writeGenericMap(2,1,2,"Settima mappa", "/ClientPackage/View/GUIResources/Image/Map/BAB.png","/ClientPackage/View/GUIResources/Image/MapPreview/AAB.png");
+        Map map8 = writeGenericMap(2,2,1,"Ottava Mappa","/ClientPackage/View/GUIResources/Image/Map/BBA.png","/ClientPackage/View/GUIResources/Image/MapPreview/AAB.png");
 
         ArrayList<Map> mapArray = new ArrayList<>();
         mapArray.add(map);
@@ -225,7 +162,7 @@ public class Map implements Serializable {
         }
     }
 
-    private static Map writeGenericMap(int firstPart, int secondPart, int thirdPart, String mapName, String mapUrl) {
+    private static Map writeGenericMap(int firstPart, int secondPart, int thirdPart, String mapName, String mapUrl, String mapPreview) {
         City arkon;
         City burgen;
         City castrum;
@@ -380,7 +317,8 @@ public class Map implements Serializable {
         map.setCity(cities);
         map.setLinks(links);
         map.setMapName(mapName);
-        map.setMapPreview(mapUrl);
+        map.setRealMap(mapUrl);
+        map.setMapPreview(mapPreview);
         return map;
     }
 
