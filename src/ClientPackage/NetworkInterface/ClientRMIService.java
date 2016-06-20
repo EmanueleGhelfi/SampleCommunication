@@ -246,63 +246,99 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException {
-        clientController.setSnapshot(snapshotToSend);
+        Runnable runnable = ()-> {
+            clientController.setSnapshot(snapshotToSend);
+        };
+        executorService.execute(runnable);
     }
 
     @Override
     public void sendMap(ArrayList<Map> mapArrayList) {
-        clientController.showMap(mapArrayList);
+        Runnable runnable = ()-> {
+            clientController.showMap(mapArrayList);
+        };
+        executorService.execute(runnable);
     }
 
     @Override
     public void gameInitialization(SnapshotToSend snapshotToSend) throws RemoteException {
-        clientController.gameInitialization(snapshotToSend);
+        executorService.execute(()->{
+            clientController.gameInitialization(snapshotToSend);
+        });
+
     }
 
     @Override
     public void isYourTurn() throws RemoteException {
-        clientController.isMyTurn();
+        executorService.execute(()->{
+            clientController.isMyTurn();
+        });
+
     }
 
     @Override
     public void finishTurn() throws RemoteException {
-        clientController.turnFinished();
+        executorService.execute(()->{
+            clientController.turnFinished();
+        });
+
     }
 
     @Override
     public void onStartMarket() throws RemoteException {
-        clientController.onStartMarket();
+        executorService.execute(()->{
+            clientController.onStartMarket();
+        });
+
     }
 
     @Override
     public void onStartBuyPhase() throws RemoteException {
-        clientController.onStartBuyPhase();
+        executorService.execute(()->{
+            clientController.onStartBuyPhase();
+        });
+
     }
 
     @Override
     public void disableMarketPhase() throws RemoteException {
 
-        clientController.onFinishBuyPhase();
+        executorService.execute(()->{
+            clientController.onFinishBuyPhase();
+        });
+
     }
 
     @Override
     public void selectPermitCard() throws RemoteException {
-        clientController.selectPermitCard();
+        executorService.execute(()->{
+            clientController.selectPermitCard();
+        });
+
     }
 
     @Override
     public void selectCityRewardBonus(SnapshotToSend snapshotToSend) throws RemoteException {
-        clientController.selectCityRewardBonus(snapshotToSend);
+        executorService.execute(()->{
+            clientController.selectCityRewardBonus(snapshotToSend);
+        });
+
     }
 
     @Override
     public void moveKing(ArrayList<City> kingPath) throws RemoteException {
-        clientController.onMoveKing(kingPath);
+        executorService.execute(()->{
+            clientController.onMoveKing(kingPath);
+        });
+
     }
 
     @Override
     public void sendMatchFinishedWithWin(boolean win) throws RemoteException {
-        clientController.sendMatchFinishedWithWin(win);
+        executorService.execute(()->{
+            clientController.sendMatchFinishedWithWin(win);
+        });
+
     }
 
     @Override
@@ -312,6 +348,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void selectOldPermiCard() throws RemoteException {
-        clientController.selectOldPermitCardBonus();
+        executorService.execute(()->{
+            clientController.selectOldPermitCardBonus();
+        });
+
     }
 }

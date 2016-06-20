@@ -6,10 +6,7 @@ package ClientPackage.View.CLIResources;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GeneralView.CLIView;
-import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper;
-import CommonModel.GameModel.Action.FastActionNewMainAction;
-import CommonModel.GameModel.Action.MainActionElectCouncilor;
+import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
@@ -62,7 +59,6 @@ public class MatchCliController {
         isYourTurn=true;
         System.out.println(ANSI_RED+"Turno iniziato"+ANSI_RESET);
         cliPrinter.printHelp(matchOptions);
-
         getInput();
 
 
@@ -101,11 +97,58 @@ public class MatchCliController {
                 Action action = new FastActionNewMainAction();
                 clientController.doAction(action);
             }
+
+            if(commandLine.hasOption("buyHelper")){
+                Action action = new FastActionMoneyForHelper();
+                clientController.doAction(action);
+            }
+
+            if(commandLine.hasOption("buildEmporium")){
+                buildEmporium(commandLine.getOptionValues("buildEmporium"));
+            }
+
+            if(commandLine.hasOption("buyPermit")){
+
+            }
+
+
             getInput();
         } catch (ParseException e) {
             System.out.println("Syntax error!");
             getInput();
         }
+    }
+
+    private void buildEmporium(String[] buildEmporia) {
+
+        if(buildEmporia.length>0 && Validator.isValidCity(buildEmporia[0])) {
+            System.out.println(ANSI_BLUE + " Select a permit card for build in " + buildEmporia[0] + ": " + ANSI_RESET);
+            CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
+            for(int i=0; i< currentUser.getPermitCards().size();i++){
+                System.out.println(""+i+". "+cliPrinter.toStringFormatted(currentUser.getPermitCards().get(i)));
+            }
+
+            int scelta = -2;
+
+            while (scelta<0 || scelta>currentUser.getPermitCards().size()){
+                try{
+                    scelta=scanner.nextInt();
+                    if(scelta>0 && scelta< currentUser.getPermitCards().size()){
+
+                        // find city with selected name
+                        City selectedCity = Validator.getCity(buildEmporia[0],clientController.getSnapshot().getMap().getCity());
+                        Action action = new MainActionBuildWithPermitCard(selectedCity,currentUser.getPermitCards().get(scelta));
+                        clientController.doAction(action);
+                    }
+                }
+                catch (Exception e){
+                    System.out.println("Invalid input!");
+                }
+
+            }
+
+        }
+
     }
 
     private void changePermitAction(String arg) {
