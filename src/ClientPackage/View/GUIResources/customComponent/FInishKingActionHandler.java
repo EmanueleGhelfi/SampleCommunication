@@ -39,11 +39,10 @@ public class FInishKingActionHandler implements EventHandler<ActionEvent>{
                 }
             }
 
-            Action action = new MainActionBuildWithKingHelp((ArrayList<City>)matchController.getKingPathforBuild()
-                    .clone(),(ArrayList<PoliticCard>)matchController.getPoliticCardforBuildWithKing().clone());
+            Action action = new MainActionBuildWithKingHelp(citiesForBuildWithKing,(ArrayList<PoliticCard>)matchController.getPoliticCardforBuildWithKing().clone());
 
 
-            System.out.println("KING PATH "+matchController.getKingPathforBuild());
+            System.out.println("KING PATH "+citiesForBuildWithKing);
 
 
             new Thread(()->{
@@ -54,7 +53,6 @@ public class FInishKingActionHandler implements EventHandler<ActionEvent>{
         }
         else{
             System.out.println("Not action");
-
         }
 
     }

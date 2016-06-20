@@ -220,7 +220,19 @@ public class MatchController implements Initializable, BaseController {
         createHand();
         creteOldPermitCard();
         gridPane.add(oldPermitCardNodeList,2,2);
-        oldPermitCardNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not().and(hamburgerMenu.visibleProperty().not()));
+        ///oldPermitCardNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not().and(hamburgerMenu.visibleProperty().not()));
+
+        hamburgerMenu.prefWidthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if(newValue.doubleValue()>0){
+                    oldPermitCardNodeList.setVisible(false);
+                }
+                else{
+                    oldPermitCardNodeList.setVisible(true);
+                }
+            }
+        });
         //help();
 
         selectionModel = tabPane.getSelectionModel();
@@ -546,7 +558,7 @@ public class MatchController implements Initializable, BaseController {
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                hamburgerMenu.setVisible(false);
+               // hamburgerMenu.setVisible(false);
             }
         });
 
