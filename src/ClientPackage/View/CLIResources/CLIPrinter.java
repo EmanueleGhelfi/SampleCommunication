@@ -3,6 +3,7 @@ package ClientPackage.View.CLIResources;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Link;
@@ -12,6 +13,8 @@ import org.apache.commons.cli.Options;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import static ClientPackage.View.CLIResources.CLIColor.*;
 
 /**
@@ -131,6 +134,23 @@ public class CLIPrinter implements CLIPrinterInterface {
     public String toStringFormatted(City city) {
 
         return city.getCityName()+" "+city.getRegion()+" "+city.getColor();
+    }
+
+    @Override
+    public void printBlue(String toPrint) {
+        System.out.println(ANSI_BLUE+toPrint+ANSI_RESET);
+    }
+
+    @Override
+    public void printError(String toPrint) {
+        System.out.println(ANSI_RED+toPrint+ANSI_RESET);
+    }
+
+    @Override
+    public void printCouncil(ArrayList<Councilor> council) {
+        for(Councilor councilor: council){
+            System.out.println(" Councilor: "+councilor.getColor());
+        }
     }
 
 
