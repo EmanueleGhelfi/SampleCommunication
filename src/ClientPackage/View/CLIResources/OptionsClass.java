@@ -1,7 +1,9 @@
 package ClientPackage.View.CLIResources;
 
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.PatternOptionBuilder;
 
 /**
  * Created by Emanuele on 19/06/2016.
@@ -37,8 +39,27 @@ public class OptionsClass {
         option.setArgName("permitType");
         standardOptions.addOption(option);
         standardOptions.addOption("finish",false,"Change Turn");
-        standardOptions.addOption("politicColor",false,"Show available color");
-        standardOptions.addOption("buyAction",false,"Buy main Action");
+        standardOptions.addOption("politicColor",false,"Show available politic color");
+        standardOptions.addOption("buyAction",false,"Buy main Action for three helper");
+        standardOptions.addOption("buyHelper",false,"Buy Helper for three money");
+        Option buyEmporiumOption = Option.builder()
+                .longOpt("buildEmporium")
+                .desc("Build emporium in city. First argument is city name")
+                .numberOfArgs(1)
+                .argName("City")
+                .hasArgs()
+                .build();
+        standardOptions.addOption(buyEmporiumOption);
+
+        Option buyPermitCard = Option.builder()
+                .longOpt("buyPermit")
+                .numberOfArgs(1)
+                .hasArgs()
+                .desc("Buy Permit a permit Card specified by regionName")
+                .argName("regionName")
+                .build();
+
+        standardOptions.addOption(buyPermitCard);
 
         return standardOptions;
 
