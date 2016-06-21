@@ -280,7 +280,6 @@ public class ClientController {
 
     public void onActionNotPossible(ActionNotPossibleException e) {
         baseView.onActionNotPossibleException(e);
-
     }
 
     public void onFinishTurn() {

@@ -14,18 +14,29 @@ public class Validator {
 
     public static boolean isValidCity(String city) {
         try {
-            CityName cityName = CityName.valueOf(city);
-            return true;
+            for(CityName cityName: CityName.values()){
+                if(cityName.getCityName().equalsIgnoreCase(city)){
+                    return true;
+                }
+            }
+            return false;
         } catch (Exception e) {
             return false;
         }
     }
 
     public static City getCity(String city, ArrayList<City> cities) {
-        CityName cityName = CityName.valueOf(city);
-        for(City singleCity: cities){
-            if(singleCity.getCityName().equals(cityName)){
-                return singleCity;
+        CityName cityName = null;
+        for(CityName singleCityName:CityName.values()){
+            if(singleCityName.getCityName().equalsIgnoreCase(city)){
+                cityName=singleCityName;
+            }
+        }
+        if(cityName!=null) {
+            for (City singleCity : cities) {
+                if (singleCity.getCityName().equals(cityName)) {
+                    return singleCity;
+                }
             }
         }
         return null;
