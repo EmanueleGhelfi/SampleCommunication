@@ -13,9 +13,11 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
+import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.CurrentUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.Link;
 import Utilities.Exception.CouncilNotFoundException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
@@ -111,6 +113,10 @@ public class MatchCliController {
                 buyPermit(commandLine.getOptionValues("buyPermit"));
             }
 
+            if(commandLine.hasOption("buildKing")){
+                buildWithKing();
+            }
+
 
             getInput();
         } catch (ParseException e) {
@@ -118,6 +124,67 @@ public class MatchCliController {
             getInput();
         }
     }
+
+    private void buildWithKing() {
+
+        cliPrinter.printBlue("Build with King help");
+
+        cliPrinter.printBlue("King's council: ");
+        cliPrinter.printCouncil(new ArrayList<Councilor>(clientController.getSnapshot().getKing().getCouncil().getCouncil()));
+
+        ArrayList<PoliticCard> politicCardArrayList = selectPoliticCard(clientController.getSnapshot().getCurrentUser().getPoliticCards());
+
+        ArrayList<City> cities = selectKingPath();
+
+        Action action = new MainActionBuildWithKingHelp(cities,politicCardArrayList);
+        clientController.doAction(action);
+    }
+
+    private ArrayList<City> selectKingPath() {
+
+        ArrayList<City> cities= new ArrayList<>();
+        cliPrinter.printBlue("Select city king: ");
+
+        System.out.println("Città corrente del re: "+ cliPrinter.toStringFormatted(clientController.getSnapshot().getKing().getCurrentCity()));
+
+        cliPrinter.printBlue("Links");
+
+        for(Link link: clientController.getSnapshot().getMap().getLinks()){
+            System.out.println(link);
+        }
+
+        cliPrinter.printBlue("Cities");
+        for(City city: clientController.getSnapshot().getMap().getCity()){
+            cliPrinter.printBlue(cliPrinter.toStringFormatted(city));
+        }
+
+        boolean correct = false;
+        String[] selectedArray= {};
+        while (!correct) {
+            cliPrinter.printBlue("Inserisci i numeri delle città seguite da uno spazio: ");
+            for (int i = 0; i < clientController.getSnapshot().getMap().getCity().size(); i++) {
+                System.out.println(" " + i + ". " + cliPrinter.
+                        toStringFormatted(clientController.getSnapshot().getMap().getCity().get(i)));
+            }
+
+            String selected = scanner.nextLine();
+
+            selectedArray = selected.split(" ");
+            correct = checkInteger(selectedArray,clientController.getSnapshot().getMap().getCity());
+        }
+
+        for(int i = 0; i<selectedArray.length;i++){
+            cities.add(clientController.getSnapshot().getMap().getCity().get(i));
+        }
+
+        if(!cities.get(0).equals(clientController.getSnapshot().getKing().getCurrentCity())){
+            cities.add(0,clientController.getSnapshot().getKing().getCurrentCity());
+        }
+        return cities;
+
+
+    }
+
 
     private void buyPermit(String[] buyPermits) {
         if(buyPermits.length>1 && Validator.isValidRegion(buyPermits[0])){
@@ -135,7 +202,9 @@ public class MatchCliController {
 
             try {
                 cliPrinter.printCouncil(clientController.getSnapshot().getCouncil(regionName));
-                selectPoliticCard(currentUser.getPoliticCards());
+                ArrayList<PoliticCard> politicCardArrayList = selectPoliticCard(currentUser.getPoliticCards());
+                Action action = new MainActionBuyPermitCard(politicCardArrayList,regionName,permitCardSelected);
+                clientController.doAction(action);
             } catch (CouncilNotFoundException e) {
                 e.printStackTrace();
             }
@@ -165,15 +234,15 @@ public class MatchCliController {
         for(int i = 0; i<selectedArray.length;i++){
             politicCardArrayList.add(politicCards.get(i));
         }
-        return null;
+        return politicCardArrayList;
 
     }
 
-    private boolean checkInteger(String[] selectedArray, ArrayList<PoliticCard> politicCards) {
+    private boolean checkInteger(String[] selectedArray, ArrayList arrayList) {
         for(String string: selectedArray){
             try {
                 int integer = Integer.parseInt(string);
-                if(integer<0 || integer>=politicCards.size()){
+                if(integer<0 || integer>=arrayList.size()){
                     return false;
                 }
             }
@@ -273,7 +342,7 @@ public class MatchCliController {
                         }
                     }
                     else{
-                        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.valueOf(args.get(1))),null, RegionName.valueOf(args.get(2)));
+                        Action action = new MainActionElectCouncilor(new Councilor(PoliticColor.valueOf(args.get(1).toUpperCase())),null, RegionName.valueOf(args.get(2).toUpperCase()));
                         clientController.doAction(action);
                     }
                 }
@@ -287,7 +356,7 @@ public class MatchCliController {
     private boolean checkValidRegion(String s) {
 
         try {
-            RegionName.valueOf(s);
+            RegionName.valueOf(s.toUpperCase());
         }
         catch (Exception e){
             return false;
