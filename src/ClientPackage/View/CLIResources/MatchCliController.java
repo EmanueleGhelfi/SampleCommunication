@@ -67,62 +67,7 @@ public class MatchCliController {
     }
 
     private void getInput() {
-        String inputString = scanner.nextLine();
-        try {
-            CommandLine commandLine = cliParser.retrieveCommandLine(inputString);
-            if(commandLine.hasOption("status")){
-                showStatus();
-            }
-            if(commandLine.hasOption("help")){
-                cliPrinter.printHelp(matchOptions);
-            }
-            if(commandLine.hasOption("elect")){
-                List<String> args = Arrays.asList(commandLine.getOptionValues("elect"));
-                System.out.println(args);
-                System.out.println(Arrays.toString(commandLine.getOptionValues("elect")));
-                getElectCouncilorArgs(args);
-            }
-            if(commandLine.hasOption("politicColor")){
-                System.out.println(clientController.getSnapshot().getBank().showCouncilor());
-            }
-            if(commandLine.hasOption("permit")){
-                showPermitCard();
-            }
-            if(commandLine.hasOption("finish")){
-                clientController.onFinishTurn();
-            }
-            if(commandLine.hasOption("changePermit")){
-                String arg = commandLine.getOptionValue("changePermit");
-                changePermitAction(arg);
-            }
-            if(commandLine.hasOption("buyAction")){
-                Action action = new FastActionNewMainAction();
-                clientController.doAction(action);
-            }
 
-            if(commandLine.hasOption("buyHelper")){
-                Action action = new FastActionMoneyForHelper();
-                clientController.doAction(action);
-            }
-
-            if(commandLine.hasOption("buildEmporium")){
-                buildEmporium(commandLine.getOptionValues("buildEmporium"));
-            }
-
-            if(commandLine.hasOption("buyPermit")){
-                buyPermit(commandLine.getOptionValues("buyPermit"));
-            }
-
-            if(commandLine.hasOption("buildKing")){
-                buildWithKing();
-            }
-
-
-            getInput();
-        } catch (ParseException e) {
-            System.out.println("Syntax error!");
-            getInput();
-        }
     }
 
     private void buildWithKing() {
