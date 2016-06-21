@@ -656,21 +656,17 @@ public class MatchController implements Initializable, BaseController {
         });
 
         HBox emporiumHBox;
-        int counet = 0;
-        int counet2 = 0;
         for (City city : clientController.getSnapshot().getMap().getCity()){
-            System.out.println(counet + "ehehehehe");
-            counet++;
             emporiumHBox = new HBox();
+            background.getChildren().add(emporiumHBox);
+            emporiumHBox.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city)));
+            emporiumHBox.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city)));
+            //emporiumHBox.setLayoutX(CityPosition.getX(city));
+            //emporiumHBox.setLayoutY(CityPosition.getY(city));
             for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
-                System.out.println(counet2 + "proteheheh");
-                counet2++;
                 emporiumHBox.getChildren().add(new ImageView(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png")));
                 System.out.println(userHashMap.getValue().getUserColor().getColor() + " -> ehehehehhe");
-                emporiumHBox.setLayoutX(CityPosition.getX(city));
-                emporiumHBox.setLayoutY(CityPosition.getY(city));
             }
-            background.getChildren().add(emporiumHBox);
         }
 
         /*
