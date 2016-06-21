@@ -657,16 +657,7 @@ public class MatchController implements Initializable, BaseController {
 
         HBox emporiumHBox;
         for (City city : clientController.getSnapshot().getMap().getCity()){
-            emporiumHBox = new HBox();
-            background.getChildren().add(emporiumHBox);
-            emporiumHBox.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city)));
-            emporiumHBox.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city)));
-            //emporiumHBox.setLayoutX(CityPosition.getX(city));
-            //emporiumHBox.setLayoutY(CityPosition.getY(city));
-            for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
-                emporiumHBox.getChildren().add(new ImageView(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png")));
-                System.out.println(userHashMap.getValue().getUserColor().getColor() + " -> ehehehehhe");
-            }
+
         }
 
         /*
@@ -913,9 +904,23 @@ public class MatchController implements Initializable, BaseController {
         background.getChildren().add(cityName);
         cityName.layoutXProperty().bind(imageView.layoutXProperty());
         cityName.layoutYProperty().bind(imageView.layoutYProperty());
-
         cityName.fitWidthProperty().bind(imageView.fitWidthProperty());
         cityName.setPreserveRatio(true);
+
+        HBox emporiumHBox = new HBox();
+        background.getChildren().add(emporiumHBox);
+        emporiumHBox.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city)));
+        emporiumHBox.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city)).add(imageView.fitHeightProperty()).subtract(30));
+        emporiumHBox.toFront();
+        //emporiumHBox.prefHeightProperty().bind(imageView.fitHeightProperty().divide(4));
+        //emporiumHBox.prefWidthProperty().bind(imageView.fitWidthProperty());
+        for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
+            ImageView imageToAdd = new ImageView();
+            imageToAdd.setImage(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
+            imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(4));
+            imageToAdd.setPreserveRatio(true);
+            emporiumHBox.getChildren().add(imageToAdd);
+        }
         Graphics.addShadow(cityName);
 
     }
