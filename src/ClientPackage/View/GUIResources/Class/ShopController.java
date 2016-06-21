@@ -80,7 +80,7 @@ public class ShopController implements BaseController {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
-        backgroundImage.setImage(new Image("/ClientPackage/View/GUIResources/Image/ShopBackground.jpg"));
+        backgroundImage.setImage(new Image("/ClientPackage/View/GUIResources/Image/ShopBackground.png"));
         setBackground();
         updateView();
         createDeck();
