@@ -13,6 +13,7 @@ import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import CommonModel.Snapshot.UserColor;
 import Server.Model.FakeUser;
 import Server.Model.Game;
 import Server.Model.Map;
@@ -45,6 +46,7 @@ public class GameController implements Serializable{
     private int nextUser;
     private int lastUser = -1;
     private Timer roundTimer = new Timer();
+    private UserColor[] userColorSet;
 
     public GameController() {
     }
@@ -107,6 +109,8 @@ public class GameController implements Serializable{
     private void setDefaultStuff() {
         int userCounter = 0;
         for (User user: users){
+            userColorSet = UserColor.values();
+            user.setUserColor(colorAvailable(0));
             user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
             user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
             user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
@@ -125,6 +129,16 @@ public class GameController implements Serializable{
 
             userCounter++;
         }
+    }
+
+    private UserColor colorAvailable(int userColorCounter) {
+        for (java.util.Map.Entry<String, User> userInFor : game.getUsersInGame().entrySet()) {
+            if (userInFor.getValue().getUserColor() != null && userColorSet[userColorCounter].getColor().equals(userInFor.getValue().getUserColor().getColor()))
+                return colorAvailable(++userColorCounter);
+            else
+                return userColorSet[userColorCounter];
+        }
+        return null;
     }
 
     public void cancelTimeout() {

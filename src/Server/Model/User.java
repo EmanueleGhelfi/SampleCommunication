@@ -8,6 +8,7 @@ import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.CurrentUser;
+import CommonModel.Snapshot.UserColor;
 import Server.Controller.GameController;
 import Server.NetworkInterface.Communication.BaseCommunication;
 import Server.Controller.GamesManager;
@@ -164,6 +165,7 @@ public class User extends CurrentUser implements Serializable{
     public void setNobilityPathPosition(Position nobilityPathPosition) {
         this.nobilityPathPosition = nobilityPathPosition;
     }
+
     public Game getGame() {
         return game;
     }
@@ -229,6 +231,7 @@ public class User extends CurrentUser implements Serializable{
         }
 
     }
+
 
 
 }

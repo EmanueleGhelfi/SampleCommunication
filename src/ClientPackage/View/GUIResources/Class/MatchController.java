@@ -10,6 +10,7 @@ import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.User;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import Utilities.Exception.CouncilNotFoundException;
@@ -651,9 +652,32 @@ public class MatchController implements Initializable, BaseController {
         */
         clientController.getSnapshot().getMap().getCity().forEach(city1 -> {
             CreateSingleCity(CityPosition.getX(city1),CityPosition.getY(city1),city1);
-                createBonus(city1.getBonus().getBonusURL(),city1.getBonus()
-                        .getBonusInfo(),city1);
+            createBonus(city1.getBonus().getBonusURL(),city1.getBonus().getBonusInfo(),city1);
         });
+
+        HBox emporiumHBox;
+        int counet = 0;
+        int counet2 = 0;
+        for (City city : clientController.getSnapshot().getMap().getCity()){
+            System.out.println(counet + "ehehehehe");
+            counet++;
+            emporiumHBox = new HBox();
+            for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
+                System.out.println(counet2 + "proteheheh");
+                counet2++;
+                emporiumHBox.getChildren().add(new ImageView(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png")));
+                System.out.println(userHashMap.getValue().getUserColor().getColor() + " -> ehehehehhe");
+                emporiumHBox.setLayoutX(CityPosition.getX(city));
+                emporiumHBox.setLayoutY(CityPosition.getY(city));
+            }
+            background.getChildren().add(emporiumHBox);
+        }
+
+        /*
+        clientController.getSnapshot().getUsersInGame().forEach((s, baseUser) -> {
+            baseUser.getUsersEmporium().
+        });
+        */
 
         createKingImage(CityPosition.getX(clientController.getSnapshot().getKing().getCurrentCity()),CityPosition
                 .getY(clientController.getSnapshot().getKing().getCurrentCity()));
