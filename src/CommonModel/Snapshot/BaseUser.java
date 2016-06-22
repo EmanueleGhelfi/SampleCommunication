@@ -4,6 +4,7 @@ import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Path.Position;
+import Server.Model.FakeUser;
 import Server.Model.User;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class BaseUser implements Serializable {
     protected ArrayList<PermitCard> permitCards;
     protected ArrayList<PermitCard> oldPermitCards;
     protected int politicCardNumber;
+    protected boolean fakeUser = false;
 
     // default constructor for inheritance. Obligatory! Do not cancel!
     public BaseUser() {
@@ -42,6 +44,9 @@ public class BaseUser implements Serializable {
         this.permitCards = user.getPermitCards();
         this.oldPermitCards = user.getOldPermitCards();
         this.politicCardNumber = user.getPoliticCardSize();
+        if (user instanceof FakeUser){
+            fakeUser = true;
+        }
     }
 
     @Override
@@ -91,5 +96,9 @@ public class BaseUser implements Serializable {
     }
     public int getPoliticCardNumber() {
         return politicCardNumber;
+    }
+
+    public boolean isFakeUser() {
+        return fakeUser;
     }
 }

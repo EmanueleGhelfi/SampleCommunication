@@ -47,6 +47,8 @@ public class GameController implements Serializable{
     private int lastUser = -1;
     private Timer roundTimer = new Timer();
     private UserColor[] userColorSet;
+    private FakeUser fakeUser;
+
 
     public GameController() {
     }
@@ -74,12 +76,13 @@ public class GameController implements Serializable{
      * Called when init game
      */
     public void notifyStarted() {
+        if (game.getUsers().size() == 2){
+            creatingFakeUser();
+            //configurationForTwoPlayers();
+        }
         users = new ArrayList<>(game.getUsers());
         game.setStarted(true);
         setDefaultStuff();
-        if (game.getUsers().size() == 2){
-            configurationForTwoPlayers();
-        }
         // send map to first user
         for(User user: users) {
             if(user.isConnected()) {
@@ -92,15 +95,23 @@ public class GameController implements Serializable{
 
     }
 
+    private void creatingFakeUser() {
+        fakeUser = new FakeUser();
+        game.getUsersInGame().put(fakeUser.getUsername(), fakeUser);
+        fakeUser.setUsername("FakeUser");
+    }
+
     private void configurationForTwoPlayers() {
         ArrayList<PermitCard> permitCardArray = new ArrayList<>();
         for (java.util.Map.Entry<RegionName, PermitDeck> permitDeck : game.getPermitDecks().entrySet()) {
             permitCardArray.add(permitDeck.getValue().getAndRemoveRandomPermitCard());
         }
-        FakeUser fakeUser = new FakeUser();
         for (PermitCard permitCard : permitCardArray) {
             for (Character character : permitCard.getCityAcronimous()){
-                //TODO regola
+                for (City city : game.getMap().getCity()) {
+                    if (city.getCityName().getCityName().startsWith(character.toString().toUpperCase()) && !fakeUser.getUsersEmporium().contains(city))
+                        fakeUser.addEmporium(city);
+                }
             }
         }
 
@@ -108,26 +119,26 @@ public class GameController implements Serializable{
 
     private void setDefaultStuff() {
         int userCounter = 0;
-        for (User user: users){
+        for (User user: users) {
             userColorSet = UserColor.values();
             user.setUserColor(colorAvailable(0));
-            user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
-            user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
-            user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
-            user.setVictoryPathPosition(Constants.INITIAL_POSITION_ON_VICTORY_PATH);
+            if (!(user instanceof FakeUser)) {
+                user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
+                user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
+                user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
+                user.setVictoryPathPosition(Constants.INITIAL_POSITION_ON_VICTORY_PATH);
 
-            ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-            for(int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++){
-                politicCardArrayList.add(game.getPoliticCards().drawACard());
+                ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
+                for (int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++) {
+                    politicCardArrayList.add(game.getPoliticCards().drawACard());
+                }
+                user.setPoliticCards(politicCardArrayList);
+
+                for (int i = 0; i < 2; i++) {
+                    user.addPermitCard(game.getPermitDeck(RegionName.HILL).getPermitCardVisible(i));
+                }
+                userCounter++;
             }
-            user.setPoliticCards(politicCardArrayList);
-
-            for (int i = 0; i<2;i++){
-                user.addPermitCard(game.getPermitDeck(RegionName.HILL).getPermitCardVisible(i));
-            }
-
-
-            userCounter++;
         }
     }
 
@@ -288,6 +299,8 @@ public class GameController implements Serializable{
             }
             sendFinishMarketToAll();
             selectFirstPlayer();
+
+            configurationForTwoPlayers();
         }
         else{
             System.out.println("MAP NOT PRESENT");

@@ -497,7 +497,7 @@ public class MatchController implements Initializable, BaseController {
     private void populateHamburgerMenu() {
         usersComboBox = new JFXComboBox<>();
         clientController.getSnapshot().getUsersInGame().forEach((s, baseUser) -> {
-            if(!(baseUser.getUsername().equals(clientController.getSnapshot().getCurrentUser().getUsername())))
+            if(!baseUser.getUsername().equals(clientController.getSnapshot().getCurrentUser().getUsername()) && !baseUser.isFakeUser())
                 usersComboBox.getItems().add(baseUser.getUsername());
         });
         hamburgerMenu.add(usersComboBox,1,0);
@@ -654,11 +654,6 @@ public class MatchController implements Initializable, BaseController {
             CreateSingleCity(CityPosition.getX(city1),CityPosition.getY(city1),city1);
             createBonus(city1.getBonus().getBonusURL(),city1.getBonus().getBonusInfo(),city1);
         });
-
-        HBox emporiumHBox;
-        for (City city : clientController.getSnapshot().getMap().getCity()){
-
-        }
 
         /*
         clientController.getSnapshot().getUsersInGame().forEach((s, baseUser) -> {
@@ -908,6 +903,7 @@ public class MatchController implements Initializable, BaseController {
         cityName.setPreserveRatio(true);
 
         HBox emporiumHBox = new HBox();
+        emporiumHBox.setId(city.getCityName().getCityName());
         background.getChildren().add(emporiumHBox);
         emporiumHBox.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city)));
         emporiumHBox.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city)).add(imageView.fitHeightProperty()).subtract(30));
@@ -916,9 +912,12 @@ public class MatchController implements Initializable, BaseController {
         //emporiumHBox.prefWidthProperty().bind(imageView.fitWidthProperty());
         for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
             ImageView imageToAdd = new ImageView();
+            imageToAdd.setId(userHashMap.getKey());
+            System.out.println("imageid" + userHashMap.getKey());
             imageToAdd.setImage(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
             imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(4));
             imageToAdd.setPreserveRatio(true);
+            imageToAdd.setVisible(false);
             emporiumHBox.getChildren().add(imageToAdd);
         }
         Graphics.addShadow(cityName);
@@ -1399,7 +1398,6 @@ public class MatchController implements Initializable, BaseController {
 
             }
         });
-
     }
 
 
@@ -1442,6 +1440,9 @@ public class MatchController implements Initializable, BaseController {
                 reprintCouncilor();
                 reprintPermitCard();
 
+        //setVisibleEmporia
+        setEmporiaVisibility();
+
         // reprint user's info
         System.out.println("update view" +usersComboBox.getValue());
                 populateField(clientController.getSnapshot().getUsersInGame().get(usersComboBox.getValue()));
@@ -1455,6 +1456,18 @@ public class MatchController implements Initializable, BaseController {
         if(needToSelectOldPermitCard.get())
             selectOldPermitCardBonus();
 
+    }
+
+    private void setEmporiaVisibility() {
+        for (Map.Entry<String, BaseUser> user : clientController.getSnapshot().getUsersInGame().entrySet()) {
+            for (City city : user.getValue().getUsersEmporium()) {
+                if (user.getValue().getUsersEmporium() != null && city != null) {
+                    HBox cityHBox = (HBox) background.lookup("#" + city.getCityName().getCityName());
+                    ImageView userEmporium = (ImageView) cityHBox.lookup("#" + user.getKey());
+                    userEmporium.setVisible(true);
+                }
+            }
+        }
     }
 
 
