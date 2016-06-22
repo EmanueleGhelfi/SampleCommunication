@@ -1,6 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import ClientPackage.View.GUIResources.customComponent.ImageLoader;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
@@ -79,7 +80,7 @@ public class ShopController implements BaseController {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
-        backgroundImage.setImage(new Image("/ClientPackage/View/GUIResources/Image/ShopBackground.png",true));
+        backgroundImage.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/ShopBackground.png"));
         setBackground();
         updateView();
         createDeck();
@@ -237,7 +238,7 @@ public class ShopController implements BaseController {
     }
 
     private void createDeck() {
-        politicCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PoliticCardDistorted.png",true));
+        politicCardDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/PoliticCardDistorted.png"));
         permitCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png",true));
         helperDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/HelperDistorted.png",true));
         paneBackground.getChildren().addAll(politicCardDeck, permitCardDeck, helperDeck);
@@ -510,7 +511,7 @@ public class ShopController implements BaseController {
         rowConstraints3.setPercentHeight(20);
         baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3);
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
-        ImageView itemBackground = new ImageView(new Image(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
+        ImageView itemBackground = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
         itemBackground.fitWidthProperty().bind(buyScrollPane.widthProperty().divide(2));
         itemBackground.fitHeightProperty().bind(buyScrollPane.heightProperty().divide(2));
         baseGridPane.getChildren().add(itemBackground);
@@ -613,20 +614,20 @@ public class ShopController implements BaseController {
 
         Label label = new Label("");
         label.setTextFill(Paint.valueOf("WHITE"));
-        itemOnSaleImage = new Image("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
+        itemOnSaleImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
         if (information.getBuyableObject() instanceof PermitCard){
             sellPane.setVgap(20);
-            upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
-            downerImage = new Image ("/ClientPackage/View/GUIResources/Image/minusWhite.png");
+            upperImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/plusWhite.png");
+            downerImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/minusWhite.png");
             label.setText(information.getBuyableObject().getInfo());
         } else {
             sellPane.setVgap(0);
             if (information.getBuyableObject() instanceof Helper) {
-                upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusBlack.png");
-                downerImage = new Image("/ClientPackage/View/GUIResources/Image/minusBlack.png");
+                upperImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/plusBlack.png");
+                downerImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/minusBlack.png");
             } else {
-                    upperImage = new Image("/ClientPackage/View/GUIResources/Image/plusWhite.png");
-                    downerImage = new Image("/ClientPackage/View/GUIResources/Image/minusWhite.png");
+                    upperImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/plusWhite.png");
+                    downerImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/minusWhite.png");
             }
         }
         ImageView upper = new ImageView(upperImage);

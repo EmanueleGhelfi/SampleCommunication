@@ -173,8 +173,9 @@ public class MatchController implements Initializable, BaseController {
         initController();
 
         System.out.println("setting image");
-        backgroundImage.setImage(new Image(currentSnapshot.getMap().getRealMap(),true));
+        backgroundImage.setImage(ImageLoader.getInstance().getImage(currentSnapshot.getMap().getRealMap()));
         backgroundImage.setPreserveRatio(true);
+        backgroundImage.setCache(true);
         backgroundImage.fitHeightProperty().bind(gridPane.heightProperty());
         backgroundImage.fitWidthProperty().bind(gridPane.widthProperty());
         gridPane.prefWidthProperty().bind(background.prefWidthProperty());
@@ -266,7 +267,7 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void setBoard() {
-        boardImageView = new ImageView(new Image(Constants.IMAGE_PATH + "/Board3.png"));
+        boardImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Board1.png"));
         boardImageView.setOpacity(0.2);
         boardImageView.fitWidthProperty().bind(gridPane.widthProperty());
         boardImageView.fitHeightProperty().bind(background.heightProperty().divide(13));
@@ -288,7 +289,8 @@ public class MatchController implements Initializable, BaseController {
 
     private void creteOldPermitCard() {
         oldPermitCardNodeList.getChildren().clear();
-        ImageView bagImage = new ImageView(new Image(Constants.IMAGE_PATH+"bag.png"));
+        ImageView bagImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"bag.png"));
+        bagImage.setCache(true);
         bagImage.setFitHeight(50);
         bagImage.setFitWidth(50);
         JFXButton bagButton = new JFXButton();
@@ -305,7 +307,8 @@ public class MatchController implements Initializable, BaseController {
 
         for(PermitCard permitCard: clientController.getSnapshot().getCurrentUser().getOldPermitCards()){
             StackPane permitStackPane = new StackPane();
-            ImageView permitImage = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png"));
+            ImageView permitImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"PermitCard.png"));
+            permitImage.setCache(true);
             permitImage.setFitHeight(80);
             permitImage.setFitWidth(80);
             Label infoLabel= new Label(permitCard.getInfo());
@@ -325,7 +328,7 @@ public class MatchController implements Initializable, BaseController {
 
     private void createPermitCardBonusInStackPane(PermitCard permitCard, StackPane permitStackPane,ImageView permitImage) {
         for (int i = 0; i < permitCard.getBonus().getBonusURL().size(); i++) {
-            ImageView bonusImage = new ImageView(new Image(permitCard.getBonus().getBonusURL().get(i)));
+            ImageView bonusImage = new ImageView(ImageLoader.getInstance().getImage(permitCard.getBonus().getBonusURL().get(i)));
             bonusImage.fitHeightProperty().bind(permitImage.fitHeightProperty().divide(4));
             bonusImage.setPreserveRatio(true);
             Label bonusLabel = new Label(permitCard.getBonus().getBonusInfo().get(i));
@@ -366,7 +369,7 @@ public class MatchController implements Initializable, BaseController {
         handHBox.setAlignment(Pos.CENTER);
         for (PoliticCard politicCard : clientController.getSnapshot().getCurrentUser().getPoliticCards()) {
             ImageView politicCardImageView = new ImageView();
-            politicCardImageView.setImage(new Image(Constants.IMAGE_PATH + "/" + politicCard.getUrl() + ".png",true));
+            politicCardImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/" + politicCard.getUrl() + ".png"));
             politicCardImageView.setCache(true);
             politicCardImageView.fitHeightProperty().bind(handHBox.prefHeightProperty());
             politicCardImageView.setPreserveRatio(true);
@@ -376,7 +379,7 @@ public class MatchController implements Initializable, BaseController {
             StackPane permitStackPane = new StackPane();
             permitStackPane.setAlignment(Pos.CENTER);
             ImageView permitCardImageView = new ImageView();
-            permitCardImageView.setImage(new Image(Constants.IMAGE_PATH + "/PermitCard.png",true));
+            permitCardImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/PermitCard.png"));
             permitCardImageView.fitHeightProperty().bind(handHBox.prefHeightProperty());
             permitCardImageView.setPreserveRatio(true);
             permitCardImageView.setCache(true);
@@ -427,7 +430,7 @@ public class MatchController implements Initializable, BaseController {
         //NODE LIST
 
         JFXButton showMore = new JFXButton();
-        ImageView imageMore = new ImageView(new Image(Constants.IMAGE_PATH+"plusMenu.png"));
+        ImageView imageMore = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"plusMenu.png"));
         showMore.setGraphic(imageMore);
         showMore.setPrefHeight(50);
         showMore.setPrefWidth(50);
@@ -439,7 +442,7 @@ public class MatchController implements Initializable, BaseController {
 
         //change turn
         JFXButton changeTurnAction = new JFXButton();
-        ImageView imageChange = new ImageView(new Image(Constants.IMAGE_PATH+"change.png"));
+        ImageView imageChange = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"change.png"));
         imageChange.setFitHeight(50);
         imageChange.setFitWidth(50);
         changeTurnAction.setPrefHeight(50);
@@ -453,7 +456,7 @@ public class MatchController implements Initializable, BaseController {
 
         // HELP
         JFXButton helpButton = new JFXButton();
-        ImageView helpImage = new ImageView(new Image(Constants.IMAGE_PATH+"QuestionMark.png"));
+        ImageView helpImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"QuestionMark.png"));
         helpImage.setFitHeight(50);
         helpImage.setFitWidth(50);
         helpImage.setFitHeight(50);
@@ -504,7 +507,7 @@ public class MatchController implements Initializable, BaseController {
         jfxButton.setTooltip(new Tooltip("Change permit card of "+regionName));
         jfxButton.setPrefHeight(50);
         jfxButton.setPrefWidth(50);
-        ImageView regionImage = new ImageView(new Image(Constants.IMAGE_PATH+""+regionName+".png"));
+        ImageView regionImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+""+regionName+".png"));
         jfxButton.setGraphic(regionImage);
         //jfxButton.setTextFill(Paint.valueOf("WHITE"));
         jfxButton.setButtonType(JFXButton.ButtonType.RAISED);
@@ -697,7 +700,8 @@ public class MatchController implements Initializable, BaseController {
         for(int i = 0; i< bonusURL.size();i++){
             ImageView imageView = new ImageView();
             System.out.println("bonus url "+bonusURL.get(i));
-            imageView.setImage(new Image(bonusURL.get(i)));
+            imageView.setImage(ImageLoader.getInstance().getImage(bonusURL.get(i)));
+            imageView.setCache(true);
             imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.05));
             imageView.fitWidthProperty().bind(background.widthProperty().divide(30));
             imageView.getStyleClass().add(city1.getCityName().getCityName());
@@ -763,7 +767,7 @@ public class MatchController implements Initializable, BaseController {
 
     private void createKingImage(double x, double y) {
         kingImage = new ImageView();
-        kingImage.setImage(new Image(Constants.IMAGE_PATH+"Crown.png",true));
+        kingImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"Crown.png"));
         kingImage.setCache(true);
         kingImage.fitHeightProperty().bind(background.heightProperty().multiply(0.07));
         kingImage.fitWidthProperty().bind(background.widthProperty().divide(25));
@@ -806,7 +810,7 @@ public class MatchController implements Initializable, BaseController {
         for (Councilor councilor: kingCouncilors) {
             ImageView coucilorImage = new ImageView();
             try {
-                coucilorImage.setImage(new Image(councilor.getColor().getImageUrl()));
+                coucilorImage.setImage(ImageLoader.getInstance().getImage(councilor.getColor().getImageUrl()));
                 coucilorImage.fitWidthProperty().bind(popOver.prefWidthProperty().divide(10));
                 coucilorImage.fitHeightProperty().bind(popOver.prefHeightProperty().divide(3));
                 coucilorImage.setPreserveRatio(true);
@@ -883,12 +887,12 @@ public class MatchController implements Initializable, BaseController {
         //castrum.radiusProperty().bind(background.widthProperty().divide(20));
         System.out.println(city.getCityName().toString().toLowerCase());
         try {
-            Image cityImage = new Image("/ClientPackage/View/GUIResources/Image/City/"+city.getColor().getColor().toLowerCase()+".png",true);
+            Image cityImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/City/"+city.getColor().getColor().toLowerCase()+".png");
             imageView.setImage(cityImage);
             imageView.setCache(true);
         }
         catch (Exception e){
-            imageView.setImage(new Image("/ClientPackage/View/GUIResources/Image/City/blue.png"));
+            imageView.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/City/blue.png"));
         }
         imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.17));
         //imageView.fitWidthProperty().bind(background.widthProperty().divide(9));
@@ -923,8 +927,8 @@ public class MatchController implements Initializable, BaseController {
             }
         });
 
-        ImageView cityName = new ImageView(new Image(Constants.IMAGE_PATH+"City/Names/"+city.
-                getCityName().getCityName()+""+city.getColor().getColor()+".png",true));
+        ImageView cityName = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"City/Names/"+city.
+                getCityName().getCityName()+""+city.getColor().getColor()+".png"));
 
         cityName.setCache(true);
         background.getChildren().add(cityName);
@@ -948,10 +952,11 @@ public class MatchController implements Initializable, BaseController {
             imageToAdd.setMouseTransparent(true);
             System.out.println("imageid" + userHashMap.getKey());
             System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
-            imageToAdd.setImage(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
+            imageToAdd.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
             imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(4));
             imageToAdd.setPreserveRatio(true);
             imageToAdd.setVisible(false);
+            imageToAdd.setCache(true);
             emporiumHBox.getChildren().add(imageToAdd);
         }
         Graphics.addShadow(cityName);
@@ -1109,7 +1114,7 @@ public class MatchController implements Initializable, BaseController {
                 for (int i = 0; i< councilors.size();i++){
                     ImageView imageView = new ImageView();
                     try {
-                        imageView.setImage(new Image(councilors.get(i).getColor().getImageUrl(),true));
+                        imageView.setImage(ImageLoader.getInstance().getImage(councilors.get(i).getColor().getImageUrl()));
                         imageView.setCache(true);
                         imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(10));
                         imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(3));
@@ -1144,7 +1149,7 @@ public class MatchController implements Initializable, BaseController {
         for (Councilor councilor: kingCouncilors){
             ImageView imageView = new ImageView();
             try{
-                imageView.setImage(new Image(councilor.getColor().getImageUrl(),true));
+                imageView.setImage(ImageLoader.getInstance().getImage(councilor.getColor().getImageUrl()));
                 imageView.setCache(true);
                 imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(10));
                 imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(3));
@@ -1178,7 +1183,7 @@ public class MatchController implements Initializable, BaseController {
                 Label label = new Label(permitCard.getCityString());
                 label.getStyleClass().add("permitLabel");
                 label.setTextFill(Paint.valueOf("WHITE"));
-                ImageView permitImageView = new ImageView(new Image(Constants.IMAGE_PATH+"PermitCard.png",true));
+                ImageView permitImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"PermitCard.png"));
                 permitImageView.setCache(true);
                 permitImageView.setPreserveRatio(true);
                 gridPane.add(permitImageView,0,0);
@@ -1220,7 +1225,7 @@ public class MatchController implements Initializable, BaseController {
                 for(int i = 0 ; i< permitCard.getBonus().getBonusURL().size();i++){
                     // style class for change image
                     ImageView imageViewBonus = imageViewArrayList.get(i);
-                    imageViewBonus.setImage(new Image(permitCard.getBonus().getBonusURL().get(i),true));
+                    imageViewBonus.setImage(ImageLoader.getInstance().getImage(permitCard.getBonus().getBonusURL().get(i)));
                     imageViewBonus.setCache(true);
                     imageViewBonus.setVisible(true);
                     Label bonusInfo = labelArrayList.get(i);
@@ -1562,7 +1567,7 @@ public class MatchController implements Initializable, BaseController {
                     ImageView imageViewBonus = (ImageView) imageViewBonusList.get(j);
                     if(j<permitCardTmp.getBonus().getBonusURL().size()) {
                         imageViewBonus.setVisible(true);
-                        imageViewBonus.setImage(new Image(permitCardTmp.getBonus().getBonusURL().get(j)));
+                        imageViewBonus.setImage(ImageLoader.getInstance().getImage(permitCardTmp.getBonus().getBonusURL().get(j)));
                         bonusLabel.setText(permitCardTmp.getBonus().getBonusInfo().get(j));
                         bonusLabel.setVisible(true);
                     }

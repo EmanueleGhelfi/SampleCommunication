@@ -1,6 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import ClientPackage.View.GUIResources.customComponent.ImageLoader;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.City;
@@ -41,7 +42,7 @@ public class NobilityPathController implements BaseController {
 
 
     private void createGridPane() {
-        backgroundImage.setImage(new Image(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png",true));
+        backgroundImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png"));
         backgroundImage.setCache(true);
         backgroundImage.fitWidthProperty().bind(nobilityPath.prefWidthProperty());
         backgroundImage.fitHeightProperty().bind(nobilityPath.prefHeightProperty());
@@ -145,7 +146,7 @@ public class NobilityPathController implements BaseController {
                 for (int i = 0; i < position.getBonus().getBonusURL().size(); i++) {
                     StackPane internalStackPane = new StackPane();
                     System.out.println(position.getPosition() + " E' LA POSITION CON " + position.getBonus().getBonusURL().size() + " BONUS");
-                    ImageView bonusImage = new ImageView(new Image(position.getBonus().getBonusURL().get(i),true));
+                    ImageView bonusImage = new ImageView(ImageLoader.getInstance().getImage(position.getBonus().getBonusURL().get(i)));
                     bonusImage.setCache(true);
                     internalStackPane.getChildren().add(bonusImage);
                     bonusImage.setPreserveRatio(true);

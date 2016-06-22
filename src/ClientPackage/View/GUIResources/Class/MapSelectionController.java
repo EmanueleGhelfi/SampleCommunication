@@ -79,7 +79,7 @@ public class MapSelectionController implements Initializable {
     public void showMap(ArrayList<Map> mapArrayList) {
         for (Map map : mapArrayList) {
             this.mapArrayList.add(map);
-            this.mapArrayListImage.add(new Image(map.getMapPreview(), 0, 0, true, false, true));
+            this.mapArrayListImage.add(ImageLoader.getInstance().getImage(map.getMapPreview()));
         }
 
         prevImageView.fitHeightProperty().bind(gridPaneBackground.heightProperty().divide(5));
