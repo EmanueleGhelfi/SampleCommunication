@@ -266,8 +266,10 @@ public class MatchController implements Initializable, BaseController {
         infoHBox.prefHeightProperty().bind(boardImageView.fitHeightProperty());
         infoHBox.prefWidthProperty().bind(gridPane.widthProperty().divide(2));
         gridPane.add(turnImage, 0, 0);
-        turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty());
+        turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty().multiply(2));
         turnImage.setPreserveRatio(true);
+        turnImage.setStyle("-fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0)");
+        turnImage.setStyle("-fx-effect: dropshadow(two-pass-box, black, ");
         GridPane.setValignment(turnImage, VPos.TOP);
         GridPane.setHalignment(turnImage, HPos.CENTER);
     }
@@ -1403,11 +1405,11 @@ public class MatchController implements Initializable, BaseController {
             public void run() {
                 if(thisTurn){
                     Graphics.notification("E' il tuo turno!");
-                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes.png"));
+                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes1.png"));
                 }
                 else{
                     Graphics.notification("Turno finito!");
-                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo.png"));
+                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo1.png"));
                 }
 
             }
