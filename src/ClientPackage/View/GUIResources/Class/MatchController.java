@@ -1227,6 +1227,7 @@ public class MatchController implements Initializable, BaseController {
             stopPulsePermitCard.setValue(true);
 
             onSelectOldPermitCard();
+
             hidePermitCardHightLight(".visiblePermitCard",bottomPane);
         }
     }
@@ -1423,7 +1424,7 @@ public class MatchController implements Initializable, BaseController {
                 */
         createHand();
         creteOldPermitCard();
-        if(needToSelectOldPermitCard.get())
+        if(needToSelectOldPermitCard.get() && myTurn)
             selectOldPermitCardBonus();
 
     }
@@ -1595,7 +1596,7 @@ public class MatchController implements Initializable, BaseController {
 
     public void onSelectOldPermitCard() {
         needToSelectOldPermitCard.setValue(false);
-        stopPulsePermitCard.setValue(false);
+        stopPulsePermitCard.setValue(true);
         stopPulseOldPermitCard.setValue(true);
         hidePermitCardHightLight(".myPermitCard",gridPane);
     }
