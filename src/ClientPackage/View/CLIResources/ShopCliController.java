@@ -2,13 +2,18 @@ package ClientPackage.View.CLIResources;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GeneralView.CLIView;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
+import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.ArrayUtils;
 import Utilities.Exception.CancelException;
 import asg.cliche.Command;
 import org.apache.commons.cli.Options;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -25,6 +30,7 @@ public class ShopCliController implements CliController{
     private boolean onMarketPhase;
     private boolean onBuyPhase;
     private boolean onSellPhase;
+
 
     public ShopCliController(CLIView cliView, ClientController clientController) {
         this.cliView = cliView;
@@ -107,5 +113,47 @@ public class ShopCliController implements CliController{
     @Command(name = "sell", abbrev = "s", description = "Sell something in the market")
     public void sell() {
 
+        cliPrinter.printBlue("YOUR OBJECT: ");
+        ArrayList<BuyableWrapper> buyableWrappers = updateList();
+
+        for (BuyableWrapper buyableWrapper : buyableWrappers) {
+            System.out.println("" + buyableWrappers.indexOf(buyableWrapper) + ". "
+                    + cliPrinter.toStringFormatted(buyableWrapper));
+        }
+
+
+
+
+    }
+
+    private ArrayList<BuyableWrapper> updateList() {
+        ArrayList<BuyableWrapper> sellList = new ArrayList<>();
+        ArrayList<BuyableWrapper> mBuyList = clientController.getSnapshot().getMarketList();
+        SnapshotToSend snapshotTosend = clientController.getSnapshot();
+        for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
+            sellList.add(buyableWrapperTmp);
+        }
+
+        for(PermitCard permitCard: snapshotTosend.getCurrentUser().getPermitCards()){
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername());
+            sellList.add(buyableWrapperTmp);
+        }
+
+        for(Helper helper: snapshotTosend.getCurrentUser().getHelpers()){
+            BuyableWrapper buyableWrapper = new BuyableWrapper(helper,snapshotTosend.getCurrentUser().getUsername());
+            sellList.add(buyableWrapper);
+        }
+
+        for(Iterator<BuyableWrapper> itr = mBuyList.iterator(); itr.hasNext();){
+            BuyableWrapper buyableWrapper = itr.next();
+            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
+                sellList.remove(buyableWrapper);
+                sellList.add(buyableWrapper);
+                itr.remove();
+            }
+        }
+
+        return sellList;
     }
 }

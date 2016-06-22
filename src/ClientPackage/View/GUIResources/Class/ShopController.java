@@ -221,8 +221,6 @@ public class ShopController implements BaseController {
             }
         }
 
-        System.out.println("In shop controller buylist: "+buyList);
-        System.out.println("In shop controller selllist: "+sellList);
         populateSellAndBuyPane();
     }
 
