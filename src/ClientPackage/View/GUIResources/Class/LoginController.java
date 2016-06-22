@@ -32,7 +32,11 @@ public class LoginController {
 
     public void onButtonLoginPressed(ActionEvent actionEvent) {
         System.out.println("On button login pressed");
-        clientController.onSendLogin(usernameText.getText());
+        if (!usernameText.getText().isEmpty()) {
+            clientController.onSendLogin(usernameText.getText());
+        } else {
+            showLoginError("Username non valido");
+        }
     }
 
     public void setClientController(ClientController clientController) {
@@ -69,8 +73,8 @@ public class LoginController {
         );
     }
 
-    public void showLoginError() {
-        errorText.setText("Username già scelto");
+    public void showLoginError(String error) {
+        errorText.setText(error);
         errorText.setTextFill(Paint.valueOf("red"));
     }
 

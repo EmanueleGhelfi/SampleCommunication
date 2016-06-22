@@ -254,7 +254,8 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void setBoard() {
-        boardImageView = new ImageView(new Image(Constants.IMAGE_PATH + "/Board.png"));
+        boardImageView = new ImageView(new Image(Constants.IMAGE_PATH + "/Board3.png"));
+        boardImageView.setOpacity(0.2);
         boardImageView.fitWidthProperty().bind(gridPane.widthProperty());
         boardImageView.fitHeightProperty().bind(background.heightProperty().divide(13));
         gridPane.add(boardImageView, 0, 0);

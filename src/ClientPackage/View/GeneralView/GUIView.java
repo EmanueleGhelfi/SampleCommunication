@@ -89,7 +89,7 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void showLoginError() {
         Platform.runLater(()->{
-            loginController.showLoginError();
+            loginController.showLoginError("Username già scelto");
         });
 
     }
@@ -119,8 +119,8 @@ public class GUIView extends Application implements BaseView {
         stage.setResizable(false);
         this.stage.setScene(scene);
         this.stage.show();
-        stage.setMinHeight(400);
-        stage.setMinWidth(600);
+        stage.setMinHeight(500);
+        stage.setMinWidth(700);
     }
 
     @Override
@@ -141,6 +141,8 @@ public class GUIView extends Application implements BaseView {
                     scene = new Scene(screen);
                     stage.setScene(scene);
                     stage.show();
+                    stage.setMinHeight(500);
+                    stage.setMinWidth(700);
                     maps = mapArrayList;
                     if(waitingController!=null){
                         mapSelectionController.showMap(maps);
