@@ -76,8 +76,8 @@ public class GUIView extends Application implements BaseView {
         });
         this.stage.setScene(scene);
         this.stage.show();
-        stage.setMinHeight(400);
-        stage.setMinWidth(600);
+        stage.setMinHeight(500);
+        stage.setMinWidth(700);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void showLoginError() {
         Platform.runLater(()->{
-            loginController.showLoginError();
+            loginController.showLoginError("Username già scelto");
         });
 
     }
@@ -116,11 +116,11 @@ public class GUIView extends Application implements BaseView {
         waitingController = loader.getController();
         waitingController.setClientController(clientController);
         scene = new Scene(screen);
-        stage.setResizable(false);
+        //stage.setResizable(false);
         this.stage.setScene(scene);
         this.stage.show();
-        stage.setMinHeight(400);
-        stage.setMinWidth(600);
+        stage.setMinHeight(500);
+        stage.setMinWidth(700);
     }
 
     @Override
@@ -141,6 +141,8 @@ public class GUIView extends Application implements BaseView {
                     scene = new Scene(screen);
                     stage.setScene(scene);
                     stage.show();
+                    stage.setMinHeight(500);
+                    stage.setMinWidth(700);
                     maps = mapArrayList;
                     if(waitingController!=null){
                         mapSelectionController.showMap(maps);
@@ -175,6 +177,13 @@ public class GUIView extends Application implements BaseView {
                 stage.setMinHeight(600);
                 stage.setMinWidth(1200);
                 stage.show();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        Platform.exit();
+                        System.exit(0);
+                    }
+                });
                 //resizingWindow();
             }
         });

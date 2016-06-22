@@ -4,9 +4,11 @@ import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Path.Position;
+import Server.Model.FakeUser;
 import Server.Model.User;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Emanuele on 18/05/2016.
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 public class BaseUser implements Serializable {
 
     protected String username;
+    protected UserColor userColor;
     protected boolean connected;
     protected int coinPathPosition;
     protected int victoryPathPosition;
@@ -23,6 +26,7 @@ public class BaseUser implements Serializable {
     protected ArrayList<PermitCard> permitCards;
     protected ArrayList<PermitCard> oldPermitCards;
     protected int politicCardNumber;
+    protected boolean fakeUser = false;
 
     // default constructor for inheritance. Obligatory! Do not cancel!
     public BaseUser() {
@@ -30,6 +34,7 @@ public class BaseUser implements Serializable {
 
     public BaseUser(User user){
         this.username = user.getUsername();
+        this.userColor = user.getUserColor();
         this.connected = user.isConnected();
         this.coinPathPosition = user.getCoinPathPosition();
         this.victoryPathPosition = user.getVictoryPathPosition();
@@ -39,6 +44,9 @@ public class BaseUser implements Serializable {
         this.permitCards = user.getPermitCards();
         this.oldPermitCards = user.getOldPermitCards();
         this.politicCardNumber = user.getPoliticCardSize();
+        if (user instanceof FakeUser){
+            fakeUser = true;
+        }
     }
 
     @Override
@@ -72,8 +80,10 @@ public class BaseUser implements Serializable {
     public ArrayList<PermitCard> getPermitCards() {
         return permitCards;
     }
-    public String getUsername() {
-        return username;
+    public String getUsername() {return username;}
+    public UserColor getUserColor() {return userColor;}
+    public void setUserColor(UserColor userColor) {
+        this.userColor = userColor;
     }
     public ArrayList<City> getUsersEmporium() {
         return usersEmporium;
@@ -86,5 +96,9 @@ public class BaseUser implements Serializable {
     }
     public int getPoliticCardNumber() {
         return politicCardNumber;
+    }
+
+    public boolean isFakeUser() {
+        return fakeUser;
     }
 }

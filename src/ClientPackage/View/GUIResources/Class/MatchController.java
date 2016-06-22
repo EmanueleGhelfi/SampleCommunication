@@ -10,6 +10,7 @@ import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.User;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import Utilities.Exception.CouncilNotFoundException;
@@ -114,11 +115,15 @@ public class MatchController implements Initializable, BaseController {
     @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
 
+    @FXML private HBox infoHBox;
+
     @FXML private Button helpButton;
+
+    @FXML private Button moreImg;
 
     private SingleSelectionModel<Tab> selectionModel;
 
-
+    private ImageView turnImage = new ImageView();
     private HBox handHBox = new HBox();
 
     //Images
@@ -149,6 +154,8 @@ public class MatchController implements Initializable, BaseController {
     private JFXNodesList moreActionNodeList = new JFXNodesList();
     // node list for old permit card
     private JFXNodesList oldPermitCardNodeList = new JFXNodesList();
+
+    private ImageView boardImageView;
 
 
     @Override
@@ -243,9 +250,38 @@ public class MatchController implements Initializable, BaseController {
         nobilityPath.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
-
+        setBoard();
         GridPane.setHalignment(nobilityPath, HPos.CENTER);
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
+        createLayers();
+    }
+
+    private void createLayers() {
+        boardImageView.toFront();
+        infoHBox.toFront();
+        turnImage.toFront();
+        hamburgerMenu.toFront();
+        hamburgerIcon.toFront();
+        bottomPane.toFront();
+    }
+
+    private void setBoard() {
+        boardImageView = new ImageView(new Image(Constants.IMAGE_PATH + "/Board3.png"));
+        boardImageView.setOpacity(0.2);
+        boardImageView.fitWidthProperty().bind(gridPane.widthProperty());
+        boardImageView.fitHeightProperty().bind(background.heightProperty().divide(13));
+        gridPane.add(boardImageView, 0, 0);
+        GridPane.setValignment(boardImageView, VPos.TOP);
+        GridPane.setColumnSpan(boardImageView, 3);
+        //boardImageView.toBack();
+        GridPane.setValignment(infoHBox, VPos.TOP);
+        infoHBox.prefHeightProperty().bind(boardImageView.fitHeightProperty());
+        infoHBox.prefWidthProperty().bind(gridPane.widthProperty().divide(2));
+        gridPane.add(turnImage, 0, 0);
+        turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty());
+        turnImage.setPreserveRatio(true);
+        GridPane.setValignment(turnImage, VPos.TOP);
+        GridPane.setHalignment(turnImage, HPos.CENTER);
     }
 
     private void creteOldPermitCard() {
@@ -485,7 +521,7 @@ public class MatchController implements Initializable, BaseController {
     private void populateHamburgerMenu() {
         usersComboBox = new JFXComboBox<>();
         clientController.getSnapshot().getUsersInGame().forEach((s, baseUser) -> {
-            if(!(baseUser.getUsername().equals(clientController.getSnapshot().getCurrentUser().getUsername())))
+            if(!baseUser.getUsername().equals(clientController.getSnapshot().getCurrentUser().getUsername()) && !baseUser.isFakeUser())
                 usersComboBox.getItems().add(baseUser.getUsername());
         });
         hamburgerMenu.add(usersComboBox,1,0);
@@ -522,6 +558,7 @@ public class MatchController implements Initializable, BaseController {
         hamburgerMenu.setPrefWidth(0);
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburgerIcon);
         burgerTask.setRate(-1);
+        //hamburgerIcon.toFront();
         hamburgerIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
 
             burgerTask.setRate(burgerTask.getRate()*-1);
@@ -639,9 +676,14 @@ public class MatchController implements Initializable, BaseController {
         */
         clientController.getSnapshot().getMap().getCity().forEach(city1 -> {
             CreateSingleCity(CityPosition.getX(city1),CityPosition.getY(city1),city1);
-                createBonus(city1.getBonus().getBonusURL(),city1.getBonus()
-                        .getBonusInfo(),city1);
+            createBonus(city1.getBonus().getBonusURL(),city1.getBonus().getBonusInfo(),city1);
         });
+
+        /*
+        clientController.getSnapshot().getUsersInGame().forEach((s, baseUser) -> {
+            baseUser.getUsersEmporium().
+        });
+        */
 
         createKingImage(CityPosition.getX(clientController.getSnapshot().getKing().getCurrentCity()),CityPosition
                 .getY(clientController.getSnapshot().getKing().getCurrentCity()));
@@ -805,6 +847,7 @@ public class MatchController implements Initializable, BaseController {
             @Override
             public void handle(MouseEvent event) {
                 if (!buildWithKingPhase.getValue()) {
+                    popOver.hide();
                     buildWithKingPhase.setValue(true);
                     startBuildWithKing();
                 }
@@ -885,9 +928,30 @@ public class MatchController implements Initializable, BaseController {
         background.getChildren().add(cityName);
         cityName.layoutXProperty().bind(imageView.layoutXProperty());
         cityName.layoutYProperty().bind(imageView.layoutYProperty());
-
         cityName.fitWidthProperty().bind(imageView.fitWidthProperty());
         cityName.setPreserveRatio(true);
+
+        HBox emporiumHBox = new HBox();
+        emporiumHBox.setId(city.getCityName().getCityName());
+        emporiumHBox.setMouseTransparent(true);
+        background.getChildren().add(emporiumHBox);
+        emporiumHBox.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city)));
+        emporiumHBox.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city)).add(imageView.fitHeightProperty()).subtract(30));
+        emporiumHBox.toFront();
+        //emporiumHBox.prefHeightProperty().bind(imageView.fitHeightProperty().divide(4));
+        //emporiumHBox.prefWidthProperty().bind(imageView.fitWidthProperty());
+        for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
+            ImageView imageToAdd = new ImageView();
+            imageToAdd.setId(userHashMap.getKey());
+            imageToAdd.setMouseTransparent(true);
+            System.out.println("imageid" + userHashMap.getKey());
+            System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
+            imageToAdd.setImage(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
+            imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(4));
+            imageToAdd.setPreserveRatio(true);
+            imageToAdd.setVisible(false);
+            emporiumHBox.getChildren().add(imageToAdd);
+        }
         Graphics.addShadow(cityName);
 
     }
@@ -1244,7 +1308,7 @@ public class MatchController implements Initializable, BaseController {
 
     @Override
     public void onFinishMarket() {
-
+        selectionModel.selectFirst();
     }
 
     @Override
@@ -1362,16 +1426,15 @@ public class MatchController implements Initializable, BaseController {
             public void run() {
                 if(thisTurn){
                     Graphics.notification("E' il tuo turno!");
-                    turnText.setText("E' il tuo turno!");
+                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes.png"));
                 }
                 else{
-                    turnText.setText("Non è il tuo turno!");
                     Graphics.notification("Turno finito!");
+                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo.png"));
                 }
 
             }
         });
-
     }
 
 
@@ -1414,6 +1477,9 @@ public class MatchController implements Initializable, BaseController {
                 reprintCouncilor();
                 reprintPermitCard();
 
+        //setVisibleEmporia
+        setEmporiaVisibility();
+
         // reprint user's info
         System.out.println("update view" +usersComboBox.getValue());
                 populateField(clientController.getSnapshot().getUsersInGame().get(usersComboBox.getValue()));
@@ -1427,6 +1493,18 @@ public class MatchController implements Initializable, BaseController {
         if(needToSelectOldPermitCard.get() && myTurn)
             selectOldPermitCardBonus();
 
+    }
+
+    private void setEmporiaVisibility() {
+        for (Map.Entry<String, BaseUser> user : clientController.getSnapshot().getUsersInGame().entrySet()) {
+            for (City city : user.getValue().getUsersEmporium()) {
+                if (user.getValue().getUsersEmporium() != null && city != null) {
+                    HBox cityHBox = (HBox) background.lookup("#" + city.getCityName().getCityName());
+                    ImageView userEmporium = (ImageView) cityHBox.lookup("#" + user.getKey());
+                    userEmporium.setVisible(true);
+                }
+            }
+        }
     }
 
 
@@ -1697,5 +1775,9 @@ public class MatchController implements Initializable, BaseController {
 
     public void showNodeList(){
         moreActionNodeList.setVisible(true);
+    }
+
+    public SingleSelectionModel<Tab> getSelectionModel() {
+        return selectionModel;
     }
 }

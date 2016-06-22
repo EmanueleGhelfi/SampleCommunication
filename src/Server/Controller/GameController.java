@@ -13,6 +13,7 @@ import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import CommonModel.Snapshot.UserColor;
 import Server.Model.FakeUser;
 import Server.Model.Game;
 import Server.Model.Map;
@@ -45,6 +46,9 @@ public class GameController implements Serializable{
     private int nextUser;
     private int lastUser = -1;
     private Timer roundTimer = new Timer();
+    private UserColor[] userColorSet;
+    private FakeUser fakeUser;
+
 
     public GameController() {
     }
@@ -72,12 +76,13 @@ public class GameController implements Serializable{
      * Called when init game
      */
     public void notifyStarted() {
+        if (game.getUsers().size() == 2){
+            creatingFakeUser();
+            //configurationForTwoPlayers();
+        }
         users = new ArrayList<>(game.getUsers());
         game.setStarted(true);
         setDefaultStuff();
-        if (game.getUsers().size() == 2){
-            configurationForTwoPlayers();
-        }
         // send map to first user
         for(User user: users) {
             if(user.isConnected()) {
@@ -90,15 +95,23 @@ public class GameController implements Serializable{
 
     }
 
+    private void creatingFakeUser() {
+        fakeUser = new FakeUser();
+        game.getUsersInGame().put(fakeUser.getUsername(), fakeUser);
+        fakeUser.setUsername("FakeUser");
+    }
+
     private void configurationForTwoPlayers() {
         ArrayList<PermitCard> permitCardArray = new ArrayList<>();
         for (java.util.Map.Entry<RegionName, PermitDeck> permitDeck : game.getPermitDecks().entrySet()) {
             permitCardArray.add(permitDeck.getValue().getAndRemoveRandomPermitCard());
         }
-        FakeUser fakeUser = new FakeUser();
         for (PermitCard permitCard : permitCardArray) {
             for (Character character : permitCard.getCityAcronimous()){
-                //TODO regola
+                for (City city : game.getMap().getCity()) {
+                    if (city.getCityName().getCityName().startsWith(character.toString().toUpperCase()) && !fakeUser.getUsersEmporium().contains(city))
+                        fakeUser.addEmporium(city);
+                }
             }
         }
 
@@ -106,25 +119,55 @@ public class GameController implements Serializable{
 
     private void setDefaultStuff() {
         int userCounter = 0;
-        for (User user: users){
-            user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
-            user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
-            user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
-            user.setVictoryPathPosition(Constants.INITIAL_POSITION_ON_VICTORY_PATH);
+        for (User user: users) {
+            userColorSet = UserColor.values();
+            user.setUserColor(colorAvailable(0));
+            if (!(user instanceof FakeUser)) {
+                user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
+                user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
+                user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
+                user.setVictoryPathPosition(Constants.INITIAL_POSITION_ON_VICTORY_PATH);
 
-            ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-            for(int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++){
-                politicCardArrayList.add(game.getPoliticCards().drawACard());
+                ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
+                for (int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++) {
+                    politicCardArrayList.add(game.getPoliticCards().drawACard());
+                }
+                user.setPoliticCards(politicCardArrayList);
+
+                for (int i = 0; i < 2; i++) {
+                    user.addPermitCard(game.getPermitDeck(RegionName.HILL).getPermitCardVisible(i));
+                }
+                userCounter++;
             }
-            user.setPoliticCards(politicCardArrayList);
-
-            for (int i = 0; i<2;i++){
-                user.addPermitCard(game.getPermitDeck(RegionName.HILL).getPermitCardVisible(i));
-            }
-
-
-            userCounter++;
         }
+    }
+
+    private UserColor colorAvailable(int userColorCounter) {
+       /* for (java.util.Map.Entry<String, User> userInFor : game.getUsersInGame().entrySet()) {
+            if (userInFor.getValue().getUserColor() != null && userColorSet[userColorCounter].getColor().equals(userInFor.getValue().getUserColor().getColor())) {
+                return colorAvailable(++userColorCounter);
+            }
+            else {
+                return userColorSet[userColorCounter];
+            }
+
+
+        }
+        */
+
+        for(UserColor userColor: UserColor.values()){
+            boolean found = false;
+            for(User user: game.getUsersInGame().values()){
+                if(user.getUserColor()!= null && user.getUserColor().equals(userColor)){
+                    found=true;
+                }
+            }
+
+            if(!found){
+                return userColor;
+            }
+        }
+        return null;
     }
 
     public void cancelTimeout() {
@@ -274,6 +317,8 @@ public class GameController implements Serializable{
             }
             sendFinishMarketToAll();
             selectFirstPlayer();
+
+            configurationForTwoPlayers();
         }
         else{
             System.out.println("MAP NOT PRESENT");
@@ -314,7 +359,8 @@ public class GameController implements Serializable{
         }
 
 
-        for(int i = 1;i< users.size();i++){
+        for(int i = 0;i< users.size();i++){
+            if(users.get(i).isConnected() && i!=nextUser)
             users.get(i).getBaseCommunication().finishTurn();
         }
 
@@ -597,4 +643,22 @@ public class GameController implements Serializable{
         sendSnapshotToAll();
 
     }
+
+    public boolean userConnectedRoutine(){
+        for (User user : users) {
+            if (user.isConnected()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void cleanGame(){
+        if (!userConnectedRoutine()){
+            roundTimer.cancel();
+            users.clear();
+            GamesManager.getInstance().cancelThisGame(game, this);
+        }
+    }
+
 }

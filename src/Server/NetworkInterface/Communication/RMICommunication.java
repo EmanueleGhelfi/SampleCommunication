@@ -271,6 +271,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             } catch (RemoteException e) {
                 user.setConnected(false);
                 user.getGameController().onUserDisconnected(user);
+                user.getGameController().cleanGame();
             }
         }
     }

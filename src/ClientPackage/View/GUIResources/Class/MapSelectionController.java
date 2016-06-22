@@ -8,6 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -24,15 +27,14 @@ public class MapSelectionController implements Initializable {
 
     private ClientController clientController;
     private CircularArrayList<Map> mapArrayList = new CircularArrayList<>();
+    private CircularArrayList<Image> mapArrayListImage = new CircularArrayList<>();
     private int mapCounter;
 
-    @FXML private Text jsonTest;
-    @FXML private ImageView coastImage;
-    @FXML private GridPane gridPane;
     @FXML private ImageView prevImageView;
     @FXML private ImageView thisImageView;
     @FXML private ImageView nextImageView;
-    @FXML private BorderPane borderPaneBackground;
+    @FXML private GridPane gridPaneBackground;
+    @FXML private GridPane gridPaneSelection;
     private Image prevImage;
     private Image thisImage;
     private Image nextImage;
@@ -49,48 +51,84 @@ public class MapSelectionController implements Initializable {
         JFXButton leftButton = new JFXButton();
         ImageView leftImage = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/Left.png"));
         leftButton.setGraphic(leftImage);
-
         JFXButton rightButton = new JFXButton();
         ImageView rightImage = new ImageView(new Image("/ClientPackage/View/GUIResources/Image/Right.png"));
         rightButton.setGraphic(rightImage);
-
-        borderPaneBackground.setLeft(leftButton);
-        borderPaneBackground.setRight(rightButton);
-
+        gridPaneBackground.add(leftButton, 0, 1);
+        gridPaneBackground.add(rightButton, 2, 1);
         leftButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 prevVisibleMap();
             }
         });
-
         rightButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 nextVisibleMap();
             }
         });
-
+        GridPane.setHalignment(leftButton, HPos.CENTER);
+        GridPane.setValignment(leftButton, VPos.CENTER);
+        GridPane.setHalignment(rightButton, HPos.CENTER);
+        GridPane.setValignment(rightButton, VPos.CENTER);
 
     }
 
     public void showMap(ArrayList<Map> mapArrayList) {
         for (Map map : mapArrayList) {
             this.mapArrayList.add(map);
+            this.mapArrayListImage.add(new Image(map.getMapPreview(), 0, 0, true, false, true));
         }
-        thisImage = new Image(mapArrayList.get(0).getMapPreview());
+
+        prevImageView.fitHeightProperty().bind(gridPaneBackground.heightProperty().divide(5));
+        prevImageView.setPreserveRatio(true);
+        thisImageView.fitHeightProperty().bind(gridPaneBackground.heightProperty().divide(3.5));
+        thisImageView.setPreserveRatio(true);
+        nextImageView.fitHeightProperty().bind(gridPaneBackground.heightProperty().divide(5));
+        nextImageView.setPreserveRatio(true);
+        prevImage = this.mapArrayListImage.get(mapCounter - 1);
+        thisImage = this.mapArrayListImage.get(mapCounter);
+        nextImage = this.mapArrayListImage.get(mapCounter + 1);
+        prevImageView.toBack();
+        thisImageView.toFront();
+        nextImageView.toBack();
+        prevImageView.setImage(prevImage);
         thisImageView.setImage(thisImage);
+        nextImageView.setImage(nextImage);
+
+        /*
+        prevImage = new Image(this.mapArrayList.get(mapCounter - 1).getMapPreview());
+        thisImage = new Image(this.mapArrayList.get(mapCounter).getMapPreview());
+        nextImage = new Image(this.mapArrayList.get(mapCounter + 1).getMapPreview());
+        */
     }
 
     public void nextVisibleMap(){
         mapCounter++;
-        System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
-        System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
-        System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
+        showThreeMaps();
     }
 
     public void prevVisibleMap(){
         mapCounter--;
+        showThreeMaps();
+    }
+
+    private void showThreeMaps() {
+        prevImage = this.mapArrayListImage.get(mapCounter - 1);
+        thisImage = this.mapArrayListImage.get(mapCounter);
+        nextImage = this.mapArrayListImage.get(mapCounter + 1);
+        prevImageView.setImage(prevImage);
+        thisImageView.setImage(thisImage);
+        nextImageView.setImage(nextImage);
+        /*
+        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
+        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
+        nextImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
+        prevImageView.setImage(prevImage);
+        thisImageView.setImage(thisImage);
+        nextImageView.setImage(nextImage);
+        */
         System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
         System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
         System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
