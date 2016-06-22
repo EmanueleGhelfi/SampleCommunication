@@ -914,6 +914,7 @@ public class MatchController implements Initializable, BaseController {
             ImageView imageToAdd = new ImageView();
             imageToAdd.setId(userHashMap.getKey());
             System.out.println("imageid" + userHashMap.getKey());
+            System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
             imageToAdd.setImage(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
             imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(4));
             imageToAdd.setPreserveRatio(true);

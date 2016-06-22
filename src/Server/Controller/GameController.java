@@ -143,11 +143,29 @@ public class GameController implements Serializable{
     }
 
     private UserColor colorAvailable(int userColorCounter) {
-        for (java.util.Map.Entry<String, User> userInFor : game.getUsersInGame().entrySet()) {
-            if (userInFor.getValue().getUserColor() != null && userColorSet[userColorCounter].getColor().equals(userInFor.getValue().getUserColor().getColor()))
+       /* for (java.util.Map.Entry<String, User> userInFor : game.getUsersInGame().entrySet()) {
+            if (userInFor.getValue().getUserColor() != null && userColorSet[userColorCounter].getColor().equals(userInFor.getValue().getUserColor().getColor())) {
                 return colorAvailable(++userColorCounter);
-            else
+            }
+            else {
                 return userColorSet[userColorCounter];
+            }
+
+
+        }
+        */
+
+        for(UserColor userColor: UserColor.values()){
+            boolean found = false;
+            for(User user: game.getUsersInGame().values()){
+                if(user.getUserColor()!= null && user.getUserColor().equals(userColor)){
+                    found=true;
+                }
+            }
+
+            if(!found){
+                return userColor;
+            }
         }
         return null;
     }
@@ -341,7 +359,8 @@ public class GameController implements Serializable{
         }
 
 
-        for(int i = 1;i< users.size();i++){
+        for(int i = 0;i< users.size();i++){
+            if(users.get(i).isConnected() && i!=nextUser)
             users.get(i).getBaseCommunication().finishTurn();
         }
 
