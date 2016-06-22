@@ -1294,7 +1294,7 @@ public class MatchController implements Initializable, BaseController {
     private void disableAllEffect() {
         if(pulseBonus!=null && pulseCity!=null && needToSelectPermitCard!=null) {
             pulseBonus.setValue(false);
-            pulseCity.setValue(false);
+            //pulseCity.setValue(false);
             needToSelectPermitCard.setValue(false);
             needToSelectOldPermitCard.setValue(false);
             stopPulseOldPermitCard.setValue(true);
