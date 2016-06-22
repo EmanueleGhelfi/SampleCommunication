@@ -1428,11 +1428,11 @@ public class MatchController implements Initializable, BaseController {
             public void run() {
                 if(thisTurn){
                     Graphics.notification("E' il tuo turno!");
-                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes.png"));
+                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes1.png"));
                 }
                 else{
                     Graphics.notification("Turno finito!");
-                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo.png"));
+                    turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo1.png"));
                 }
 
             }
