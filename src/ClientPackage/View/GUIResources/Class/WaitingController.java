@@ -52,8 +52,10 @@ public class WaitingController {
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
         background.getChildren().add(jfxSpinner);
+        jfxSpinner.setRadius(200);
+        //jfxSpinner.radiusProperty().bind(background.widthProperty().divide(7));
         StackPane.setAlignment(jfxSpinner, Pos.CENTER);
-        jfxSpinner.radiusProperty().bind(background.widthProperty().divide(7));
+        StackPane.setAlignment(typewriterLabel, Pos.CENTER);
         typewriter();
     }
 
@@ -62,9 +64,13 @@ public class WaitingController {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                typewriterArrayList.add("Aspetto l'araldo");
-                typewriterArrayList.add("Attendo il commissario");
-                typewriterArrayList.add("Cercando il bigodino");
+                typewriterArrayList.add("Playing the trumpet");
+                typewriterArrayList.add("Contacting the herald");
+                typewriterArrayList.add("Looking for Sisi");
+                typewriterArrayList.add("Saddling the unicorn");
+                typewriterArrayList.add("Travelling through space and time");
+                typewriterArrayList.add("Learning the Waltz");
+                typewriterArrayList.add("Visiting Horst and Grete");
                 Collections.shuffle(typewriterArrayList);
                 startingTimeOut(typewriterArrayList.get(count), count);
             }

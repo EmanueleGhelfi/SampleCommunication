@@ -68,9 +68,9 @@ public class MapSelectionController implements Initializable {
                 nextVisibleMap();
             }
         });
-        GridPane.setHalignment(leftButton, HPos.RIGHT);
+        GridPane.setHalignment(leftButton, HPos.CENTER);
         GridPane.setValignment(leftButton, VPos.CENTER);
-        GridPane.setHalignment(rightButton, HPos.LEFT);
+        GridPane.setHalignment(rightButton, HPos.CENTER);
         GridPane.setValignment(rightButton, VPos.CENTER);
 
     }
