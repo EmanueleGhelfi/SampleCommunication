@@ -175,6 +175,13 @@ public class GUIView extends Application implements BaseView {
                 stage.setMinHeight(600);
                 stage.setMinWidth(1200);
                 stage.show();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        Platform.exit();
+                        System.exit(0);
+                    }
+                });
                 //resizingWindow();
             }
         });
@@ -233,6 +240,7 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void onFinishMarket() {
+        matchController.getSelectionModel().selectFirst();
         baseControllerList.forEach(baseController -> baseController.onFinishMarket());
     }
 

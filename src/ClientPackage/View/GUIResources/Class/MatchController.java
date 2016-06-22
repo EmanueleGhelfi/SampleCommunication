@@ -1746,4 +1746,8 @@ public class MatchController implements Initializable, BaseController {
     public void showNodeList(){
         moreActionNodeList.setVisible(true);
     }
+
+    public SingleSelectionModel<Tab> getSelectionModel() {
+        return selectionModel;
+    }
 }

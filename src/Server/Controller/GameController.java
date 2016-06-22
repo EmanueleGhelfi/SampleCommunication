@@ -624,4 +624,22 @@ public class GameController implements Serializable{
         sendSnapshotToAll();
 
     }
+
+    public boolean userConnectedRoutine(){
+        for (User user : users) {
+            if (user.isConnected()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void cleanGame(){
+        if (!userConnectedRoutine()){
+            roundTimer.cancel();
+            users.clear();
+            GamesManager.getInstance().cancelThisGame(game, this);
+        }
+    }
+
 }

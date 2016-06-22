@@ -12,6 +12,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Emanuele on 09/05/2016.
@@ -93,4 +94,13 @@ public class GamesManager {
         users.add(user);
     }
 
+    public void cancelThisGame(Game game, GameController gameController) {
+        for (Map.Entry<String, User> userInGame : game.getUsersInGame().entrySet()) {
+            users.remove(userInGame.getValue());
+        }
+        for (int i = 0; i < games.size(); i++) {
+            if(games.get(i).equals(game))
+                games.remove(i);
+        }
+    }
 }

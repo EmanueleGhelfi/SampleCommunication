@@ -315,17 +315,11 @@
                         <Label fx:id="helperLabel" layoutX="88.0" layoutY="431.0" text="Helper" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
-                  <HBox alignment="TOP_RIGHT" fillHeight="false" prefHeight="25.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowSpan="2" GridPane.valignment="TOP">
-                     <children>
-                        <JFXHamburger fx:id="hamburgerIcon" alignment="TOP_CENTER" fillWidth="false" prefHeight="41.0" prefWidth="62.0" GridPane.columnIndex="2" GridPane.rowSpan="2">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets></JFXHamburger>
-                     </children>
-                     <GridPane.margin>
-                        <Insets top="20.0" />
-                     </GridPane.margin>
-                  </HBox>
+                  <JFXHamburger fx:id="hamburgerIcon" alignment="TOP_CENTER" fillWidth="false" prefHeight="41.0" prefWidth="62.0" translateY="20.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </JFXHamburger>
                   <StackPane fx:id="bottomPane" alignment="TOP_CENTER" style="-fx-background-color: white;" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="TOP" />
                   <Button fx:id="moreImg" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#showMore" prefHeight="48.0" prefWidth="47.0" text="Button" GridPane.halignment="RIGHT" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                      <effect>
