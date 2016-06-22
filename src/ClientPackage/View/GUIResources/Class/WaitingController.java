@@ -59,6 +59,7 @@ public class WaitingController {
         typewriter();
     }
 
+
     public void typewriter(){
         int count = 0;
         Platform.runLater(new Runnable() {
