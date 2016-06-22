@@ -158,6 +158,8 @@ public class MatchController implements Initializable, BaseController {
     private ImageView boardImageView;
 
 
+    private ProgressIndicator progressIndicator = new ProgressIndicator();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         popOver.setContentNode(paneOfPopup);
@@ -242,6 +244,8 @@ public class MatchController implements Initializable, BaseController {
         GridPane.setHalignment(nobilityPath, HPos.CENTER);
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
         createLayers();
+
+        //progressIndicator.setI
     }
 
     private void createLayers() {
@@ -268,8 +272,7 @@ public class MatchController implements Initializable, BaseController {
         gridPane.add(turnImage, 0, 0);
         turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty().multiply(2));
         turnImage.setPreserveRatio(true);
-        turnImage.setStyle("-fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0)");
-        turnImage.setStyle("-fx-effect: dropshadow(two-pass-box, black, ");
+        turnImage.setStyle("-fx-effect: dropshadow(three-pass-box, black, 20, 0, 0, 0)");
         GridPane.setValignment(turnImage, VPos.TOP);
         GridPane.setHalignment(turnImage, HPos.CENTER);
     }
