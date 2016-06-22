@@ -241,6 +241,16 @@ public class MatchController implements Initializable, BaseController {
         setBoard();
         GridPane.setHalignment(nobilityPath, HPos.CENTER);
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
+        createLayers();
+    }
+
+    private void createLayers() {
+        boardImageView.toFront();
+        infoHBox.toFront();
+        turnImage.toFront();
+        hamburgerMenu.toFront();
+        hamburgerIcon.toFront();
+        bottomPane.toFront();
     }
 
     private void setBoard() {
@@ -252,14 +262,13 @@ public class MatchController implements Initializable, BaseController {
         GridPane.setColumnSpan(boardImageView, 3);
         //boardImageView.toBack();
         GridPane.setValignment(infoHBox, VPos.TOP);
-        infoHBox.toFront();
-        hamburgerIcon.toFront();
+        infoHBox.prefHeightProperty().bind(boardImageView.fitHeightProperty());
+        infoHBox.prefWidthProperty().bind(gridPane.widthProperty().divide(2));
         gridPane.add(turnImage, 0, 0);
         turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty());
         turnImage.setPreserveRatio(true);
         GridPane.setValignment(turnImage, VPos.TOP);
         GridPane.setHalignment(turnImage, HPos.CENTER);
-        turnImage.toFront();
     }
 
     private void creteOldPermitCard() {
@@ -534,7 +543,7 @@ public class MatchController implements Initializable, BaseController {
         hamburgerMenu.setPrefWidth(0);
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburgerIcon);
         burgerTask.setRate(-1);
-        hamburgerIcon.toFront();
+        //hamburgerIcon.toFront();
         hamburgerIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
 
             burgerTask.setRate(burgerTask.getRate()*-1);
@@ -822,6 +831,7 @@ public class MatchController implements Initializable, BaseController {
             @Override
             public void handle(MouseEvent event) {
                 if (!buildWithKingPhase.getValue()) {
+                    popOver.hide();
                     buildWithKingPhase.setValue(true);
                     startBuildWithKing();
                 }
@@ -904,6 +914,7 @@ public class MatchController implements Initializable, BaseController {
 
         HBox emporiumHBox = new HBox();
         emporiumHBox.setId(city.getCityName().getCityName());
+        emporiumHBox.setMouseTransparent(true);
         background.getChildren().add(emporiumHBox);
         emporiumHBox.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city)));
         emporiumHBox.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city)).add(imageView.fitHeightProperty()).subtract(30));
@@ -913,6 +924,7 @@ public class MatchController implements Initializable, BaseController {
         for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
             ImageView imageToAdd = new ImageView();
             imageToAdd.setId(userHashMap.getKey());
+            imageToAdd.setMouseTransparent(true);
             System.out.println("imageid" + userHashMap.getKey());
             System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
             imageToAdd.setImage(new Image(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
@@ -1272,7 +1284,7 @@ public class MatchController implements Initializable, BaseController {
 
     @Override
     public void onFinishMarket() {
-
+        selectionModel.selectFirst();
     }
 
     @Override
@@ -1596,16 +1608,9 @@ public class MatchController implements Initializable, BaseController {
     public void showMore(ActionEvent actionEvent) {
         if(bottomPane.isVisible()){
             bottomPane.setVisible(false);
-            boardImageView.toFront();
-            infoHBox.toFront();
-            hamburgerIcon.toFront();
         }
         else {
             bottomPane.setVisible(true);
-            bottomPane.toFront();
-            boardImageView.toBack();
-            infoHBox.toBack();
-            hamburgerIcon.toBack();
         }
     }
 

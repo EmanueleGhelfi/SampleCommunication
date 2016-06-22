@@ -240,7 +240,6 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void onFinishMarket() {
-        matchController.getSelectionModel().selectFirst();
         baseControllerList.forEach(baseController -> baseController.onFinishMarket());
     }
 
