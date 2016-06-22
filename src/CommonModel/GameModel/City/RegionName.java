@@ -14,4 +14,8 @@ public enum  RegionName {
         this.regionName = region;
 
     }
+
+    public String getRegion(){
+        return regionName;
+    }
 }

@@ -284,8 +284,32 @@ public class MatchCliController implements CliController  {
                 king=clientController.getSnapshot().getKing();
             }
         }
+        else{
+            for(RegionName regionName1: RegionName.values()){
+                if(regionName1.getRegion().equalsIgnoreCase(region.toLowerCase())){
+                    regionName=regionName1;
+                }
+            }
+        }
 
-        //TODO: continue
+        if((king!=null || regionName!=null)&& selectedPoliticColor!=null) {
+            Action action = null;
+            switch (type.toLowerCase()) {
+                case "helper":
+                    action = new FastActionElectCouncilorWithHelper(regionName, king, new Councilor(selectedPoliticColor), "");
+                    break;
+                case "money":
+                    action = new MainActionElectCouncilor(new Councilor(selectedPoliticColor), king, regionName);
+            }
+            if(action!=null)
+                clientController.doAction(action);
+            else
+                cliPrinter.printError("ERROR");
+
+        }
+        else
+            cliPrinter.printError("SYNTAX ERROR");
+
 
     }
 
