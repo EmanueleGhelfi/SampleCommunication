@@ -17,6 +17,10 @@ public class ImageLoader {
         imageHashMap = new HashMap<>();
     }
 
+    public static ImageLoader getInstance() {
+        return imageLoader;
+    }
+
 
 
 
