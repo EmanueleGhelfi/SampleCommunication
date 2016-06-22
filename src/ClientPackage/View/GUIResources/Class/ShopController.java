@@ -73,14 +73,13 @@ public class ShopController implements BaseController {
 
     @FXML private GridPane shop;
     @FXML private Pane paneBackground;
-    @FXML private ScrollPane sellScroll;
 
     @Override
     public void setClientController(ClientController clientController, GUIView guiView) {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
-        backgroundImage.setImage(new Image("/ClientPackage/View/GUIResources/Image/ShopBackground.png"));
+        backgroundImage.setImage(new Image("/ClientPackage/View/GUIResources/Image/ShopBackground.png",true));
         setBackground();
         updateView();
         createDeck();
@@ -95,8 +94,8 @@ public class ShopController implements BaseController {
         sellPane.setPrefColumns(2);
         sellPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
         sellPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
-        sellScrollPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(1.3));
-        sellScrollPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(1.3));
+        sellScrollPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
+        sellScrollPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
         //sellScrollPane.setPadding(new Insets(20));
         sellScrollPane.setContent(sellPane);
 
@@ -238,9 +237,9 @@ public class ShopController implements BaseController {
     }
 
     private void createDeck() {
-        politicCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PoliticCardDistorted.png"));
-        permitCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png"));
-        helperDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/HelperDistorted.png"));
+        politicCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PoliticCardDistorted.png",true));
+        permitCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png",true));
+        helperDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/HelperDistorted.png",true));
         paneBackground.getChildren().addAll(politicCardDeck, permitCardDeck, helperDeck);
         politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3973));
         politicCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5612));
@@ -254,6 +253,13 @@ public class ShopController implements BaseController {
         permitCardDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
         helperDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(10));
         helperDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
+
+        // add effect
+        Graphics.addBorder(politicCardDeck);
+        Graphics.addBorder(helperDeck);
+        Graphics.addBorder(permitCardDeck);
+
+
     }
 
     private void settingDeckActions() {
@@ -505,6 +511,8 @@ public class ShopController implements BaseController {
         baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3);
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
         ImageView itemBackground = new ImageView(new Image(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
+        itemBackground.fitWidthProperty().bind(buyScrollPane.widthProperty().divide(2));
+        itemBackground.fitHeightProperty().bind(buyScrollPane.heightProperty().divide(2));
         baseGridPane.getChildren().add(itemBackground);
         GridPane.setColumnSpan(itemBackground, 3);
         GridPane.setRowSpan(itemBackground, 3);
@@ -522,11 +530,12 @@ public class ShopController implements BaseController {
 
         Label label = new Label(information.getBuyableObject().getInfo());
         if(information.getBuyableObject() instanceof PermitCard){
-            baseGridPane.add(label,0,1);
+            baseGridPane.add(label,1,0);
             GridPane.setHalignment(label,HPos.CENTER);
             GridPane.setValignment(label,VPos.CENTER);
         }
-        label.setVisible(false);
+        label.setVisible(true);
+        label.setTextFill(Paint.valueOf("WHITE"));
         baseGridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -542,11 +551,13 @@ public class ShopController implements BaseController {
             @Override
             public void handle(MouseEvent event) {
                 button.setVisible(false);
-                label.setVisible(false);
+               // label.setVisible(false);
                 itemBackground.setEffect(null);
             }
         });
         baseGridPane.add(button, 1, 1);
+        GridPane.setHalignment(button,HPos.CENTER);
+        GridPane.setValignment(button,VPos.CENTER);
         return baseGridPane;
     }
 
@@ -625,6 +636,12 @@ public class ShopController implements BaseController {
         plusButton.setGraphic(upper);
         JFXButton minusButton = new JFXButton("");
         minusButton.setGraphic(downer);
+        JFXButton sellButton = new JFXButton("Sell!");
+        sellButton.setTextFill(Paint.valueOf("WHITE"));
+        sellButton.setButtonType(JFXButton.ButtonType.RAISED);
+        sellButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("4F6161"),null,null)));
+        sellButton.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().divide(3));
+        sellButton.setVisible(false);
         plusButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -649,6 +666,7 @@ public class ShopController implements BaseController {
         baseGridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                sellButton.setVisible(true);
                 plusButton.setVisible(true);
                 minusButton.setVisible(true);
                 buttonToSell.setVisible(true);
@@ -661,6 +679,7 @@ public class ShopController implements BaseController {
         baseGridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                sellButton.setVisible(false);
                 itemOnSaleImageView.setEffect(null);
                 plusButton.setVisible(false);
                 minusButton.setVisible(false);
@@ -677,6 +696,7 @@ public class ShopController implements BaseController {
         baseGridPane.add(plusButton, 0, 1);
         baseGridPane.add(buttonToSell, 1, 1);
         baseGridPane.add(minusButton, 2, 1);
+        baseGridPane.add(sellButton,1,2);
         upper.setPreserveRatio(false);
         upper.setFitWidth(30);
         upper.setFitHeight(30);
@@ -699,12 +719,14 @@ public class ShopController implements BaseController {
         plusButton.setVisible(false);
         minusButton.setVisible(false);
         label.setVisible(false);
-        baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
+        itemOnSaleImageView.fitWidthProperty().bind(sellScrollPane.widthProperty().divide(2));
+        itemOnSaleImageView.fitHeightProperty().bind(sellScrollPane.heightProperty().divide(3));
         baseGridPane.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
+        baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
         return baseGridPane;
     }
 
-    public void displayHelp() {
+    void displayHelp() {
         PopOver helpPopOver = new PopOver();
         String helpString = "Benvenuto!\n" +
                 "In basso puoi osservare quali carte politiche hai in mano e le tue carte permesso.\n" +
