@@ -111,7 +111,7 @@ public class Graphics {
 
         node.getStyleClass().add("bordered");
 
-        DropShadow ds = new DropShadow( 20, Color.AQUA );
+        DropShadow ds = new DropShadow( 10, Color.AQUA );
 
         node.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
