@@ -33,7 +33,6 @@ public class MainActionBuildWithKingHelp extends Action {
     }
 
 
-    //TODO: restore previous state in catch
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // count number of correct politic card

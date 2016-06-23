@@ -46,8 +46,8 @@ public class MainActionBuildWithPermitCard extends Action{
                         user.addEmporium(gameCity);
                         System.out.println("user's emporium " + user.getUsersEmporium());
                         gameCity.getBonus().getBonus(user, game);
-                        // get bonus to old city near the city in wich the user wants to build
-                        CityVisitor cityVisitor = new CityVisitor(game.getGraph(), user.getUsersEmporium());
+                        // get bonus to old city near the city in which the user wants to build
+                        CityVisitor cityVisitor = new CityVisitor(game.getMap().getMapGraph(), user.getUsersEmporium());
                         for (City cityToVisit : cityVisitor.visit(gameCity)) {
                             if (cityToVisit != null && cityToVisit.getBonus() != null) {
                                 cityToVisit.getBonus().getBonus(user, game);
@@ -60,9 +60,6 @@ public class MainActionBuildWithPermitCard extends Action{
                         // add to old permit card
                         user.removePermitCard(permitCard);
                         removeAction(game, user);
-                        // todo: remove
-                        user.addOptionalActionCounter();
-                        user.getBaseCommunication().selectOldPermitCard();
                         if (user.getUsersEmporium().size() == 10) {
                             game.getGameController().startingLastRound();
                         }

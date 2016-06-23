@@ -93,8 +93,9 @@ public class ShopController implements BaseController {
 
     private void setMarketPane() {
         sellPane.setPrefColumns(2);
-        sellPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
+        /*sellPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
         sellPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
+        */
         sellScrollPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
         sellScrollPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
         //sellScrollPane.setPadding(new Insets(20));
@@ -102,8 +103,9 @@ public class ShopController implements BaseController {
 
 
         buyPane.setPrefColumns(2);
-        buyPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
+        /*buyPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
         buyPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
+        */
         buyScrollPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(3));
         buyScrollPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(3));
         //buyScrollPane.setPadding(new Insets(20));
@@ -513,7 +515,7 @@ public class ShopController implements BaseController {
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
         ImageView itemBackground = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
         itemBackground.fitWidthProperty().bind(buyScrollPane.widthProperty().divide(2));
-        itemBackground.fitHeightProperty().bind(buyScrollPane.heightProperty().divide(2));
+
         baseGridPane.getChildren().add(itemBackground);
         GridPane.setColumnSpan(itemBackground, 3);
         GridPane.setRowSpan(itemBackground, 3);
@@ -559,6 +561,8 @@ public class ShopController implements BaseController {
         baseGridPane.add(button, 1, 1);
         GridPane.setHalignment(button,HPos.CENTER);
         GridPane.setValignment(button,VPos.CENTER);
+        baseGridPane.prefWidthProperty().bind(itemBackground.fitWidthProperty());
+        baseGridPane.prefHeightProperty().bind(itemBackground.fitHeightProperty());
         return baseGridPane;
     }
 
@@ -671,7 +675,6 @@ public class ShopController implements BaseController {
                 plusButton.setVisible(true);
                 minusButton.setVisible(true);
                 buttonToSell.setVisible(true);
-                label.setVisible(true);
                 ColorAdjust colorAdjust = new ColorAdjust();
                 colorAdjust.setBrightness(-0.5);
                 itemOnSaleImageView.setEffect(colorAdjust);
@@ -687,7 +690,6 @@ public class ShopController implements BaseController {
                 buttonToSell.setVisible(false);
                 plusButton.setVisible(false);
                 minusButton.setVisible(false);
-                label.setVisible(false);
             }
         });
         baseGridPane.add(itemOnSaleImageView, 0, 0);
@@ -719,11 +721,10 @@ public class ShopController implements BaseController {
         buttonToSell.setVisible(false);
         plusButton.setVisible(false);
         minusButton.setVisible(false);
-        label.setVisible(false);
+        label.setVisible(true);
         itemOnSaleImageView.fitWidthProperty().bind(sellScrollPane.widthProperty().divide(2));
-        itemOnSaleImageView.fitHeightProperty().bind(sellScrollPane.heightProperty().divide(3));
         baseGridPane.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
-        baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.8));
+        baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitHeightProperty().multiply(0.8));
         return baseGridPane;
     }
 
