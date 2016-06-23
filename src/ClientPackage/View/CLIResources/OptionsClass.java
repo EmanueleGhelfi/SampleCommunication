@@ -29,7 +29,7 @@ public class OptionsClass {
         final Options standardOptions = new Options();
         standardOptions.addOption("status",false,"Show user status");
         standardOptions.addOption("help",false,"Show help");
-        standardOptions.addOption("permit",false,"Show Visible Permit Card");
+
         Option councilorOption = new Option("elect",true,"Elect councilor. First param is money or helper, second" +
                 "is politicColor, third is king or region");
         councilorOption.setArgs(3);
@@ -40,6 +40,7 @@ public class OptionsClass {
         standardOptions.addOption(option);
         standardOptions.addOption("finish",false,"Change Turn");
         standardOptions.addOption("politicColor",false,"Show available politic color");
+        standardOptions.addOption("permit",false,"Show Visible Permit Card");
         standardOptions.addOption("buyAction",false,"Buy main Action for three helper");
         standardOptions.addOption("buyHelper",false,"Buy Helper for three money");
         Option buyEmporiumOption = Option.builder()
@@ -60,6 +61,14 @@ public class OptionsClass {
                 .build();
 
         standardOptions.addOption(buyPermitCard);
+
+        Option buildWithKing = Option.builder()
+                .longOpt("buildKing")
+                .numberOfArgs(0)
+                .desc("Build with king help")
+                .build();
+
+        standardOptions.addOption(buildWithKing);
 
         return standardOptions;
 

@@ -8,9 +8,12 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -103,5 +106,27 @@ public class Graphics {
             }
         });
     }
+
+    public static void addBorder(Node node) {
+
+        node.getStyleClass().add("bordered");
+
+        DropShadow ds = new DropShadow( 10, Color.AQUA );
+
+        node.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                node.setEffect(ds);
+            }
+        });
+
+        node.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                node.setEffect(null);
+            }
+        });
+    }
+
 
 }

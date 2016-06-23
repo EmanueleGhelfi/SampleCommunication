@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by Emanuele on 13/05/2016.
@@ -24,13 +25,17 @@ public class CLIView implements BaseView {
 
     private Scanner reader = new Scanner(System.in);
     private CLIPrinterInterface cliPrinterInterface = new CLIPrinter();
-    private CLIParser cliParser = new CLIParser(OptionsClass.constructOptions());
+    private CLIParser cliParser = new CLIParser(this.getClass());
     private ClientController clientController;
     // for showing help
     private boolean first = true;
     private MatchCliController matchCliController;
     private ShopCliController shopCliController;
+    private LoginCliController loginCliController;
     private SnapshotToSend currentSnapshot;
+    private CliController currentController;
+    private AtomicBoolean needToRead = new AtomicBoolean(true);
+    private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
 
     public CLIView(ClientController clientController) {
@@ -39,23 +44,45 @@ public class CLIView implements BaseView {
         this.clientController.setBaseView(this);
         matchCliController= new MatchCliController(this,clientController);
         shopCliController = new ShopCliController(this,clientController);
+        loginCliController = new LoginCliController(this,clientController);
     }
 
     @Override
     public void initView() {
+        currentController=loginCliController;
+
+        getInput();
+
+
+    }
+
+    private void getInput() {
         String input="";
         if(first) {
-            cliPrinterInterface.printHelp(OptionsClass.constructOptions());
+            currentController.printHelp();
             first=false;
         }
-        input=reader.nextLine();
-        cliParser.parseLine(input,this);
+
+        while (true) {
+            try {
+                while (!bufferedReader.ready() || !needToRead.get()) {
+                    Thread.sleep(200);
+                }
+                input = bufferedReader.readLine();
+
+
+                currentController.parseLine(input);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void showLoginError() {
         System.out.println("Name is already used! Insert another name!");
-        initView();
     }
 
     @Override
@@ -65,6 +92,7 @@ public class CLIView implements BaseView {
 
     @Override
     public void showMap(ArrayList<Map> mapArrayList) {
+        needToRead.set(false);
         System.out.println("Select map: \n");
         for(Map map : mapArrayList){
             System.out.println(cliPrinterInterface.toStringFormatted(map)+"\n");
@@ -83,8 +111,10 @@ public class CLIView implements BaseView {
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         System.out.println("Game Started Correctly\n");
         this.currentSnapshot = snapshotToSend;
+        currentController = matchCliController;
         matchCliController.onGameStart();
-
+        needToRead.set(true);
+        getInput();
     }
 
     @Override
@@ -97,30 +127,30 @@ public class CLIView implements BaseView {
     public void isMyTurn(SnapshotToSend snapshot) {
         System.out.println("Is your turn, make you choice: ");
         matchCliController.onYourTurn();
-
     }
 
     @Override
     public void updateSnapshot() {
-
-        System.out.println("On update snapshot");
-        cliPrinterInterface.toStringFormatted(clientController.getSnapshot());
+        //cliPrinterInterface.toStringFormatted(clientController.getSnapshot());
     }
 
     @Override
     public void onStartMarket() {
-        shopCliController.onStartMarket();
-
+        currentController = shopCliController;
+        System.out.println(" MARKET STARTED ");
+        currentController.printHelp();
     }
 
     @Override
     public void onStartBuyPhase() {
-
+        currentController = shopCliController;
+        shopCliController.onStartBuyPhase();
     }
 
     @Override
     public void onFinishMarket() {
-
+        currentController=matchCliController;
+        shopCliController.onFinishBuyPhase();
     }
 
     @Override
@@ -154,16 +184,8 @@ public class CLIView implements BaseView {
 
     }
 
-    public void showStatus() {
-        if(clientController.getSnapshot()!=null) {
-            System.out.println(clientController.getSnapshot().toString());
-        }
-    }
 
-    public void onLogin(String name) {
-        System.out.println("sending login");
-        clientController.onSendLogin(name);
-    }
+
 
     public void printHelp() {
         cliPrinterInterface.printHelp(OptionsClass.constructOptions());

@@ -4,6 +4,8 @@ import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Councilor;
+import CommonModel.GameModel.Council.Helper;
+import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Link;
@@ -151,6 +153,23 @@ public class CLIPrinter implements CLIPrinterInterface {
         for(Councilor councilor: council){
             System.out.println(" Councilor: "+councilor.getColor());
         }
+    }
+
+    @Override
+    public String toStringFormatted(BuyableWrapper buyableWrapper) {
+        if(buyableWrapper.getBuyableObject() instanceof PermitCard){
+            return " Permit Card "+((PermitCard) buyableWrapper.getBuyableObject()).getCityAcronimous()+" "
+                    + " from user: "+buyableWrapper.getUsername() +" cost: "+ buyableWrapper.getCost();
+        }
+        if(buyableWrapper.getBuyableObject() instanceof Helper){
+            return " Helper "+ "from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost();
+        }
+
+        if(buyableWrapper.getBuyableObject() instanceof PoliticCard){
+            return " Politic Card" + toStringFormatted((PoliticCard) buyableWrapper.getBuyableObject())+
+                    " from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost();
+        }
+        return "";
     }
 
 

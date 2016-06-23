@@ -1,6 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
+import ClientPackage.View.GUIResources.customComponent.ImageLoader;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.City;
@@ -41,7 +42,8 @@ public class NobilityPathController implements BaseController {
 
 
     private void createGridPane() {
-        backgroundImage.setImage(new Image(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png"));
+        backgroundImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png"));
+        backgroundImage.setCache(true);
         backgroundImage.fitWidthProperty().bind(nobilityPath.prefWidthProperty());
         backgroundImage.fitHeightProperty().bind(nobilityPath.prefHeightProperty());
         nobilityPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -59,11 +61,16 @@ public class NobilityPathController implements BaseController {
     }
 
     private void placeBonusCard() {
-        ImageView greyBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/GreyBonusCard.png"));
-        ImageView orangeBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/PinkBonusCard.png"));
-        ImageView blueBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/BlueBonusCard.png"));
-        ImageView yellowBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/YellowBonusCard.png"));
-        kingBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/KingBonus1.png"));
+        ImageView greyBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/GreyBonusCard.png",true));
+        greyBonus.setCache(true);
+        ImageView orangeBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/PinkBonusCard.png",true));
+        orangeBonus.setCache(true);
+        ImageView blueBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/BlueBonusCard.png",true));
+        blueBonus.setCache(true);
+        ImageView yellowBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/YellowBonusCard.png",true));
+        yellowBonus.setCache(true);
+        kingBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/KingBonus1.png",true));
+        kingBonus.setCache(true);
 
         greyBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
         orangeBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
@@ -139,7 +146,8 @@ public class NobilityPathController implements BaseController {
                 for (int i = 0; i < position.getBonus().getBonusURL().size(); i++) {
                     StackPane internalStackPane = new StackPane();
                     System.out.println(position.getPosition() + " E' LA POSITION CON " + position.getBonus().getBonusURL().size() + " BONUS");
-                    ImageView bonusImage = new ImageView(new Image(position.getBonus().getBonusURL().get(i)));
+                    ImageView bonusImage = new ImageView(ImageLoader.getInstance().getImage(position.getBonus().getBonusURL().get(i)));
+                    bonusImage.setCache(true);
                     internalStackPane.getChildren().add(bonusImage);
                     bonusImage.setPreserveRatio(true);
                     bonusImage.fitWidthProperty().bind(positionHBox.prefWidthProperty().divide(position.getBonus().getBonusURL().size()));

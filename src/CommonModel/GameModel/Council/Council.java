@@ -3,6 +3,7 @@ package CommonModel.GameModel.Council;
 import Utilities.Class.Constants;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -44,4 +45,5 @@ public class Council implements Serializable {
         }
         return q2;
     }
+
 }

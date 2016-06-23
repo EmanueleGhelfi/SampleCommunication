@@ -50,3 +50,12 @@
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
+
+
+.bordered:hover{
+    -fx-border-color: WHITE;
+    -fx-border-width: 5;
+    -fx-border-insets: 5;
+    -fx-border-style: solid;
+    -fx-cursor: hand;
+}
