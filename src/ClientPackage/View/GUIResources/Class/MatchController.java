@@ -67,7 +67,6 @@ public class MatchController implements Initializable, BaseController {
     private String city;
     private GUIView guiView;
     @FXML private ImageView imageTest;
-    private PermitCard permitCardSelected = null;
     //BUTTONs
     @FXML JFXButton coastPermitButton;
     @FXML JFXButton hillPermitButton;
@@ -813,6 +812,7 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void showKingPopover(ImageView imageView) {
+        politicCardforBuildWithKing.clear();
         PopOver popOver = new PopOver();
         VBox vBox = new VBox();
         //KING
@@ -995,44 +995,17 @@ public class MatchController implements Initializable, BaseController {
     private void showPopoverOnCity(City city, ImageView imageView) {
         PopOver popOver = new PopOver();
 
+        VBox cityInfoVBox = new VBox();
+        HBox buttonHbox = new HBox();
+        final PermitCard[] permitCardSelected = {null};
         //TODO: show button and other stuff
-        GridPane grid = new GridPane();
-        ColumnConstraints columnConstraints = new ColumnConstraints();
-        ColumnConstraints columnConstraints1 = new ColumnConstraints();
-        columnConstraints.setPercentWidth(50);
-        columnConstraints1.setPercentWidth(50);
-        RowConstraints rowConstraints = new RowConstraints();
-        RowConstraints rowConstraints1 = new RowConstraints();
-        RowConstraints rowConstraints2 = new RowConstraints();
-        rowConstraints.setPercentHeight(20);
-        rowConstraints1.setPercentHeight(40);
-        rowConstraints2.setPercentHeight(40);
-        grid.getColumnConstraints().addAll(columnConstraints,columnConstraints1);
-        grid.getRowConstraints().addAll(rowConstraints,rowConstraints1,rowConstraints2);
-        Label cityLabel = new Label(city.getCityName().getCityName());
-        grid.add(cityLabel,0,0);
-        GridPane.setHalignment(cityLabel,HPos.CENTER);
-        GridPane.setValignment(cityLabel,VPos.CENTER);
-        GridPane.setColumnSpan(cityLabel,2);
 
-        /*
-        TreeItem<String> treeItem = new TreeItem<>("Utenti con empori nella città:");
-        for (BaseUser baseUser : clientController.getSnapshot().getUsersInGame().values()) {
-            if(baseUser.getUsersEmporium().contains(city)){
-                System.out.println("Found emporium");
-                TreeItem<String> user = new TreeItem<>(baseUser.getUsername());
-                treeItem.getChildren().add(user);
-            }
-            else{
-                System.out.println("emporium not found");
-                TreeItem<String> user = new TreeItem<>(baseUser.getUsername());
-                treeItem.getChildren().add(user);
-            }
-        }
-        TreeView<String> treeView = new TreeView<>(treeItem);
-        grid.add(treeView,0,1);
-        GridPane.setColumnSpan(treeView,2);
-        */
+        ImageView cityName = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"City/Names/"+city.
+                getCityName().getCityName()+""+city.getColor().getColor()+".png"));
+
+        cityName.setFitWidth(150);
+        cityName.setPreserveRatio(true);
+
         JFXComboBox<String> jfxComboBox = new JFXComboBox<>();
         for (PermitCard permitCard :
                 clientController.getSnapshot().getCurrentUser().getPermitCards()) {
@@ -1043,26 +1016,26 @@ public class MatchController implements Initializable, BaseController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 System.out.println("Selection changed to: "+newValue);
-                permitCardSelected = clientController.getSnapshot().getCurrentUser().getPermitCards().get(newValue.intValue());
+                permitCardSelected[0] = clientController.getSnapshot().getCurrentUser().getPermitCards().get(newValue.intValue());
             }
         });
         jfxComboBox.setPromptText("Seleziona la carta permesso");
-        grid.add(jfxComboBox,0,2);
 
         JFXButton jfxButton = new JFXButton("Compra emporio!");
-        jfxButton.getStyleClass().add("buyEmporiumButton");
+        jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("D73D00"),null,null)));
+        jfxButton.setTextFill(Paint.valueOf("WHITE"));
 
         jfxButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Action action = new MainActionBuildWithPermitCard(city,permitCardSelected);
+                Action action = new MainActionBuildWithPermitCard(city, permitCardSelected[0]);
                 clientController.doAction(action);
             }
         });
 
-        grid.add(jfxButton,1,2);
-        //treeView.setPrefHeight(backgroundImage.getFitHeight()/7);
-        grid.setPrefSize(backgroundImage.getFitWidth()/3,backgroundImage.getFitHeight()/3);
+        buttonHbox.getChildren().addAll(jfxComboBox,jfxButton);
+        buttonHbox.setSpacing(10);
+
 
         if(CityPosition.getX(city)>0.5){
             if(CityPosition.getY(city)>0.5) {
@@ -1080,7 +1053,13 @@ public class MatchController implements Initializable, BaseController {
                 popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
             }
         }
-        popOver.setContentNode(grid);
+
+        cityInfoVBox.setPadding(new Insets(20,20,20,20));
+        cityInfoVBox.setSpacing(20);
+        cityInfoVBox.getChildren().addAll(cityName,buttonHbox);
+        cityInfoVBox.setAlignment(Pos.CENTER);
+        popOver.setContentNode(cityInfoVBox);
+        popOver.setTitle(city.getCityName().getCityName());
         popOver.show(imageView);
 
 
@@ -1751,9 +1730,6 @@ public class MatchController implements Initializable, BaseController {
         }
     }
 
-    public void setPermitCardSelected(PermitCard permitCardSelected) {
-        this.permitCardSelected = permitCardSelected;
-    }
 
     public Pane getBackground() {
         return background;

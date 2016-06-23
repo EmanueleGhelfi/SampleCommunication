@@ -135,7 +135,7 @@ public class CLIPrinter implements CLIPrinterInterface {
     @Override
     public String toStringFormatted(City city) {
 
-        return city.getCityName()+" "+city.getRegion()+" "+city.getColor();
+        return city.getCityName()+" \t "+city.getRegion()+" \t "+city.getColor();
     }
 
     @Override
@@ -145,7 +145,9 @@ public class CLIPrinter implements CLIPrinterInterface {
 
     @Override
     public void printError(String toPrint) {
+        System.out.println("------------------------------------------------------------------");
         System.out.println(ANSI_RED+toPrint+ANSI_RESET);
+        System.out.println("------------------------------------------------------------------");
     }
 
     @Override
@@ -159,15 +161,15 @@ public class CLIPrinter implements CLIPrinterInterface {
     public String toStringFormatted(BuyableWrapper buyableWrapper) {
         if(buyableWrapper.getBuyableObject() instanceof PermitCard){
             return " Permit Card "+((PermitCard) buyableWrapper.getBuyableObject()).getCityAcronimous()+" "
-                    + " from user: "+buyableWrapper.getUsername() +" cost: "+ buyableWrapper.getCost();
+                    + " from user: "+buyableWrapper.getUsername() +" cost: "+ buyableWrapper.getCost() + " onSale: "+buyableWrapper.isOnSale();
         }
         if(buyableWrapper.getBuyableObject() instanceof Helper){
-            return " Helper "+ "from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost();
+            return " Helper "+ "from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost() + " onSale: "+buyableWrapper.isOnSale();
         }
 
         if(buyableWrapper.getBuyableObject() instanceof PoliticCard){
             return " Politic Card" + toStringFormatted((PoliticCard) buyableWrapper.getBuyableObject())+
-                    " from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost();
+                    " from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost() + " onSale: "+buyableWrapper.isOnSale();
         }
         return "";
     }

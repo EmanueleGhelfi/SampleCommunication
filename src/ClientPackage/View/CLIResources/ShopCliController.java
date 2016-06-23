@@ -39,6 +39,8 @@ public class ShopCliController implements CliController{
 
     public void onStartMarket() {
         cliPrinter.printBlue("START MARKET!");
+        onMarketPhase = true;
+        onSellPhase=true;
     }
 
     @Override
@@ -58,10 +60,14 @@ public class ShopCliController implements CliController{
 
     public void onStartBuyPhase() {
         cliPrinter.printBlue("Start buy phase!");
+        onBuyPhase = true;
+        onSellPhase=false;
     }
 
     public void onFinishBuyPhase() {
         cliPrinter.printBlue("Finish Buy Phase");
+        onBuyPhase=false;
+        onMarketPhase=false;
     }
 
     @Command(name = "buy", abbrev = "b", description = "buy Something in the market")
@@ -72,11 +78,7 @@ public class ShopCliController implements CliController{
         clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
                 !buyableWrapper.getUsername().equalsIgnoreCase(clientController.getSnapshot().getCurrentUser().getUsername()))
                 .forEach(buyableWrappers::add);
-
-        for (BuyableWrapper buyableWrapper : buyableWrappers) {
-            System.out.println("" + buyableWrappers.indexOf(buyableWrapper) + ". "
-                    + cliPrinter.toStringFormatted(buyableWrapper));
-        }
+        printMarketList(buyableWrappers);
         try {
             ArrayList<BuyableWrapper> selected = selectBuyableWrapper(buyableWrappers);
             clientController.onBuy(selected);
@@ -97,7 +99,6 @@ public class ShopCliController implements CliController{
 
 
         if(ArrayUtils.checkInteger(selectedParsed,buyableWrappers) &&  ArrayUtils.checkDuplicate(selectedParsed)){
-            //TODO: continue
             if(Integer.parseInt(selectedParsed[0])!=-1) {
                 for (int i = 0; i < selectedParsed.length; i++) {
                     toReturn.add(buyableWrappers.get(Integer.parseInt(selectedParsed[i])));
@@ -113,7 +114,7 @@ public class ShopCliController implements CliController{
     @Command(name = "sell", abbrev = "s", description = "Sell something in the market")
     public void sell() {
 
-        cliPrinter.printBlue("YOUR OBJECT: ");
+        cliPrinter.printBlue("YOUR OBJECTS: ");
         ArrayList<BuyableWrapper> buyableWrappers = updateList();
 
         for (BuyableWrapper buyableWrapper : buyableWrappers) {
@@ -121,7 +122,13 @@ public class ShopCliController implements CliController{
                     + cliPrinter.toStringFormatted(buyableWrapper));
         }
 
+        try {
+            ArrayList<BuyableWrapper> toSell = selectBuyableWrapper(buyableWrappers);
+            clientController.sendSaleItem(toSell);
 
+        } catch (CancelException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -155,5 +162,39 @@ public class ShopCliController implements CliController{
         }
 
         return sellList;
+    }
+
+
+    @Command(name = "showMarket", abbrev = "sm", description = "Show elements in market")
+    public void showMarket(){
+
+        if(onBuyPhase){
+            ArrayList<BuyableWrapper> buyableWrappers = new ArrayList<>();
+            clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
+                    !buyableWrapper.getUsername().equalsIgnoreCase(clientController.getSnapshot().getCurrentUser().getUsername()))
+                    .forEach(buyableWrappers::add);
+            printMarketList(buyableWrappers);
+        }
+        else{
+            cliPrinter.printError("Sorry, you are't in Buy Phase");
+        }
+    }
+
+
+    private void printMarketList(ArrayList<BuyableWrapper> buyableWrappers){
+        for (BuyableWrapper buyableWrapper : buyableWrappers) {
+            System.out.println("" + buyableWrappers.indexOf(buyableWrapper) + ". "
+                    + cliPrinter.toStringFormatted(buyableWrapper));
+        }
+    }
+
+
+    @Command(name = "showSell", abbrev = "ss", description = "Show your items on market list")
+    public void showSellList(){
+        ArrayList<BuyableWrapper> buyableWrappers = new ArrayList<>();
+        clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
+                buyableWrapper.getUsername().equalsIgnoreCase(clientController.getSnapshot().getCurrentUser().getUsername()))
+                .forEach(buyableWrappers::add);
+        printMarketList(buyableWrappers);
     }
 }
