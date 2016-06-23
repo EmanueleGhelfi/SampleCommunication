@@ -77,9 +77,9 @@ public class MatchCliController implements CliController  {
             System.out.println(link);
         }
 
-        cliPrinter.printBlue("Cities");
+        cliPrinter.printBlue("Cities \t Region \t Color");
         for(City city: clientController.getSnapshot().getMap().getCity()){
-            cliPrinter.printBlue(cliPrinter.toStringFormatted(city));
+            System.out.println(cliPrinter.toStringFormatted(city));
         }
 
         boolean correct = false;
@@ -131,8 +131,10 @@ public class MatchCliController implements CliController  {
         }
 
         for(int i = 0; i<selectedArray.length;i++){
-            politicCardArrayList.add(politicCards.get(i));
+            System.out.println(" You have selected "+selectedArray[i]);
+            politicCardArrayList.add(politicCards.get(Integer.parseInt(selectedArray[i])));
         }
+
         return politicCardArrayList;
 
     }

@@ -49,6 +49,7 @@ public class FakeCommunication extends BaseCommunication {
     @Override
     public void sendStartBuyPhase() {
 
+
     }
 
     @Override

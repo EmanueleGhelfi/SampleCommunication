@@ -33,7 +33,6 @@ public class MainActionBuildWithKingHelp extends Action {
     }
 
 
-    //TODO: restore previous state in catch
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // count number of correct politic card
@@ -52,18 +51,27 @@ public class MainActionBuildWithKingHelp extends Action {
                 // calculate money to spend
                 newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
 
+                System.out.println("New position in money path "+ newPositionInMoneyPath +" because "+correctPoliticCard);
                 if ((kingPath.size()-1) * Constants.KING_PRICE < user.getCoinPathPosition()) {
                     for (City city : kingPath) {
-                        user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
+                        //user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
+                        game.getMoneyPath().goAhead(user,-Constants.KING_PRICE);
+                        System.out.println("Current position "+ user.getCoinPathPosition());
                         king.setCurrentCity(city);
                     }
-                    user.setCoinPathPosition(user.getCoinPathPosition()+Constants.KING_PRICE);
+                    //user.setCoinPathPosition(user.getCoinPathPosition()+Constants.KING_PRICE);
+                    game.getMoneyPath().goAhead(user,Constants.KING_PRICE);
+                    System.out.println("Current position "+user.getCoinPathPosition());
                     user.addEmporium(kingCity);
                     kingCity.getBonus().getBonus(user, game);
-                    CityVisitor cityVisitor = new CityVisitor(game.getMap().getMapGraph(), user.getUsersEmporium());
+
+                    //check near bonus
+                    super.getNearCityBonus(game,user,kingCity);
+                   /* CityVisitor cityVisitor = new CityVisitor(game.getMap().getMapGraph(), user.getUsersEmporium());
                     for (City cityToVisit : cityVisitor.visit(kingCity)) {
                         cityToVisit.getBonus().getBonus(user, game);
                     }
+                    */
                 } else {
                     throw new ActionNotPossibleException(Constants.MONEY_EXCEPTION);
                 }

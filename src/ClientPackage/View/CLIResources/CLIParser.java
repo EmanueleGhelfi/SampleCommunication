@@ -50,6 +50,7 @@ public class CLIParser {
                         }
                     }
                     methodDescription.put(((Command) annotation).name(),description);
+                    methodDescription.put(((Command) annotation).name(),description);
                 }
             }
         }

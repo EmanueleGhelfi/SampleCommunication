@@ -1,5 +1,6 @@
 package Server.Model;
 
+import ClientPackage.View.CLIResources.CLIColor;
 import CommonModel.GameModel.City.City;
 
 import java.io.Serializable;
@@ -38,9 +39,7 @@ public class Link implements Serializable {
 
     @Override
     public String toString() {
-        return "Link{" +
-                "city1=" + city1 +
-                ", city2=" + city2 +
-                '}';
+        return CLIColor.ANSI_BLUE+"Linked City \t "+CLIColor.ANSI_BLUE+ city1.getCityName().getCityName()+
+                " "+city2.getCityName().getCityName()+"";
     }
 }

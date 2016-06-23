@@ -449,6 +449,9 @@ public class GameController implements Serializable{
                 marketHashMap.clear();
                 startBuyPhase();
             }
+            else{
+                System.out.println("No : "+finishedUser + " "+connectedUser);
+            }
         }
     }
 
@@ -464,10 +467,12 @@ public class GameController implements Serializable{
         boolean found = false;
         while (!found) {
             userNumber = random.nextInt(users.size());
-            if((!marketHashMap.containsKey(users.get(userNumber)) || !marketHashMap.get(users.get(userNumber)) && users.get(userNumber).isConnected())){
+            if((!marketHashMap.containsKey(users.get(userNumber)) || !marketHashMap.get(users.get(userNumber)))
+                    && users.get(userNumber).isConnected() && !(users.get(userNumber) instanceof FakeUser)){
                 found = true;
             }
         }
+        System.out.println("Sending start buy phase to "+users.get(userNumber));
         users.get(userNumber).getBaseCommunication().sendStartBuyPhase();
     }
 

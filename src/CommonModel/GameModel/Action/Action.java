@@ -3,6 +3,7 @@ package CommonModel.GameModel.Action;
 import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.CityVisitor;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
 import CommonModel.GameModel.Market.BuyableWrapper;
@@ -107,19 +108,26 @@ public abstract class Action implements Serializable {
     }
 
     protected int calculateMoney(int correctPoliticCard, ArrayList<PoliticCard> politicCards, int bonusCounter) throws ActionNotPossibleException {
+        // calculate multicolor:
+        int bonusNumber=0;
+        for(PoliticCard politicCard:politicCards)
+            if(politicCard.isMultiColor()){
+                bonusNumber++;
+            }
         // calculate money
         int newPositionInMoneyPath = 0;
         if(correctPoliticCard == politicCards.size()){
             if(correctPoliticCard<Constants.FOUR_PARAMETER_BUY_PERMIT_CARD && correctPoliticCard>0)
-                newPositionInMoneyPath=Constants.TEN_PARAMETER_BUY_PERMIT_CARD -(correctPoliticCard-Constants.ONE_PARAMETER_BUY_PERMIT_CARD);
+                newPositionInMoneyPath=Constants.TEN_PARAMETER_BUY_PERMIT_CARD -
+                        correctPoliticCard*(correctPoliticCard-Constants.ONE_PARAMETER_BUY_PERMIT_CARD);
             else if(correctPoliticCard==Constants.FOUR_PARAMETER_BUY_PERMIT_CARD)
                 newPositionInMoneyPath = 0;
-            newPositionInMoneyPath+=bonusCounter;
+            newPositionInMoneyPath+=bonusNumber;
         }
         else {
             throw new ActionNotPossibleException("Politic card not correct!");
         }
-        System.out.println("NUOVA POS "+correctPoliticCard);
+        System.out.println("NUOVA POS "+newPositionInMoneyPath+" bonus "+ bonusNumber);
         return newPositionInMoneyPath;
     }
 
@@ -166,5 +174,18 @@ public abstract class Action implements Serializable {
 
     String getActionType(){
         return actionType;
+    }
+
+    void getNearCityBonus(Game game, User user,City city) throws ActionNotPossibleException {
+        CityVisitor cityVisitor = new CityVisitor(game.getMap().getMapGraph(), user.getUsersEmporium());
+        for (City cityToVisit : cityVisitor.visit(city)) {
+            City cityToGetBonus = game.getCity(cityToVisit);
+            if (cityToGetBonus != null && cityToGetBonus.getBonus() != null) {
+                //cityToVisit.getBonus().getBonus(user, game);
+                cityToGetBonus.getBonus(user,game);
+            } else {
+                System.out.println(" " + cityToVisit + " has null bonus or is null");
+            }
+        }
     }
 }
