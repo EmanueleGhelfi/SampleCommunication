@@ -6,6 +6,7 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import Server.Model.User;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Giulio on 14/05/2016.
@@ -19,6 +20,8 @@ public class NobilityPath implements Path, Serializable {
         position = new Position[length+1];
         for (int i = 0 ; i<length; i++){
             Bonus bonus = new MainBonus(1,3,10,true);
+            if (i == 0)
+                bonus.getBonusArrayList().clear();
             position[i] = new Position(i,bonus);
         }
     }

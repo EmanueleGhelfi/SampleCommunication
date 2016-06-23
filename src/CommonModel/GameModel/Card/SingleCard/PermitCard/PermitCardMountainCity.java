@@ -9,9 +9,9 @@ import java.util.ArrayList;
 //TODO rifare
 public enum PermitCardMountainCity implements Serializable {
 
-    H('H', null, null), GHI('G', 'H', 'I'), F('F', null, null), HI('H', 'I', null), I('I', null, null), FG('F', 'G', null), J('J', null, null),
-    HG('H', 'G', null), FGH('F', 'G', 'H'), G('G', null, null), FJ('F', 'J', null), IJ('I', 'J', null), FGJ('F', 'G', 'J'), FIJ('F','I','J'),
-    IJH('I', 'J', 'H');
+    KLM('K', 'L', 'M'), LMN('L', 'M', 'N'), OK('O', 'K', null), ML('M', 'L', null), L('L', null, null), M('M', null, null), NO('N', 'O', null),
+    KL('K', 'L', null), KLO('K', 'L', 'O'), K('K', null, null), KNO('K', 'N', 'O'), MNO('M', 'N', 'O'), O('O', null, null), N('N',null,null),
+    MN('M', 'N', null);
 
     ArrayList<Character> cities = new ArrayList<>();
 

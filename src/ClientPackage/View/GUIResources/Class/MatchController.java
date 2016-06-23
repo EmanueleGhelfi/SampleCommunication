@@ -34,6 +34,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -41,6 +42,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 
+import java.awt.geom.AffineTransform;
 import java.net.URL;
 import java.util.*;
 
@@ -120,7 +122,17 @@ public class MatchController implements Initializable, BaseController {
 
     @FXML private Button helpButton;
 
-    @FXML private Button moreImg;
+    @FXML private JFXButton moreImg;
+    @FXML private JFXButton lessImg;
+
+    @FXML private HBox menuAllButtons;
+
+    @FXML private ImageView imageInfo1;
+    @FXML private ImageView imageInfo2;
+    @FXML private ImageView imageInfo3;
+    @FXML private ImageView imageInfo4;
+    @FXML private ImageView imageInfo5;
+    @FXML private ImageView imageInfo6;
 
     private SingleSelectionModel<Tab> selectionModel;
 
@@ -230,6 +242,9 @@ public class MatchController implements Initializable, BaseController {
         createHand();
         creteOldPermitCard();
         gridPane.add(oldPermitCardNodeList,2,2);
+        GridPane.setHalignment(oldPermitCardNodeList, HPos.RIGHT);
+        GridPane.setValignment(oldPermitCardNodeList, VPos.BOTTOM);
+        gridPane.setMargin(oldPermitCardNodeList, new Insets(0, 20, 20, 0));
         ///oldPermitCardNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not().and(hamburgerMenu.visibleProperty().not()));
 
         hamburgerMenu.prefWidthProperty().addListener(new ChangeListener<Number>() {
@@ -256,8 +271,8 @@ public class MatchController implements Initializable, BaseController {
         setBoard();
         GridPane.setHalignment(nobilityPath, HPos.CENTER);
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
+        createHBoxMenu();
         createLayers();
-
 
         /*
         Gauge gauge = new Gauge();
@@ -269,20 +284,50 @@ public class MatchController implements Initializable, BaseController {
         */
     }
 
+    private void createHBoxMenu() {
+
+        ImageView moreImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/CouncilorButton.png"));
+        ImageView lessImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/PathButton.png"));
+        moreImageView.setFitWidth(60);
+        moreImageView.setFitHeight(40);
+        lessImageView.setFitWidth(60);
+        lessImageView.setFitHeight(40);
+        moreImg.setGraphic(moreImageView);
+        lessImg.setGraphic(lessImageView);
+        moreImg.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showMore();
+            }
+        });
+        lessImg.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showLess();
+            }
+        });
+    }
+
     private void createLayers() {
         boardImageView.toFront();
         infoHBox.toFront();
         turnImage.toFront();
+        bottomPane.toFront();
+        nobilityPath.toFront();
+        moreActionNodeList.toFront();
         hamburgerMenu.toFront();
         hamburgerIcon.toFront();
-        bottomPane.toFront();
+        moreImg.toFront();
+        lessImg.toFront();
+        menuAllButtons.toFront();
     }
 
     private void setBoard() {
-        boardImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Board1.png"));
+        boardImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Board.png"));
         boardImageView.setOpacity(0.2);
         boardImageView.fitWidthProperty().bind(gridPane.widthProperty());
-        boardImageView.fitHeightProperty().bind(background.heightProperty().divide(13));
+        boardImageView.setFitHeight(60);
+        //boardImageView.fitHeightProperty().bind(background.heightProperty().divide(13));
         gridPane.add(boardImageView, 0, 0);
         GridPane.setValignment(boardImageView, VPos.TOP);
         GridPane.setColumnSpan(boardImageView, 3);
@@ -290,12 +335,29 @@ public class MatchController implements Initializable, BaseController {
         GridPane.setValignment(infoHBox, VPos.TOP);
         infoHBox.prefHeightProperty().bind(boardImageView.fitHeightProperty());
         infoHBox.prefWidthProperty().bind(gridPane.widthProperty().divide(2));
+        //setImageInInfo();
         gridPane.add(turnImage, 0, 0);
+        gridPane.setMargin(turnImage, new Insets(20, 0, 0, 20));
         turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty().multiply(2));
         turnImage.setPreserveRatio(true);
         turnImage.setStyle("-fx-effect: dropshadow(three-pass-box, black, 20, 0, 0, 0)");
         GridPane.setValignment(turnImage, VPos.TOP);
         GridPane.setHalignment(turnImage, HPos.CENTER);
+    }
+
+    private void setImageInInfo() {
+        imageInfo1.setFitHeight(50);
+        imageInfo2.setFitHeight(50);
+        imageInfo3.setFitHeight(50);
+        imageInfo4.setFitHeight(50);
+        imageInfo5.setFitHeight(50);
+        imageInfo6.setFitHeight(50);
+        imageInfo1.setPreserveRatio(true);
+        imageInfo2.setPreserveRatio(true);
+        imageInfo3.setPreserveRatio(true);
+        imageInfo4.setPreserveRatio(true);
+        imageInfo5.setPreserveRatio(true);
+        imageInfo6.setPreserveRatio(true);
     }
 
     private void creteOldPermitCard() {
@@ -490,6 +552,7 @@ public class MatchController implements Initializable, BaseController {
 
 
         moreActionNodeList.setSpacing(10);
+        gridPane.setMargin(moreActionNodeList, new Insets(0,0,20,20));
         moreActionNodeList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
                 new KeyValue(showMore.rotateProperty(), expanded? 225:180 ,
                 Interpolator.EASE_BOTH));}});
@@ -507,9 +570,25 @@ public class MatchController implements Initializable, BaseController {
 
 
         moreActionNodeList.addAnimatedNode(helpButton);
+        JFXButton shopButton = new JFXButton();
+        ImageView shopButtonImageView = new ImageView(new Image(Constants.IMAGE_PATH + "/ShopButton.png"));
+        shopButtonImageView.setFitHeight(50);
+        shopButtonImageView.setFitWidth(50);
+        shopButton.setPrefWidth(50);
+        shopButton.setPrefHeight(50);
+        shopButton.setGraphic(shopButtonImageView);
+        shopButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                selectionModel.selectNext();
+            }
+        });
+        moreActionNodeList.addAnimatedNode(shopButton);
+        shopButton.setTooltip(new Tooltip("Go to shop"));
+
         gridPane.add(moreActionNodeList,0,2);
-        GridPane.setHalignment(moreActionNodeList,HPos.RIGHT);
-        GridPane.setValignment(moreActionNodeList,VPos.TOP);
+        GridPane.setHalignment(moreActionNodeList,HPos.LEFT);
+        GridPane.setValignment(moreActionNodeList,VPos.BOTTOM);
         moreActionNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not());
     }
 
@@ -955,8 +1034,6 @@ public class MatchController implements Initializable, BaseController {
         emporiumHBox.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city)));
         emporiumHBox.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city)).add(imageView.fitHeightProperty()).subtract(30));
         emporiumHBox.toFront();
-        //emporiumHBox.prefHeightProperty().bind(imageView.fitHeightProperty().divide(4));
-        //emporiumHBox.prefWidthProperty().bind(imageView.fitWidthProperty());
         for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
             ImageView imageToAdd = new ImageView();
             imageToAdd.setId(userHashMap.getKey());
@@ -964,7 +1041,7 @@ public class MatchController implements Initializable, BaseController {
             System.out.println("imageid" + userHashMap.getKey());
             System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
             imageToAdd.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
-            imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(4));
+            imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(6));
             imageToAdd.setPreserveRatio(true);
             imageToAdd.setVisible(false);
             imageToAdd.setCache(true);
@@ -1647,7 +1724,8 @@ public class MatchController implements Initializable, BaseController {
         showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
     }
 
-    public void showMore(ActionEvent actionEvent) {
+    public void showMore() {
+        System.out.println("PREMUTO");
         if(bottomPane.isVisible()){
             bottomPane.setVisible(false);
         }
@@ -1656,11 +1734,10 @@ public class MatchController implements Initializable, BaseController {
         }
     }
 
-    public void showLess (ActionEvent actionEvent) {
+    public void showLess () {
         if(nobilityPath.isVisible()){
             handHBox.setVisible(true);
             nobilityPath.setVisible(false);
-
         }
         else {
             handHBox.setVisible(false);

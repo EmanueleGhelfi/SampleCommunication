@@ -92,3 +92,19 @@
     -fx-font-family: Verdana;
     -fx-font-weight: bold;
 }
+
+.tab-pane {
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+    -fx-tab-max-height: 0;
+}
+.tab-pane .tab-header-area, .tab-pane .tab-header-back {
+    visibility: hidden ;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    visibility: hidden ;
+    -fx-opacity: 0;
+}

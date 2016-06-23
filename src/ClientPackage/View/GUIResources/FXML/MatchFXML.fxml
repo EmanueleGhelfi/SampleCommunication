@@ -315,43 +315,37 @@
                         <Label fx:id="helperLabel" layoutX="88.0" layoutY="431.0" text="Helper" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
-                  <JFXHamburger fx:id="hamburgerIcon" alignment="TOP_CENTER" fillWidth="false" prefHeight="41.0" prefWidth="62.0" translateY="20.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </JFXHamburger>
+                  <HBox fx:id="menuAllButtons" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                     <children>
+                        <JFXButton fx:id="moreImg" prefHeight="40.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                        <JFXButton fx:id="lessImg" prefHeight="40.0" prefWidth="60.0" HBox.hgrow="ALWAYS" />
+                        <JFXHamburger fx:id="hamburgerIcon" alignment="CENTER" fillWidth="false" prefHeight="40.0" prefWidth="60.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" HBox.hgrow="ALWAYS">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </JFXHamburger>
+                     </children>
+                  </HBox>
                   <StackPane fx:id="bottomPane" alignment="TOP_CENTER" style="-fx-background-color: white;" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="TOP" />
-                  <Button fx:id="moreImg" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#showMore" prefHeight="48.0" prefWidth="47.0" text="Button" GridPane.halignment="RIGHT" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-                     <effect>
-                        <ImageInput>
-                           <source>
-                              <Image url="/ClientPackage/View/GUIResources/Image/icon/more.png" />
-                           </source>
-                        </ImageInput>
-                     </effect>
-                     <GridPane.margin>
-                        <Insets top="10.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <HBox fx:id="infoHBox" alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="511.0" spacing="30.0" style="-fx-background-color: transparent;" stylesheets="@../CSS/MatchCSS.css" translateZ="10.0" GridPane.columnIndex="1" GridPane.valignment="TOP">
+                  <HBox fx:id="infoHBox" alignment="BOTTOM_LEFT" prefHeight="42.0" prefWidth="511.0" spacing="30.0" style="-fx-background-color: transparent;" stylesheets="@../CSS/MatchCSS.css" translateZ="10.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
                      <children>
                         <GridPane alignment="CENTER">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="63.0" minWidth="10.0" prefWidth="52.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="68.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#buyHelper" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <ImageView fx:id="imageInfo1" fitHeight="60.0" fitWidth="35.0" onMouseClicked="#buyHelper" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <image>
                                     <Image url="@../Image/Helper.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="helperText" text="10" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                  <font>
-                                    <Font name="Calibri Bold" size="15.0" />
+                                    <Font name="Calibri Bold" size="17.0" />
                                  </font>
                               </Label>
                            </children>
@@ -360,18 +354,18 @@
                            <children>
                               <Label fx:id="richPathText" text="10" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                  <font>
-                                    <Font name="Calibri Bold" size="15.0" />
+                                    <Font name="Calibri Bold" size="17.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <ImageView fx:id="imageInfo2" fitHeight="60.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <image>
                                     <Image url="@../Image/Money.png" />
                                  </image>
                               </ImageView>
                            </children>
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="55.0" minWidth="10.0" prefWidth="55.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="65.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -381,18 +375,18 @@
                            <children>
                               <Label fx:id="victoryPathText" text="10" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                  <font>
-                                    <Font name="Calibri Bold" size="15.0" />
+                                    <Font name="Calibri Bold" size="17.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <ImageView fx:id="imageInfo3" fitHeight="60.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <image>
                                     <Image url="@../Image/ShieldTransparent.png" />
                                  </image>
                               </ImageView>
                            </children>
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="64.0" minWidth="10.0" prefWidth="54.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="66.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -402,18 +396,18 @@
                            <children>
                               <Label fx:id="nobilityPathText" text="10" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                  <font>
-                                    <Font name="Calibri Bold" size="15.0" />
+                                    <Font name="Calibri Bold" size="17.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <ImageView fx:id="imageInfo4" fitHeight="60.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <image>
                                     <Image url="@../Image/NobilityArrow.png" />
                                  </image>
                               </ImageView>
                            </children>
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.0" minWidth="10.0" prefWidth="54.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="66.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -423,18 +417,18 @@
                            <children>
                               <Label fx:id="fastActionText" text="10" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                  <font>
-                                    <Font name="Calibri Bold" size="15.0" />
+                                    <Font name="Calibri Bold" size="17.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <ImageView fx:id="imageInfo5" fitHeight="60.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <image>
                                     <Image url="@../Image/fastAction.png" />
                                  </image>
                               </ImageView>
                            </children>
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="59.0" minWidth="10.0" prefWidth="53.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="67.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -444,18 +438,18 @@
                            <children>
                               <Label fx:id="mainActionText" text="10" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                  <font>
-                                    <Font name="Calibri Bold" size="15.0" />
+                                    <Font name="Calibri Bold" size="17.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#buyMainAction" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <ImageView fx:id="imageInfo6" fitHeight="60.0" fitWidth="35.0" onMouseClicked="#buyMainAction" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <image>
                                     <Image url="@../Image/mainAction.png" />
                                  </image>
                               </ImageView>
                            </children>
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="59.0" minWidth="10.0" prefWidth="54.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="66.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -464,16 +458,6 @@
                      </children>
                   </HBox>
                   <fx:include fx:id="nobilityPath" source="NobilityPathFXML.fxml" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showLess" text="Button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-                     <effect>
-                        <ImageInput>
-                           <source>
-                              <Image url="/ClientPackage/View/GUIResources/Image/icon/less.png" />
-                           </source>
-                        </ImageInput>
-                     </effect>
-                  </Button>
-                  <Label fx:id="turnText" text="Turno" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                </children>
             </GridPane>
          </content>

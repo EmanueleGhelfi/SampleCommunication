@@ -281,7 +281,9 @@ public class GameController implements Serializable{
         TimerTask checkUserTimerTask = new TimerTask() {
             @Override
             public void run() {
-                users.forEach(user -> user.getBaseCommunication().ping());
+                for(Iterator<User> iterator = users.iterator(); iterator.hasNext();){
+                    iterator.next().getBaseCommunication().ping();
+                }
             }
         };
         checkUserTimer.scheduleAtFixedRate(checkUserTimerTask,0,5000);
