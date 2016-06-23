@@ -26,7 +26,13 @@ public class ImageLoader {
 
     public Image getImage(String path){
         if(!imageHashMap.containsKey(path)){
-            Image image = new Image(path,true);
+            Image image=null;
+            if(!path.contains("Map")) {
+                 image = new Image(path, true);
+            }
+            else{
+                image=new Image(path);
+            }
             imageHashMap.put(path,image);
         }
         return imageHashMap.get(path);
