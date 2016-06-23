@@ -267,7 +267,6 @@ public class MatchController implements Initializable, BaseController {
         gauge.setStartFromZero(true);
         background.getChildren().add(gauge);
         */
-
     }
 
     private void createLayers() {
