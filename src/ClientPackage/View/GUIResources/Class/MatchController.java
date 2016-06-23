@@ -40,6 +40,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+
 import java.net.URL;
 import java.util.*;
 
@@ -157,7 +158,6 @@ public class MatchController implements Initializable, BaseController {
 
     private ImageView boardImageView;
 
-
     private ProgressIndicator progressIndicator = new ProgressIndicator();
 
     @Override
@@ -245,7 +245,16 @@ public class MatchController implements Initializable, BaseController {
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
         createLayers();
 
-        //progressIndicator.setI
+
+        /*
+        Gauge gauge = new Gauge();
+        gauge.setSkin(GaugeDesign);
+        gauge.setPrefWidth(500);
+        gauge.setPrefHeight(500);
+        gauge.setStartFromZero(true);
+        background.getChildren().add(gauge);
+        */
+
     }
 
     private void createLayers() {
