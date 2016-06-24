@@ -22,6 +22,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -305,6 +307,14 @@ public class MatchController implements Initializable, BaseController {
                 showLess();
             }
         });
+
+        /*
+        ObservableList<Node> workingCollection = FXCollections.observableArrayList(menuAllButtons.getChildren());
+        Collections.swap(workingCollection, 0, 1);
+
+        */
+        menuAllButtons.getChildren().setAll(hamburgerIcon,moreImg,lessImg);
+        menuAllButtons.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
     }
 
     private void createLayers() {
