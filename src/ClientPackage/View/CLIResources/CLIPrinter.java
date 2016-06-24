@@ -99,7 +99,7 @@ public class CLIPrinter implements CLIPrinterInterface {
         }
         toReturn+= ANSI_BLUE+"Links: \n"+ANSI_RESET;
         for (Link link: map.getLinks()){
-            toReturn+=""+link.toString();
+            toReturn+=""+link.toString()+"\n";
         }
         toReturn+="END MAP";
         return toReturn;
