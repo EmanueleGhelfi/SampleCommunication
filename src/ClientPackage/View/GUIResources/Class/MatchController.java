@@ -180,7 +180,6 @@ public class MatchController implements Initializable, BaseController {
         this.clientController = clientController;
         this.guiView = guiView;
         hiddenSidesPane = new HiddenSidesPane();
-
         currentSnapshot = clientController.getSnapshot();
         guiView.registerBaseController(this);
         initController();
@@ -243,7 +242,7 @@ public class MatchController implements Initializable, BaseController {
         gridPane.add(oldPermitCardNodeList,2,2);
         GridPane.setHalignment(oldPermitCardNodeList, HPos.RIGHT);
         GridPane.setValignment(oldPermitCardNodeList, VPos.BOTTOM);
-        gridPane.setMargin(oldPermitCardNodeList, new Insets(0, 20, 20, 0));
+        GridPane.setMargin(oldPermitCardNodeList, new Insets(0, 20, 20, 0));
         ///oldPermitCardNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not().and(hamburgerMenu.visibleProperty().not()));
 
         hamburgerMenu.prefWidthProperty().addListener(new ChangeListener<Number>() {
@@ -260,6 +259,7 @@ public class MatchController implements Initializable, BaseController {
         //help();
 
         selectionModel = tabPane.getSelectionModel();
+        tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
 
         populateHamburgerMenu();
         initHamburgerIcon();
@@ -336,7 +336,7 @@ public class MatchController implements Initializable, BaseController {
         infoHBox.prefWidthProperty().bind(gridPane.widthProperty().divide(2));
         //setImageInInfo();
         gridPane.add(turnImage, 0, 0);
-        gridPane.setMargin(turnImage, new Insets(20, 0, 0, 20));
+        GridPane.setMargin(turnImage, new Insets(20, 0, 0, 20));
         turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty().multiply(2));
         turnImage.setPreserveRatio(true);
         turnImage.setStyle("-fx-effect: dropshadow(three-pass-box, black, 20, 0, 0, 0)");
@@ -398,6 +398,41 @@ public class MatchController implements Initializable, BaseController {
 
     }
 
+    private void createPermitCardBonusInGridPane(PermitCard permitCard, GridPane permitGridPane,ImageView permitImage) {
+        for (int i = 0; i < permitCard.getBonus().getBonusURL().size(); i++) {
+            ImageView bonusImage = new ImageView(ImageLoader.getInstance().getImage(permitCard.getBonus().getBonusURL().get(i)));
+            bonusImage.fitHeightProperty().bind(permitImage.fitHeightProperty().divide(4));
+            bonusImage.setPreserveRatio(true);
+            Label bonusLabel = new Label(permitCard.getBonus().getBonusInfo().get(i));
+            bonusLabel.setTextFill(Paint.valueOf("WHITE"));
+            permitGridPane.add(bonusImage, i+1, 1);
+            permitGridPane.add(bonusLabel, i+1, 1);
+            GridPane.setHalignment(bonusImage, HPos.CENTER);
+            GridPane.setValignment(bonusImage, VPos.CENTER);
+            GridPane.setHalignment(bonusLabel, HPos.CENTER);
+            GridPane.setValignment(bonusLabel, VPos.CENTER);
+            //permitGridPane.setAlignment(Pos.CENTER);
+            /*
+            Insets insets;
+            switch (i) {
+                case 0:
+                    insets = new Insets(0, 0, 0, 10);
+                    break;
+                case 1:
+                    insets = new Insets(0);
+                    break;
+                case 2:
+                    insets = new Insets(0, 10, 0, 0);
+                    break;
+                default:
+                    insets = new Insets(0);
+            }
+            */
+            //GridPane.setMargin(bonusLabel, insets);
+        }
+    }
+
+
     private void createPermitCardBonusInStackPane(PermitCard permitCard, StackPane permitStackPane,ImageView permitImage) {
         for (int i = 0; i < permitCard.getBonus().getBonusURL().size(); i++) {
             ImageView bonusImage = new ImageView(ImageLoader.getInstance().getImage(permitCard.getBonus().getBonusURL().get(i)));
@@ -420,7 +455,6 @@ public class MatchController implements Initializable, BaseController {
                 case 2:
                     bonusPosition = Pos.CENTER_RIGHT;
                     insets = new Insets(0, 5, 0, 0);
-
                     break;
                 default:
                     bonusPosition = Pos.CENTER;
@@ -429,9 +463,9 @@ public class MatchController implements Initializable, BaseController {
             StackPane.setAlignment(bonusImage, bonusPosition);
             StackPane.setAlignment(bonusLabel, bonusPosition);
             StackPane.setMargin(bonusLabel, insets);
-
         }
     }
+
 
     private void createHand() {
         handHBox.getChildren().clear();
@@ -448,6 +482,43 @@ public class MatchController implements Initializable, BaseController {
             handHBox.getChildren().add(politicCardImageView);
         }
         for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()){
+            GridPane permitGridPane = new GridPane();
+
+            ColumnConstraints columnConstraints1 = new ColumnConstraints();
+            ColumnConstraints columnConstraints2 = new ColumnConstraints();
+            ColumnConstraints columnConstraints3 = new ColumnConstraints();
+            ColumnConstraints columnConstraints4 = new ColumnConstraints();
+            ColumnConstraints columnConstraints5 = new ColumnConstraints();
+            columnConstraints1.setPercentWidth(5);
+            columnConstraints2.setPercentWidth(30);
+            columnConstraints3.setPercentWidth(30);
+            columnConstraints4.setPercentWidth(30);
+            columnConstraints5.setPercentWidth(5);
+            permitGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3, columnConstraints4, columnConstraints5);
+            gridPane.setAlignment(Pos.CENTER);
+            ImageView permitCardImageView = new ImageView();
+            permitCardImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/PermitCard.png"));
+            permitCardImageView.fitHeightProperty().bind(handHBox.prefHeightProperty());
+            permitCardImageView.setPreserveRatio(true);
+            permitCardImageView.setCache(true);
+            permitCardImageView.setCache(true);
+            Label labelOfPermitCard = new Label();
+            labelOfPermitCard.setText(permitCard.getCityString());
+            labelOfPermitCard.setTextFill(Paint.valueOf("WHITE"));
+            permitGridPane.add(labelOfPermitCard, 0, 0);
+            permitGridPane.add(permitCardImageView, 0, 0);
+            GridPane.setColumnSpan(labelOfPermitCard, 5);
+            GridPane.setColumnSpan(permitCardImageView, 5);
+            GridPane.setRowSpan(permitCardImageView, 2);
+            GridPane.setValignment(labelOfPermitCard, VPos.BOTTOM);
+            GridPane.setHalignment(labelOfPermitCard, HPos.CENTER);
+            permitGridPane.setGridLinesVisible(true);
+            createPermitCardBonusInGridPane(permitCard,permitGridPane,permitCardImageView);
+            permitCardImageView.getStyleClass().add("myPermitCard");
+            permitGridPane.setOnMouseClicked(new OldPermitCardHandler(permitCard,needToSelectOldPermitCard,clientController, this));
+            handHBox.getChildren().add(permitGridPane);
+
+            /*
             StackPane permitStackPane = new StackPane();
             permitStackPane.setAlignment(Pos.CENTER);
             ImageView permitCardImageView = new ImageView();
@@ -464,6 +535,7 @@ public class MatchController implements Initializable, BaseController {
             permitCardImageView.getStyleClass().add("myPermitCard");
             permitStackPane.setOnMouseClicked(new OldPermitCardHandler(permitCard,needToSelectOldPermitCard,clientController, this));
             handHBox.getChildren().add(permitStackPane);
+            */
         }
 
         GridPane.setValignment(handHBox, VPos.BOTTOM);
@@ -544,6 +616,7 @@ public class MatchController implements Initializable, BaseController {
             public void handle(ActionEvent event) {
                 SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                 selectionModel.selectNext();
+                tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
                 shopController.displayHelp();
             }
         });
@@ -580,6 +653,7 @@ public class MatchController implements Initializable, BaseController {
             @Override
             public void handle(ActionEvent event) {
                 selectionModel.selectNext();
+                tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
             }
         });
         moreActionNodeList.addAnimatedNode(shopButton);
@@ -1373,6 +1447,7 @@ public class MatchController implements Initializable, BaseController {
     @Override
     public void onStartMarket() {
         selectionModel.selectNext();
+        tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
     }
 
     @Override
@@ -1383,6 +1458,7 @@ public class MatchController implements Initializable, BaseController {
     @Override
     public void onFinishMarket() {
         selectionModel.selectFirst();
+        tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
     }
 
     @Override

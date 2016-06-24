@@ -20,9 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -75,6 +73,8 @@ public class ShopController implements BaseController {
     @FXML private GridPane shop;
     @FXML private Pane paneBackground;
 
+
+
     @Override
     public void setClientController(ClientController clientController, GUIView guiView) {
         this.clientController = clientController;
@@ -85,10 +85,23 @@ public class ShopController implements BaseController {
         updateView();
         createDeck();
         onFinishMarket();
-
-
+        setArrow();
         setMarketPane();
 
+    }
+
+    private void setArrow() {
+        JFXButton backArrow = new JFXButton();
+        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png"));
+        arrowImageView.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3188));
+        arrowImageView.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.7767));
+        backArrow.setGraphic(arrowImageView);
+        backArrow.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //TODO
+            }
+        });
     }
 
     private void setMarketPane() {
