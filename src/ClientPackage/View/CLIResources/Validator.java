@@ -2,6 +2,7 @@ package ClientPackage.View.CLIResources;
 
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.CityName;
+import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
 
 import java.util.ArrayList;
@@ -43,12 +44,18 @@ public class Validator {
     }
 
     public static boolean isValidRegion(String buyPermit) {
-        try {
-            RegionName regionName = RegionName.valueOf(buyPermit);
-            return true;
-        } catch (Exception e) {
-            return false;
+        for(RegionName region: RegionName.values()){
+            if(region.getRegion().equalsIgnoreCase(buyPermit))
+                return true;
         }
+        return false;
+    }
 
+    public static RegionName getRegion(String region){
+        for(RegionName regionName: RegionName.values()){
+            if(regionName.getRegion().equalsIgnoreCase(region))
+                return regionName;
+        }
+        return null;
     }
 }

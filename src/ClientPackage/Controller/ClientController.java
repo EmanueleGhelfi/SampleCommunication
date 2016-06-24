@@ -2,6 +2,7 @@ package ClientPackage.Controller;
 
 import ClientPackage.NetworkInterface.ClientService;
 import ClientPackage.NetworkInterface.ClientFactoryService;
+import ClientPackage.View.CLIResources.CLIColor;
 import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
 import ClientPackage.View.GeneralView.GUIView;
@@ -78,7 +79,14 @@ public class ClientController {
         String method = "";
         System.out.println("Quale UI vuoi utilizzare? \n 1. GUI \n 2. CLI");
         while(method.equals("")) {
-            int choice = Integer.parseInt(inKeyboard.readLine());
+            int choice;
+            try {
+                choice = Integer.parseInt(inKeyboard.readLine());
+            }
+            catch (Exception e){
+                System.out.println(CLIColor.ANSI_RED+"Syntax error, starting default choice: GUI"+CLIColor.ANSI_RESET);
+                choice=1;
+            }
             switch (choice) {
                 case 1:
                     method = Constants.GUI;
