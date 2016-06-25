@@ -18,7 +18,7 @@ public class NobilityPath implements Path, Serializable {
 
     public NobilityPath() {
         position = new Position[length+1];
-        for (int i = 0 ; i<length; i++){
+        for (int i = 0 ; i<=length; i++){
             Bonus bonus = new MainBonus(1,3,10,true);
             if (i == 0)
                 bonus.getBonusArrayList().clear();

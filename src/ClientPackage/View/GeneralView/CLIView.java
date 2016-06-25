@@ -7,13 +7,19 @@ import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -37,6 +43,9 @@ public class CLIView implements BaseView {
     private AtomicBoolean needToRead = new AtomicBoolean(true);
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
+    private ExecutorService executorService= Executors.newSingleThreadExecutor();
+
+    private Future futureTask;
 
     public CLIView(ClientController clientController) {
         // to implement
@@ -50,34 +59,37 @@ public class CLIView implements BaseView {
     @Override
     public void initView() {
         currentController=loginCliController;
-
         getInput();
-
-
     }
 
     private void getInput() {
-        String input="";
-        if(first) {
-            currentController.printHelp();
-            first=false;
-        }
 
-        while (true) {
-            try {
-                while (!bufferedReader.ready() || !needToRead.get()) {
-                    Thread.sleep(200);
-                }
-                input = bufferedReader.readLine();
-
-
-                currentController.parseLine(input);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        Runnable runnable= ()-> {
+            String input = "";
+            if (first) {
+                currentController.printHelp();
+                first = false;
             }
-        }
+
+            while (true) {
+                try {
+                    while (!bufferedReader.ready() || !needToRead.get()) {
+                        Thread.sleep(200);
+                    }
+                    input = bufferedReader.readLine();
+                    String finalInput = input;
+                    currentController.parseLine(finalInput);
+                } catch (IOException e1) {
+
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        //executorService.execute(runnable);
+        futureTask = executorService.submit(runnable);
+
+
     }
 
     @Override
@@ -120,7 +132,8 @@ public class CLIView implements BaseView {
     @Override
     public void turnFinished() {
         System.out.println(" "+CLIColor.ANSI_RED+" Turno finito "+CLIColor.ANSI_RESET);
-
+        matchCliController.onFinisTurn();
+        getInput();
     }
 
     @Override

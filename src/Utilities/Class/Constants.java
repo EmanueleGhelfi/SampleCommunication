@@ -51,7 +51,7 @@ public class Constants {
     public static final String MAP_SELECTION_FXML = "/ClientPackage/View/GUIResources/FXML/MapSelectionFXML.fxml";
     public static final String NOTIFICATION_ICON = "Icon.png";
     public static final String NOTIFICATION_TEXT = "COFfee";
-
+    public static final String CITY_REWARD_BONUS_INCORRECT = "Bonus not correct because of nobility bonus";
 
 
     //NETWORK
@@ -127,8 +127,8 @@ public class Constants {
     public static final String COAST = "Coast";
 
     //PATH LENGHT
-    public static final int MONEY_PATH_LENGTH = 21;
-    public static final int NOBILITY_PATH_ELEMENT = 21;
+    public static final int MONEY_PATH_LENGTH = 20;
+    public static final int NOBILITY_PATH_ELEMENT = 20;
     public static final int VICTORY_PATH_LENGTH = 100;
 
     //TIMEOUT TO CREATE GAME
@@ -168,7 +168,7 @@ public class Constants {
     public static final String POLITIC_CARD = "POLITIC_CARD";
 
     //ROUND
-    public static final long ROUND_DURATION = 600000;
+    public static final long ROUND_DURATION = 20000;
 
     // Folder
     public  static String IMAGE_PATH= "/ClientPackage/View/GUIResources/Image/";
@@ -187,4 +187,5 @@ public class Constants {
     public static final String MONEY_PATH_EXCEPTION = "You can\'t go back in money path!";
     public static final String PERMIT_CARD_NOT_PRESENT_EXCEPTION = "This permit card is not present!";
     public static final String CITY_NOT_CORRECT_EXCEPTION = "City not correct exception";
+    public static final String POLITIC_CARD_EXCEPTION = "Politic cards not correct, sorry bro!";
 }

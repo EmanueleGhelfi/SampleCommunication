@@ -121,6 +121,8 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_OLD_PERMIT_CARD_BONUS,null);
     }
 
+
+
     @Override
     public void run() {
         String line;
@@ -202,7 +204,11 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                     }
                     case Constants.CODE_CITY_REWARD_BONUS:{
                         City city = gson.fromJson(communicationInfo.getInfo(),City.class);
-                        user.getGameController().getCityRewardBonus(city,user);
+                        try {
+                            user.getGameController().getCityRewardBonus(city,user);
+                        } catch (ActionNotPossibleException e) {
+                            CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e.getMessage());
+                        }
                         break;
                     }
                     case Constants.SELECT_PERMITCARD_BONUS:{

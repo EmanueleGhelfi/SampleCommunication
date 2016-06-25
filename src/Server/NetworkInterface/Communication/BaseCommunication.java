@@ -41,4 +41,6 @@ public abstract class BaseCommunication {
     public abstract void ping();
 
     public abstract void selectOldPermitCard();
+
+
 }

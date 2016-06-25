@@ -728,14 +728,14 @@ public class MatchController implements Initializable, BaseController {
         moneyLabel.setText(baseUser.getCoinPathPosition()+"");
         politicLabel.setText(baseUser.getPoliticCardNumber()+"");
         helperLabel.setText(baseUser.getHelpers().size()+"");
-        nobilityLabel.setText(baseUser.getNobilityPathPosition().getPosition()+"");
+        victoryLabel.setText(baseUser.getNobilityPathPosition().getPosition()+"");
         if(baseUser.getPermitCards().size()>0){
             permitLabel.setText(baseUser.getPermitCards().get(0).getCityString());
         }
         else{
             permitLabel.setText("No permit card");
         }
-        victoryLabel.setText(baseUser.getVictoryPathPosition()+"");
+        nobilityLabel.setText(baseUser.getVictoryPathPosition()+"");
     }
 
     private void initHamburgerIcon() {

@@ -23,6 +23,9 @@ import asg.cliche.Command;
 import asg.cliche.Param;
 import org.apache.commons.cli.Options;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import static ClientPackage.View.CLIResources.CLIColor.*;
@@ -32,13 +35,13 @@ import static ClientPackage.View.CLIResources.CLIColor.*;
  */
 public class MatchCliController implements CliController  {
 
-    private boolean isYourTurn = false;
+    private boolean isMyTurn = false;
     private Options matchOptions;
     private CLIView cliView;
     private ClientController clientController;
     private CLIParser cliParser;
     private CLIPrinter cliPrinter = new CLIPrinter();
-    private Scanner scanner = new Scanner(System.in);
+    private BufferedReader scanner = new BufferedReader(new InputStreamReader(System.in));
     private SnapshotToSend snapshotToSend;
 
     public MatchCliController(CLIView cliView, ClientController clientController) {
@@ -56,7 +59,7 @@ public class MatchCliController implements CliController  {
 
     public void onYourTurn() {
         snapshotToSend = cliView.getSnapshot();
-        isYourTurn=true;
+        isMyTurn=true;
         System.out.println(ANSI_RED+"Turno iniziato"+ANSI_RESET);
         //cliPrinter.printHelp(matchOptions);
     }
@@ -64,7 +67,7 @@ public class MatchCliController implements CliController  {
 
 
 
-    private ArrayList<City> selectKingPath() {
+    private ArrayList<City> selectKingPath() throws IOException {
 
         ArrayList<City> cities= new ArrayList<>();
         cliPrinter.printBlue("Select city king: ");
@@ -84,35 +87,36 @@ public class MatchCliController implements CliController  {
 
         boolean correct = false;
         String[] selectedArray= {};
-        while (!correct) {
+        while (!correct && isMyTurn) {
             cliPrinter.printBlue("Inserisci i numeri delle città seguite da uno spazio: ");
             for (int i = 0; i < clientController.getSnapshot().getMap().getCity().size(); i++) {
                 System.out.println(" " + i + ". " + cliPrinter.
                         toStringFormatted(clientController.getSnapshot().getMap().getCity().get(i)));
             }
 
-            String selected = scanner.nextLine();
+            String selected = scanner.readLine();
 
             selectedArray = selected.split(" ");
             correct = ArrayUtils.checkInteger(selectedArray,clientController.getSnapshot().getMap().getCity());
         }
 
-        for(int i = 0; i<selectedArray.length;i++){
-            cities.add(clientController.getSnapshot().getMap().getCity().get(i));
+            for (int i = 0; i < selectedArray.length; i++) {
+                cities.add(clientController.getSnapshot().getMap().getCity().get(i));
+            }
+
+            if (!cities.get(0).equals(clientController.getSnapshot().getKing().getCurrentCity())) {
+                cities.add(0, clientController.getSnapshot().getKing().getCurrentCity());
+            return cities;
         }
 
-        if(!cities.get(0).equals(clientController.getSnapshot().getKing().getCurrentCity())){
-            cities.add(0,clientController.getSnapshot().getKing().getCurrentCity());
-        }
-        return cities;
-
+        return null;
 
     }
 
 
 
 
-    private ArrayList<PoliticCard> selectPoliticCard(ArrayList<PoliticCard> politicCards) {
+    private ArrayList<PoliticCard> selectPoliticCard(ArrayList<PoliticCard> politicCards) throws IOException {
         boolean done = false;
         boolean correct = false;
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
@@ -123,7 +127,7 @@ public class MatchCliController implements CliController  {
                 System.out.println(" " + i + ". " + cliPrinter.toStringFormatted(politicCards.get(i)));
             }
 
-            String selected = scanner.nextLine();
+            String selected = scanner.readLine();
 
             selectedArray = selected.split(" ");
             done= ArrayUtils.checkDuplicate(selectedArray);
@@ -155,14 +159,21 @@ public class MatchCliController implements CliController  {
 
     private PermitCard selectPermitCard(ArrayList<PermitCard> permitCards) {
         int scelta = -2;
-        while ((scelta<0 || scelta>permitCards.size()) && (scelta!=-1)){
-            try{
-                scelta=scanner.nextInt();
-                // always do a nextline to skip \n
-                scanner.nextLine();
-                if(scelta>=0 && scelta< permitCards.size()){
+        while ((scelta<0 || scelta>permitCards.size()) && (scelta!=-1) && isMyTurn){
+            try {
+                while (!scanner.ready() && isMyTurn) {
+                    Thread.sleep(200);
+                }
+                if (isMyTurn) {
+                    scelta = Integer.parseInt(scanner.readLine());
 
-                    return permitCards.get(scelta);
+                    if (scelta >= 0 && scelta < permitCards.size()) {
+
+                        return permitCards.get(scelta);
+                    }
+                }
+                else{
+                    System.out.println("turno finito");
                 }
             }
             catch (Exception e){
@@ -227,7 +238,7 @@ public class MatchCliController implements CliController  {
 
     @Command(name = "finish",description = "Finish your turn", abbrev = "f")
     public void finishTurn(){
-        isYourTurn=false;
+        isMyTurn=false;
         System.out.println(ANSI_RED+"Turno finito"+ANSI_RESET);
         clientController.onFinishTurn();
     }
@@ -278,9 +289,19 @@ public class MatchCliController implements CliController  {
         cliPrinter.printBlue("King's council: ");
         cliPrinter.printCouncil(new ArrayList<Councilor>(clientController.getSnapshot().getKing().getCouncil().getCouncil()));
 
-        ArrayList<PoliticCard> politicCardArrayList = selectPoliticCard(clientController.getSnapshot().getCurrentUser().getPoliticCards());
+        ArrayList<PoliticCard> politicCardArrayList = null;
+        try {
+            politicCardArrayList = selectPoliticCard(clientController.getSnapshot().getCurrentUser().getPoliticCards());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        ArrayList<City> cities = selectKingPath();
+        ArrayList<City> cities = null;
+        try {
+            cities = selectKingPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Action action = new MainActionBuildWithKingHelp(cities,politicCardArrayList);
         clientController.doAction(action);
@@ -325,7 +346,11 @@ public class MatchCliController implements CliController  {
 
                 try {
                     cliPrinter.printCouncil(clientController.getSnapshot().getCouncil(regionName));
-                    ArrayList<PoliticCard> politicCardArrayList = selectPoliticCard(currentUser.getPoliticCards());
+                    ArrayList<PoliticCard> politicCardArrayList = null;
+                    try {
+                        politicCardArrayList = selectPoliticCard(currentUser.getPoliticCards());
+                    } catch (IOException e) {
+                    }
                     Action action = new MainActionBuyPermitCard(politicCardArrayList, regionName, permitCardSelected);
                     clientController.doAction(action);
                 } catch (CouncilNotFoundException e) {
@@ -334,8 +359,15 @@ public class MatchCliController implements CliController  {
             }
 
             else{
-                cliPrinter.printError("Sorry, invalid selection!");
-                buyPermit(region);
+                if(isMyTurn) {
+                    cliPrinter.printError("Sorry, invalid selection!");
+                    buyPermit(region);
+                }
+                else{
+
+                    System.out.println("finished turn");
+                }
+
             }
 
 
@@ -419,5 +451,10 @@ public class MatchCliController implements CliController  {
             System.out.println("Error in region Name");
         }
 
+    }
+
+
+    public void onFinisTurn() {
+        isMyTurn=false;
     }
 }

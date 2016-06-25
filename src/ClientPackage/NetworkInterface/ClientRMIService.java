@@ -179,8 +179,10 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             rmiClientHandler.getCityRewardBonus(city1);
         } catch (RemoteException e) {
             e.printStackTrace();
+        } catch (ActionNotPossibleException e) {
+            clientController.onActionNotPossible(e);
         }
-    };
+        };
         executorService.execute(runnable);
 
     }
