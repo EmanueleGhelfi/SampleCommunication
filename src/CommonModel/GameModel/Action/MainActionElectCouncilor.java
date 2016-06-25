@@ -54,10 +54,13 @@ public class MainActionElectCouncilor extends Action implements Serializable {
 
     @Override
     public String toString() {
-        return "MainActionElectCouncilor{" +
-                "councilorToAdd=" + councilorToAdd +
-                ", region=" + region +
-                ", king=" + king +
-                '}';
+        String region ="";
+        if(king==null){
+            region="KING";
+        }
+        else {
+            region=this.region.getRegion();
+        }
+        return "[MAIN ACTION] Elect councilor for money. Councilor: "+councilorToAdd+" In region "+region;
     }
 }

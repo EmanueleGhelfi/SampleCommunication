@@ -126,4 +126,12 @@ public class MainActionBuildWithKingHelp extends Action {
             executorService.execute(runnable);
         });
     }
+
+    @Override
+    public String toString() {
+        if(kingPath.size()==0){
+            return "";
+        }
+        return "[MAIN ACTION] Build an empory in city " + kingPath.get(kingPath.size()-1).getCityName()+" with king help.\n";
+    }
 }

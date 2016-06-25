@@ -40,8 +40,6 @@ public class FastActionChangePermitCardWithHelper extends Action {
 
     @Override
     public String toString() {
-        return "FastActionChangePermitCardWithHelper{" +
-                "region=" + region +
-                '}';
+        return "[FAST ACTION] Change permit card of region " +region+" with helper";
     }
 }

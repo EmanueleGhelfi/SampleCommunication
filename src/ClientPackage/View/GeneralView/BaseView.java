@@ -1,5 +1,6 @@
 package ClientPackage.View.GeneralView;
 
+import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -45,4 +46,6 @@ public interface BaseView {
     void sendMatchFinishedWithWin(boolean win);
 
     void selectOldPermitCardBonus();
+
+    void onActionDone(Action action);
 }

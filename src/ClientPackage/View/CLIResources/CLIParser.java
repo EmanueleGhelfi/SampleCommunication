@@ -2,6 +2,8 @@ package ClientPackage.View.CLIResources;
 
 import ClientPackage.View.GeneralView.CLIView;
 import Utilities.Class.AnnotationUtilities;
+import Utilities.Class.CircularArrayList;
+import Utilities.Class.MapUtil;
 import Utilities.Exception.MethodNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
@@ -23,8 +25,6 @@ public class CLIParser {
     private Class mClass;
     private HashMap<String,Method> methodHashMap = new HashMap<>();
     private HashMap<String,String> methodDescription = new HashMap<>();
-
-
     public CLIParser(Class mClass){
         this.mClass = mClass;
         initMethods();
@@ -50,7 +50,7 @@ public class CLIParser {
                         }
                     }
                     methodDescription.put(((Command) annotation).name(),description);
-                    methodDescription.put(((Command) annotation).name(),description);
+                    //methodDescription.put(((Command) annotation).name(),description);
                 }
             }
         }
@@ -89,6 +89,9 @@ public class CLIParser {
                 } catch (IllegalAccessException e) {
                     System.out.println(e.getMessage());
                 }
+            }
+            else{
+                cliPrinter.printError("Sorry, method not found");
             }
         }
 
@@ -147,9 +150,9 @@ public class CLIParser {
 
         if(lines.length<=1) {
 
-            for (Map.Entry<String, String> entry : methodDescription.entrySet()) {
+            Map<String,String> tmpMap = MapUtil.sortByValue(methodDescription);
+            for (Map.Entry<String, String> entry : tmpMap.entrySet()) {
                 System.out.println(CLIColor.ANSI_BLUE + entry.getKey() + CLIColor.ANSI_RESET + " \n \t " + entry.getValue());
-
             }
         }
         else {

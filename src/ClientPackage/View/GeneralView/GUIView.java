@@ -2,6 +2,7 @@ package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.*;
+import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -287,6 +288,11 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void selectOldPermitCardBonus() {
         baseControllerList.forEach(baseController -> baseController.selectOldPermitCardBonus());
+    }
+
+    @Override
+    public void onActionDone(Action action) {
+
     }
 
     public synchronized void registerBaseController(BaseController baseController){

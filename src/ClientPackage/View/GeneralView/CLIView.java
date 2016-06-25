@@ -3,6 +3,7 @@ package ClientPackage.View.GeneralView;
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.CLIResources.*;
 import ClientPackage.View.GUIResources.Class.MatchController;
+import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
@@ -132,6 +133,7 @@ public class CLIView implements BaseView {
     @Override
     public void turnFinished() {
         System.out.println(" "+CLIColor.ANSI_RED+" Turno finito "+CLIColor.ANSI_RESET);
+        futureTask.cancel(true);
         matchCliController.onFinisTurn();
         getInput();
     }
@@ -145,7 +147,7 @@ public class CLIView implements BaseView {
     @Override
     public void updateSnapshot() {
         //cliPrinterInterface.toStringFormatted(clientController.getSnapshot());
-        matchCliController.showStatus();
+        //matchCliController.showStatus();
     }
 
     @Override
@@ -198,7 +200,11 @@ public class CLIView implements BaseView {
 
     }
 
-
+    @Override
+    public void onActionDone(Action action) {
+        cliPrinterInterface.printBlue("Sending Action to Server: ");
+        System.out.println(action.toString());
+    }
 
 
     public void printHelp() {

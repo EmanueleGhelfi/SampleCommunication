@@ -18,6 +18,7 @@ import CommonModel.Snapshot.CurrentUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Link;
 import Utilities.Class.ArrayUtils;
+import Utilities.Class.Constants;
 import Utilities.Exception.CouncilNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
@@ -121,25 +122,36 @@ public class MatchCliController implements CliController  {
         boolean correct = false;
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
         String[] selectedArray= {};
-        while (!done && !correct) {
+        while (!done && !correct && isMyTurn) {
             cliPrinter.printBlue("Inserisci i numeri delle carte separati da uno spazio: ");
             for (int i = 0; i < politicCards.size(); i++) {
                 System.out.println(" " + i + ". " + cliPrinter.toStringFormatted(politicCards.get(i)));
             }
 
-            String selected = scanner.readLine();
+            while (!scanner.ready() && isMyTurn){
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                }
+            }
+            if(isMyTurn) {
+                String selected = scanner.readLine();
 
-            selectedArray = selected.split(" ");
-            done= ArrayUtils.checkDuplicate(selectedArray);
-            correct = ArrayUtils.checkInteger(selectedArray,politicCards);
+                selectedArray = selected.split(" ");
+                done = ArrayUtils.checkDuplicate(selectedArray);
+                correct = ArrayUtils.checkInteger(selectedArray, politicCards);
+            }
         }
 
-        for(int i = 0; i<selectedArray.length;i++){
-            System.out.println(" You have selected "+selectedArray[i]);
-            politicCardArrayList.add(politicCards.get(Integer.parseInt(selectedArray[i])));
-        }
+        if(isMyTurn) {
+            for (int i = 0; i < selectedArray.length; i++) {
+                System.out.println(" You have selected " + selectedArray[i]);
+                politicCardArrayList.add(politicCards.get(Integer.parseInt(selectedArray[i])));
+            }
 
-        return politicCardArrayList;
+            return politicCardArrayList;
+        }
+        return null;
 
     }
 
@@ -280,7 +292,7 @@ public class MatchCliController implements CliController  {
     }
 
 
-    @Command(description = ""+CLIColor.ANSI_RED+"[MAIN ACTION]"+CLIColor.ANSI_RESET+" Build an empory with king help",
+    @Command(description = ""+CLIColor.ANSI_RED+"|MAIN ACTION|"+CLIColor.ANSI_RESET+" Build an empory with king help",
             abbrev = "bk", name = "buildKing")
     public void buildWithKing() {
 
@@ -296,18 +308,20 @@ public class MatchCliController implements CliController  {
             e.printStackTrace();
         }
 
-        ArrayList<City> cities = null;
-        try {
-            cities = selectKingPath();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if(isMyTurn) {
+            ArrayList<City> cities = null;
+            try {
+                cities = selectKingPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        Action action = new MainActionBuildWithKingHelp(cities,politicCardArrayList);
-        clientController.doAction(action);
+            Action action = new MainActionBuildWithKingHelp(cities, politicCardArrayList);
+            clientController.doAction(action);
+        }
     }
 
-    @Command (description = ""+CLIColor.ANSI_RED+"[MAIN ACTION]"+CLIColor.ANSI_RESET+"Build an empory with permitCard", name = "buildEmpory", abbrev = "be")
+    @Command (description = ""+CLIColor.ANSI_RED+"|MAIN ACTION|"+CLIColor.ANSI_RESET+"Build an empory with permitCard", name = "buildEmpory", abbrev = "be")
     public void buildEmporium(@Param(name="city", description="The city when you want to build")String city) {
 
         if(Validator.isValidCity(city)) {
@@ -328,7 +342,7 @@ public class MatchCliController implements CliController  {
 
     }
 
-    @Command (description = ""+CLIColor.ANSI_RED+"[MAIN ACTION]"+CLIColor.ANSI_RESET+" Buy a permit card in selected region", name = "buyPermit", abbrev = "bp")
+    @Command (description = ""+CLIColor.ANSI_RED+"|MAIN ACTION|"+CLIColor.ANSI_RESET+" Buy a permit card in selected region", name = "buyPermit", abbrev = "bp")
     public void buyPermit(@Param(name = "Region", description = "region where you want to buy") String region) {
         if(Validator.isValidRegion(region)){
             cliPrinter.printBlue("Select a permit card: ");
@@ -375,7 +389,7 @@ public class MatchCliController implements CliController  {
     }
 
 
-    @Command (description = ""+CLIColor.ANSI_RED+"[FAST OR MAIN ACTION]"+CLIColor.ANSI_RESET+"Elect councilor", name = "electCouncilor", abbrev = "ec")
+    @Command (description = ""+CLIColor.ANSI_RED+"|FAST OR MAIN ACTION|"+CLIColor.ANSI_RESET+"Elect councilor", name = "electCouncilor", abbrev = "ec")
     public void getElectCouncilorArgs(@Param(name = "type", description = "helper or money") String type,
                                       @Param(name = "region", description = "King or region name") String region,
                                       @Param(name = "Politic Color", description = "Color of councilor that you want to elect") String color) {
@@ -385,62 +399,67 @@ public class MatchCliController implements CliController  {
         RegionName regionName = null;
         King king=null;
 
+
         for(PoliticColor politicColor: PoliticColor.values()){
             if(politicColor.getColor().equalsIgnoreCase(color)){
                 selectedPoliticColor=politicColor;
             }
         }
 
-        if(!checkValidRegion(region)){
-            if(region.equalsIgnoreCase("king")){
-                king=clientController.getSnapshot().getKing();
-            }
-        }
-        else{
-            for(RegionName regionName1: RegionName.values()){
-                if(regionName1.getRegion().equalsIgnoreCase(region.toLowerCase())){
-                    regionName=regionName1;
+        if(clientController.getSnapshot().getBank().showCouncilor().contains(selectedPoliticColor)) {
+
+            if (!checkValidRegion(region)) {
+                if (region.equalsIgnoreCase("king")) {
+                    king = clientController.getSnapshot().getKing();
+                }
+            } else {
+                for (RegionName regionName1 : RegionName.values()) {
+                    if (regionName1.getRegion().equalsIgnoreCase(region.toLowerCase())) {
+                        regionName = regionName1;
+                    }
                 }
             }
+
+            if ((king != null || regionName != null) && selectedPoliticColor != null) {
+                Action action = null;
+                switch (type.toLowerCase()) {
+                    case "helper":
+                        action = new FastActionElectCouncilorWithHelper(regionName, king, new Councilor(selectedPoliticColor), "");
+                        break;
+                    case "money":
+                        action = new MainActionElectCouncilor(new Councilor(selectedPoliticColor), king, regionName);
+                }
+                if (action != null)
+                    clientController.doAction(action);
+                else
+                    cliPrinter.printError("ERROR");
+
+            } else
+                cliPrinter.printError("SYNTAX ERROR");
+
+
         }
-
-        if((king!=null || regionName!=null)&& selectedPoliticColor!=null) {
-            Action action = null;
-            switch (type.toLowerCase()) {
-                case "helper":
-                    action = new FastActionElectCouncilorWithHelper(regionName, king, new Councilor(selectedPoliticColor), "");
-                    break;
-                case "money":
-                    action = new MainActionElectCouncilor(new Councilor(selectedPoliticColor), king, regionName);
-            }
-            if(action!=null)
-                clientController.doAction(action);
-            else
-                cliPrinter.printError("ERROR");
-
+        else {
+            System.out.println("Councilor not present in back, sorry!");
         }
-        else
-            cliPrinter.printError("SYNTAX ERROR");
-
-
     }
 
 
-    @Command(abbrev = "bh", description = ""+CLIColor.ANSI_RED+"[FAST ACTION]"+CLIColor.ANSI_RESET+"Buy helper for money", name = "buyHelper")
+    @Command(abbrev = "bh", description = ""+CLIColor.ANSI_RED+"|FAST ACTION|"+CLIColor.ANSI_RESET+"Buy helper for money", name = "buyHelper")
     public void buyHelper(){
         Action action = new FastActionMoneyForHelper();
         clientController.doAction(action);
     }
 
 
-    @Command(abbrev = "ba", description = ""+CLIColor.ANSI_RED+"[FAST ACTION]"+CLIColor.ANSI_RESET+"Buy a Main action for money", name = "buyAction")
+    @Command(abbrev = "ba", description = ""+CLIColor.ANSI_RED+"|FAST ACTION|"+CLIColor.ANSI_RESET+"Buy a Main action for" + Constants.HELPER_LIMITATION_NEW_MAIN_ACTION+" Helper", name = "buyAction")
     public void buyMainAction(){
         Action action = new FastActionNewMainAction();
         clientController.doAction(action);
     }
 
 
-    @Command (description = ""+CLIColor.ANSI_RED+"[FAST ACTION]"+CLIColor.ANSI_RESET+"Change permit card", name = "changePermit", abbrev = "cp")
+    @Command (description = ""+CLIColor.ANSI_RED+"|FAST ACTION|"+CLIColor.ANSI_RESET+"Change permit card", name = "changePermit", abbrev = "cp")
     public void changePermitAction(@Param(name="region", description="Region of the permit card that you want to change")String arg) {
         try {
             RegionName regionName = RegionName.valueOf(arg);

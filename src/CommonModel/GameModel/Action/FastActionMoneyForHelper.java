@@ -27,4 +27,9 @@ public class FastActionMoneyForHelper extends Action {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "[FAST ACTION] buy helper with "+Constants.MONEY_LIMITATION_MONEY_FOR_HELPER+" money!";
+    }
 }

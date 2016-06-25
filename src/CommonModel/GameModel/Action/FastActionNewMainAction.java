@@ -31,4 +31,9 @@ public class FastActionNewMainAction extends Action {
     public String getActionType() {
         return actionType;
     }
+
+    @Override
+    public String toString() {
+        return "[FAST ACTION] Buy main action for: "+Constants.HELPER_LIMITATION_NEW_MAIN_ACTION;
+    }
 }
