@@ -105,6 +105,7 @@ public class GameController implements Serializable{
         fakeUser.setUsername("FakeUser");
     }
 
+
     private void configurationForTwoPlayers() {
         ArrayList<PermitCard> permitCardArray = new ArrayList<>();
         for (java.util.Map.Entry<RegionName, PermitDeck> permitDeck : game.getPermitDecks().entrySet()) {
