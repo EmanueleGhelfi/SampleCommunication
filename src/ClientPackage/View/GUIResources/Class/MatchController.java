@@ -238,7 +238,7 @@ public class MatchController implements Initializable, BaseController {
         initPermitButton();
         handleClick();
         createCity();
-        gridPane.add(handHBox, 0, 2);
+        gridPane.add(handHBox, 0, 1);
         createHand();
         creteOldPermitCard();
         gridPane.add(oldPermitCardNodeList,2,2);
@@ -263,13 +263,13 @@ public class MatchController implements Initializable, BaseController {
         selectionModel = tabPane.getSelectionModel();
         tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
 
-        populateHamburgerMenu();
         initHamburgerIcon();
         bottomPane.setVisible(false);
         nobilityPath.setVisible(false);
         kingPathforBuild.add(clientController.getSnapshot().getKing().getCurrentCity());
         createNodeList();
         setBoard();
+        populateHamburgerMenu();
         GridPane.setHalignment(nobilityPath, HPos.CENTER);
         GridPane.setValignment(nobilityPath, VPos.BOTTOM);
         createHBoxMenu();
@@ -482,7 +482,9 @@ public class MatchController implements Initializable, BaseController {
         handHBox.prefWidthProperty().bind(gridPane.prefWidthProperty());
         handHBox.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(7));
         //handHBox.setMouseTransparent(true);
-        handHBox.setAlignment(Pos.CENTER);
+        handHBox.setAlignment(Pos.BOTTOM_CENTER);
+        handHBox.setStyle("-fx-background-color: red");
+
         for (PoliticCard politicCard : clientController.getSnapshot().getCurrentUser().getPoliticCards()) {
             ImageView politicCardImageView = new ImageView();
             politicCardImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/" + politicCard.getUrl() + ".png"));
@@ -505,9 +507,11 @@ public class MatchController implements Initializable, BaseController {
             columnConstraints4.setPercentWidth(30);
             columnConstraints5.setPercentWidth(5);
             permitGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3, columnConstraints4, columnConstraints5);
-            gridPane.setAlignment(Pos.CENTER);
+
             ImageView permitCardImageView = new ImageView();
             permitCardImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/PermitCard.png"));
+            permitGridPane.prefHeightProperty().bind(handHBox.heightProperty());
+            //permitGridPane.prefWidthProperty().bind(permitCardImageView.fitWidthProperty());
             permitCardImageView.fitHeightProperty().bind(handHBox.prefHeightProperty());
             permitCardImageView.setPreserveRatio(true);
             permitCardImageView.setCache(true);
@@ -517,16 +521,18 @@ public class MatchController implements Initializable, BaseController {
             labelOfPermitCard.setTextFill(Paint.valueOf("WHITE"));
             permitGridPane.add(labelOfPermitCard, 0, 0);
             permitGridPane.add(permitCardImageView, 0, 0);
-            GridPane.setColumnSpan(labelOfPermitCard, 5);
             GridPane.setColumnSpan(permitCardImageView, 5);
             GridPane.setRowSpan(permitCardImageView, 2);
-            GridPane.setValignment(labelOfPermitCard, VPos.BOTTOM);
+            GridPane.setColumnSpan(labelOfPermitCard, 5);
+            GridPane.setValignment(labelOfPermitCard, VPos.TOP);
             GridPane.setHalignment(labelOfPermitCard, HPos.CENTER);
-            permitGridPane.setGridLinesVisible(true);
             createPermitCardBonusInGridPane(permitCard,permitGridPane,permitCardImageView);
             permitCardImageView.getStyleClass().add("myPermitCard");
             permitGridPane.setOnMouseClicked(new OldPermitCardHandler(permitCard,needToSelectOldPermitCard,clientController, this));
             handHBox.getChildren().add(permitGridPane);
+            GridPane.setMargin(labelOfPermitCard, new Insets(10, 0, 0, 0));
+            labelOfPermitCard.toFront();
+
 
             /*
             StackPane permitStackPane = new StackPane();
@@ -550,8 +556,8 @@ public class MatchController implements Initializable, BaseController {
 
         GridPane.setValignment(handHBox, VPos.BOTTOM);
         GridPane.setHalignment(handHBox, HPos.CENTER);
-        GridPane.setHalignment(handHBox, HPos.CENTER);
         GridPane.setColumnSpan(handHBox, 3);
+        GridPane.setRowSpan(handHBox, 2);
     }
 
 
@@ -653,12 +659,13 @@ public class MatchController implements Initializable, BaseController {
 
         moreActionNodeList.addAnimatedNode(helpButton);
         JFXButton shopButton = new JFXButton();
-        ImageView shopButtonImageView = new ImageView(new Image(Constants.IMAGE_PATH + "/ShopButton.png"));
+        ImageView shopButtonImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/ShopButton.png"));
         shopButtonImageView.setFitHeight(50);
         shopButtonImageView.setFitWidth(50);
         shopButton.setPrefWidth(50);
         shopButton.setPrefHeight(50);
         shopButton.setGraphic(shopButtonImageView);
+        shopButton.setRotate(180);
         shopButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -712,7 +719,8 @@ public class MatchController implements Initializable, BaseController {
             }
         });
         usersComboBox.getSelectionModel().select(0);
-        hamburgerMenu.prefHeightProperty().bind(gridPane.heightProperty());
+        hamburgerMenu.prefHeightProperty().bind(gridPane.heightProperty().subtract(boardImageView.fitHeightProperty()));
+        GridPane.setValignment(hamburgerMenu, VPos.BOTTOM);
     }
 
     private void populateField(BaseUser baseUser) {

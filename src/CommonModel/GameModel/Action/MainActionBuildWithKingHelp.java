@@ -101,8 +101,8 @@ public class MainActionBuildWithKingHelp extends Action {
 
     private boolean pathIsCorrect(Game game) {
         UndirectedGraph<City,DefaultEdge> mapGraph = game.getMap().getMapGraph();
-        if(!kingPath.get(0).equals(game.getKing().getCurrentCity())){
-            System.out.println("First city isn't king city becuse: "+kingPath.get(0)+ "and "+game.getKing().getCurrentCity());
+        if(kingPath.size()>0 && !kingPath.get(0).equals(game.getKing().getCurrentCity())){
+            System.out.println("First city isn't king city");
             return false;
         }
         for(int i = 0; i<kingPath.size()-1;i++){

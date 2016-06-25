@@ -105,6 +105,7 @@ public class GameController implements Serializable{
         fakeUser.setUsername("FakeUser");
     }
 
+
     private void configurationForTwoPlayers() {
         ArrayList<PermitCard> permitCardArray = new ArrayList<>();
         for (java.util.Map.Entry<RegionName, PermitDeck> permitDeck : game.getPermitDecks().entrySet()) {
@@ -131,16 +132,6 @@ public class GameController implements Serializable{
                 user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
                 user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
                 user.setVictoryPathPosition(Constants.INITIAL_POSITION_ON_VICTORY_PATH);
-
-                ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-                for (int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++) {
-                    politicCardArrayList.add(game.getPoliticCards().drawACard());
-                }
-                user.setPoliticCards(politicCardArrayList);
-
-                for (int i = 0; i < 2; i++) {
-                    user.addPermitCard(game.getPermitDeck(RegionName.HILL).getPermitCardVisible(i));
-                }
                 userCounter++;
             }
         }
