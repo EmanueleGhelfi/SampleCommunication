@@ -86,4 +86,6 @@ public class FakeCommunication extends BaseCommunication {
     public void selectOldPermitCard() {
 
     }
+
+
 }

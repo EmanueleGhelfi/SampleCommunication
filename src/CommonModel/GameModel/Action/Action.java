@@ -125,7 +125,7 @@ public abstract class Action implements Serializable {
             newPositionInMoneyPath+=bonusNumber;
         }
         else {
-            throw new ActionNotPossibleException("Politic card not correct!");
+            throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
         }
         System.out.println("NUOVA POS "+newPositionInMoneyPath+" bonus "+ bonusNumber);
         return newPositionInMoneyPath;

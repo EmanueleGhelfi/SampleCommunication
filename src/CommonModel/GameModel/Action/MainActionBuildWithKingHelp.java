@@ -42,24 +42,27 @@ public class MainActionBuildWithKingHelp extends Action {
         //this is the new position of the user in money path
         int newPositionInMoneyPath = 0;
         //true if the emporiums are not ten and i haven't build in that city
-        if(super.checkActionCounter(user) && pathIsCorrect(game)) {
+        if(super.checkActionCounter(user) && pathIsCorrect(game) && politicCards.size()>0) {
             if (checkEmporiumsAreNotTen(user) && kingPath.size()>0 && checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
                 // city where king goes
-                City kingCity = kingPath.get(kingPath.size() - 1);
+                City kingCity = game.getCity(kingPath.get(kingPath.size() - 1));
+                System.out.println("City where king wants to go "+ kingCity);
                 // calculate correct politic card
                 correctPoliticCard = countCorrectPoliticCard(king, politicCards, bonusCounter);
                 // calculate money to spend
                 newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
 
-                System.out.println("New position in money path "+ newPositionInMoneyPath +" because "+correctPoliticCard);
+                System.out.println("New position in money path "+ newPositionInMoneyPath +" because correct politic card "+correctPoliticCard);
                 if ((kingPath.size()-1) * Constants.KING_PRICE < user.getCoinPathPosition()) {
                     for (City city : kingPath) {
                         //user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
                         game.getMoneyPath().goAhead(user,-Constants.KING_PRICE);
                         System.out.println("Current position "+ user.getCoinPathPosition());
-                        king.setCurrentCity(city);
+                        //king.setCurrentCity(city);
                     }
-                    //user.setCoinPathPosition(user.getCoinPathPosition()+Constants.KING_PRICE);
+                    king.setCurrentCity(kingCity);
+
+                    // because of first element
                     game.getMoneyPath().goAhead(user,Constants.KING_PRICE);
                     System.out.println("Current position "+user.getCoinPathPosition());
                     user.addEmporium(kingCity);
@@ -67,11 +70,6 @@ public class MainActionBuildWithKingHelp extends Action {
 
                     //check near bonus
                     super.getNearCityBonus(game,user,kingCity);
-                   /* CityVisitor cityVisitor = new CityVisitor(game.getMap().getMapGraph(), user.getUsersEmporium());
-                    for (City cityToVisit : cityVisitor.visit(kingCity)) {
-                        cityToVisit.getBonus().getBonus(user, game);
-                    }
-                    */
                 } else {
                     throw new ActionNotPossibleException(Constants.MONEY_EXCEPTION);
                 }
@@ -82,6 +80,10 @@ public class MainActionBuildWithKingHelp extends Action {
                 // remove cards from user
                 removePoliticCard(politicCards, user,game);
 
+                //check region and color bonus
+                checkRegionBonus(kingCity, user, game);
+                checkColorBonus(kingCity, user, game);
+
                 moveKing(game,user);
                 removeAction(game, user);
             }
@@ -90,6 +92,9 @@ public class MainActionBuildWithKingHelp extends Action {
             }
         }
         else{
+            if(politicCards.size()>0){
+                throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
+            }
             throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);
         }
     }
@@ -97,7 +102,7 @@ public class MainActionBuildWithKingHelp extends Action {
     private boolean pathIsCorrect(Game game) {
         UndirectedGraph<City,DefaultEdge> mapGraph = game.getMap().getMapGraph();
         if(!kingPath.get(0).equals(game.getKing().getCurrentCity())){
-            System.out.println("First city isn't king city");
+            System.out.println("First city isn't king city becuse: "+kingPath.get(0)+ "and "+game.getKing().getCurrentCity());
             return false;
         }
         for(int i = 0; i<kingPath.size()-1;i++){

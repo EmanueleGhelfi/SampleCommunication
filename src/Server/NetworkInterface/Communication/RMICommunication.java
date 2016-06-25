@@ -107,7 +107,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
-    public void getCityRewardBonus(City city1) throws RemoteException {
+    public void getCityRewardBonus(City city1) throws RemoteException, ActionNotPossibleException {
         System.out.println("get city reward bonus");
         user.getGameController().getCityRewardBonus(city1,user);
     }
@@ -284,6 +284,8 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             e.printStackTrace();
         }
     }
+
+
 
 
     @Override

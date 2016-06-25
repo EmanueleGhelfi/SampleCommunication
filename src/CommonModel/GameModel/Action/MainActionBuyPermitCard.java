@@ -36,7 +36,7 @@ public class MainActionBuyPermitCard extends Action {
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        if(super.checkActionCounter(user)) {
+        if(super.checkActionCounter(user) && politicCards.size()>0) {
             // count number of correct politic card
             int correctPoliticCard = 0;
             // region of permit card
@@ -60,6 +60,9 @@ public class MainActionBuyPermitCard extends Action {
             permitCardToBuy.getBonus().getBonus(user, game);
             user.addPermitCard(permitCardToBuy);
             removeAction(game, user);
+        }
+        else{
+            throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
         }
     }
 

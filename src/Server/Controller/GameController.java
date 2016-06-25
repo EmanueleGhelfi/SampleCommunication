@@ -1,6 +1,8 @@
 package Server.Controller;
 
 import CommonModel.GameModel.Action.Action;
+import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Bonus.SingleBonus.NobilityBonus;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
@@ -22,6 +24,8 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Utilities.Exception.AlreadyPresentException;
 import Utilities.Exception.MapsNotFoundException;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -301,17 +305,21 @@ public class GameController implements Serializable{
         action.doAction(game,user);
     }
 
-    // send available map
-    private void sendAvailableMap(User userToAdd) {
-        userToAdd.getBaseCommunication().sendAvailableMap(availableMaps);
+    /** send available map to client
+     *
+     * @param user
+     */
+    private void sendAvailableMap(User user) {
+        user.getBaseCommunication().sendAvailableMap(availableMaps);
     }
 
-    /* set map and init game*/
+    /* set map and init game called by client*/
     public void setMap(Map map) {
         if(availableMaps.contains(map)){
             Map mapToFind = findMap(map);
             game.setMap(mapToFind);
             game.setKing(new King(map.getCity().get(0),game.getBank()));
+            setKingPosition(game,mapToFind);
             for (User user: game.getUsers()) {
                 SnapshotToSend snapshotToSend = new SnapshotToSend(game,user);
                 // init game
@@ -324,6 +332,15 @@ public class GameController implements Serializable{
         }
         else{
             System.out.println("MAP NOT PRESENT");
+        }
+    }
+
+    private void setKingPosition(Game game, Map mapToFind) {
+        for(City city: mapToFind.getCity()){
+            if(city.getColor().equals(CommonModel.GameModel.City.Color.PURPLE)){
+                game.setKing(new King(city,game.getBank()));
+                break;
+            }
         }
     }
 
@@ -378,7 +395,7 @@ public class GameController implements Serializable{
         }).start();
     }
 
-    // called when receive an object to sell
+    // called by client when receive an object to sell
     public boolean onReceiveBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) {
         for (BuyableWrapper buyableWrapper: buyableWrappers) {
             try {
@@ -393,7 +410,7 @@ public class GameController implements Serializable{
 
     }
 
-    // called when receive object to buy
+    // called by client when receive object to buy
     public boolean onBuyObject(User user, ArrayList<BuyableWrapper> buyableWrappers) {
         int counter = 0;
         for (BuyableWrapper buyableWrapper : buyableWrappers) {
@@ -502,19 +519,43 @@ public class GameController implements Serializable{
         }
     }
 
-    public void getCityRewardBonus(City city1, User user) {
-        try {
+    public void getCityRewardBonus(City city1, User user) throws ActionNotPossibleException {
             City city = game.getCity(city1);
 
-            city.getBonus(user,game);
+            if(checkBonusCorrect(city,user)) {
+                try {
+                    city.getBonus(user, game);
+                }
+                catch (ActionNotPossibleException e){
 
-            user.decrementOptionalActionCounter();
+                }
 
-            sendSnapshotToAll();
+                user.decrementOptionalActionCounter();
 
-        } catch (ActionNotPossibleException e) {
-            e.printStackTrace();
+                sendSnapshotToAll();
+            }
+            else{
+                user.addOptionalActionCounter();
+                user.getBaseCommunication().selectCityRewardBonus(new SnapshotToSend(game, user));
+                throw new ActionNotPossibleException(Constants.CITY_REWARD_BONUS_INCORRECT);
+            }
+
+    }
+
+    private boolean checkBonusCorrect(City city, User user) {
+        ArrayList<Bonus> bonusArrayList = city.getBonus().getBonusArrayList();
+        for(Bonus bonus:bonusArrayList){
+            if(bonus instanceof NobilityBonus){
+                return false;
+            }
         }
+
+        for(City city1: user.getUsersEmporium()){
+            if(city1.equals(city)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void onSelectPermitCard(PermitCard permitCard, User user) {
