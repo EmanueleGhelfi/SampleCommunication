@@ -182,7 +182,8 @@ public abstract class Action implements Serializable {
             City cityToGetBonus = game.getCity(cityToVisit);
             if (cityToGetBonus != null && cityToGetBonus.getBonus() != null) {
                 //cityToVisit.getBonus().getBonus(user, game);
-                cityToGetBonus.getBonus(user,game);
+                if (!city.getColor().getColor().equals(Constants.PURPLE))
+                    cityToGetBonus.getBonus(user,game);
             } else {
                 System.out.println(" " + cityToVisit + " has null bonus or is null");
             }

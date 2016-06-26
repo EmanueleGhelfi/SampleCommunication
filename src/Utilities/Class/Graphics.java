@@ -1,5 +1,6 @@
 package Utilities.Class;
 
+import ClientPackage.View.GUIResources.Class.BringUpHandler;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -33,6 +34,19 @@ public class Graphics {
             mediaPlayer.play();
         }catch(Exception e){
             e.printStackTrace();
+        }
+    }
+
+    public static void bringUpImages(Node... nodes) {
+        for (Node node: nodes) {
+            BringUpHandler bringUpHandler = new BringUpHandler(node);
+            node.setOnMouseEntered(bringUpHandler);
+            node.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    bringUpHandler.setNormalPosition();
+                }
+            });
         }
     }
 

@@ -3,6 +3,7 @@ package Server.Model;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.*;
+import Utilities.Class.Constants;
 import Utilities.Class.InterfaceAdapter;
 import Utilities.Exception.MapsNotFoundException;
 import com.google.gson.Gson;
@@ -367,8 +368,10 @@ public class Map implements Serializable {
                     Map map = gson.fromJson(text,Map.class);
                     UndirectedGraph graph = map.getMapGraph();
                     for (City city: map.getCity()) {
-                        city.createRandomBonus();
-                        graph.addVertex(city);
+                        if (!city.getColor().getColor().equals(Constants.PURPLE)) {
+                            city.createRandomBonus();
+                        }
+                            graph.addVertex(city);
                     }
                     for(Link links: map.getLinks())
                     {

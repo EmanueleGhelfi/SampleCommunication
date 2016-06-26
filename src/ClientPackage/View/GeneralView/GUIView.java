@@ -34,6 +34,7 @@ public class GUIView extends Application implements BaseView {
 
     private LoginController loginController;
     private WaitingController waitingController;
+    private FinishMatchController finishMatchController;
     private MapSelectionController mapSelectionController;
     private MatchController matchController;
     private ArrayList<BaseController> baseControllerList = new ArrayList<>();
@@ -281,7 +282,34 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void sendMatchFinishedWithWin(boolean win) {
-        //TODO
+        GUIView baseView = this;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                stage.setResizable(true);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientPackage/View/GUIResources/FXML/FinishMatchFXML.fxml"));
+                Parent screen = null;
+                try {
+                    screen = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                finishMatchController = loader.getController();
+                finishMatchController.setClientController(clientController, baseView, win);
+                Scene scene = new Scene(screen);
+                stage.setScene(scene);
+                stage.setMinHeight(600);
+                stage.setMinWidth(1200);
+                stage.show();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        Platform.exit();
+                        System.exit(0);
+                    }
+                });
+            }
+        });
     }
 
     @Override

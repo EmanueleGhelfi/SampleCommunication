@@ -105,7 +105,6 @@ public class GameController implements Serializable{
         fakeUser.setUsername("FakeUser");
     }
 
-
     private void configurationForTwoPlayers() {
         ArrayList<PermitCard> permitCardArray = new ArrayList<>();
         for (java.util.Map.Entry<RegionName, PermitDeck> permitDeck : game.getPermitDecks().entrySet()) {
@@ -134,6 +133,13 @@ public class GameController implements Serializable{
                 user.setVictoryPathPosition(Constants.INITIAL_POSITION_ON_VICTORY_PATH);
                 userCounter++;
             }
+            ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
+            for (int cont = 0; cont < Constants.DEFAULT_POLITIC_CARD_HAND; cont++) {
+                politicCardArrayList.add(game.getPoliticCards().drawACard());
+            }
+            user.setPoliticCards(politicCardArrayList);
+
+
         }
     }
 
@@ -208,7 +214,7 @@ public class GameController implements Serializable{
                     turnCounter--;
                     nextUser++;
                 }
-                if (lastUser != nextUser) {
+                if (lastUser != nextUser % game.getUsers().size()) {
                     if ((nextUser % game.getUsers().size()) == cont) {
                         onAllUserDisconnected();
                     } else {
@@ -320,6 +326,20 @@ public class GameController implements Serializable{
             selectFirstPlayer();
 
             configurationForTwoPlayers();
+
+            for (User user :
+                    users) {
+                int cont=0;
+                for (City city : game.getMap().getCity()) {
+                    if (cont<9) {
+                        if (!(user instanceof FakeUser)) {
+                            user.addEmporium(city);
+                            cont++;
+                        }
+                    }
+
+                }
+            }
         }
         else{
             System.out.println("MAP NOT PRESENT");
@@ -515,7 +535,8 @@ public class GameController implements Serializable{
 
             if(checkBonusCorrect(city,user)) {
                 try {
-                    city.getBonus(user, game);
+                    if (!city.getColor().getColor().equals(Constants.PURPLE))
+                        city.getBonus(user, game);
                 }
                 catch (ActionNotPossibleException e){
 
@@ -571,40 +592,69 @@ public class GameController implements Serializable{
         }
     }
     public void startingLastRound() {
-        lastUser = nextUser;
+        lastUser = nextUser % game.getUsers().size();
     }
 
     public void checkUserWhoWin(){
-        ArrayList<User> firstNobilityPathUserToReward = new ArrayList<>();
-        ArrayList<User> secondNobilityPathUserToReward = new ArrayList<>();
+        ArrayList<User> firstNobilityPathUserToReward = new ArrayList<>(users);
+        ArrayList<User> secondNobilityPathUserToReward = new ArrayList<>(users);
+        ArrayList<User> userMaxPermitCard = new ArrayList<>(users);
+        ArrayList<User> userMaxHelper = new ArrayList<>(users);
         User userToRewardMaxPermitCard = new User();
         User userWithMaxHelperAndPoliticCard = new User();
-        for (User user : users) {
-            if (user.getNobilityPathPosition().getPosition() > firstNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition()){
-                firstNobilityPathUserToReward.clear();
-                firstNobilityPathUserToReward.add(user);
-            }
-            if (user.getNobilityPathPosition().getPosition() == firstNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition()){
-                firstNobilityPathUserToReward.add(user);
-            } else {
-                if (user.getNobilityPathPosition().getPosition() > secondNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition())
-                    secondNobilityPathUserToReward.clear();
-                    secondNobilityPathUserToReward.add(user);
-                if (user.getNobilityPathPosition().getPosition() == secondNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition())
-                    secondNobilityPathUserToReward.add(user);
-            }
-            if (user.getPermitCards().size() > userToRewardMaxPermitCard.getPermitCards().size()){
-                userToRewardMaxPermitCard = user;
-            }
-            if (user.getHelpers().size() + user.getPoliticCardSize() > userWithMaxHelperAndPoliticCard.getHelpers().size() + userWithMaxHelperAndPoliticCard.getPoliticCardSize()){
-                userWithMaxHelperAndPoliticCard = user;
+
+        firstNobilityPathUserToReward.remove(fakeUser);
+        secondNobilityPathUserToReward.remove(fakeUser);
+        userMaxPermitCard.remove(fakeUser);
+        userMaxHelper.remove(fakeUser);
+        users.remove(fakeUser);
+
+
+        sortingOnNobiliy(firstNobilityPathUserToReward);
+        sortingOnNobiliy(secondNobilityPathUserToReward);
+        sortingOnPermit(userMaxPermitCard);
+        sortingOnHelper(userMaxHelper);
+
+        for (User user : firstNobilityPathUserToReward) {
+            for(Iterator<User> itr = firstNobilityPathUserToReward.iterator(); itr.hasNext();) {
+                User userUsed = itr.next();
+                if (firstNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition() > userUsed.getNobilityPathPosition().getPosition()){
+                    itr.remove();
+                }
             }
         }
+        secondNobilityPathUserToReward.removeAll(firstNobilityPathUserToReward);
+        for (User user : secondNobilityPathUserToReward) {
+            for(Iterator<User> itr = secondNobilityPathUserToReward.iterator(); itr.hasNext();) {
+                User userUsed = itr.next();
+                if (secondNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition() > userUsed.getNobilityPathPosition().getPosition()){
+                    itr.remove();
+                }
+            }
+        }
+        for (User user : secondNobilityPathUserToReward) {
+            for(Iterator<User> itr = userMaxPermitCard.iterator(); itr.hasNext();) {
+                User userUsed = itr.next();
+                if (userMaxPermitCard.get(0).getPermitCards().size() > userUsed.getPermitCards().size()){
+                    itr.remove();
+                }
+            }
+        }
+        for (User user : secondNobilityPathUserToReward) {
+            for(Iterator<User> itr = secondNobilityPathUserToReward.iterator(); itr.hasNext();) {
+                User userUsed = itr.next();
+                if (userMaxHelper.get(0).getHelpers().size() + userMaxHelper.get(0).getPoliticCardSize() > userUsed.getHelpers().size() + userUsed.getPoliticCardSize()){
+                    itr.remove();
+                }
+            }
+        }
+
         firstNobilityPathUserToReward.forEach(user -> user.setVictoryPathPosition(user.getVictoryPathPosition()+5));
         secondNobilityPathUserToReward.forEach(user -> user.setVictoryPathPosition(user.getVictoryPathPosition() + 2));
         userToRewardMaxPermitCard.setVictoryPathPosition(userToRewardMaxPermitCard.getVictoryPathPosition()+3);
-        ArrayList<User> userWhoWin = new ArrayList<>();
-        userWhoWin = checkFirst();
+
+        ArrayList<User> userWhoWin = new ArrayList<>(users);
+        userWhoWin = checkFirst(userWhoWin);
 
         if (userWhoWin.size()>1){
             for (User user : users) {
@@ -612,19 +662,57 @@ public class GameController implements Serializable{
                     user.setVictoryPathPosition(user.getVictoryPathPosition()+3);
                 }
             }
+            userWhoWin = checkFirst(userWhoWin);
         }
-        userWhoWin.clear();
-        userWhoWin = checkFirst();
-        users.forEach(user -> {
 
-        });
-
-        ArrayList<User> finalUserWhoWin = userWhoWin;
-        users.forEach(user -> {
-            if(isAWinner(finalUserWhoWin, user))
+        for (User user : users) {
+            if (userWhoWin.contains(user)){
                 user.getBaseCommunication().sendMatchFinishedWithWin(true);
-            else
+            } else {
                 user.getBaseCommunication().sendMatchFinishedWithWin(false);
+            }
+        }
+    }
+
+    private void sortingOnHelper(ArrayList<User> arrayList) {
+        Collections.sort(arrayList, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getHelpers().size() + o1.getPoliticCardSize() > o2.getHelpers().size() + o2.getPoliticCardSize())
+                    return -1;
+                if (o1.getHelpers().size() + o1.getPoliticCardSize() < o2.getHelpers().size() + o2.getPoliticCardSize())
+                    return 1;
+                else
+                    return 0;
+            }
+        });
+    }
+
+    private void sortingOnPermit(ArrayList<User> arrayList) {
+        Collections.sort(arrayList, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getPermitCards().size() > o2.getPermitCards().size())
+                    return -1;
+                if (o1.getPermitCards().size() < o2.getPermitCards().size())
+                    return 1;
+                else
+                    return 0;
+            }
+        });
+    }
+
+    private void sortingOnNobiliy(ArrayList<User> arrayList) {
+        Collections.sort(arrayList, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getNobilityPathPosition().getPosition() > o2.getNobilityPathPosition().getPosition())
+                    return -1;
+                if (o1.getNobilityPathPosition().getPosition() < o2.getNobilityPathPosition().getPosition())
+                    return 1;
+                else
+                    return 0;
+            }
         });
     }
 
@@ -636,18 +724,28 @@ public class GameController implements Serializable{
         return false;
     }
 
-    private ArrayList<User> checkFirst() {
-        ArrayList<User> userWhoWin = new ArrayList<>();
-        users.forEach(user -> {
-            if (user.getVictoryPathPosition() > userWhoWin.get(0).getVictoryPathPosition()) {
-                userWhoWin.clear();
-                userWhoWin.add(user);
-            }
-            if (user.getVictoryPathPosition() == userWhoWin.get(0).getVictoryPathPosition()) {
-                userWhoWin.add(user);
+    private ArrayList<User> checkFirst(ArrayList<User> arrayList) {
+        Collections.sort(arrayList, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getVictoryPathPosition() > o2.getVictoryPathPosition())
+                    return -1;
+                if (o1.getVictoryPathPosition() < o2.getVictoryPathPosition())
+                    return 1;
+                else
+                    return 0;
             }
         });
-        return userWhoWin;
+
+        for (User user : arrayList) {
+            for(Iterator<User> itr = arrayList.iterator(); itr.hasNext();) {
+                User userUsed = itr.next();
+                if (arrayList.get(0).getVictoryPathPosition() > userUsed.getVictoryPathPosition()){
+                    itr.remove();
+                }
+            }
+        }
+        return arrayList;
     }
 
 
@@ -700,4 +798,19 @@ public class GameController implements Serializable{
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GameController that = (GameController) o;
+
+        return fakeUser != null ? fakeUser.equals(that.fakeUser) : that.fakeUser == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return fakeUser != null ? fakeUser.hashCode() : 0;
+    }
 }

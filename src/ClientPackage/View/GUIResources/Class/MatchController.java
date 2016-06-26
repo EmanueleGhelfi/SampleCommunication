@@ -275,6 +275,8 @@ public class MatchController implements Initializable, BaseController {
         createHBoxMenu();
         createLayers();
 
+        placeRegionBonus();
+
         /*
         Gauge gauge = new Gauge();
         gauge.setSkin(GaugeDesign);
@@ -283,6 +285,32 @@ public class MatchController implements Initializable, BaseController {
         gauge.setStartFromZero(true);
         background.getChildren().add(gauge);
         */
+    }
+
+    private void placeRegionBonus() {
+        ImageView coastImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/CoastBonusCard.png"));
+        ImageView hillImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/HillBonusCard.png"));
+        ImageView mountainImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/MountainBonusCard.png"));
+        coastImage.setCache(true);
+        hillImage.setCache(true);
+        mountainImage.setCache(true);
+        coastImage.layoutXProperty().bind(background.widthProperty().multiply(0.089));
+        coastImage.layoutYProperty().bind(background.heightProperty().multiply(0.82));
+        hillImage.layoutXProperty().bind(background.widthProperty().multiply(0.447));
+        hillImage.layoutYProperty().bind(background.heightProperty().multiply(0.82));
+        mountainImage.layoutXProperty().bind(background.widthProperty().multiply(0.80));
+        mountainImage.layoutYProperty().bind(background.heightProperty().multiply(0.82));
+        coastImage.fitWidthProperty().bind(background.widthProperty().divide(20));
+        hillImage.fitWidthProperty().bind(background.widthProperty().divide(20));
+        mountainImage.fitWidthProperty().bind(background.widthProperty().divide(20));
+        coastImage.setPreserveRatio(true);
+        hillImage.setPreserveRatio(true);
+        mountainImage.setPreserveRatio(true);
+        Graphics.addShadow(coastImage);
+        Graphics.addShadow(hillImage);
+        Graphics.addShadow(mountainImage);
+        Graphics.bringUpImages(coastImage, hillImage, mountainImage);
+        background.getChildren().addAll(coastImage, hillImage, mountainImage);
     }
 
     private void createHBoxMenu() {
@@ -483,7 +511,6 @@ public class MatchController implements Initializable, BaseController {
         handHBox.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(7));
         //handHBox.setMouseTransparent(true);
         handHBox.setAlignment(Pos.BOTTOM_CENTER);
-        handHBox.setStyle("-fx-background-color: red");
 
         for (PoliticCard politicCard : clientController.getSnapshot().getCurrentUser().getPoliticCards()) {
             ImageView politicCardImageView = new ImageView();
@@ -862,7 +889,9 @@ public class MatchController implements Initializable, BaseController {
         */
         clientController.getSnapshot().getMap().getCity().forEach(city1 -> {
             CreateSingleCity(CityPosition.getX(city1),CityPosition.getY(city1),city1);
-            createBonus(city1.getBonus().getBonusURL(),city1.getBonus().getBonusInfo(),city1);
+            if (!city1.getColor().getColor().equals(Constants.PURPLE)) {
+                createBonus(city1.getBonus().getBonusURL(), city1.getBonus().getBonusInfo(), city1);
+            }
         });
 
         /*
@@ -933,7 +962,7 @@ public class MatchController implements Initializable, BaseController {
                     if(needToSelectOldBonus){
                         System.out.println("click on bonus");
                         new Thread(()->{
-                            clientController.getCityRewardBonus(city1);
+                                clientController.getCityRewardBonus(city1);
                         }).start();
 
                         needToSelectOldBonus=false;
@@ -1578,14 +1607,15 @@ public class MatchController implements Initializable, BaseController {
     }
 
     private void pulseBonus(City city1) {
-        if(pulseBonus==null) {
-            pulseBonus = new SimpleBooleanProperty(false);
+        if (!city1.getColor().getColor().equals(Constants.PURPLE)) {
+            if (pulseBonus == null) {
+                pulseBonus = new SimpleBooleanProperty(false);
+            } else {
+                pulseBonus.setValue(false);
+            }
+            Set<Node> nodes = background.lookupAll("." + city1.getCityName().getCityName());
+            nodes.forEach(node -> Graphics.scaleTransitionEffectCycle(node, 1.2f, 1.2f, pulseBonus));
         }
-        else {
-            pulseBonus.setValue(false);
-        }
-        Set<Node> nodes =background.lookupAll("."+city1.getCityName().getCityName());
-        nodes.forEach(node -> Graphics.scaleTransitionEffectCycle(node,1.2f,1.2f,pulseBonus));
     }
 
     private void turnFinished(boolean thisTurn) {

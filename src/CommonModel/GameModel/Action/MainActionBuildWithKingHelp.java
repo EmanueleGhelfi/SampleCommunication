@@ -66,8 +66,9 @@ public class MainActionBuildWithKingHelp extends Action {
                     game.getMoneyPath().goAhead(user,Constants.KING_PRICE);
                     System.out.println("Current position "+user.getCoinPathPosition());
                     user.addEmporium(kingCity);
-                    kingCity.getBonus().getBonus(user, game);
-
+                    if (!kingCity.getColor().getColor().equals(Constants.PURPLE)) {
+                        kingCity.getBonus().getBonus(user, game);
+                    }
                     //check near bonus
                     super.getNearCityBonus(game,user,kingCity);
                 } else {
@@ -86,6 +87,9 @@ public class MainActionBuildWithKingHelp extends Action {
 
                 moveKing(game,user);
                 removeAction(game, user);
+                if (user.getUsersEmporium().size() == 10) {
+                    game.getGameController().startingLastRound();
+                }
             }
             else{
                 throw new ActionNotPossibleException(Constants.EMPORIUM_PRESENT_EXCEPTION);

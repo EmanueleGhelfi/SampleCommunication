@@ -1,6 +1,7 @@
 package CommonModel.GameModel.Action;
 
 import CommonModel.GameModel.City.RegionName;
+import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
@@ -58,7 +59,6 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
             else{
                 throw new ActionNotPossibleException(Constants.HELPER_EXCEPTION);
             }
-
             }
         }
 }

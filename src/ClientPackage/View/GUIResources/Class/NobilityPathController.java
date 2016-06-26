@@ -8,6 +8,7 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
+import Utilities.Class.Graphics;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point3D;
@@ -87,15 +88,15 @@ public class NobilityPathController implements BaseController {
         */
 
 
-        greyBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.7908));
+        blueBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.7908));
         orangeBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.8458));
-        blueBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.8983));
+        greyBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.8983));
         yellowBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.9491));
         kingBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.9391));
 
-        greyBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.552));
+        blueBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.552));
         orangeBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.5167));
-        blueBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.4769));
+        greyBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.4769));
         yellowBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.4284));
         kingBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.0));
 
@@ -112,24 +113,10 @@ public class NobilityPathController implements BaseController {
         kingBonus.setPreserveRatio(true);
 
 
-
-        bringUpImages(greyBonus,orangeBonus,yellowBonus,blueBonus,kingBonus);
+        Graphics.bringUpImages(greyBonus, orangeBonus, yellowBonus, blueBonus, kingBonus);
 
 
         nobilityPath.getChildren().addAll(greyBonus, orangeBonus, blueBonus, yellowBonus, kingBonus);
-    }
-
-    private void bringUpImages(Node... nodes) {
-        for (Node node: nodes) {
-            BringUpHandler bringUpHandler = new BringUpHandler(node);
-            node.setOnMouseEntered(bringUpHandler);
-            node.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    bringUpHandler.setNormalPosition();
-                }
-            });
-        }
     }
 
     private void createPath() {
