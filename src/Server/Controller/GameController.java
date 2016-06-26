@@ -327,7 +327,7 @@ public class GameController implements Serializable{
             configurationForTwoPlayers();
 
             //TODO: READD TEN EMPORIUMS
-            /*for (User user :
+            for (User user :
                     users) {
                 int cont=0;
                 for (City city : game.getMap().getCity()) {
@@ -340,7 +340,6 @@ public class GameController implements Serializable{
 
                 }
             }
-            */
         }
 
         else{
@@ -673,18 +672,12 @@ public class GameController implements Serializable{
 
         ArrayList<BaseUser> finalSnapshot = new ArrayList<>();
         for (User userInArray : users) {
-            finalSnapshot.add(userInArray);
+            finalSnapshot.add(new BaseUser(userInArray));
         }
 
         for (User user : users) {
-            if (userWhoWin.contains(user)){
-                user.getBaseCommunication().sendMatchFinishedWithWin(finalSnapshot);
-            } else {
-                user.getBaseCommunication().sendMatchFinishedWithWin(finalSnapshot);
-            }
+            user.getBaseCommunication().sendMatchFinishedWithWin(finalSnapshot);
         }
-
-
     }
 
     private void sortingOnWin(ArrayList<User> arrayList) {

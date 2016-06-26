@@ -226,7 +226,7 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_FINISH:{
                 ArrayList<BaseUser> finalSnapshot = new ArrayList<>();
-                Type listType = new TypeToken<ArrayList<City>>(){}.getType();
+                Type listType = new TypeToken<ArrayList<BaseUser>>(){}.getType();
                 finalSnapshot = gson.fromJson(communicationInfo.getInfo(),listType);
                 clientController.sendMatchFinishedWithWin(finalSnapshot);
                 break;

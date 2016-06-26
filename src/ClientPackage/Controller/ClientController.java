@@ -338,7 +338,7 @@ public class ClientController {
     }
 
     public String getUserBuilding(String selectedItem) {
-        String toReturn = null;
+        String toReturn = "";
         for (BaseUser baseUser : finalSnapshot) {
             if (baseUser.getUsername().equals(selectedItem)){
                 for (int i = 0; i < baseUser.getUsersEmporium().size(); i++) {

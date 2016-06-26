@@ -68,7 +68,7 @@ public class FinishMatchController implements Initializable {
                 System.out.println("event x and y "+event.getX()/gridPane.getWidth()+" "+event.getY()/gridPane.getHeight());
             }
         });
-        innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.png"));
+        innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.jpg"));
         innerImage.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(2));
         innerImage.setPreserveRatio(true);
         innerPaneWhereShow.setPrefWidth(10);
@@ -94,8 +94,6 @@ public class FinishMatchController implements Initializable {
             }
         });
         ranking.setStyle("-fx-background-color: transparent");
-        gridPane.add(innerImage, 0, 0);
-        GridPane.setRowSpan(innerImage, 3);
         gridPane.add(innerImage, 0, 0);
         GridPane.setRowSpan(innerImage, 3);
         gridPane.add(ranking, 1, 1);
@@ -126,5 +124,11 @@ public class FinishMatchController implements Initializable {
         innerPopOver.setContentNode(popOverStackPane);
         innerPopOver.show(innerPaneWhereShow);
     }
+
+
+    //TODO
+    /*
+    event x and y 0.09560067681895093 0.5858951175406871 pane where show
+     */
 
 }
