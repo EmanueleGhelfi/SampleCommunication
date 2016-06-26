@@ -4,6 +4,7 @@ import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
@@ -254,9 +255,9 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     }
 
     @Override
-    public void sendMatchFinishedWithWin(boolean win) {
+    public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) {
         try {
-            rmiClientInterface.sendMatchFinishedWithWin(win);
+            rmiClientInterface.sendMatchFinishedWithWin(finalSnapshot);
         } catch (RemoteException e){
             e.printStackTrace();
         }

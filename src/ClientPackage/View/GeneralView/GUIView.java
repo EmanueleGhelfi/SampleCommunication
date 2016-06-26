@@ -4,6 +4,7 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.*;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -282,7 +283,7 @@ public class GUIView extends Application implements BaseView {
     }
 
     @Override
-    public void sendMatchFinishedWithWin(boolean win) {
+    public void sendMatchFinishedWithWin() {
         GUIView baseView = this;
         Platform.runLater(new Runnable() {
             @Override
@@ -296,7 +297,7 @@ public class GUIView extends Application implements BaseView {
                     e.printStackTrace();
                 }
                 finishMatchController = loader.getController();
-                finishMatchController.setClientController(clientController, baseView, win);
+                finishMatchController.setClientController(clientController, baseView);
                 Scene scene = new Scene(screen);
                 stage.setScene(scene);
                 stage.setMinHeight(600);

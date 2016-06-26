@@ -5,6 +5,7 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
@@ -107,8 +108,8 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     }
 
     @Override
-    public void sendMatchFinishedWithWin(boolean win) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH, win);
+    public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH, finalSnapshot);
     }
 
     @Override

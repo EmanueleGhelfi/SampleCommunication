@@ -669,13 +669,36 @@ public class GameController implements Serializable{
             userWhoWin = checkFirst(userWhoWin);
         }
 
+        sortingOnWin(users);
+
+        ArrayList<BaseUser> finalSnapshot = new ArrayList<>();
+        for (User userInArray : users) {
+            finalSnapshot.add(userInArray);
+        }
+
         for (User user : users) {
             if (userWhoWin.contains(user)){
-                user.getBaseCommunication().sendMatchFinishedWithWin(true);
+                user.getBaseCommunication().sendMatchFinishedWithWin(finalSnapshot);
             } else {
-                user.getBaseCommunication().sendMatchFinishedWithWin(false);
+                user.getBaseCommunication().sendMatchFinishedWithWin(finalSnapshot);
             }
         }
+
+
+    }
+
+    private void sortingOnWin(ArrayList<User> arrayList) {
+        Collections.sort(arrayList, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getVictoryPathPosition() > o1.getVictoryPathPosition())
+                    return -1;
+                if (o1.getVictoryPathPosition() > o1.getVictoryPathPosition())
+                    return 1;
+                else
+                    return 0;
+            }
+        });
     }
 
     private void sortingOnHelper(ArrayList<User> arrayList) {
@@ -718,14 +741,6 @@ public class GameController implements Serializable{
                     return 0;
             }
         });
-    }
-
-    private boolean isAWinner(ArrayList<User> userWhoWin, User userToCheck){
-        for (User user : userWhoWin) {
-            if (user.equals(userToCheck))
-                return true;
-        }
-        return false;
     }
 
     private ArrayList<User> checkFirst(ArrayList<User> arrayList) {

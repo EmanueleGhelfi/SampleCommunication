@@ -6,6 +6,7 @@ import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -336,9 +337,9 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
     }
 
     @Override
-    public void sendMatchFinishedWithWin(boolean win) throws RemoteException {
+    public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) throws RemoteException {
         executorService.execute(()->{
-            clientController.sendMatchFinishedWithWin(win);
+            clientController.sendMatchFinishedWithWin(finalSnapshot);
         });
 
     }
