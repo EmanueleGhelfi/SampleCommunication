@@ -48,4 +48,9 @@ public class PermitCardBonus implements Bonus, Serializable {
         toReturn.add("");
         return toReturn;
     }
+
+    @Override
+    public String toString() {
+        return "Draw Permit Card from Table";
+    }
 }

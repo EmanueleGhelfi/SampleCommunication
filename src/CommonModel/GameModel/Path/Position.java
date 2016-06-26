@@ -29,4 +29,9 @@ public class Position implements Serializable{
     public Bonus getBonus() {
         return bonus;
     }
+
+    @Override
+    public String toString() {
+        return "Posizione "+position +" : Bonus: "+bonus.toString();
+    }
 }

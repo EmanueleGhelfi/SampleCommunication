@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class OldPermitCardBonus implements Bonus,Serializable {
 
-    //TODO teso
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
 
@@ -45,5 +44,10 @@ public class OldPermitCardBonus implements Bonus,Serializable {
         ArrayList<String> toReturn = new ArrayList<String>();
         toReturn.add("");
         return toReturn;
+    }
+
+    @Override
+    public String toString() {
+        return "Old Permit Card Bonus";
     }
 }
