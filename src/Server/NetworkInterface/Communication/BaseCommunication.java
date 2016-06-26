@@ -1,6 +1,7 @@
 package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.City.City;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Server.Model.User;
@@ -36,7 +37,7 @@ public abstract class BaseCommunication {
 
     public abstract void moveKing(ArrayList<City> kingPath);
 
-    public abstract void sendMatchFinishedWithWin(boolean win);
+    public abstract void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot);
 
     public abstract void ping();
 

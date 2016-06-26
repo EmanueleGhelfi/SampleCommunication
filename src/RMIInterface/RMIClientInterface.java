@@ -1,6 +1,7 @@
 package RMIInterface;
 
 import CommonModel.GameModel.City.City;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 
@@ -35,7 +36,7 @@ public interface RMIClientInterface extends Remote {
 
     void moveKing(ArrayList<City> kingPath) throws RemoteException;
 
-    void sendMatchFinishedWithWin(boolean win) throws RemoteException;
+    void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) throws RemoteException;
 
     void ping() throws RemoteException;
 

@@ -5,6 +5,7 @@ import ClientPackage.View.CLIResources.*;
 import ClientPackage.View.GUIResources.Class.MatchController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
@@ -191,7 +192,7 @@ public class CLIView implements BaseView {
     }
 
     @Override
-    public void sendMatchFinishedWithWin(boolean win) {
+    public void sendMatchFinishedWithWin() {
 
     }
 

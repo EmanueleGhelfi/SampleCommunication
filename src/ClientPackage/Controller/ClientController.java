@@ -13,6 +13,7 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -40,6 +41,7 @@ public class ClientController {
     private BaseView baseView;
     private static ClientController clientController;
     private SnapshotToSend snapshot;
+    private ArrayList<BaseUser> finalSnapshot = new ArrayList<>();
 
     private ClientController(){
     }
@@ -292,8 +294,9 @@ public class ClientController {
         clientService.onFinishTurn();
     }
 
-    public void sendMatchFinishedWithWin(boolean win) {
-        baseView.sendMatchFinishedWithWin(win);
+    public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) {
+        this.finalSnapshot = finalSnapshot;
+        baseView.sendMatchFinishedWithWin();
     }
 
     public void selectOldPermitCardBonus() {
@@ -302,5 +305,50 @@ public class ClientController {
 
     public void onSelectOldPermitCard(PermitCard permitCard) {
         clientService.onSelectOldPermitCard(permitCard);
+    }
+
+    public ArrayList<BaseUser> getFinalSnapshot() {
+        return finalSnapshot;
+    }
+
+    public boolean amIAWinner() {
+        for (BaseUser baseUser : finalSnapshot) {
+            if (finalSnapshot.get(0).getVictoryPathPosition() > baseUser.getVictoryPathPosition()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public BaseUser getUserWithString(String selectedItem) {
+        for (BaseUser baseUser : finalSnapshot) {
+            if (baseUser.getUsername().equals(selectedItem))
+                return baseUser;
+        }
+        return null;
+    }
+
+    public String getUserPosition(String selectedItem) {
+        for (int i = 0; i < finalSnapshot.size(); i++) {
+            if (finalSnapshot.get(i).getUsername().equals(selectedItem)){
+                return Integer.toString(i);
+            }
+        }
+        return Integer.toString(-1);
+    }
+
+    public String getUserBuilding(String selectedItem) {
+        String toReturn = null;
+        for (BaseUser baseUser : finalSnapshot) {
+            if (baseUser.getUsername().equals(selectedItem)){
+                for (int i = 0; i < baseUser.getUsersEmporium().size(); i++) {
+                    toReturn.concat(baseUser.getUsersEmporium().get(i).getCityName().getCityName());
+                    if (i >= 1){
+                        toReturn.concat(", ");
+                    }
+                }
+            }
+        }
+        return toReturn;
     }
 }

@@ -6,6 +6,7 @@ import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.CommunicationInfo;
@@ -224,7 +225,10 @@ public class ClientSocketService extends ClientService implements Runnable {
                 break;
             }
             case Constants.CODE_FINISH:{
-                clientController.sendMatchFinishedWithWin(Boolean.parseBoolean(communicationInfo.getInfo()));
+                ArrayList<BaseUser> finalSnapshot = new ArrayList<>();
+                Type listType = new TypeToken<ArrayList<City>>(){}.getType();
+                finalSnapshot = gson.fromJson(communicationInfo.getInfo(),listType);
+                clientController.sendMatchFinishedWithWin(finalSnapshot);
                 break;
             }
             case Constants.CODE_OLD_PERMIT_CARD_BONUS:{
