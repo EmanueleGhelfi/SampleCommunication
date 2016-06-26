@@ -25,6 +25,7 @@ public class CLIParser {
     private Class mClass;
     private HashMap<String,Method> methodHashMap = new HashMap<>();
     private HashMap<String,String> methodDescription = new HashMap<>();
+    private HashMap<String,String> shortMethodDescription = new HashMap<>();
     public CLIParser(Class mClass){
         this.mClass = mClass;
         initMethods();
@@ -50,7 +51,7 @@ public class CLIParser {
                         }
                     }
                     methodDescription.put(((Command) annotation).name(),description);
-                    //methodDescription.put(((Command) annotation).name(),description);
+                    shortMethodDescription.put(((Command) annotation).abbrev(),description);
                 }
             }
         }
@@ -161,7 +162,13 @@ public class CLIParser {
                 System.out.println(desc);
             }
             else{
-                System.out.println("Sorry, command not found");
+                if(shortMethodDescription.containsKey(lines[1])){
+                    String desc = shortMethodDescription.get(lines[1]);
+                    System.out.println(desc);
+                }
+                else {
+                    System.out.println("Sorry, command not found");
+                }
             }
 
         }

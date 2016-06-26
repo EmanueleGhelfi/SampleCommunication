@@ -162,6 +162,9 @@ public class MainBonus implements Bonus,Serializable {
     @Override
     public String toString() {
         String toReturn="";
+        for(Bonus bonus: bonusArrayList){
+            toReturn+= bonus.toString()+" \t\t\t\t";
+        }
         return toReturn;
     }
 }

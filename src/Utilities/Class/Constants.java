@@ -168,7 +168,7 @@ public class Constants {
     public static final String POLITIC_CARD = "POLITIC_CARD";
 
     //ROUND
-    public static final long ROUND_DURATION = 180000;
+    public static final long ROUND_DURATION = 120000;
 
     // Folder
     public  static String IMAGE_PATH= "/ClientPackage/View/GUIResources/Image/";
