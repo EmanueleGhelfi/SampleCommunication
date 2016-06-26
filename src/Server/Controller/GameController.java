@@ -552,7 +552,6 @@ public class GameController implements Serializable{
                 sendSnapshotToAll();
             }
             else{
-                user.addOptionalActionCounter();
                 user.getBaseCommunication().selectCityRewardBonus(new SnapshotToSend(game, user));
                 throw new ActionNotPossibleException(Constants.CITY_REWARD_BONUS_INCORRECT);
             }

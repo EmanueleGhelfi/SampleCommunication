@@ -1,6 +1,7 @@
 package ClientPackage.View.GUIResources.customComponent;
 
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 
 import java.util.HashMap;
 
@@ -12,6 +13,10 @@ public class ImageLoader {
     private static ImageLoader imageLoader = new ImageLoader();
 
     private HashMap<String,Image> imageHashMap = new HashMap<>();
+
+    private double width = Screen.getPrimary().getBounds().getWidth();
+
+    private double height = Screen.getPrimary().getBounds().getWidth();
 
     private ImageLoader(){
         imageHashMap = new HashMap<>();
@@ -27,11 +32,27 @@ public class ImageLoader {
     public Image getImage(String path){
         if(!imageHashMap.containsKey(path)){
             Image image=null;
+            //TODO: Improve
             if(!path.contains("Map")) {
-                 image = new Image(path, true);
+                 image = new Image(path,200,200,true, true,true);
             }
             else{
-                image=new Image(path);
+                image=new Image(path,width,height,true,true,true);
+            }
+            imageHashMap.put(path,image);
+        }
+        return imageHashMap.get(path);
+    }
+
+    public Image getImage(String path, double width, double height) {
+        if(!imageHashMap.containsKey(path)){
+            Image image=null;
+            //TODO: Improve
+            if(!path.contains("Map")) {
+                image = new Image(path,width,height,true, true,true);
+            }
+            else{
+                image=new Image(path,width,height,true,true,true);
             }
             imageHashMap.put(path,image);
         }

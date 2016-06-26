@@ -50,10 +50,10 @@ public class MapSelectionController implements Initializable {
 
     private void initButton() {
         JFXButton leftButton = new JFXButton();
-        ImageView leftImage = new ImageView(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/Left.png"));
+        ImageView leftImage = new ImageView(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/Left.png",gridPaneBackground.getWidth()/3,gridPaneBackground.getHeight()/3));
         leftButton.setGraphic(leftImage);
         JFXButton rightButton = new JFXButton();
-        ImageView rightImage = new ImageView(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/Right.png"));
+        ImageView rightImage = new ImageView(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/Right.png",gridPaneBackground.getWidth()/3,gridPaneBackground.getHeight()/3));
         rightButton.setGraphic(rightImage);
         gridPaneBackground.add(leftButton, 0, 1);
         gridPaneBackground.add(rightButton, 2, 1);
@@ -79,7 +79,7 @@ public class MapSelectionController implements Initializable {
     public void showMap(ArrayList<Map> mapArrayList) {
         for (Map map : mapArrayList) {
             this.mapArrayList.add(map);
-            this.mapArrayListImage.add(ImageLoader.getInstance().getImage(map.getMapPreview()));
+            this.mapArrayListImage.add(ImageLoader.getInstance().getImage(map.getMapPreview(),gridPaneBackground.getWidth(),gridPaneBackground.getHeight()));
         }
 
         prevImageView.fitHeightProperty().bind(gridPaneBackground.heightProperty().divide(5));
