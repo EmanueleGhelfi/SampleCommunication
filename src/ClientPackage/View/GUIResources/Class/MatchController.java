@@ -154,6 +154,7 @@ public class MatchController implements BaseController {
     private BooleanProperty pulseBonus;
     private BooleanProperty stopPulsePermitCard = new SimpleBooleanProperty(false);
     private BooleanProperty stopPulseOldPermitCard = new SimpleBooleanProperty(false);
+    private BooleanProperty stopPulseBonus = new SimpleBooleanProperty();
 
     //Phase
     private boolean needToSelectOldBonus = false;
@@ -458,6 +459,10 @@ public class MatchController implements BaseController {
 
         oldPermitCardNodeList.setRotate(180);
 
+        for (Node node: oldPermitCardNodeList.getChildren()){
+            Graphics.addShadow(node);
+        }
+
     }
 
     private void createPermitCardBonusInGridPane(PermitCard permitCard, GridPane permitGridPane,ImageView permitImage) {
@@ -730,6 +735,9 @@ public class MatchController implements BaseController {
         gridPane.add(moreActionNodeList,0,2);
         GridPane.setHalignment(moreActionNodeList,HPos.LEFT);
         GridPane.setValignment(moreActionNodeList,VPos.BOTTOM);
+
+        for(Node node: moreActionNodeList.getChildren())
+            Graphics.addShadow(node);
         moreActionNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not());
     }
 
@@ -1008,8 +1016,8 @@ public class MatchController implements BaseController {
         DropShadow ds = new DropShadow(15, Color.BLACK);
         kingImage.setEffect(ds);
         background.getChildren().add(kingImage);
-        kingImage.layoutXProperty().bind(background.widthProperty().multiply(x));
-        kingImage.layoutYProperty().bind(background.heightProperty().multiply(y).add(50));
+        kingImage.layoutXProperty().bind(background.widthProperty().multiply(x).add(background.widthProperty().divide(20)));
+        kingImage.layoutYProperty().bind(background.heightProperty().multiply(y));
         kingImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -1501,13 +1509,23 @@ public class MatchController implements BaseController {
     }
 
     private void disableAllEffect() {
-        if(pulseBonus!=null && pulseCity!=null && needToSelectPermitCard!=null) {
-            pulseBonus.setValue(false);
+
+        if(pulseBonus!=null){
+            pulseBonus.setValue(true);
+        }
+
+        if(pulseCity!=null){
+
+        }
+
+        if(pulseBonus!=null || pulseCity!=null || needToSelectPermitCard!=null) {
+
             //pulseCity.setValue(false);
             needToSelectPermitCard.setValue(false);
             needToSelectOldPermitCard.setValue(false);
             stopPulseOldPermitCard.setValue(true);
             stopPulsePermitCard.setValue(true);
+            pulseBonus.setValue(true);
 
             onSelectOldPermitCard();
 
@@ -1518,13 +1536,14 @@ public class MatchController implements BaseController {
     @Override
     public void onStartMarket() {
         selectionModel.selectNext();
-        if(tabPane.getStyleClass().contains("matchPattern")){
-            tabPane.getStyleClass().remove("matchPattern");
+
+        if(tabPane.getStyle().contains("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')")){
+            tabPane.setStyle(tabPane.getStyle().replace("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')",
+                    "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')"));
         }
 
-        if(!tabPane.getStyleClass().contains("shopPattern")){
-            tabPane.getStyleClass().add("shopPattern");
-        }
+
+        System.out.println("[DEBUG] "+tabPane.getStyle());
        // tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
     }
 
@@ -1537,13 +1556,14 @@ public class MatchController implements BaseController {
     public void onFinishMarket() {
         selectionModel.selectFirst();
        //tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
-        if(tabPane.getStyleClass().contains("shopPattern")){
-            tabPane.getStyleClass().remove("shopPattern");
+        if(tabPane.getStyle().contains( "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png'")){
+            tabPane.setStyle(tabPane.getStyle().replace( "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')",
+                    "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')"));
         }
 
-        if(!tabPane.getStyleClass().contains("matchPattern")){
-            tabPane.getStyleClass().add("matchPattern");
-        }
+
+        System.out.println("[DEBUG] "+tabPane.getStyle());
+
     }
 
     @Override
@@ -1581,6 +1601,7 @@ public class MatchController implements BaseController {
     public void selectCityRewardBonus() {
         System.out.println("Select city reward bonus");
         needToSelectOldBonus=true;
+        stopPulseBonus.setValue(false);
         clientController.getSnapshot().getCurrentUser().getUsersEmporium().forEach(this::pulseBonus);
     }
 
@@ -1605,8 +1626,8 @@ public class MatchController implements BaseController {
             timeline.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    kingImage.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size() - 1))));
-                    kingImage.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size() - 1))).add(50));
+                    kingImage.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(kingPath.get(kingPath.size() - 1))).add(background.widthProperty().divide(20)));
+                    kingImage.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(kingPath.get(kingPath.size() - 1))));
                 }
             });
 
