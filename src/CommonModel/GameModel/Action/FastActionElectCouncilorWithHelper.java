@@ -61,4 +61,27 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
             }
             }
         }
+
+
+    @Override
+    public String toString() {
+       /* return "FastActionElectCouncilorWithHelper{" +
+                "councilor=" + councilor +
+                ", region=" + region +
+                ", king=" + king +
+                ", councilType='" + councilType + '\'' +
+                '}';
+        */
+        String toReturn="[FAST ACTION] ";
+        toReturn+="Elect a counilor with helper! \n"+
+                "Councilor: "+councilor;
+        if(councilType.equals(Constants.REGION_COUNCIL)){
+            toReturn+="\n Council of "+region;
+        }
+        else{
+            toReturn+="Council of King";
+        }
+
+        return toReturn;
+    }
 }

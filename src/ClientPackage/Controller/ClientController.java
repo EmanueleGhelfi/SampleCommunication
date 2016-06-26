@@ -224,10 +224,9 @@ public class ClientController {
     public void doAction(Action action) {
         try {
             clientService.onAction(action);
+            baseView.onActionDone(action);
         } catch (ActionNotPossibleException e) {
-            e.printStackTrace();
         } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 
@@ -279,7 +278,6 @@ public class ClientController {
 
     public void onSelectPermitCard(PermitCard permitCard) {
         clientService.onSelectPermitCard(permitCard);
-
     }
 
     public void onMoveKing(ArrayList<City> kingPath) {

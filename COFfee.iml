@@ -30,5 +30,6 @@
     <orderEntry type="library" name="cliche-110413" level="application" />
     <orderEntry type="library" name="Medusa-5.0" level="application" />
     <orderEntry type="library" name="cliche-110413" level="project" />
+    <orderEntry type="library" name="eu.hansolo:Medusa:5.0" level="application" />
   </component>
 </module>

@@ -91,4 +91,8 @@ public class MainActionBuyPermitCard extends Action {
         }
     }
 
+    @Override
+    public String toString() {
+        return "[MAIN ACTION] Buy permit card "+permitCard.getCityAcronimous()+" of region: "+userRegion.getRegion()+"";
+    }
 }

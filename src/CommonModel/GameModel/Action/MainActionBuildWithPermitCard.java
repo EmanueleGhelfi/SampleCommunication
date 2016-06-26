@@ -69,4 +69,10 @@ public class MainActionBuildWithPermitCard extends Action{
             }
         }
     }
+
+
+    @Override
+    public String toString() {
+        return "[MAIN ACTION] Build with permit card "+ permitCard.getCityAcronimous()+" in city: "+city.getCityName()+".";
+    }
 }

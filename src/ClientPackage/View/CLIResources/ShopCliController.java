@@ -81,7 +81,9 @@ public class ShopCliController implements CliController{
         printMarketList(buyableWrappers);
         try {
             ArrayList<BuyableWrapper> selected = selectBuyableWrapper(buyableWrappers);
-            clientController.onBuy(selected);
+            if(selected!=null) {
+                clientController.onBuy(selected);
+            }
         } catch (CancelException e) {
             System.out.println("Cancelled correctly");
         }
@@ -99,7 +101,7 @@ public class ShopCliController implements CliController{
 
 
         if(ArrayUtils.checkInteger(selectedParsed,buyableWrappers) &&  ArrayUtils.checkDuplicate(selectedParsed)){
-            if(selectedParsed[0]!="-1") {
+            if(!selectedParsed[0].equals("-1")) {
                 for (int i = 0; i < selectedParsed.length; i++) {
                     toReturn.add(buyableWrappers.get(Integer.parseInt(selectedParsed[i])));
                 }
@@ -107,7 +109,8 @@ public class ShopCliController implements CliController{
             else throw new CancelException();
         }
 
-        return selectBuyableWrapper(buyableWrappers);
+        System.out.println("Error");
+        return null;
 
     }
 
@@ -124,10 +127,12 @@ public class ShopCliController implements CliController{
 
         try {
             ArrayList<BuyableWrapper> toSell = selectBuyableWrapper(buyableWrappers);
-            clientController.sendSaleItem(toSell);
+            if(toSell!=null) {
+                clientController.sendSaleItem(toSell);
+            }
 
         } catch (CancelException e) {
-            e.printStackTrace();
+            System.out.println("Cancelled!");
         }
 
 
