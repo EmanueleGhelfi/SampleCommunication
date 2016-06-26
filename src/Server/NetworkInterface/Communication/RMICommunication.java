@@ -141,7 +141,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         try {
             rmiClientInterface.sendSnapshot(snapshotToSend);
         } catch (RemoteException e) {
-            e.printStackTrace();
             user.setConnected(false);
         }
         catch (NullPointerException e){
@@ -158,7 +157,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         try {
             rmiClientInterface.isYourTurn();
         } catch (RemoteException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
             user.setConnected(false);
             user.getGameController().onFinishRound(user);
         }
@@ -198,7 +197,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             System.out.println("user "+user.getUsername()+" has finished turn");
             rmiClientInterface.finishTurn();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             user.setConnected(false);
         }
     }

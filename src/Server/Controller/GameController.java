@@ -326,7 +326,8 @@ public class GameController implements Serializable{
 
             configurationForTwoPlayers();
 
-            for (User user :
+            //TODO: READD TEN EMPORIUMS
+            /*for (User user :
                     users) {
                 int cont=0;
                 for (City city : game.getMap().getCity()) {
@@ -339,7 +340,9 @@ public class GameController implements Serializable{
 
                 }
             }
+            */
         }
+
         else{
             System.out.println("MAP NOT PRESENT");
         }
@@ -399,8 +402,10 @@ public class GameController implements Serializable{
     public synchronized void sendSnapshotToAll() {
         new Thread(()-> {
             for (User user : game.getUsers()) {
-                SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
-                user.getBaseCommunication().sendSnapshot(snapshotToSend);
+                if(user.isConnected()) {
+                    SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
+                    user.getBaseCommunication().sendSnapshot(snapshotToSend);
+                }
             }
         }).start();
     }
@@ -614,39 +619,39 @@ public class GameController implements Serializable{
         sortingOnPermit(userMaxPermitCard);
         sortingOnHelper(userMaxHelper);
 
-        for (User user : firstNobilityPathUserToReward) {
+        //for (User user : firstNobilityPathUserToReward) {
             for(Iterator<User> itr = firstNobilityPathUserToReward.iterator(); itr.hasNext();) {
                 User userUsed = itr.next();
                 if (firstNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition() > userUsed.getNobilityPathPosition().getPosition()){
                     itr.remove();
                 }
             }
-        }
+
         secondNobilityPathUserToReward.removeAll(firstNobilityPathUserToReward);
-        for (User user : secondNobilityPathUserToReward) {
+        //for (User user : secondNobilityPathUserToReward) {
             for(Iterator<User> itr = secondNobilityPathUserToReward.iterator(); itr.hasNext();) {
                 User userUsed = itr.next();
                 if (secondNobilityPathUserToReward.get(0).getNobilityPathPosition().getPosition() > userUsed.getNobilityPathPosition().getPosition()){
                     itr.remove();
                 }
             }
-        }
-        for (User user : secondNobilityPathUserToReward) {
+
+        //for (User user : secondNobilityPathUserToReward) {
             for(Iterator<User> itr = userMaxPermitCard.iterator(); itr.hasNext();) {
                 User userUsed = itr.next();
                 if (userMaxPermitCard.get(0).getPermitCards().size() > userUsed.getPermitCards().size()){
                     itr.remove();
                 }
             }
-        }
-        for (User user : secondNobilityPathUserToReward) {
+
+       // for (User user : secondNobilityPathUserToReward) {
             for(Iterator<User> itr = secondNobilityPathUserToReward.iterator(); itr.hasNext();) {
                 User userUsed = itr.next();
                 if (userMaxHelper.get(0).getHelpers().size() + userMaxHelper.get(0).getPoliticCardSize() > userUsed.getHelpers().size() + userUsed.getPoliticCardSize()){
                     itr.remove();
                 }
             }
-        }
+
 
         firstNobilityPathUserToReward.forEach(user -> user.setVictoryPathPosition(user.getVictoryPathPosition()+5));
         secondNobilityPathUserToReward.forEach(user -> user.setVictoryPathPosition(user.getVictoryPathPosition() + 2));
