@@ -88,7 +88,7 @@ public class ShopController implements BaseController {
         setBackground();
         updateView();
         createDeck();
-        onFinishMarket();
+        //onFinishMarket();
         setArrow();
         setMarketPane();
 
