@@ -1,6 +1,7 @@
 package Server.NetworkInterface.Communication;
 
 import CommonModel.GameModel.City.City;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Server.Model.User;
@@ -73,7 +74,7 @@ public class FakeCommunication extends BaseCommunication {
     }
 
     @Override
-    public void sendMatchFinishedWithWin(boolean win) {
+    public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) {
 
     }
 
