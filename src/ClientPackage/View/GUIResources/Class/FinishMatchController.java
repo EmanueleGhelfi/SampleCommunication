@@ -10,7 +10,9 @@ import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -33,9 +35,8 @@ public class FinishMatchController implements Initializable {
     private ClientController clientController;
     private GUIView baseView;
     private ImageView winnerOrLoser;
-    private ScrollPane scrollRanking;
-    private JFXListView<String> ranking;
-    private ArrayList<String> usernameRanking;
+    private JFXListView<String> ranking = new JFXListView<>();
+    private ArrayList<String> usernameRanking = new ArrayList<>();
     private PopOver innerPopOver;
     private ImageView innerImage;
     private Pane innerPaneWhereShow = new Pane();
@@ -61,7 +62,6 @@ public class FinishMatchController implements Initializable {
         GridPane.setRowSpan(backgroundImage, 2);
         backgroundImage.fitWidthProperty().bind(gridPane.widthProperty());
         backgroundImage.fitHeightProperty().bind(gridPane.heightProperty());
-
         gridPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -69,8 +69,12 @@ public class FinishMatchController implements Initializable {
             }
         });
         innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.png"));
+        innerImage.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(2));
+        innerImage.setPreserveRatio(true);
         innerPaneWhereShow.setPrefWidth(10);
         innerPaneWhereShow.setPrefHeight(10);
+        //innerPaneWhereShow.setLayoutX();
+        //innerPaneWhereShow.setLayoutY();
 
         for (BaseUser baseUser : clientController.getFinalSnapshot()) {
             usernameRanking.add(baseUser.getUsername());
@@ -81,6 +85,8 @@ public class FinishMatchController implements Initializable {
         } else {
             winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver.png"));
         }
+        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty());
+        winnerOrLoser.fitHeightProperty().bind(backgroundImage.fitHeightProperty());
         ranking.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -96,9 +102,13 @@ public class FinishMatchController implements Initializable {
         gridPane.add(winnerOrLoser, 0, 0);
         GridPane.setRowSpan(winnerOrLoser, 3);
         GridPane.setColumnSpan(winnerOrLoser, 3);
+        GridPane.setValignment(innerImage, VPos.BOTTOM);
+        GridPane.setHalignment(innerImage, HPos.LEFT);
+        GridPane.setHalignment(ranking, HPos.CENTER);
+        GridPane.setValignment(ranking, VPos.CENTER);
         winnerOrLoser.toBack();
         backgroundImage.toBack();
-        gridPane.getChildren().addAll(innerImage, innerPaneWhereShow, ranking, winnerOrLoser);
+        gridPane.getChildren().add(innerPaneWhereShow);
     }
 
     private void displayInfo(String selectedItem) {
