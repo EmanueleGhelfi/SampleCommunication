@@ -1515,22 +1515,19 @@ public class MatchController implements BaseController {
         }
 
         if(pulseCity!=null){
-
+            finishKingPhase();
         }
 
-        if(pulseBonus!=null || pulseCity!=null || needToSelectPermitCard!=null) {
-
-            //pulseCity.setValue(false);
+        if(needToSelectPermitCard!=null){
             needToSelectPermitCard.setValue(false);
             needToSelectOldPermitCard.setValue(false);
             stopPulseOldPermitCard.setValue(true);
             stopPulsePermitCard.setValue(true);
-            pulseBonus.setValue(true);
-
             onSelectOldPermitCard();
-
             hidePermitCardHightLight(".visiblePermitCard",bottomPane);
+
         }
+
     }
 
     @Override

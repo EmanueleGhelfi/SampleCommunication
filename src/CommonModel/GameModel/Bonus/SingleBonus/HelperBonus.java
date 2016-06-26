@@ -49,4 +49,9 @@ public class HelperBonus implements Bonus,Serializable {
         toReturn.add(helperNumber+"");
         return toReturn;
     }
+
+    @Override
+    public String toString() {
+        return "Helper bonus: +"+helperNumber;
+    }
 }

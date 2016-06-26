@@ -49,6 +49,11 @@ public class NobilityBonus implements Bonus,Serializable {
         ArrayList<String> toReturn = new ArrayList<String>();
         toReturn.add(nobilityNumber+"");
         return toReturn;
+    }
 
+
+    @Override
+    public String toString() {
+        return "Nobility Path Bonus: +"+nobilityNumber;
     }
 }

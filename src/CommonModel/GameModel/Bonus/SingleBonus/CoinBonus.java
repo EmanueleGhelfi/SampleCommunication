@@ -50,4 +50,9 @@ public class CoinBonus implements Bonus,Serializable {
         toReturn.add(coinNumber+"");
         return toReturn;
     }
+
+    @Override
+    public String toString() {
+        return "Coin Bonus: +"+coinNumber;
+    }
 }

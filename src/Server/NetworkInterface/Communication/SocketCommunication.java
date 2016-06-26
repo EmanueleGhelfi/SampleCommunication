@@ -229,7 +229,8 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                 }
             }
         }catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("User Disconnected: "+user.getUsername());
             user.setConnected(false);
             user.getGameController().onUserDisconnected(user);
             user.getGameController().cleanGame();

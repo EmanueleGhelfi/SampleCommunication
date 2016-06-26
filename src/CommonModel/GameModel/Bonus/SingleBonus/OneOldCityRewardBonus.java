@@ -46,4 +46,9 @@ public class OneOldCityRewardBonus implements Bonus,Serializable {
         toReturn.add("");
         return toReturn;
     }
+
+    @Override
+    public String toString() {
+        return "OneOldCityRewardBonus";
+    }
 }

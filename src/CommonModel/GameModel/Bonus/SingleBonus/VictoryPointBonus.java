@@ -59,4 +59,8 @@ public class VictoryPointBonus implements Bonus,Serializable {
         return toReturn;
     }
 
+    @Override
+    public String toString() {
+        return "Victory Point Bonus :"+victoryPoint;
+    }
 }

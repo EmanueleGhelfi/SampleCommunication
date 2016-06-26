@@ -158,4 +158,10 @@ public class MainBonus implements Bonus,Serializable {
         );
         return toReturn;
     }
+
+    @Override
+    public String toString() {
+        String toReturn="";
+        return toReturn;
+    }
 }

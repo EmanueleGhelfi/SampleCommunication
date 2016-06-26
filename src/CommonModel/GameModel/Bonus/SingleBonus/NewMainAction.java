@@ -45,4 +45,9 @@ public class NewMainAction implements Bonus,Serializable {
         return toReturn;
     }
 
+
+    @Override
+    public String toString() {
+        return "New Main Action Bonus";
+    }
 }

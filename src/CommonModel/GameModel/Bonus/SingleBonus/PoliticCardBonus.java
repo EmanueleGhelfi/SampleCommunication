@@ -41,4 +41,9 @@ public class PoliticCardBonus implements Bonus, Serializable {
         toReturn.add("");
         return toReturn;
     }
+
+    @Override
+    public String toString() {
+        return "Get a Politic Card";
+    }
 }

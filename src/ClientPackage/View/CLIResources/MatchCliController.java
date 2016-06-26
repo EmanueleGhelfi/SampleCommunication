@@ -14,6 +14,7 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
+import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.CurrentUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Link;
@@ -22,6 +23,7 @@ import Utilities.Class.Constants;
 import Utilities.Exception.CouncilNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
+import javafx.geometry.Pos;
 import org.apache.commons.cli.Options;
 
 import java.io.BufferedReader;
@@ -81,7 +83,7 @@ public class MatchCliController implements CliController  {
             System.out.println(link);
         }
 
-        cliPrinter.printBlue("Cities \t Region \t Color");
+        cliPrinter.printBlue("Cities \t\t Region \t\t Color");
         for(City city: clientController.getSnapshot().getMap().getCity()){
             System.out.println(cliPrinter.toStringFormatted(city));
         }
@@ -95,19 +97,29 @@ public class MatchCliController implements CliController  {
                         toStringFormatted(clientController.getSnapshot().getMap().getCity().get(i)));
             }
 
-            String selected = scanner.readLine();
+            while (!scanner.ready() && isMyTurn) {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                }
+            }
+            if (isMyTurn) {
+                String selected = scanner.readLine();
 
-            selectedArray = selected.split(" ");
-            correct = ArrayUtils.checkInteger(selectedArray,clientController.getSnapshot().getMap().getCity());
+                selectedArray = selected.split(" ");
+                correct = ArrayUtils.checkInteger(selectedArray, clientController.getSnapshot().getMap().getCity());
+            }
         }
 
+        if(isMyTurn) {
             for (int i = 0; i < selectedArray.length; i++) {
                 cities.add(clientController.getSnapshot().getMap().getCity().get(i));
             }
 
             if (!cities.get(0).equals(clientController.getSnapshot().getKing().getCurrentCity())) {
                 cities.add(0, clientController.getSnapshot().getKing().getCurrentCity());
-            return cities;
+                return cities;
+            }
         }
 
         return null;
@@ -316,8 +328,10 @@ public class MatchCliController implements CliController  {
                 e.printStackTrace();
             }
 
-            Action action = new MainActionBuildWithKingHelp(cities, politicCardArrayList);
-            clientController.doAction(action);
+            if(cities!=null && isMyTurn) {
+                Action action = new MainActionBuildWithKingHelp(cities, politicCardArrayList);
+                clientController.doAction(action);
+            }
         }
     }
 
@@ -332,9 +346,11 @@ public class MatchCliController implements CliController  {
                 System.out.println(""+i+". "+cliPrinter.toStringFormatted(currentUser.getPermitCards().get(i)));
             }
             PermitCard permitCard = selectPermitCard(currentUser.getPermitCards());
-            City selectedCity = Validator.getCity(city,clientController.getSnapshot().getMap().getCity());
-            Action action = new MainActionBuildWithPermitCard(selectedCity,permitCard);
-            clientController.doAction(action);
+            if(isMyTurn && permitCard!=null) {
+                City selectedCity = Validator.getCity(city, clientController.getSnapshot().getMap().getCity());
+                Action action = new MainActionBuildWithPermitCard(selectedCity, permitCard);
+                clientController.doAction(action);
+            }
         }
         else{
             cliPrinter.printError("City not valid!");
@@ -475,5 +491,14 @@ public class MatchCliController implements CliController  {
 
     public void onFinisTurn() {
         isMyTurn=false;
+    }
+
+
+    @Command(description = "Show nobility Path", name = "showNobility", abbrev = "sn")
+    public void showNobility(){
+        for(Position position: clientController.getSnapshot().getNobilityPathPosition()){
+            System.out.println(position.toString());
+        }
+
     }
 }
