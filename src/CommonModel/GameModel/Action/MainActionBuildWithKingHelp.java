@@ -52,6 +52,7 @@ public class MainActionBuildWithKingHelp extends Action {
                 // calculate money to spend
                 newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
 
+
                 System.out.println("New position in money path "+ newPositionInMoneyPath +" because correct politic card "+correctPoliticCard);
                 if ((kingPath.size()-1) * Constants.KING_PRICE < user.getCoinPathPosition()) {
                     for (City city : kingPath) {
