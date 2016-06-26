@@ -1533,7 +1533,6 @@ public class MatchController implements BaseController {
         }
     }
 
-
     @Override
     public void onStartMarket() {
         selectionModel.selectNext();
