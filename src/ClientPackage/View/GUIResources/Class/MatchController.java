@@ -1300,6 +1300,7 @@ public class MatchController implements BaseController {
 
     private void initController() {
         shopController.setClientController(clientController,guiView);
+        shopController.setMatchController(this);
         nobilityPathController.setClientController(clientController, guiView);
         nobilityPathController.setMatchController(this);
     }

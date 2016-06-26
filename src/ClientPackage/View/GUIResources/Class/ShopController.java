@@ -76,7 +76,7 @@ public class ShopController implements BaseController {
     private boolean marketPhase = false;
     private boolean sellPhase = false;
     private boolean buyPhase = false;
-
+    private MatchController matchController;
 
 
     @Override
@@ -96,14 +96,22 @@ public class ShopController implements BaseController {
 
     private void setArrow() {
         JFXButton backArrow = new JFXButton();
-        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png"));
-        arrowImageView.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3188));
-        arrowImageView.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.7767));
+        paneBackground.getChildren().add(backArrow);
+        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png",backgroundImage.getFitWidth()/10,backgroundImage.getFitHeight()/10));
+        arrowImageView.setCache(true);
+        arrowImageView.setPreserveRatio(true);
         backArrow.setGraphic(arrowImageView);
+        arrowImageView.fitWidthProperty().bind(backgroundImage.fitWidthProperty().divide(10));
+        arrowImageView.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(10));
+        backArrow.prefWidthProperty().bind(backgroundImage.fitWidthProperty().divide(10));
+        backArrow.prefHeightProperty().bind(backgroundImage.fitHeightProperty().divide(10));
+        backArrow.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3188));
+        backArrow.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.7767));
+
         backArrow.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO
+                matchController.getSelectionModel().selectFirst();
             }
         });
     }
@@ -811,5 +819,9 @@ public class ShopController implements BaseController {
         stackPaneForHelp.setPadding(new Insets(20));
         helpPopOver.setContentNode(stackPaneForHelp);
         helpPopOver.show(paneWhereShowPopOver);
+    }
+
+    public void setMatchController(MatchController matchController) {
+        this.matchController=matchController;
     }
 }

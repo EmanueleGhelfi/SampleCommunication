@@ -135,7 +135,7 @@ public class CLIPrinter implements CLIPrinterInterface {
     @Override
     public String toStringFormatted(City city) {
 
-        return city.getCityName()+" \t "+city.getRegion()+" \t "+city.getColor();
+        return city.getCityName()+" \t\t\t\t "+city.getRegion()+" \t\t\t\t "+city.getColor();
     }
 
     @Override
@@ -168,7 +168,7 @@ public class CLIPrinter implements CLIPrinterInterface {
         }
 
         if(buyableWrapper.getBuyableObject() instanceof PoliticCard){
-            return " Politic Card" + toStringFormatted((PoliticCard) buyableWrapper.getBuyableObject())+
+            return " Politic Card " + toStringFormatted((PoliticCard) buyableWrapper.getBuyableObject())+
                     " from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost() + " onSale: "+buyableWrapper.isOnSale();
         }
         return "";

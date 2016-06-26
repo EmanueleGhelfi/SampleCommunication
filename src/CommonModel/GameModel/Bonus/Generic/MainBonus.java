@@ -163,7 +163,7 @@ public class MainBonus implements Bonus,Serializable {
     public String toString() {
         String toReturn="";
         for(Bonus bonus: bonusArrayList){
-            toReturn+= bonus.toString()+" \t\t\t\t";
+            toReturn+= bonus.toString()+" \t\t\t\t\t";
         }
         return toReturn;
     }

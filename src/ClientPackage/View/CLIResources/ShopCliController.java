@@ -12,6 +12,9 @@ import Utilities.Exception.CancelException;
 import asg.cliche.Command;
 import org.apache.commons.cli.Options;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -23,8 +26,7 @@ public class ShopCliController implements CliController{
 
     CLIView cliView;
     ClientController clientController;
-    Options options = OptionsClass.getMarketOptions();
-    Scanner scanner = new Scanner(System.in);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     CLIParser parser = new CLIParser(this.getClass());
     CLIPrinter cliPrinter = new CLIPrinter();
     private boolean onMarketPhase;
@@ -38,7 +40,9 @@ public class ShopCliController implements CliController{
     }
 
     public void onStartMarket() {
+        System.out.println("---------------------------------------------------------------------------");
         cliPrinter.printBlue("START MARKET!");
+        System.out.println("----------------------------------------------------------------------------");
         onMarketPhase = true;
         onSellPhase=true;
     }
@@ -95,21 +99,37 @@ public class ShopCliController implements CliController{
         System.out.println("-1 for cancel");
         ArrayList<BuyableWrapper> toReturn = new ArrayList<>();
 
-        String selected = scanner.nextLine();
-
-        String[] selectedParsed = selected.split(" ");
-
-
-        if(ArrayUtils.checkInteger(selectedParsed,buyableWrappers) &&  ArrayUtils.checkDuplicate(selectedParsed)){
-            if(!selectedParsed[0].equals("-1")) {
-                for (int i = 0; i < selectedParsed.length; i++) {
-                    toReturn.add(buyableWrappers.get(Integer.parseInt(selectedParsed[i])));
-                }
+        try {
+            while (!reader.ready() && onMarketPhase){
+                Thread.sleep(200);
             }
-            else throw new CancelException();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        System.out.println("Error");
+        if(onMarketPhase) {
+            String selected = null;
+            try {
+                selected = reader.readLine();
+                String[] selectedParsed = selected.split(" ");
+
+
+                if (ArrayUtils.checkInteger(selectedParsed, buyableWrappers) && ArrayUtils.checkDuplicate(selectedParsed)) {
+                    if (!selectedParsed[0].equals("-1")) {
+                        for (int i = 0; i < selectedParsed.length; i++) {
+                            toReturn.add(buyableWrappers.get(Integer.parseInt(selectedParsed[i])));
+                        }
+                    } else throw new CancelException();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            System.out.println("Not on market phase");
+        }
         return null;
 
     }
@@ -129,6 +149,9 @@ public class ShopCliController implements CliController{
             ArrayList<BuyableWrapper> toSell = selectBuyableWrapper(buyableWrappers);
             if(toSell!=null) {
                 clientController.sendSaleItem(toSell);
+            }
+            else{
+                System.out.println("null");
             }
 
         } catch (CancelException e) {

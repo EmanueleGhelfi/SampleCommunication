@@ -30,6 +30,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 
 import static ClientPackage.View.CLIResources.CLIColor.*;
 
@@ -83,7 +84,7 @@ public class MatchCliController implements CliController  {
             System.out.println(link);
         }
 
-        cliPrinter.printBlue("Cities \t\t Region \t\t Color");
+        cliPrinter.printBlue("Cities \t\t\t\t Region \t\t\t\t Color");
         for(City city: clientController.getSnapshot().getMap().getCity()){
             System.out.println(cliPrinter.toStringFormatted(city));
         }
@@ -157,10 +158,9 @@ public class MatchCliController implements CliController  {
 
         if(isMyTurn) {
             for (int i = 0; i < selectedArray.length; i++) {
-                System.out.println(" You have selected " + selectedArray[i]);
+                System.out.println(" You have selected " + politicCards.get(Integer.parseInt(selectedArray[i])));
                 politicCardArrayList.add(politicCards.get(Integer.parseInt(selectedArray[i])));
             }
-
             return politicCardArrayList;
         }
         return null;
@@ -498,6 +498,176 @@ public class MatchCliController implements CliController  {
     public void showNobility(){
         for(Position position: clientController.getSnapshot().getNobilityPathPosition()){
             System.out.println(position.toString());
+        }
+    }
+
+    @Command(description = "Show City Bonus",name = "showCity",abbrev = "sc")
+    public void showCity(){
+        cliPrinter.printBlue("CITY\t\t\t\t\t BONUS" );
+        for(City city: clientController.getSnapshot().getMap().getCity()){
+            String bonusToPrint = "";
+            if(city.getBonus()!=null){
+                bonusToPrint=city.getBonus().toString();
+            }
+            System.out.println(city.getCityName()+"\t\t\t\t\t "+ bonusToPrint);
+        }
+    }
+
+    public void selectPermitCard() {
+
+        for(RegionName regionName: RegionName.values()){
+            cliPrinter.printBlue("REGIONE" + regionName);
+            for(PermitCard permitCard: clientController.getSnapshot().getVisibleRegionPermitCard(regionName)){
+                System.out.println(clientController.getSnapshot().getVisibleRegionPermitCard(regionName).indexOf(permitCard)+
+                        ". "+ cliPrinter.toStringFormatted(permitCard));
+            }
+        }
+
+        cliPrinter.printBlue("Select a region and a permit card separated by a blank space (like this: mountain 1)");
+
+        try {
+            while (!scanner.ready() && isMyTurn){
+                Thread.sleep(200);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(isMyTurn){
+            try {
+                String line = scanner.readLine();
+                String[] parsed = line.split(" ");
+
+                if(parsed.length>1 && Validator.isValidRegion(parsed[0])){
+                    try {
+                        if (Integer.parseInt(parsed[1])>=0 && Integer.parseInt(parsed[1])<=1) {
+                            RegionName regionName = Validator.getRegion(parsed[0]);
+                            PermitCard permitCard = clientController.getSnapshot().getVisibleRegionPermitCard(regionName)
+                                    .get(Integer.parseInt(parsed[1]));
+                            clientController.onSelectPermitCard(permitCard);
+                        }
+                        else{
+                            selectPermitCard();
+                        }
+                    }
+                    catch (Exception e){
+                        selectPermitCard();
+                    }
+
+                }
+                else{
+                    selectPermitCard();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public void selectCityRewardBonus() {
+        cliPrinter.printBlue("You can choose a bonus of you city! Note that you can't choose a victory bonus!");
+        cliPrinter.printBlue("\t\t\tCITY\t\t\t BONUS" );
+        for(City city: clientController.getSnapshot().getCurrentUser().getUsersEmporium()){
+                System.out.println(""+clientController.getSnapshot().getCurrentUser().getUsersEmporium().indexOf(city)+".\t\t\t"
+                        +city.getCityName()+"\t\t\t "+ city.getBonus());
+            }
+
+        System.out.println("Select a city!");
+
+        try {
+            while (!scanner.ready() && isMyTurn){
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if(isMyTurn){
+                String selected = scanner.readLine();
+                try {
+                    int index = Integer.parseInt(selected);
+                    if(index>=0 && index<clientController.getSnapshot().getCurrentUser().getUsersEmporium().size()){
+                        clientController.getCityRewardBonus(clientController.getSnapshot().getCurrentUser().getUsersEmporium().get(index));
+                    }
+                    else{
+                        selectCityRewardBonus();
+                    }
+                }
+                catch (Exception e){
+                    selectCityRewardBonus();
+                }
+
+
+            }
+        } catch (IOException e) {
+
+        }
+    }
+
+    public void selectOldPermitCardBonus() {
+       cliPrinter.printBlue("Select an old permit card bonus!");
+
+        System.out.println("CURRENT PERMIT CARD:");
+
+        for(PermitCard permitCard: clientController.getSnapshot().getCurrentUser().getPermitCards()){
+            System.out.println(" "+clientController.getSnapshot().getCurrentUser().getPermitCards().indexOf(permitCard)
+                    +" "+cliPrinter.toStringFormatted(permitCard));
+        }
+
+        System.out.println("OLD PERMIT CARD");
+        for(PermitCard permitCard: clientController.getSnapshot().getCurrentUser().getOldPermitCards()){
+            System.out.println(" "+clientController.getSnapshot().getCurrentUser().getOldPermitCards().indexOf(permitCard)
+                    +" "+cliPrinter.toStringFormatted(permitCard));
+        }
+
+        System.out.println("Select OLD or CURRENT and permit card's index (like this:" +
+                " old 2 permit card number 2 in old permit card)");
+
+        try {
+            while (!scanner.ready() && isMyTurn){
+                Thread.sleep(200);
+            }
+            if(isMyTurn){
+                String selected = scanner.readLine();
+                String[] parsed = selected.split(" ");
+                if(parsed.length!=2)
+                    selectOldPermitCardBonus();
+                else{
+                    try {
+                        int index = Integer.parseInt(parsed[1]);
+                        if(parsed[0].equalsIgnoreCase("old")){
+                            if(index<0 || index>=clientController.getSnapshot().getCurrentUser().getOldPermitCards().size()){
+                                selectOldPermitCardBonus();
+                            }
+                            else{
+                                clientController.onSelectOldPermitCard(clientController.getSnapshot().getCurrentUser().getOldPermitCards().get(index));
+                            }
+                        }
+                        else{
+                            if(parsed[0].equalsIgnoreCase("current")){
+                                if(index<0 || index>=clientController.getSnapshot().getCurrentUser().getPermitCards().size()){
+                                    selectOldPermitCardBonus();
+                                }
+                                else{
+                                    clientController.onSelectOldPermitCard(clientController.getSnapshot().getCurrentUser().getPermitCards().get(index));
+                                }
+                            }
+                            else{
+                                selectOldPermitCardBonus();
+                            }
+                        }
+                    }
+                    catch (Exception e){
+                        selectOldPermitCardBonus();
+                    }
+                }
+            }
+        } catch (IOException | InterruptedException e) {
         }
 
     }

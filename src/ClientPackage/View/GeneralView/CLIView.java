@@ -61,6 +61,7 @@ public class CLIView implements BaseView {
     @Override
     public void initView() {
         currentController=loginCliController;
+        printWelcome();
         getInput();
     }
 
@@ -172,12 +173,16 @@ public class CLIView implements BaseView {
 
     @Override
     public void selectPermitCard() {
-
+        futureTask.cancel(true);
+        matchCliController.selectPermitCard();
+        getInput();
     }
 
     @Override
     public void selectCityRewardBonus() {
-
+        futureTask.cancel(true);
+        matchCliController.selectCityRewardBonus();
+        getInput();
     }
 
     @Override
@@ -198,7 +203,9 @@ public class CLIView implements BaseView {
 
     @Override
     public void selectOldPermitCardBonus() {
-
+        futureTask.cancel(true);
+        matchCliController.selectOldPermitCardBonus();
+        getInput();
     }
 
     @Override
@@ -214,5 +221,25 @@ public class CLIView implements BaseView {
 
     public SnapshotToSend getSnapshot() {
         return currentSnapshot;
+    }
+
+
+    public void printWelcome(){
+        System.out.println("                                                                                                                                                          \n" +
+                "                                                                                     ,----..                                                              \n" +
+                "  ,----..                                                         ,--,              /   /   \\                      ,---,.                                 \n" +
+                " /   /   \\                                               ,--,   ,--.'|             /   .     :   .--.,           ,'  .' |                                 \n" +
+                "|   :     :  ,---.           ,--,      ,---,           ,--.'|   |  | :            .   /   ;.  \\,--.'  \\        ,---.'   |   ,---.           ,--,  __  ,-. \n" +
+                ".   |  ;. / '   ,'\\        ,'_ /|  ,-+-. /  |          |  |,    :  : '           .   ;   /  ` ;|  | /\\/        |   |   .'  '   ,'\\        ,'_ /|,' ,'/ /| \n" +
+                ".   ; /--` /   /   |  .--. |  | : ,--.'|'   |   ,---.  `--'_    |  ' |           ;   |  ; \\ ; |:  : :          :   :  :   /   /   |  .--. |  | :'  | |' | \n" +
+                ";   | ;   .   ; ,. :,'_ /| :  . ||   |  ,\"' |  /     \\ ,' ,'|   '  | |           |   :  | ; | ':  | |-,        :   |  |-,.   ; ,. :,'_ /| :  . ||  |   ,' \n" +
+                "|   : |   '   | |: :|  ' | |  . .|   | /  | | /    / ' '  | |   |  | :           .   |  ' ' ' :|  : :/|        |   :  ;/|'   | |: :|  ' | |  . .'  :  /   \n" +
+                ".   | '___'   | .; :|  | ' |  | ||   | |  | |.    ' /  |  | :   '  : |__         '   ;  \\; /  ||  |  .'        |   |   .''   | .; :|  | ' |  | ||  | '    \n" +
+                "'   ; : .'|   :    |:  | : ;  ; ||   | |  |/ '   ; :__ '  : |__ |  | '.'|         \\   \\  ',  / '  : '          '   :  '  |   :    |:  | : ;  ; |;  : |    \n" +
+                "'   | '/  :\\   \\  / '  :  `--'   \\   | |--'  '   | '.'||  | '.'|;  :    ;          ;   :    /  |  | |          |   |  |   \\   \\  / '  :  `--'   \\  , ;    \n" +
+                "|   :    /  `----'  :  ,      .-./   |/      |   :    :;  :    ;|  ,   /            \\   \\ .'   |  : \\          |   :  \\    `----'  :  ,      .-./---'     \n" +
+                " \\   \\ .'            `--`----'   '---'        \\   \\  / |  ,   /  ---`-'              `---`     |  |,'          |   | ,'             `--`----'             \n" +
+                "  `---`                                        `----'   ---`-'                                 `--'            `----'                                     \n" +
+                "                                                                                                                                                          ");
     }
 }
