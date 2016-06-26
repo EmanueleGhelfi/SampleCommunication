@@ -286,7 +286,7 @@ public class GameController implements Serializable{
                 }
             }
         };
-        checkUserTimer.scheduleAtFixedRate(checkUserTimerTask,0,5000);
+        checkUserTimer.scheduleAtFixedRate(checkUserTimerTask,0,30000);
     }
 
     private void sendStartMarket(User user) {

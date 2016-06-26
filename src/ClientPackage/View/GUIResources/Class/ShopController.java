@@ -84,7 +84,7 @@ public class ShopController implements BaseController {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
-        backgroundImage.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/ShopBackground.png"));
+        backgroundImage.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/ShopBackground.png",backgroundImage.getFitWidth(),backgroundImage.getFitWidth()));
         setBackground();
         updateView();
         createDeck();
@@ -110,22 +110,14 @@ public class ShopController implements BaseController {
 
     private void setMarketPane() {
         sellPane.setPrefColumns(2);
-        /*sellPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
-        sellPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
-        */
         sellScrollPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(2));
         sellScrollPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
-        //sellScrollPane.setPadding(new Insets(20));
         sellScrollPane.setContent(sellPane);
 
 
         buyPane.setPrefColumns(2);
-        /*buyPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
-        buyPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(3));
-        */
         buyScrollPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(3));
         buyScrollPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(3));
-        //buyScrollPane.setPadding(new Insets(20));
         buyScrollPane.setContent(buyPane);
         finishShop = new ImageView(new Image(Constants.IMAGE_PATH + "/Check.png"));
         buyIt = new ImageView(new Image(Constants.IMAGE_PATH + "/Cart.png"));
@@ -258,8 +250,8 @@ public class ShopController implements BaseController {
 
     private void createDeck() {
         politicCardDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/PoliticCardDistorted.png"));
-        permitCardDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png",true));
-        helperDeck.setImage(new Image("/ClientPackage/View/GUIResources/Image/HelperDistorted.png",true));
+        permitCardDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png"));
+        helperDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/HelperDistorted.png"));
         paneBackground.getChildren().addAll(politicCardDeck, permitCardDeck, helperDeck);
         politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3973));
         politicCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5612));
