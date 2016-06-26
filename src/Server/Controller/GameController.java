@@ -244,7 +244,6 @@ public class GameController implements Serializable{
     }
 
     private void startRoundTimer(User user) {
-        //// TODO: 17/06/2016 start timer for user round
         roundTimer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override

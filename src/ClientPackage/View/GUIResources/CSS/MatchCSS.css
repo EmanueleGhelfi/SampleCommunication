@@ -94,7 +94,7 @@
 }
 
 .tab-pane {
-    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png");
+    /*-fx-background-image: url("/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png");*/
     -fx-background-repeat: stretch;
     -fx-background-position: center;
     -fx-background-size: cover;
@@ -107,4 +107,13 @@
 .tab-pane .tab-header-area .tab-header-background {
     visibility: hidden ;
     -fx-opacity: 0;
+}
+
+
+.matchPattern{
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png");
+}
+
+.shopPattern{
+    -fx-background-image: url("/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png");
 }

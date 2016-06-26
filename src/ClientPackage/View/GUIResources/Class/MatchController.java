@@ -16,6 +16,12 @@ import Utilities.Class.Graphics;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import com.sun.javafx.tk.Toolkit;
+import eu.hansolo.medusa.Gauge;
+import eu.hansolo.medusa.TickLabelOrientation;
+import eu.hansolo.medusa.skins.FlatSkin;
+import eu.hansolo.medusa.skins.ModernSkin;
+import eu.hansolo.medusa.skins.SlimSkin;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -60,7 +66,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Giulio on 17/05/2016.
  */
-public class MatchController implements Initializable, BaseController {
+public class MatchController implements BaseController {
 
     private ClientController clientController;
     private boolean myTurn;
@@ -173,10 +179,9 @@ public class MatchController implements Initializable, BaseController {
 
     private ProgressIndicator progressIndicator = new ProgressIndicator();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        popOver.setContentNode(paneOfPopup);
-    }
+    private Gauge timerIndicator = new Gauge();
+
+    private Timer timer = new Timer();
 
     public void setClientController(ClientController clientController, GUIView guiView) {
         this.clientController = clientController;
@@ -223,15 +228,7 @@ public class MatchController implements Initializable, BaseController {
             }
         });
 
-
-
-        //background.setStyle("-fx-background-image: url('"+currentSnapshot.getMap().getMapPreview()+"')");
-        //createArray();
-        /*
-        createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
-        createPermitCard(hillHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.HILL);
-        createPermitCard(mountainHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.MOUNTAIN);
-        */
+        createGauge();
 
         pulseCity.bind(buildWithKingPhase.not());
         createOverlay();
@@ -345,13 +342,40 @@ public class MatchController implements Initializable, BaseController {
         infoHBox.prefHeightProperty().bind(boardImageView.fitHeightProperty());
         infoHBox.prefWidthProperty().bind(gridPane.widthProperty().divide(2));
         //setImageInInfo();
+
         gridPane.add(turnImage, 0, 0);
-        GridPane.setMargin(turnImage, new Insets(20, 0, 0, 20));
-        turnImage.fitHeightProperty().bind(boardImageView.fitHeightProperty().multiply(2));
+        //GridPane.setMargin(turnImage, new Insets(20, 0, 0, 20));
+        turnImage.fitWidthProperty().bind(background.widthProperty().multiply(0.07));
         turnImage.setPreserveRatio(true);
         turnImage.setStyle("-fx-effect: dropshadow(three-pass-box, black, 20, 0, 0, 0)");
-        GridPane.setValignment(turnImage, VPos.TOP);
+        GridPane.setValignment(turnImage, VPos.CENTER);
         GridPane.setHalignment(turnImage, HPos.CENTER);
+
+    }
+
+    private void createGauge() {
+
+        timerIndicator = new Gauge();
+        timerIndicator.setSkin(new FlatSkin(timerIndicator));
+        timerIndicator.setTitle("Mancano ancora");
+        timerIndicator.setUnit("Secondi");
+        timerIndicator.setDecimals(0);
+        timerIndicator.setValueColor(Color.WHITE);
+        timerIndicator.setTitleColor(Color.WHITE);
+        timerIndicator.setSubTitleColor(Color.WHITE);
+        timerIndicator.setBarColor(Color.rgb(0, 214, 215));
+        timerIndicator.setNeedleColor(Color.WHITE);
+        timerIndicator.setThresholdColor(Color.rgb(204, 0, 0));
+        timerIndicator.setTickLabelColor(Color.rgb(151, 151, 151));
+        timerIndicator.setTickMarkColor(Color.BLACK);
+        timerIndicator.setTickLabelOrientation(TickLabelOrientation.ORTHOGONAL);
+        gridPane.add(timerIndicator,0,0);
+        timerIndicator.setKeepAspect(true);
+        //GridPane.setMargin(timerIndicator, new Insets(20, 0, 0, 20));
+        GridPane.setHalignment(timerIndicator,HPos.CENTER);
+        GridPane.setValignment(timerIndicator,VPos.CENTER);
+        timerIndicator.prefWidthProperty().bind(background.widthProperty().multiply(0.1));
+
     }
 
     private void setImageInInfo() {
@@ -609,7 +633,7 @@ public class MatchController implements Initializable, BaseController {
         changeTurnAction.setPrefWidth(50);
         changeTurnAction.setGraphic(imageChange);
         changeTurnAction.setButtonType(JFXButton.ButtonType.RAISED);
-        changeTurnAction.setOnAction(new ChangeTurnHandler());
+        changeTurnAction.setOnAction(new ChangeTurnHandler(this));
         showMore.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
         changeTurnAction.setRotate(180);
         changeTurnAction.setTooltip(new Tooltip("Chage turn"));
@@ -1465,7 +1489,14 @@ public class MatchController implements Initializable, BaseController {
     @Override
     public void onStartMarket() {
         selectionModel.selectNext();
-        tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
+        if(tabPane.getStyleClass().contains("matchPattern")){
+            tabPane.getStyleClass().remove("matchPattern");
+        }
+
+        if(!tabPane.getStyleClass().contains("shopPattern")){
+            tabPane.getStyleClass().add("shopPattern");
+        }
+       // tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
     }
 
     @Override
@@ -1476,7 +1507,14 @@ public class MatchController implements Initializable, BaseController {
     @Override
     public void onFinishMarket() {
         selectionModel.selectFirst();
-        tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
+       //tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
+        if(tabPane.getStyleClass().contains("shopPattern")){
+            tabPane.getStyleClass().remove("shopPattern");
+        }
+
+        if(!tabPane.getStyleClass().contains("matchPattern")){
+            tabPane.getStyleClass().add("matchPattern");
+        }
     }
 
     @Override
@@ -1573,6 +1611,7 @@ public class MatchController implements Initializable, BaseController {
         stopPulsePermitCard.setValue(false);
         Set<Node> permitCards = gridPane.lookupAll(".myPermitCard");
         permitCards.forEach(node-> highlightPermitCard(node,stopPulseOldPermitCard));
+        oldPermitCardNodeList.animateList();
         hamburgerMenu.setVisible(false);
         nobilityPath.setVisible(false);
     }
@@ -1593,16 +1632,31 @@ public class MatchController implements Initializable, BaseController {
             @Override
             public void run() {
                 if(thisTurn){
+
+                    startTimer();
                     Graphics.notification("E' il tuo turno!");
                     turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes1.png"));
                 }
                 else{
+                    cancelTimer();
                     Graphics.notification("Turno finito!");
                     turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo1.png"));
                 }
 
             }
         });
+    }
+
+    private void cancelTimer() {
+        if(timer!=null) {
+            timer.cancel();
+        }
+        timerIndicator.setValue(0);
+    }
+
+    private void startTimer() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerProgress(timerIndicator,this,clientController),0,1000);
     }
 
 
