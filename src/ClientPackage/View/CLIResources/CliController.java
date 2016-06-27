@@ -9,4 +9,5 @@ public interface CliController {
     void changeController();
 
     void printHelp();
+
 }

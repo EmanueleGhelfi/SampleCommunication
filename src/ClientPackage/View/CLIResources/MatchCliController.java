@@ -20,9 +20,11 @@ import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Link;
 import Utilities.Class.ArrayUtils;
 import Utilities.Class.Constants;
+import Utilities.Class.TableBuilder;
 import Utilities.Exception.CouncilNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
+import dnl.utils.text.table.TextTable;
 import javafx.geometry.Pos;
 import org.apache.commons.cli.Options;
 
@@ -84,18 +86,23 @@ public class MatchCliController implements CliController  {
             System.out.println(link);
         }
 
-        cliPrinter.printBlue("Cities \t\t\t\t Region \t\t\t\t Color");
+        cliPrinter.printBlue("Cities \t\t\t\t\t\t Region \t\t\t\t\t\t Color");
         for(City city: clientController.getSnapshot().getMap().getCity()){
             System.out.println(cliPrinter.toStringFormatted(city));
         }
 
         boolean correct = false;
         String[] selectedArray= {};
+        //Object[][] citiesToPrint = new Object[clientController.getSnapshot().getMap().getCity().size()][10];
         while (!correct && isMyTurn) {
             cliPrinter.printBlue("Inserisci i numeri delle città seguite da uno spazio: ");
+            TableBuilder tableBuilder = new TableBuilder();
+            tableBuilder.addRow("Number ", "CITY","COLOR", "BONUS");
+            tableBuilder.addRow("-------","--------","-----------","----------------");
             for (int i = 0; i < clientController.getSnapshot().getMap().getCity().size(); i++) {
-                System.out.println(" " + i + ". " + cliPrinter.
+                System.out.println(" " + i + ". \t\t\t\t" + cliPrinter.
                         toStringFormatted(clientController.getSnapshot().getMap().getCity().get(i)));
+
             }
 
             while (!scanner.ready() && isMyTurn) {
@@ -114,20 +121,33 @@ public class MatchCliController implements CliController  {
 
         if(isMyTurn) {
             for (int i = 0; i < selectedArray.length; i++) {
-                cities.add(clientController.getSnapshot().getMap().getCity().get(i));
+                cities.add(clientController.getSnapshot().getMap().getCity().get(Integer.parseInt(selectedArray[i])));
             }
 
-            if (!cities.get(0).equals(clientController.getSnapshot().getKing().getCurrentCity())) {
+            if (!cities.get(0).getCityName().equals(clientController.getSnapshot().getKing().getCurrentCity().getCityName())) {
                 cities.add(0, clientController.getSnapshot().getKing().getCurrentCity());
-                return cities;
             }
+
+            return cities;
         }
 
         return null;
 
     }
 
+    private void printCity(Object[][] citiesToPrint) {
+        String[] columnNames = new String[]{"NAME","COLOR","BONUS"};
+        TextTable tt = new TextTable(columnNames, citiesToPrint);
+// this adds the numbering on the left
+        tt.setAddRowNumbering(true);
+// sort by the first column
+        tt.setSort(0);
+        tt.printTable();
+    }
 
+    private void addCity(Object[][] citiesToPrint, int i, City city) {
+        citiesToPrint[i] = new String[]{city.getCityName().getCityName(),city.getColor().getColor(),city.getBonus().toString()};
+    }
 
 
     private ArrayList<PoliticCard> selectPoliticCard(ArrayList<PoliticCard> politicCards) throws IOException {
@@ -158,7 +178,7 @@ public class MatchCliController implements CliController  {
 
         if(isMyTurn) {
             for (int i = 0; i < selectedArray.length; i++) {
-                System.out.println(" You have selected " + politicCards.get(Integer.parseInt(selectedArray[i])));
+                System.out.println("You have selected " + cliPrinter.toStringFormatted(politicCards.get(Integer.parseInt(selectedArray[i]))));
                 politicCardArrayList.add(politicCards.get(Integer.parseInt(selectedArray[i])));
             }
             return politicCardArrayList;
@@ -263,7 +283,6 @@ public class MatchCliController implements CliController  {
     @Command(name = "finish",description = "Finish your turn", abbrev = "f")
     public void finishTurn(){
         isMyTurn=false;
-        System.out.println(ANSI_RED+"Turno finito"+ANSI_RESET);
         clientController.onFinishTurn();
     }
 
@@ -329,6 +348,7 @@ public class MatchCliController implements CliController  {
             }
 
             if(cities!=null && isMyTurn) {
+                System.out.println(politicCardArrayList+" "+cities);
                 Action action = new MainActionBuildWithKingHelp(cities, politicCardArrayList);
                 clientController.doAction(action);
             }
@@ -478,9 +498,20 @@ public class MatchCliController implements CliController  {
     @Command (description = ""+CLIColor.ANSI_RED+"|FAST ACTION|"+CLIColor.ANSI_RESET+"Change permit card", name = "changePermit", abbrev = "cp")
     public void changePermitAction(@Param(name="region", description="Region of the permit card that you want to change")String arg) {
         try {
-            RegionName regionName = RegionName.valueOf(arg);
-            Action action = new FastActionChangePermitCardWithHelper(regionName);
-            clientController.doAction(action);
+            RegionName regionName = null;
+
+            for(RegionName tmpRegion: RegionName.values()){
+                if(tmpRegion.getRegion().equalsIgnoreCase(arg)){
+                    regionName=tmpRegion;
+                }
+            }
+            if(regionName!=null) {
+                Action action = new FastActionChangePermitCardWithHelper(regionName);
+                clientController.doAction(action);
+            }
+            else{
+                cliPrinter.printError("ERROR IN REGION NAME");
+            }
         }
         catch (Exception e){
             System.out.println("Error in region Name");

@@ -135,7 +135,7 @@ public class CLIPrinter implements CLIPrinterInterface {
     @Override
     public String toStringFormatted(City city) {
 
-        return city.getCityName()+" \t\t\t\t "+city.getRegion()+" \t\t\t\t "+city.getColor();
+        return city.getCityName()+" \t\t\t\t\t\t\t\t "+city.getRegion()+" \t\t\t\t\t\t\t\t "+city.getColor();
     }
 
     @Override

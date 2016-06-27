@@ -155,7 +155,7 @@ public class CLIView implements BaseView {
     @Override
     public void onStartMarket() {
         currentController = shopCliController;
-        System.out.println(" MARKET STARTED ");
+        shopCliController.onStartMarket();
         currentController.printHelp();
     }
 
@@ -187,7 +187,7 @@ public class CLIView implements BaseView {
 
     @Override
     public void onMoveKing(ArrayList<City> kingPath) {
-            cliPrinterInterface.printBlue(" King moved to "+kingPath.get(kingPath.size()-1));
+            cliPrinterInterface.printBlue(" King moved to "+kingPath.get(kingPath.size()-1).getCityName()+ " Bonus: "+kingPath.get(kingPath.size()-1).getBonus());
     }
 
     @Override
