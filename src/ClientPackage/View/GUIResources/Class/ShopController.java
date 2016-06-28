@@ -97,16 +97,16 @@ public class ShopController implements BaseController {
     private void setArrow() {
         JFXButton backArrow = new JFXButton();
         paneBackground.getChildren().add(backArrow);
-        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png",backgroundImage.getFitWidth()/10,backgroundImage.getFitHeight()/10));
+        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png",backgroundImage.getFitWidth()/6,backgroundImage.getFitHeight()/6));
         arrowImageView.setCache(true);
         arrowImageView.setPreserveRatio(true);
         backArrow.setGraphic(arrowImageView);
-        arrowImageView.fitWidthProperty().bind(backgroundImage.fitWidthProperty().divide(10));
-        arrowImageView.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(10));
-        backArrow.prefWidthProperty().bind(backgroundImage.fitWidthProperty().divide(10));
-        backArrow.prefHeightProperty().bind(backgroundImage.fitHeightProperty().divide(10));
-        backArrow.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3188));
-        backArrow.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.7767));
+        arrowImageView.fitWidthProperty().bind(backgroundImage.fitWidthProperty().divide(6));
+        arrowImageView.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(6));
+        backArrow.prefWidthProperty().bind(backgroundImage.fitWidthProperty().divide(6));
+        backArrow.prefHeightProperty().bind(backgroundImage.fitHeightProperty().divide(6));
+        backArrow.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3964));
+        backArrow.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.7619));
 
         backArrow.setOnAction(new EventHandler<ActionEvent>() {
             @Override

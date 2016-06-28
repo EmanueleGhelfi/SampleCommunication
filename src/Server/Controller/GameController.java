@@ -125,7 +125,7 @@ public class GameController implements Serializable{
         int userCounter = 0;
         for (User user: users) {
             userColorSet = UserColor.values();
-            user.setUserColor(colorAvailable(0));
+            user.setUserColor(colorAvailable());
             if (!(user instanceof FakeUser)) {
                 user.setHelpers(Constants.DEFAULT_HELPER_COUNTER + userCounter);
                 user.setCoinPathPosition(Constants.FIRST_INITIAL_POSITION_ON_MONEY_PATH + userCounter);
@@ -143,27 +143,16 @@ public class GameController implements Serializable{
         }
     }
 
-    private UserColor colorAvailable(int userColorCounter) {
-       /* for (java.util.Map.Entry<String, User> userInFor : game.getUsersInGame().entrySet()) {
-            if (userInFor.getValue().getUserColor() != null && userColorSet[userColorCounter].getColor().equals(userInFor.getValue().getUserColor().getColor())) {
-                return colorAvailable(++userColorCounter);
-            }
-            else {
-                return userColorSet[userColorCounter];
-            }
-
-
-        }
-        */
-
-        for(UserColor userColor: UserColor.values()){
+    private UserColor colorAvailable() {
+        ArrayList<UserColor> shuffledUserColor = new ArrayList<>(Arrays.asList(UserColor.values()));
+        Collections.shuffle(shuffledUserColor);
+        for(UserColor userColor: shuffledUserColor){
             boolean found = false;
             for(User user: game.getUsersInGame().values()){
                 if(user.getUserColor()!= null && user.getUserColor().equals(userColor)){
                     found=true;
                 }
             }
-
             if(!found){
                 return userColor;
             }
@@ -294,7 +283,9 @@ public class GameController implements Serializable{
     }
 
     private void onAllUserDisconnected() {
-        System.out.println("All user Disconnected! I don't know what to do");
+        roundTimer.cancel();
+        users.clear();
+        GamesManager.getInstance().cancelThisGame(game, this);
     }
 
     public void doAction(Action action, User user) throws ActionNotPossibleException {

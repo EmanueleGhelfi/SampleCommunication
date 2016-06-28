@@ -780,7 +780,7 @@ public class MatchController implements BaseController {
         victoryLabel.setText(baseUser.getNobilityPathPosition().getPosition()+"");
         permitListView.setItems(FXCollections.observableArrayList(clientController.populateListView(baseUser.getUsername())));
         nobilityLabel.setText(baseUser.getVictoryPathPosition()+"");
-        userColorImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/" + clientController.getSnapshot().getUsersInGame().get(baseUser.getUsername()).getUserColor().getColor() + ".png" , 41, 53));
+        userColorImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + clientController.getSnapshot().getUsersInGame().get(baseUser.getUsername()).getUserColor().getColor() + ".png" , 41, 53));
     }
 
     private void initHamburgerIcon() {
@@ -791,7 +791,6 @@ public class MatchController implements BaseController {
         burgerTask.setRate(-1);
         //hamburgerIcon.toFront();
         hamburgerIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
-
             burgerTask.setRate(burgerTask.getRate()*-1);
             if(burgerTask.getRate()==1){
 

@@ -9,6 +9,7 @@ import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -34,6 +35,7 @@ public class PermitDeck implements Deck,Serializable {
         //create a deck for this region
         System.out.println("creating deck of: "+region);
         ArrayList<ArrayList<Character>> citiesPermitCard = CityFactory.getCity(region);
+        Collections.shuffle(citiesPermitCard);
         if(citiesPermitCard!=null) {
             for (int i = 0; i < citiesPermitCard.size(); i++) {
                 PermitCard permitCard = new PermitCard();
@@ -43,6 +45,7 @@ public class PermitDeck implements Deck,Serializable {
                 permitDeck.add(permitCard);
             }
             permitCardsVisible = new ArrayList<>();
+
             permitCardsVisible.add(permitDeck.remove());
             permitCardsVisible.add(permitDeck.remove());
         }
