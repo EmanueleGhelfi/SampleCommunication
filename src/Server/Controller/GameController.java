@@ -284,7 +284,6 @@ public class GameController implements Serializable{
 
     private void onAllUserDisconnected() {
         roundTimer.cancel();
-        users.clear();
         GamesManager.getInstance().cancelThisGame(game, this);
     }
 
