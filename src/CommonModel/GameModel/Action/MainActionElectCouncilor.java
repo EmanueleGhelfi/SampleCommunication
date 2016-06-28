@@ -59,6 +59,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
             region="KING";
         }
         else {
+            //TODO nullPointer
             region=this.region.getRegion();
         }
         return "[MAIN ACTION] Elect councilor for money. Councilor: "+councilorToAdd+" In region "+region;

@@ -326,8 +326,9 @@ public class GameController implements Serializable{
 
             configurationForTwoPlayers();
 
+
             //TODO: READD TEN EMPORIUMS
-            /*
+
             for (User user :
                     users) {
                 int cont=0;
@@ -341,7 +342,7 @@ public class GameController implements Serializable{
 
                 }
             }
-            */
+
         }
 
         else{

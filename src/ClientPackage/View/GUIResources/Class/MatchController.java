@@ -10,18 +10,14 @@ import CommonModel.GameModel.City.*;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
-import Server.Model.User;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import com.sun.javafx.tk.Toolkit;
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.TickLabelOrientation;
 import eu.hansolo.medusa.skins.FlatSkin;
-import eu.hansolo.medusa.skins.ModernSkin;
-import eu.hansolo.medusa.skins.SlimSkin;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -29,12 +25,10 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -42,7 +36,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -50,8 +43,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 
-import java.awt.geom.AffineTransform;
-import java.net.URL;
 import java.util.*;
 
 import javafx.scene.paint.Paint;
@@ -61,7 +52,6 @@ import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 /**
  * Created by Giulio on 17/05/2016.
@@ -122,10 +112,10 @@ public class MatchController implements BaseController {
     @FXML private Label victoryLabel;
     @FXML private Label politicLabel;
     @FXML private Label helperLabel;
-    @FXML private Label permitLabel;
     @FXML private Label nobilityLabel;
-
+    @FXML private JFXListView<String> permitListView;
     @FXML private HBox infoHBox;
+    @FXML private ImageView userColorImageView;
 
     @FXML private Button helpButton;
 
@@ -788,13 +778,9 @@ public class MatchController implements BaseController {
         politicLabel.setText(baseUser.getPoliticCardNumber()+"");
         helperLabel.setText(baseUser.getHelpers().size()+"");
         victoryLabel.setText(baseUser.getNobilityPathPosition().getPosition()+"");
-        if(baseUser.getPermitCards().size()>0){
-            permitLabel.setText(baseUser.getPermitCards().get(0).getCityString());
-        }
-        else{
-            permitLabel.setText("No permit card");
-        }
+        permitListView.setItems(FXCollections.observableArrayList(clientController.populateListView(baseUser.getUsername())));
         nobilityLabel.setText(baseUser.getVictoryPathPosition()+"");
+        userColorImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/" + clientController.getSnapshot().getUsersInGame().get(baseUser.getUsername()).getUserColor().getColor() + ".png" , 41, 53));
     }
 
     private void initHamburgerIcon() {

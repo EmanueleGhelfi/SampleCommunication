@@ -42,7 +42,7 @@ public class FinishMatchController implements Initializable {
     private Pane innerPaneWhereShow = new Pane();
     private ImageView backgroundImage;
 
-    @FXML GridPane gridPane;
+    @FXML private GridPane gridPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,13 +68,13 @@ public class FinishMatchController implements Initializable {
                 System.out.println("event x and y "+event.getX()/gridPane.getWidth()+" "+event.getY()/gridPane.getHeight());
             }
         });
-        innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.jpg"));
+        innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.png"));
         innerImage.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(2));
         innerImage.setPreserveRatio(true);
         innerPaneWhereShow.setPrefWidth(10);
         innerPaneWhereShow.setPrefHeight(10);
-        //innerPaneWhereShow.setLayoutX();
-        //innerPaneWhereShow.setLayoutY();
+        //innerPaneWhereShow.layoutXProperty().bind(gridPane.widthProperty().multiply(0.095));
+        //innerPaneWhereShow.layoutYProperty().bind(gridPane.heightProperty().multiply(0.5858));
 
         for (BaseUser baseUser : clientController.getFinalSnapshot()) {
             usernameRanking.add(baseUser.getUsername());
@@ -85,8 +85,8 @@ public class FinishMatchController implements Initializable {
         } else {
             winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver.png"));
         }
-        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty());
-        winnerOrLoser.fitHeightProperty().bind(backgroundImage.fitHeightProperty());
+        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().divide(3));
+        winnerOrLoser.setPreserveRatio(true);
         ranking.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -94,12 +94,15 @@ public class FinishMatchController implements Initializable {
             }
         });
         ranking.setStyle("-fx-background-color: transparent");
+        ranking.prefWidthProperty().bind(gridPane.widthProperty().divide(4));
         gridPane.add(innerImage, 0, 0);
         GridPane.setRowSpan(innerImage, 3);
         gridPane.add(ranking, 1, 1);
         gridPane.add(winnerOrLoser, 0, 0);
         GridPane.setRowSpan(winnerOrLoser, 3);
         GridPane.setColumnSpan(winnerOrLoser, 3);
+        GridPane.setValignment(winnerOrLoser, VPos.TOP);
+        GridPane.setHalignment(winnerOrLoser, HPos.RIGHT);
         GridPane.setValignment(innerImage, VPos.BOTTOM);
         GridPane.setHalignment(innerImage, HPos.LEFT);
         GridPane.setHalignment(ranking, HPos.CENTER);
@@ -107,6 +110,7 @@ public class FinishMatchController implements Initializable {
         winnerOrLoser.toBack();
         backgroundImage.toBack();
         gridPane.getChildren().add(innerPaneWhereShow);
+
     }
 
     private void displayInfo(String selectedItem) {
@@ -114,21 +118,26 @@ public class FinishMatchController implements Initializable {
         StackPane popOverStackPane = new StackPane();
         popOverStackPane.setAlignment(Pos.CENTER);
         Text innerText = new Text();
-        innerText.setText("Il giocatore " + baseUser.getUsername() + " si è posizionato " + clientController.getUserPosition(selectedItem) + "°\n"
-            + "Ecco le sue posizioni:\n" + baseUser.getVictoryPathPosition() + "\t nel percorso della vittoria\n"
-            + baseUser.getNobilityPathPosition().getPosition() + "\t nel percorso della nobiltà\n" + baseUser.getCoinPathPosition()
-            + "\t nel percorso della ricchezza\n" + "Aveva" + baseUser.getHelpers() + " aiutanti e" + baseUser.getPoliticCardNumber() + " carte politica\n"
-            + "Ha edificato in " + clientController.getUserBuilding(selectedItem));
-
+        System.out.println(baseUser.getUsername() + " DA ORA");
+        System.out.println(clientController.getUserPosition(selectedItem));
+        System.out.println(baseUser.getVictoryPathPosition());
+        System.out.println(baseUser.getNobilityPathPosition().getPosition());
+        System.out.println(baseUser.getHelpers().size());
+        System.out.println(baseUser.getPoliticCardNumber());
+        System.out.println(" ECCO QUI" + clientController.getUserBuilding(selectedItem));
+        innerText.setText("Vò narrando delle gesta di " + baseUser.getUsername() + ".\nSi posizionò " + clientController.getUserPosition(selectedItem) + "° nella maggior gara del nuovo anno.\n"
+                + "Riuscì ad ottenere molti scudi prestigiosi dalle sue " + baseUser.getVictoryPathPosition() + " vittorie.\n"
+                + "Conobbe vari nobili città dove gli vennero donati prestigiosi premi. In particolare, rimasto molto affascinato, si fermò nel " + baseUser.getNobilityPathPosition().getPosition() + "° posto.\n "
+                + "Riuscì ad ottenere grandi ricompense, fino ad arrivare a " + baseUser.getCoinPathPosition() + " monete d'oro.\n"
+                + "Conobbi anche tutti i suoi " + baseUser.getHelpers().size() + " servitori ed aiutanti, a lui molto cari.\n"
+                + "Grande personaggio fu questo " + baseUser.getUsername() + ". Mi ricorderò sempre di quel giorno che mi fece vedere le sue" + baseUser.getPoliticCardNumber()
+                + "prestigiose carte politiche con cui poteva soddisfare qualsiasi consiglio.\n"
+                + "In tutto il mondo è noto il suo nome. Ovunque si sa che il magnifico " + baseUser.getUsername() + "riuscì a costruire empori in molte città, come\n"
+                + clientController.getUserBuilding(selectedItem) +"\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
         popOverStackPane.getChildren().add(innerText);
+        innerPopOver = new PopOver();
         innerPopOver.setContentNode(popOverStackPane);
         innerPopOver.show(innerPaneWhereShow);
     }
-
-
-    //TODO
-    /*
-    event x and y 0.09560067681895093 0.5858951175406871 pane where show
-     */
 
 }
