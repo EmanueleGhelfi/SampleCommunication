@@ -111,7 +111,8 @@ public class ShopController implements BaseController {
         backArrow.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                matchController.getSelectionModel().selectFirst();
+                // simulate finish market becuse it change background
+                matchController.onFinishMarket();
             }
         });
     }

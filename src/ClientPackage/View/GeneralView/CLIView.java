@@ -97,12 +97,13 @@ public class CLIView implements BaseView {
 
     @Override
     public void showLoginError() {
-        System.out.println("Name is already used! Insert another name!");
+        cliPrinterInterface.printError("Name is already used! Insert another name!");
+        loginCliController.setLoginDone(false);
     }
 
     @Override
     public void showWaitingForStart() {
-        System.out.println("Waiting for other player...");
+        cliPrinterInterface.printGreen("Waiting for other player...");
     }
 
     @Override

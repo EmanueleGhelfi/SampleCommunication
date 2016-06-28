@@ -322,9 +322,14 @@ public class GameController implements Serializable{
                 user.getBaseCommunication().sendSelectedMap(snapshotToSend);
             }
             sendFinishMarketToAll();
+
+
+            if(game.getUsers().size()==2){
+                configurationForTwoPlayers();
+            }
+
             selectFirstPlayer();
 
-            configurationForTwoPlayers();
 
             //TODO: READD TEN EMPORIUMS
             /*

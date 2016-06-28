@@ -174,5 +174,12 @@ public class CLIPrinter implements CLIPrinterInterface {
         return "";
     }
 
+    @Override
+    public void printGreen(String s) {
+        System.out.println("------------------------------------------------------------------");
+        System.out.println(ANSI_GREEN+s+ANSI_RESET);
+        System.out.println("------------------------------------------------------------------");
+    }
+
 
 }

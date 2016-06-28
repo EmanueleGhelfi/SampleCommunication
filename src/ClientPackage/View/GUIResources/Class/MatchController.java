@@ -1552,7 +1552,6 @@ public class MatchController implements BaseController {
         }
 
 
-        System.out.println("[DEBUG] "+tabPane.getStyle());
 
     }
 

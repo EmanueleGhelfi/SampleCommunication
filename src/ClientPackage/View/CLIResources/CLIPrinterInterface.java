@@ -36,4 +36,6 @@ public interface CLIPrinterInterface {
     void printCouncil(ArrayList<Councilor> council);
 
     String toStringFormatted(BuyableWrapper buyableWrapper);
+
+    void printGreen(String s);
 }
