@@ -286,7 +286,7 @@ public class GameController implements Serializable{
                 }
             }
         };
-        checkUserTimer.scheduleAtFixedRate(checkUserTimerTask,0,5000);
+        checkUserTimer.scheduleAtFixedRate(checkUserTimerTask,0,30000);
     }
 
     private void sendStartMarket(User user) {
@@ -322,9 +322,14 @@ public class GameController implements Serializable{
                 user.getBaseCommunication().sendSelectedMap(snapshotToSend);
             }
             sendFinishMarketToAll();
+
+
+            if(game.getUsers().size()==2){
+                configurationForTwoPlayers();
+            }
+
             selectFirstPlayer();
 
-            configurationForTwoPlayers();
 
 
             //TODO: READD TEN EMPORIUMS

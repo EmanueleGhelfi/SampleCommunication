@@ -43,8 +43,8 @@ public class NobilityPathController implements BaseController {
 
 
     private void createGridPane() {
-        backgroundImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png"));
-        backgroundImage.setCache(true);
+
+
         backgroundImage.fitWidthProperty().bind(nobilityPath.prefWidthProperty());
         backgroundImage.fitHeightProperty().bind(nobilityPath.prefHeightProperty());
         nobilityPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -56,6 +56,9 @@ public class NobilityPathController implements BaseController {
         nobilityPath.setOpacity(0.8);
         nobilityPath.prefHeightProperty().bind(matchController.getBackground().prefHeightProperty().divide(4));
         nobilityPath.prefWidthProperty().bind(matchController.getBackground().prefWidthProperty());
+        backgroundImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png",nobilityPath.getPrefWidth(),nobilityPath.getPrefHeight()));
+        backgroundImage.setCache(true);
+
         nobilityPath.getChildren().add(backgroundImage);
         createPath();
         placeBonusCard();

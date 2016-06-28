@@ -34,10 +34,10 @@ public class ImageLoader {
             Image image=null;
             //TODO: Improve
             if(!path.contains("Map")) {
-                 image = new Image(path,200,200,true, true,true);
+                 image = new Image(path,true);
             }
             else{
-                image=new Image(path,width,height,true,true,true);
+                image=new Image(path,true);
             }
             imageHashMap.put(path,image);
         }

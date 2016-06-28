@@ -97,7 +97,7 @@ public class MainActionBuildWithKingHelp extends Action {
             }
         }
         else{
-            if(politicCards.size()>0){
+            if(politicCards.size()==0){
                 throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
             }
             throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);

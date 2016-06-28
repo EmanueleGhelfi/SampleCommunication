@@ -276,9 +276,9 @@ public class MatchController implements BaseController {
     }
 
     private void placeRegionBonus() {
-        ImageView coastImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/CoastBonusCard.png"));
-        ImageView hillImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/HillBonusCard.png"));
-        ImageView mountainImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/MountainBonusCard.png"));
+        ImageView coastImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/CoastBonusCard.png",background.getWidth()*0.89,background.getHeight()*0.82));
+        ImageView hillImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/HillBonusCard.png",background.getWidth()*0.89,background.getHeight()*0.82));
+        ImageView mountainImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/MountainBonusCard.png",background.getWidth()*0.89,background.getHeight()*0.82));
         coastImage.setCache(true);
         hillImage.setCache(true);
         mountainImage.setCache(true);
@@ -348,7 +348,7 @@ public class MatchController implements BaseController {
     }
 
     private void setBoard() {
-        boardImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Board.png"));
+        boardImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Board.png",gridPane.getWidth(),60));
         boardImageView.setOpacity(0.2);
         boardImageView.fitWidthProperty().bind(gridPane.widthProperty());
         boardImageView.setFitHeight(60);
@@ -414,7 +414,7 @@ public class MatchController implements BaseController {
 
     private void creteOldPermitCard() {
         oldPermitCardNodeList.getChildren().clear();
-        ImageView bagImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"bag.png"));
+        ImageView bagImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"bag.png",50,50));
         bagImage.setCache(true);
         bagImage.setFitHeight(50);
         bagImage.setFitWidth(50);
@@ -432,7 +432,7 @@ public class MatchController implements BaseController {
 
         for(PermitCard permitCard: clientController.getSnapshot().getCurrentUser().getOldPermitCards()){
             StackPane permitStackPane = new StackPane();
-            ImageView permitImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"PermitCard.png"));
+            ImageView permitImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"PermitCard.png",80,80));
             permitImage.setCache(true);
             permitImage.setFitHeight(80);
             permitImage.setFitWidth(80);
@@ -648,7 +648,7 @@ public class MatchController implements BaseController {
 
         //change turn
         JFXButton changeTurnAction = new JFXButton();
-        ImageView imageChange = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"change.png"));
+        ImageView imageChange = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"change.png",50,50));
         imageChange.setFitHeight(50);
         imageChange.setFitWidth(50);
         changeTurnAction.setPrefHeight(50);
@@ -662,7 +662,7 @@ public class MatchController implements BaseController {
 
         // HELP
         JFXButton helpButton = new JFXButton();
-        ImageView helpImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"QuestionMark.png"));
+        ImageView helpImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"QuestionMark.png",50,50));
         helpImage.setFitHeight(50);
         helpImage.setFitWidth(50);
         helpImage.setFitHeight(50);
@@ -705,7 +705,7 @@ public class MatchController implements BaseController {
 
         moreActionNodeList.addAnimatedNode(helpButton);
         JFXButton shopButton = new JFXButton();
-        ImageView shopButtonImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/ShopButton.png"));
+        ImageView shopButtonImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/ShopButton.png",50,50));
         shopButtonImageView.setFitHeight(50);
         shopButtonImageView.setFitWidth(50);
         shopButton.setPrefWidth(50);
@@ -995,7 +995,7 @@ public class MatchController implements BaseController {
 
     private void createKingImage(double x, double y) {
         kingImage = new ImageView();
-        kingImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"Crown.png"));
+        kingImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"Crown.png",background.getHeight()*0.07,background.getWidth()/25));
         kingImage.setCache(true);
         kingImage.fitHeightProperty().bind(background.heightProperty().multiply(0.07));
         kingImage.fitWidthProperty().bind(background.widthProperty().divide(25));
@@ -1108,23 +1108,17 @@ public class MatchController implements BaseController {
     }
 
     private void CreateSingleCity(double layoutX, double layoutY, City city) {
-        //Circle castrum = new Circle();
         ImageView imageView = new ImageView();
         imageView.getStyleClass().add("cityImage");
-
-        //castrum.setFill(Paint.valueOf("BLACK"));
-        //castrum.radiusProperty().bind(background.widthProperty().divide(20));
         System.out.println(city.getCityName().toString().toLowerCase());
         try {
-            Image cityImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/City/"+city.getColor().getColor().toLowerCase()+".png");
+            Image cityImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/City/"+city.getColor().getColor().toLowerCase()+".png",background.getHeight()*0.17,background.getWidth()/11);
             imageView.setImage(cityImage);
             imageView.setCache(true);
         }
         catch (Exception e){
-            imageView.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/City/blue.png"));
         }
         imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.17));
-        //imageView.fitWidthProperty().bind(background.widthProperty().divide(9));
         imageView.fitWidthProperty().bind(background.widthProperty().divide(11));
         background.getChildren().add(imageView);
         imageView.layoutXProperty().bind(background.widthProperty().multiply(layoutX));
@@ -1157,7 +1151,7 @@ public class MatchController implements BaseController {
         });
 
         ImageView cityName = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"City/Names/"+city.
-                getCityName().getCityName()+""+city.getColor().getColor()+".png"));
+                getCityName().getCityName()+""+city.getColor().getColor()+".png",imageView.getFitWidth(),imageView.getFitHeight()));
 
         cityName.setCache(true);
         background.getChildren().add(cityName);
@@ -1179,7 +1173,7 @@ public class MatchController implements BaseController {
             imageToAdd.setMouseTransparent(true);
             System.out.println("imageid" + userHashMap.getKey());
             System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
-            imageToAdd.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png"));
+            imageToAdd.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png",imageView.getFitHeight(),imageView.getFitWidth()));
             imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(6));
             imageToAdd.setPreserveRatio(true);
             imageToAdd.setVisible(false);
@@ -1214,8 +1208,6 @@ public class MatchController implements BaseController {
         VBox cityInfoVBox = new VBox();
         HBox buttonHbox = new HBox();
         final PermitCard[] permitCardSelected = {null};
-        //TODO: show button and other stuff
-
         ImageView cityName = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"City/Names/"+city.
                 getCityName().getCityName()+""+city.getColor().getColor()+".png"));
 
@@ -1294,6 +1286,7 @@ public class MatchController implements BaseController {
 
     private void initController() {
         shopController.setClientController(clientController,guiView);
+        shopController.setMatchController(this);
         nobilityPathController.setClientController(clientController, guiView);
         nobilityPathController.setMatchController(this);
     }
@@ -1320,7 +1313,7 @@ public class MatchController implements BaseController {
                 for (int i = 0; i< councilors.size();i++){
                     ImageView imageView = new ImageView();
                     try {
-                        imageView.setImage(ImageLoader.getInstance().getImage(councilors.get(i).getColor().getImageUrl()));
+                        imageView.setImage(ImageLoader.getInstance().getImage(councilors.get(i).getColor().getImageUrl(),background.getWidth()/10,vbox.getPrefHeight()/3));
                         imageView.setCache(true);
                         imageView.fitWidthProperty().bind(background.prefWidthProperty().divide(10));
                         imageView.fitHeightProperty().bind(vbox.prefHeightProperty().divide(3));
@@ -1545,7 +1538,6 @@ public class MatchController implements BaseController {
         }
 
 
-        System.out.println("[DEBUG] "+tabPane.getStyle());
 
     }
 
@@ -1701,7 +1693,7 @@ public class MatchController implements BaseController {
                 councilors = clientController.getSnapshot().getCouncil(regionName);
                 ArrayList<ImageView> imageView = councilHashMap.get(regionName);
                 for(int i = 0; i< councilors.size();i++){
-                    imageView.get(i).setImage(new Image(councilors.get(i).getColor().getImageUrl()));
+                    imageView.get(i).setImage(ImageLoader.getInstance().getImage(councilors.get(i).getColor().getImageUrl(),imageView.get(i).getFitWidth(),imageView.get(i).getFitHeight()));
                 }
             } catch (CouncilNotFoundException e) {
                 e.printStackTrace();
@@ -1711,7 +1703,7 @@ public class MatchController implements BaseController {
 
         ArrayList<Councilor> kingCouncilArray = new ArrayList<>(clientController.getSnapshot().getKing().getCouncil().getCouncil());
         for (int i = 0; i<kingCouncil.size();i++) {
-            kingCouncil.get(i).setImage(new Image(kingCouncilArray.get(i).getColor().getImageUrl()));
+            kingCouncil.get(i).setImage(ImageLoader.getInstance().getImage(kingCouncilArray.get(i).getColor().getImageUrl(),kingCouncil.get(i).getFitWidth(),kingCouncil.get(i).getFitHeight()));
         }
 
     }
@@ -1816,7 +1808,7 @@ public class MatchController implements BaseController {
                     ImageView imageViewBonus = (ImageView) imageViewBonusList.get(j);
                     if(j<permitCardTmp.getBonus().getBonusURL().size()) {
                         imageViewBonus.setVisible(true);
-                        imageViewBonus.setImage(ImageLoader.getInstance().getImage(permitCardTmp.getBonus().getBonusURL().get(j)));
+                        imageViewBonus.setImage(ImageLoader.getInstance().getImage(permitCardTmp.getBonus().getBonusURL().get(j),imageViewBonus.getFitWidth(),imageViewBonus.getFitHeight()));
                         bonusLabel.setText(permitCardTmp.getBonus().getBonusInfo().get(j));
                         bonusLabel.setVisible(true);
                     }

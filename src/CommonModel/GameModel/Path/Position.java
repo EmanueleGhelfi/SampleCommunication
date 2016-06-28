@@ -33,6 +33,6 @@ public class Position implements Serializable{
     @Override
     public String toString() {
 
-        return "Posizione "+position +" :\t\t Bonus:\t\t "+bonus.toString();
+        return ""+position +"\t ---> \t\t Bonus:\t\t "+bonus.toString();
     }
 }

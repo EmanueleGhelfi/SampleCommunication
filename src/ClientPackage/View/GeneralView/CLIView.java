@@ -61,6 +61,7 @@ public class CLIView implements BaseView {
     @Override
     public void initView() {
         currentController=loginCliController;
+        printWelcome();
         getInput();
     }
 
@@ -96,12 +97,13 @@ public class CLIView implements BaseView {
 
     @Override
     public void showLoginError() {
-        System.out.println("Name is already used! Insert another name!");
+        cliPrinterInterface.printError("Name is already used! Insert another name!");
+        loginCliController.setLoginDone(false);
     }
 
     @Override
     public void showWaitingForStart() {
-        System.out.println("Waiting for other player...");
+        cliPrinterInterface.printGreen("Waiting for other player...");
     }
 
     @Override
@@ -111,12 +113,19 @@ public class CLIView implements BaseView {
         for(Map map : mapArrayList){
             System.out.println(cliPrinterInterface.toStringFormatted(map)+"\n");
         }
-        int scelta;
+        int scelta=-1;
         do{
-            scelta=reader.nextInt();
-            if(scelta>=0 && scelta<mapArrayList.size()){
-                clientController.sendMap(mapArrayList.get(scelta));
+            try{
+                scelta=reader.nextInt();
+                if(scelta>=0 && scelta<mapArrayList.size()){
+                    clientController.sendMap(mapArrayList.get(scelta));
+                }
             }
+            catch (Exception e){
+                cliPrinterInterface.printError("ERROR IN MAP SELECTION, RETRY!");
+                reader.nextLine();
+            }
+
         }while (scelta<0 || scelta>=mapArrayList.size());
 
     }
@@ -154,7 +163,7 @@ public class CLIView implements BaseView {
     @Override
     public void onStartMarket() {
         currentController = shopCliController;
-        System.out.println(" MARKET STARTED ");
+        shopCliController.onStartMarket();
         currentController.printHelp();
     }
 
@@ -172,17 +181,21 @@ public class CLIView implements BaseView {
 
     @Override
     public void selectPermitCard() {
-
+        futureTask.cancel(true);
+        matchCliController.selectPermitCard();
+        getInput();
     }
 
     @Override
     public void selectCityRewardBonus() {
-
+        futureTask.cancel(true);
+        matchCliController.selectCityRewardBonus();
+        getInput();
     }
 
     @Override
     public void onMoveKing(ArrayList<City> kingPath) {
-            cliPrinterInterface.printBlue(" King moved to "+kingPath.get(kingPath.size()-1));
+            cliPrinterInterface.printBlue(" King moved to "+kingPath.get(kingPath.size()-1).getCityName()+ " Bonus: "+kingPath.get(kingPath.size()-1).getBonus());
     }
 
     @Override
@@ -198,7 +211,9 @@ public class CLIView implements BaseView {
 
     @Override
     public void selectOldPermitCardBonus() {
-
+        futureTask.cancel(true);
+        matchCliController.selectOldPermitCardBonus();
+        getInput();
     }
 
     @Override
@@ -214,5 +229,25 @@ public class CLIView implements BaseView {
 
     public SnapshotToSend getSnapshot() {
         return currentSnapshot;
+    }
+
+
+    public void printWelcome(){
+        System.out.println("                                                                                                                                                          \n" +
+                "                                                                                     ,----..                                                              \n" +
+                "  ,----..                                                         ,--,              /   /   \\                      ,---,.                                 \n" +
+                " /   /   \\                                               ,--,   ,--.'|             /   .     :   .--.,           ,'  .' |                                 \n" +
+                "|   :     :  ,---.           ,--,      ,---,           ,--.'|   |  | :            .   /   ;.  \\,--.'  \\        ,---.'   |   ,---.           ,--,  __  ,-. \n" +
+                ".   |  ;. / '   ,'\\        ,'_ /|  ,-+-. /  |          |  |,    :  : '           .   ;   /  ` ;|  | /\\/        |   |   .'  '   ,'\\        ,'_ /|,' ,'/ /| \n" +
+                ".   ; /--` /   /   |  .--. |  | : ,--.'|'   |   ,---.  `--'_    |  ' |           ;   |  ; \\ ; |:  : :          :   :  :   /   /   |  .--. |  | :'  | |' | \n" +
+                ";   | ;   .   ; ,. :,'_ /| :  . ||   |  ,\"' |  /     \\ ,' ,'|   '  | |           |   :  | ; | ':  | |-,        :   |  |-,.   ; ,. :,'_ /| :  . ||  |   ,' \n" +
+                "|   : |   '   | |: :|  ' | |  . .|   | /  | | /    / ' '  | |   |  | :           .   |  ' ' ' :|  : :/|        |   :  ;/|'   | |: :|  ' | |  . .'  :  /   \n" +
+                ".   | '___'   | .; :|  | ' |  | ||   | |  | |.    ' /  |  | :   '  : |__         '   ;  \\; /  ||  |  .'        |   |   .''   | .; :|  | ' |  | ||  | '    \n" +
+                "'   ; : .'|   :    |:  | : ;  ; ||   | |  |/ '   ; :__ '  : |__ |  | '.'|         \\   \\  ',  / '  : '          '   :  '  |   :    |:  | : ;  ; |;  : |    \n" +
+                "'   | '/  :\\   \\  / '  :  `--'   \\   | |--'  '   | '.'||  | '.'|;  :    ;          ;   :    /  |  | |          |   |  |   \\   \\  / '  :  `--'   \\  , ;    \n" +
+                "|   :    /  `----'  :  ,      .-./   |/      |   :    :;  :    ;|  ,   /            \\   \\ .'   |  : \\          |   :  \\    `----'  :  ,      .-./---'     \n" +
+                " \\   \\ .'            `--`----'   '---'        \\   \\  / |  ,   /  ---`-'              `---`     |  |,'          |   | ,'             `--`----'             \n" +
+                "  `---`                                        `----'   ---`-'                                 `--'            `----'                                     \n" +
+                "                                                                                                                                                          ");
     }
 }

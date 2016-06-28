@@ -15,14 +15,18 @@ import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Path.Position;
+import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.CurrentUser;
 import CommonModel.Snapshot.SnapshotToSend;
+import Server.Model.FakeUser;
 import Server.Model.Link;
 import Utilities.Class.ArrayUtils;
 import Utilities.Class.Constants;
+import Utilities.Class.TableBuilder;
 import Utilities.Exception.CouncilNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
+import dnl.utils.text.table.TextTable;
 import javafx.geometry.Pos;
 import org.apache.commons.cli.Options;
 
@@ -30,6 +34,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 
 import static ClientPackage.View.CLIResources.CLIColor.*;
 
@@ -83,18 +88,23 @@ public class MatchCliController implements CliController  {
             System.out.println(link);
         }
 
-        cliPrinter.printBlue("Cities \t\t Region \t\t Color");
+        cliPrinter.printBlue("Cities \t\t\t\t\t\t Region \t\t\t\t\t\t Color");
         for(City city: clientController.getSnapshot().getMap().getCity()){
             System.out.println(cliPrinter.toStringFormatted(city));
         }
 
         boolean correct = false;
         String[] selectedArray= {};
+        //Object[][] citiesToPrint = new Object[clientController.getSnapshot().getMap().getCity().size()][10];
         while (!correct && isMyTurn) {
             cliPrinter.printBlue("Inserisci i numeri delle città seguite da uno spazio: ");
+            TableBuilder tableBuilder = new TableBuilder();
+            tableBuilder.addRow("Number ", "CITY","COLOR", "BONUS");
+            tableBuilder.addRow("-------","--------","-----------","----------------");
             for (int i = 0; i < clientController.getSnapshot().getMap().getCity().size(); i++) {
-                System.out.println(" " + i + ". " + cliPrinter.
+                System.out.println(" " + i + ". \t\t\t\t" + cliPrinter.
                         toStringFormatted(clientController.getSnapshot().getMap().getCity().get(i)));
+
             }
 
             while (!scanner.ready() && isMyTurn) {
@@ -113,20 +123,33 @@ public class MatchCliController implements CliController  {
 
         if(isMyTurn) {
             for (int i = 0; i < selectedArray.length; i++) {
-                cities.add(clientController.getSnapshot().getMap().getCity().get(i));
+                cities.add(clientController.getSnapshot().getMap().getCity().get(Integer.parseInt(selectedArray[i])));
             }
 
-            if (!cities.get(0).equals(clientController.getSnapshot().getKing().getCurrentCity())) {
+            if (!cities.get(0).getCityName().equals(clientController.getSnapshot().getKing().getCurrentCity().getCityName())) {
                 cities.add(0, clientController.getSnapshot().getKing().getCurrentCity());
-                return cities;
             }
+
+            return cities;
         }
 
         return null;
 
     }
 
+    private void printCity(Object[][] citiesToPrint) {
+        String[] columnNames = new String[]{"NAME","COLOR","BONUS"};
+        TextTable tt = new TextTable(columnNames, citiesToPrint);
+// this adds the numbering on the left
+        tt.setAddRowNumbering(true);
+// sort by the first column
+        tt.setSort(0);
+        tt.printTable();
+    }
 
+    private void addCity(Object[][] citiesToPrint, int i, City city) {
+        citiesToPrint[i] = new String[]{city.getCityName().getCityName(),city.getColor().getColor(),city.getBonus().toString()};
+    }
 
 
     private ArrayList<PoliticCard> selectPoliticCard(ArrayList<PoliticCard> politicCards) throws IOException {
@@ -157,10 +180,9 @@ public class MatchCliController implements CliController  {
 
         if(isMyTurn) {
             for (int i = 0; i < selectedArray.length; i++) {
-                System.out.println(" You have selected " + selectedArray[i]);
+                System.out.println("You have selected " + cliPrinter.toStringFormatted(politicCards.get(Integer.parseInt(selectedArray[i]))));
                 politicCardArrayList.add(politicCards.get(Integer.parseInt(selectedArray[i])));
             }
-
             return politicCardArrayList;
         }
         return null;
@@ -263,7 +285,6 @@ public class MatchCliController implements CliController  {
     @Command(name = "finish",description = "Finish your turn", abbrev = "f")
     public void finishTurn(){
         isMyTurn=false;
-        System.out.println(ANSI_RED+"Turno finito"+ANSI_RESET);
         clientController.onFinishTurn();
     }
 
@@ -329,6 +350,7 @@ public class MatchCliController implements CliController  {
             }
 
             if(cities!=null && isMyTurn) {
+                System.out.println(politicCardArrayList+" "+cities);
                 Action action = new MainActionBuildWithKingHelp(cities, politicCardArrayList);
                 clientController.doAction(action);
             }
@@ -339,17 +361,22 @@ public class MatchCliController implements CliController  {
     public void buildEmporium(@Param(name="city", description="The city when you want to build")String city) {
 
         if(Validator.isValidCity(city)) {
-            System.out.println(ANSI_BLUE + " Select a permit card for build in " + city + ": " + ANSI_RESET);
-            System.out.println("(-1 for cancel)");
-            CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
-            for(int i=0; i< currentUser.getPermitCards().size();i++){
-                System.out.println(""+i+". "+cliPrinter.toStringFormatted(currentUser.getPermitCards().get(i)));
+            if(clientController.getSnapshot().getCurrentUser().getPermitCards().size()>0) {
+                System.out.println(ANSI_BLUE + " Select a permit card for build in " + city + ": " + ANSI_RESET);
+                System.out.println("(-1 for cancel)");
+                CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
+                for (int i = 0; i < currentUser.getPermitCards().size(); i++) {
+                    System.out.println("" + i + ". " + cliPrinter.toStringFormatted(currentUser.getPermitCards().get(i)));
+                }
+                PermitCard permitCard = selectPermitCard(currentUser.getPermitCards());
+                if (isMyTurn && permitCard != null) {
+                    City selectedCity = Validator.getCity(city, clientController.getSnapshot().getMap().getCity());
+                    Action action = new MainActionBuildWithPermitCard(selectedCity, permitCard);
+                    clientController.doAction(action);
+                }
             }
-            PermitCard permitCard = selectPermitCard(currentUser.getPermitCards());
-            if(isMyTurn && permitCard!=null) {
-                City selectedCity = Validator.getCity(city, clientController.getSnapshot().getMap().getCity());
-                Action action = new MainActionBuildWithPermitCard(selectedCity, permitCard);
-                clientController.doAction(action);
+            else{
+                cliPrinter.printError("Sorry, you have 0 permit card, so you can't build an empory!");
             }
         }
         else{
@@ -478,9 +505,20 @@ public class MatchCliController implements CliController  {
     @Command (description = ""+CLIColor.ANSI_RED+"|FAST ACTION|"+CLIColor.ANSI_RESET+"Change permit card", name = "changePermit", abbrev = "cp")
     public void changePermitAction(@Param(name="region", description="Region of the permit card that you want to change")String arg) {
         try {
-            RegionName regionName = RegionName.valueOf(arg);
-            Action action = new FastActionChangePermitCardWithHelper(regionName);
-            clientController.doAction(action);
+            RegionName regionName = null;
+
+            for(RegionName tmpRegion: RegionName.values()){
+                if(tmpRegion.getRegion().equalsIgnoreCase(arg)){
+                    regionName=tmpRegion;
+                }
+            }
+            if(regionName!=null) {
+                Action action = new FastActionChangePermitCardWithHelper(regionName);
+                clientController.doAction(action);
+            }
+            else{
+                cliPrinter.printError("ERROR IN REGION NAME");
+            }
         }
         catch (Exception e){
             System.out.println("Error in region Name");
@@ -499,6 +537,222 @@ public class MatchCliController implements CliController  {
         for(Position position: clientController.getSnapshot().getNobilityPathPosition()){
             System.out.println(position.toString());
         }
+    }
+
+    @Command(description = "Show City Bonus",name = "showCity",abbrev = "sc")
+    public void showCity(){
+        cliPrinter.printBlue(String.format("%-30s %-50s","CITY","BONUS"));
+        for(City city: clientController.getSnapshot().getMap().getCity()){
+            String bonusToPrint = "";
+            if(city.getBonus()!=null){
+                bonusToPrint=String.format("%-50s",city.getBonus().toString());
+            }
+            System.out.println(String.format("%-30s",city.getCityName())+ bonusToPrint);
+        }
+    }
+
+    public void selectPermitCard() {
+
+        for(RegionName regionName: RegionName.values()){
+            cliPrinter.printBlue("REGIONE" + regionName);
+            for(PermitCard permitCard: clientController.getSnapshot().getVisibleRegionPermitCard(regionName)){
+                System.out.println(clientController.getSnapshot().getVisibleRegionPermitCard(regionName).indexOf(permitCard)+
+                        ". "+ cliPrinter.toStringFormatted(permitCard));
+            }
+        }
+
+        cliPrinter.printBlue("Select a region and a permit card separated by a blank space (like this: mountain 1)");
+
+        try {
+            while (!scanner.ready() && isMyTurn){
+                Thread.sleep(200);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(isMyTurn){
+            try {
+                String line = scanner.readLine();
+                String[] parsed = line.split(" ");
+
+                if(parsed.length>1 && Validator.isValidRegion(parsed[0])){
+                    try {
+                        if (Integer.parseInt(parsed[1])>=0 && Integer.parseInt(parsed[1])<=1) {
+                            RegionName regionName = Validator.getRegion(parsed[0]);
+                            PermitCard permitCard = clientController.getSnapshot().getVisibleRegionPermitCard(regionName)
+                                    .get(Integer.parseInt(parsed[1]));
+                            clientController.onSelectPermitCard(permitCard);
+                        }
+                        else{
+                            selectPermitCard();
+                        }
+                    }
+                    catch (Exception e){
+                        selectPermitCard();
+                    }
+
+                }
+                else{
+                    selectPermitCard();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
+
+    public void selectCityRewardBonus() {
+        cliPrinter.printBlue("You can choose a bonus of you city! Note that you can't choose a victory bonus!");
+        if(clientController.getSnapshot().getCurrentUser().getUsersEmporium().size()>0) {
+            cliPrinter.printBlue("\t\t\tCITY\t\t\t BONUS");
+            for (City city : clientController.getSnapshot().getCurrentUser().getUsersEmporium()) {
+                System.out.println("" + clientController.getSnapshot().getCurrentUser().getUsersEmporium().indexOf(city) + ".\t\t\t"
+                        + city.getCityName() + "\t\t\t " + city.getBonus());
+            }
+
+            System.out.println("Select a city!");
+
+            try {
+                while (!scanner.ready() && isMyTurn) {
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (isMyTurn) {
+                    String selected = scanner.readLine();
+                    try {
+                        int index = Integer.parseInt(selected);
+                        if (index >= 0 && index < clientController.getSnapshot().getCurrentUser().getUsersEmporium().size()) {
+                            clientController.getCityRewardBonus(clientController.getSnapshot().getCurrentUser().getUsersEmporium().get(index));
+                        } else {
+                            selectCityRewardBonus();
+                        }
+                    } catch (Exception e) {
+                        selectCityRewardBonus();
+                    }
+
+
+                }
+            } catch (IOException e) {
+
+            }
+        }
+        else{
+            cliPrinter.printError("You can't choose a city because you have 0 empory, sorry!");
+        }
+    }
+
+    public void selectOldPermitCardBonus() {
+
+       cliPrinter.printBlue("Select an old permit card bonus!");
+
+        if(clientController.getSnapshot().getCurrentUser().getOldPermitCards().size()>0 ||
+                clientController.getSnapshot().getCurrentUser().getPermitCards().size()>0) {
+
+            if (clientController.getSnapshot().getCurrentUser().getPermitCards().size() > 0) {
+                System.out.println("CURRENT PERMIT CARD:");
+
+                for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getPermitCards()) {
+                    System.out.println(" " + clientController.getSnapshot().getCurrentUser().getPermitCards().indexOf(permitCard)
+                            + " " + cliPrinter.toStringFormatted(permitCard));
+                }
+            }
+
+            if (clientController.getSnapshot().getCurrentUser().getOldPermitCards().size() > 0) {
+                System.out.println("OLD PERMIT CARD");
+                for (PermitCard permitCard : clientController.getSnapshot().getCurrentUser().getOldPermitCards()) {
+                    System.out.println(" " + clientController.getSnapshot().getCurrentUser().getOldPermitCards().indexOf(permitCard)
+                            + " " + cliPrinter.toStringFormatted(permitCard));
+                }
+            }
+
+            System.out.println("Select OLD or CURRENT and permit card's index (like this:" +
+                    " old 2 -> means permit card number 2 in old permit card)");
+
+            try {
+                while (!scanner.ready() && isMyTurn) {
+                    Thread.sleep(200);
+                }
+                if (isMyTurn) {
+                    String selected = scanner.readLine();
+                    String[] parsed = selected.split(" ");
+                    if (parsed.length != 2)
+                        selectOldPermitCardBonus();
+                    else {
+                        try {
+                            int index = Integer.parseInt(parsed[1]);
+                            if (parsed[0].equalsIgnoreCase("old")) {
+                                if (index < 0 || index >= clientController.getSnapshot().getCurrentUser().getOldPermitCards().size()) {
+                                    selectOldPermitCardBonus();
+                                } else {
+                                    clientController.onSelectOldPermitCard(clientController.getSnapshot().getCurrentUser().getOldPermitCards().get(index));
+                                }
+                            } else {
+                                if (parsed[0].equalsIgnoreCase("current")) {
+                                    if (index < 0 || index >= clientController.getSnapshot().getCurrentUser().getPermitCards().size()) {
+                                        selectOldPermitCardBonus();
+                                    } else {
+                                        clientController.onSelectOldPermitCard(clientController.getSnapshot().getCurrentUser().getPermitCards().get(index));
+                                    }
+                                } else {
+                                    selectOldPermitCardBonus();
+                                }
+                            }
+                        } catch (Exception e) {
+                            selectOldPermitCardBonus();
+                        }
+                    }
+                }
+            } catch (IOException | InterruptedException e) {
+            }
+
+        }
+
+    }
+
+    @Command(name = "showEnemy", abbrev ="se", description = "Show other user status")
+    public void showUsers() {
+
+        cliPrinter.printGreen("YOUR ENEMY:");
+        for (BaseUser baseUser : clientController.getSnapshot().getUsersInGame().values()) {
+            if (!(baseUser instanceof FakeUser)) {
+                printUser(baseUser);
+            }
+        }
+    }
+
+
+    public void printUser(BaseUser baseUser){
+            System.out.println("-----------------------------------------------------------------");
+            System.out.println(ANSI_RED+"STATUS: "+baseUser.getUsername()+ANSI_RESET);
+            cliPrinter.printBlue("Politic Card: ");
+
+            cliPrinter.printBlue("Permit Card:\n");
+            for (PermitCard permitCard: baseUser.getPermitCards()){
+                System.out.println("\t"+cliPrinter.toStringFormatted(permitCard));
+            }
+
+            cliPrinter.printBlue("Posizioni:");
+            System.out.println("\t Nobility Path: "+baseUser.getNobilityPathPosition().getPosition());
+            System.out.println("\t Money Path: "+baseUser.getCoinPathPosition());
+            System.out.println("\t Nobility Path: "+baseUser.getNobilityPathPosition().getPosition());
+            System.out.println("Aiutanti : "+baseUser.getHelpers().size());
+
+            System.out.println("Le tue Città:");
+
+            for (City city: baseUser.getUsersEmporium()){
+                System.out.println("\t " + cliPrinter.toStringFormatted(city));
+            }
+
+            System.out.println("Fine status\n ");
+            System.out.println("-----------------------------------------------------------------");
+        }
 }
