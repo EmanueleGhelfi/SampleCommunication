@@ -1,4 +1,4 @@
-package ClientPackage.View.GUIResources.Class;
+package ClientPackage.View.GUIResources.customComponent;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;

@@ -1,6 +1,6 @@
 package Utilities.Class;
 
-import ClientPackage.View.GUIResources.Class.BringUpHandler;
+import ClientPackage.View.GUIResources.customComponent.BringUpHandler;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -13,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
