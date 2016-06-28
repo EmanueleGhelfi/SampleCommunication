@@ -14,6 +14,10 @@ import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXButton;
 
+import javafx.animation.PathTransition;
+import javafx.animation.PathTransitionBuilder;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -27,10 +31,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.PathElement;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
 
 import java.util.ArrayList;
@@ -97,7 +106,7 @@ public class ShopController implements BaseController {
     private void setArrow() {
         JFXButton backArrow = new JFXButton();
         paneBackground.getChildren().add(backArrow);
-        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png",backgroundImage.getFitWidth()/6,backgroundImage.getFitHeight()/6));
+        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png", backgroundImage.getFitWidth() / 6, backgroundImage.getFitHeight() / 6));
         arrowImageView.setCache(true);
         arrowImageView.setPreserveRatio(true);
         backArrow.setGraphic(arrowImageView);
@@ -115,6 +124,24 @@ public class ShopController implements BaseController {
                 matchController.onFinishMarket();
             }
         });
+
+        BooleanProperty stopPulse  = new SimpleBooleanProperty(false);
+
+        backArrow.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stopPulse.setValue(false);
+                Graphics.scaleTransitionEffectCycle(backArrow, 1.2f, 1.2f, stopPulse);
+            }
+        });
+
+        backArrow.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stopPulse.setValue(true);
+            }
+        });
+
     }
 
     private void setMarketPane() {
@@ -262,24 +289,23 @@ public class ShopController implements BaseController {
         permitCardDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png"));
         helperDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/HelperDistorted.png"));
         paneBackground.getChildren().addAll(politicCardDeck, permitCardDeck, helperDeck);
-        politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3973));
-        politicCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5612));
-        permitCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.4691));
-        permitCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5552));
-        helperDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.545));
-        helperDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.5597));
+        politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3645));
+        politicCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.58));
+        permitCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.4437));
+        permitCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.58));
+        helperDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.5218));
+        helperDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.6));
         politicCardDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(10));
         politicCardDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
         permitCardDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(10));
         permitCardDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
-        helperDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(10));
-        helperDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
+        helperDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(15));
+        helperDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(15));
 
         // add effect
         Graphics.addBorder(politicCardDeck);
         Graphics.addBorder(helperDeck);
         Graphics.addBorder(permitCardDeck);
-
 
     }
 
