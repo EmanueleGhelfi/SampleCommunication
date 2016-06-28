@@ -43,9 +43,14 @@ public class LoginCliController implements CliController {
 
     @Command (description = "Do login",name = "login", abbrev = "l")
     public void onLogin(@Param(name = "name", description = "your name in game") String name) {
-        System.out.println("sending login");
-        clientController.onSendLogin(name);
-        loginDone=true;
+        if(!loginDone) {
+            System.out.println("sending login");
+            clientController.onSendLogin(name);
+            loginDone = true;
+        }
+        else{
+            cliPrinter.printError("Login already done, sorry!");
+        }
     }
 
     public void setLoginDone(boolean loginDone) {

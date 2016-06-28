@@ -135,7 +135,7 @@ public class CLIPrinter implements CLIPrinterInterface {
     @Override
     public String toStringFormatted(City city) {
 
-        return city.getCityName()+" \t\t\t\t\t\t\t\t "+city.getRegion()+" \t\t\t\t\t\t\t\t "+city.getColor();
+        return String.format("%-10s %-10s %-40s",city.getCityName(),city.getRegion(),city.getColor());
     }
 
     @Override
@@ -177,7 +177,7 @@ public class CLIPrinter implements CLIPrinterInterface {
     @Override
     public void printGreen(String s) {
         System.out.println("------------------------------------------------------------------");
-        System.out.println(ANSI_GREEN+s+ANSI_RESET);
+        System.out.println(ANSI_YELLOW+s+ANSI_RESET);
         System.out.println("------------------------------------------------------------------");
     }
 

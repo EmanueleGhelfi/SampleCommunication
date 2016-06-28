@@ -113,12 +113,19 @@ public class CLIView implements BaseView {
         for(Map map : mapArrayList){
             System.out.println(cliPrinterInterface.toStringFormatted(map)+"\n");
         }
-        int scelta;
+        int scelta=-1;
         do{
-            scelta=reader.nextInt();
-            if(scelta>=0 && scelta<mapArrayList.size()){
-                clientController.sendMap(mapArrayList.get(scelta));
+            try{
+                scelta=reader.nextInt();
+                if(scelta>=0 && scelta<mapArrayList.size()){
+                    clientController.sendMap(mapArrayList.get(scelta));
+                }
             }
+            catch (Exception e){
+                cliPrinterInterface.printError("ERROR IN MAP SELECTION, RETRY!");
+                reader.nextLine();
+            }
+
         }while (scelta<0 || scelta>=mapArrayList.size());
 
     }

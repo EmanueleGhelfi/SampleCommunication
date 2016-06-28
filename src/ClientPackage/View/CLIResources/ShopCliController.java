@@ -87,6 +87,7 @@ public class ShopCliController implements CliController{
         if(onBuyPhase) {
             cliPrinter.printBlue("MARKET LIST: ");
             ArrayList<BuyableWrapper> buyableWrappers = new ArrayList<>();
+            //// TODO: 28/06/2016 check error
             clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
                     !buyableWrapper.getUsername().equalsIgnoreCase(clientController.getSnapshot().getCurrentUser().getUsername()))
                     .forEach(buyableWrappers::add);
@@ -98,6 +99,12 @@ public class ShopCliController implements CliController{
                     clientController.sendFinishedBuyPhase();
                     onBuyPhase = false;
                     cliPrinter.printBlue("SENDING OBJECT TO SERVER....");
+                }
+                else{
+                    if(onBuyPhase){
+                        cliPrinter.printError("ERROR IN SELECTION!");
+                        buy();
+                    }
                 }
             } catch (CancelException e) {
                 System.out.println("Cancelled correctly");
@@ -171,6 +178,10 @@ public class ShopCliController implements CliController{
                     onSellPhase = false;
                     System.out.println("SENDING ITEMS TO SERVER...");
                 } else {
+                    if(onSellPhase) {
+                        cliPrinter.printError("Sorry, items not found, check it!");
+                        sell();
+                    }
                 }
 
             } catch (CancelException e) {
@@ -205,7 +216,13 @@ public class ShopCliController implements CliController{
                         throw new CancelException();
 
                     int cost = Integer.parseInt(line);
-                    toSell.get(i).setCost(cost);
+                    if(cost>=0 && cost<20) {
+                        toSell.get(i).setCost(cost);
+                    }
+                    else{
+                        System.out.println("Error in cost!");
+                        i--;
+                    }
                 }
                 catch (NumberFormatException e ){
                     cliPrinter.printError("ERROR IN COST!");
