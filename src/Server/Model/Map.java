@@ -136,7 +136,7 @@ public class Map implements Serializable {
         Map map5 = writeGenericMap(1,2,1,"Quinta Mappa", "/ClientPackage/View/GUIResources/Image/Map/ABA.png","/ClientPackage/View/GUIResources/Image/MapPreview/ABA.png");
         Map map6 = writeGenericMap(2,1,1,"Sesta Mappa", "/ClientPackage/View/GUIResources/Image/Map/BAA.png","/ClientPackage/View/GUIResources/Image/MapPreview/BAA.png");
         Map map7 = writeGenericMap(2,1,2,"Settima mappa", "/ClientPackage/View/GUIResources/Image/Map/BAB.png","/ClientPackage/View/GUIResources/Image/MapPreview/BAB.png");
-        Map map8 = writeGenericMap(2,2,1,"Ottava Mappa","/ClientPackage/View/GUIResources/Image/Map/BBA.png","/ClientPackage/View/GUIResources/Image/MapPreview/BBAma.png");
+        Map map8 = writeGenericMap(2,2,1,"Ottava Mappa","/ClientPackage/View/GUIResources/Image/Map/BBA.png","/ClientPackage/View/GUIResources/Image/MapPreview/BBA.png");
 
         ArrayList<Map> mapArray = new ArrayList<>();
         mapArray.add(map);
