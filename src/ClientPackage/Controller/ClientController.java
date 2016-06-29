@@ -329,7 +329,7 @@ public class ClientController {
     public String getUserPosition(String selectedItem) {
         for (int i = 0; i < finalSnapshot.size(); i++) {
             if (finalSnapshot.get(i).getUsername().equals(selectedItem)){
-                return Integer.toString(i);
+                return Integer.toString(i + 1);
             }
         }
         return Integer.toString(-1);

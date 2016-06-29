@@ -44,6 +44,7 @@ public class FinishMatchController implements Initializable {
     private ImageView innerImage;
     private Pane innerPaneWhereShow = new Pane();
     private ImageView backgroundImage;
+    private Pane backgroundPane = new Pane();
 
     @FXML private GridPane gridPane;
 
@@ -60,9 +61,6 @@ public class FinishMatchController implements Initializable {
 
     private void displayFinalScreen() {
         backgroundImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/LoginBackground.png"));
-        gridPane.add(backgroundImage, 0, 0);
-        GridPane.setColumnSpan(backgroundImage, 2);
-        GridPane.setRowSpan(backgroundImage, 2);
         backgroundImage.fitWidthProperty().bind(gridPane.widthProperty());
         backgroundImage.fitHeightProperty().bind(gridPane.heightProperty());
         gridPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -71,13 +69,17 @@ public class FinishMatchController implements Initializable {
                 System.out.println("event x and y "+event.getX()/gridPane.getWidth()+" "+event.getY()/gridPane.getHeight());
             }
         });
+        gridPane.add(backgroundImage, 0, 0);
+        GridPane.setColumnSpan(backgroundImage, 3);
+        GridPane.setRowSpan(backgroundImage, 3);
         innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.png"));
         innerImage.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(2));
         innerImage.setPreserveRatio(true);
-        innerPaneWhereShow.setPrefWidth(10);
-        innerPaneWhereShow.setPrefHeight(10);
-        //innerPaneWhereShow.layoutXProperty().bind(gridPane.widthProperty().multiply(0.095));
-        //innerPaneWhereShow.layoutYProperty().bind(gridPane.heightProperty().multiply(0.5858));
+
+        innerPaneWhereShow.prefWidthProperty().bind(backgroundPane.prefWidthProperty().multiply(0.01));
+        innerPaneWhereShow.prefHeightProperty().bind(backgroundPane.prefHeightProperty().multiply(0.01));
+        innerPaneWhereShow.layoutXProperty().bind(backgroundPane.prefWidthProperty().multiply(0.095));
+        innerPaneWhereShow.layoutYProperty().bind(backgroundPane.prefHeightProperty().multiply(0.5858));
 
         for (BaseUser baseUser : clientController.getFinalSnapshot()) {
             usernameRanking.add(baseUser.getUsername());
@@ -112,7 +114,8 @@ public class FinishMatchController implements Initializable {
         GridPane.setValignment(ranking, VPos.CENTER);
         winnerOrLoser.toBack();
         backgroundImage.toBack();
-        gridPane.getChildren().add(innerPaneWhereShow);
+        backgroundPane.toBack();
+        //gridPane.getChildren().add(innerPaneWhereShow);
 
     }
 
@@ -135,13 +138,14 @@ public class FinishMatchController implements Initializable {
                 + "Conobbi anche tutti i suoi " + baseUser.getHelpers().size() + " servitori ed aiutanti, a lui molto cari.\n"
                 + "Grande personaggio fu questo " + baseUser.getUsername() + ". Mi ricorderò sempre di quel giorno che mi fece vedere le sue" + baseUser.getPoliticCardNumber()
                 + "prestigiose carte politiche con cui poteva soddisfare qualsiasi consiglio.\n"
-                + "In tutto il mondo è noto il suo nome. Ovunque si sa che il magnifico " + baseUser.getUsername() + "riuscì a costruire empori in molte città, come\n"
+                + "In tutto il mondo è noto il suo nome. Ovunque si sa che il magnifico " + baseUser.getUsername() + " riuscì a costruire empori in molte città, come\n"
                 + clientController.getUserBuilding(selectedItem) +"\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
         innerText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15));
         popOverStackPane.getChildren().add(innerText);
         innerPopOver = new PopOver();
         innerPopOver.setContentNode(popOverStackPane);
         innerPopOver.show(innerPaneWhereShow);
+
     }
 
 }
