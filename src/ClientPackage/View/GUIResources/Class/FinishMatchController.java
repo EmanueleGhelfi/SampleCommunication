@@ -116,7 +116,6 @@ public class FinishMatchController implements Initializable {
         backgroundImage.toBack();
         backgroundPane.toBack();
         //gridPane.getChildren().add(innerPaneWhereShow);
-
     }
 
     private void displayInfo(String selectedItem) {
