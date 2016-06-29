@@ -94,17 +94,6 @@ public class FinishMatchController implements Initializable {
         ranking.prefWidthProperty().bind(rootPane.widthProperty().divide(15));
         rootPane.getChildren().add(ranking);
         StackPane.setAlignment(ranking, Pos.BOTTOM_RIGHT);
-
-
-        if(clientController.amIAWinner()) {
-            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
-            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
-            displayPopOverOfImage(true);
-        } else {
-            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
-            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
-            displayPopOverOfImage(false);
-        }
         winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
         winnerOrLoser.setPreserveRatio(true);
         StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
@@ -118,6 +107,17 @@ public class FinishMatchController implements Initializable {
         kingOrJester.toBack();
         ranking.toBack();
         backgroundImage.toBack();
+
+        if(clientController.amIAWinner()) {
+            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
+            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
+            displayPopOverOfImage(true);
+        } else {
+            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
+            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
+            displayPopOverOfImage(false);
+        }
+
     }
 
     private void displayPopOverOfImage(boolean win) {
