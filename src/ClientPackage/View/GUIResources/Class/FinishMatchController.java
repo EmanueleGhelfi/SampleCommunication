@@ -20,6 +20,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
@@ -134,6 +137,7 @@ public class FinishMatchController implements Initializable {
                 + "prestigiose carte politiche con cui poteva soddisfare qualsiasi consiglio.\n"
                 + "In tutto il mondo è noto il suo nome. Ovunque si sa che il magnifico " + baseUser.getUsername() + "riuscì a costruire empori in molte città, come\n"
                 + clientController.getUserBuilding(selectedItem) +"\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
+        innerText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15));
         popOverStackPane.getChildren().add(innerText);
         innerPopOver = new PopOver();
         innerPopOver.setContentNode(popOverStackPane);

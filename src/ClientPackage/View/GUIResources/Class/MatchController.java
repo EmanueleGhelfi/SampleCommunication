@@ -695,7 +695,6 @@ public class MatchController implements BaseController {
 
         moreActionNodeList.setRotate(180);
 
-
         // REGION
 
         for(RegionName regionName : RegionName.values()){
@@ -1636,6 +1635,7 @@ public class MatchController implements BaseController {
         Set<Node> permitCards = gridPane.lookupAll(".myPermitCard");
         permitCards.forEach(node-> highlightPermitCard(node,stopPulseOldPermitCard));
         oldPermitCardNodeList.animateList();
+        handHBox.setVisible(true);
         hamburgerMenu.setVisible(false);
         nobilityPath.setVisible(false);
     }
