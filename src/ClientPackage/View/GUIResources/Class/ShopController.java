@@ -97,7 +97,6 @@ public class ShopController implements BaseController {
         setBackground();
         updateView();
         createDeck();
-        //onFinishMarket();
         setArrow();
         setMarketPane();
 
@@ -234,7 +233,6 @@ public class ShopController implements BaseController {
 
     @Override
     public void updateView() {
-        System.out.println("On update shopController");
         updateList();
     }
 
@@ -649,10 +647,8 @@ public class ShopController implements BaseController {
         buttonToSell.setButtonType(JFXButton.ButtonType.FLAT);
         if (information.isOnSale()){
             buttonToSell.setText("REMOVE");
-            System.out.println(information.getBuyableObject().getUrl() + " ADDED");
         } else {
             buttonToSell.setText("0");
-            System.out.println(information.getBuyableObject().getUrl() + " REMOVED");
         }
 
         Image itemOnSaleImage = null;

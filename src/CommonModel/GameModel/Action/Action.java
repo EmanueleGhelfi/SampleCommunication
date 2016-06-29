@@ -7,6 +7,7 @@ import CommonModel.GameModel.City.CityVisitor;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import Server.Model.FakeUser;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
@@ -194,5 +195,15 @@ public abstract class Action implements Serializable {
                 System.out.println(" " + cityToVisit + " has null bonus or is null");
             }
         }
+    }
+
+
+    public void removeHelper(City kingCity, User user, Game game) {
+
+        for (User tmpUser: game.getUsers()) {
+            if(tmpUser.getUsersEmporium().contains(kingCity))
+                user.removeHelper();
+        }
+
     }
 }

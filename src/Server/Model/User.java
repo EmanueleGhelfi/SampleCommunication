@@ -233,5 +233,7 @@ public class User extends CurrentUser implements Serializable{
     }
 
 
-
+    public void removeHelper() {
+        this.helpers.remove(helpers.size()-1);
+    }
 }

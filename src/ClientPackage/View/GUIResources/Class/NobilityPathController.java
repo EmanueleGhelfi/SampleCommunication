@@ -50,7 +50,6 @@ public class NobilityPathController implements BaseController {
         nobilityPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("event x and y "+event.getX()/ backgroundImage.getFitWidth()+" "+event.getY()/ backgroundImage.getFitHeight());
             }
         });
         nobilityPath.setOpacity(0.8);
@@ -146,7 +145,6 @@ public class NobilityPathController implements BaseController {
             if (position != null) {
                 for (int i = 0; i < position.getBonus().getBonusURL().size(); i++) {
                     StackPane internalStackPane = new StackPane();
-                    System.out.println(position.getPosition() + " E' LA POSITION CON " + position.getBonus().getBonusURL().size() + " BONUS");
                     ImageView bonusImage = new ImageView(ImageLoader.getInstance().getImage(position.getBonus().getBonusURL().get(i)));
                     bonusImage.setCache(true);
                     internalStackPane.getChildren().add(bonusImage);

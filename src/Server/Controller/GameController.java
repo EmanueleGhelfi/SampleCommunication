@@ -193,9 +193,10 @@ public class GameController implements Serializable{
         user.getBaseCommunication().finishTurn();
 
         for(int cont = 0; cont < users.size(); cont++){
-            System.out.println("GAMECONTROLLER <- Sending Snapshot to :" + users.get(cont).getUsername());
+            /*System.out.println("GAMECONTROLLER <- Sending Snapshot to :" + users.get(cont).getUsername());
             SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
+            */
             if(user.equals(users.get(cont))){
                 nextUser = cont+1;
                 while (!users.get((nextUser)%game.getUsers().size()).isConnected() && nextUser%game.getUsers().size()!=cont){
@@ -234,6 +235,7 @@ public class GameController implements Serializable{
         userArrayList.get((nextUser) % game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
         userArrayList.get((nextUser)%game.getUsers().size()).drawCard();
         userArrayList.get((nextUser) % game.getUsers().size()).getBaseCommunication().changeRound();
+        sendSnapshotToAll();
         startRoundTimer(userArrayList.get((nextUser)%game.getUsers().size()));
     }
 

@@ -55,7 +55,6 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
             VBox vBox = new VBox();
             for (PoliticCard politicCard : politicCards) {
                 politicCardsCheckBox = new JFXCheckBox();
-                System.out.println(politicCard);
                 String stringa;
                 if (politicCard.getPoliticColor() == null) {
                     stringa = "MULTICOLOR";

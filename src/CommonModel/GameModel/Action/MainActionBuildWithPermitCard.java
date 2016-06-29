@@ -53,6 +53,7 @@ public class MainActionBuildWithPermitCard extends Action{
                         checkRegionBonus(gameCity, user, game);
                         checkColorBonus(gameCity, user, game);
 
+
                         // add to old permit card
                         user.removePermitCard(permitCard);
                         removeAction(game, user);
