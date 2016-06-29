@@ -37,8 +37,8 @@ public class FinishMatchController implements Initializable {
 
     private ClientController clientController;
     private GUIView baseView;
-    private ImageView winnerOrLoser;
-    private ImageView kingOrJester;
+    private ImageView winnerOrLoser = new ImageView();
+    private ImageView kingOrJester = new ImageView();
     private JFXListView<String> ranking = new JFXListView<>();
     private ArrayList<String> usernameRanking = new ArrayList<>();
     private PopOver innerPopOver;
@@ -94,6 +94,7 @@ public class FinishMatchController implements Initializable {
         ranking.prefWidthProperty().bind(rootPane.widthProperty().divide(15));
         rootPane.getChildren().add(ranking);
         StackPane.setAlignment(ranking, Pos.BOTTOM_RIGHT);
+
         winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
         winnerOrLoser.setPreserveRatio(true);
         StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
@@ -112,7 +113,7 @@ public class FinishMatchController implements Initializable {
             winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
             kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
             displayPopOverOfImage(true);
-        } else {
+        } else if (!clientController.amIAWinner()){
             winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
             kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
             displayPopOverOfImage(false);
