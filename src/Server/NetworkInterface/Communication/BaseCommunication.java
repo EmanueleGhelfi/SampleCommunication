@@ -44,4 +44,5 @@ public abstract class BaseCommunication {
     public abstract void selectOldPermitCard();
 
 
+    public abstract void sendUserDisconnect(String username);
 }

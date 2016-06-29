@@ -269,9 +269,11 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
             try {
                 rmiClientInterface.ping();
             } catch (RemoteException e) {
-                user.setConnected(false);
-                user.getGameController().onUserDisconnected(user);
-                user.getGameController().cleanGame();
+                if(user.isConnected()) {
+                    user.setConnected(false);
+                    user.getGameController().onUserDisconnected(user);
+                    user.getGameController().cleanGame();
+                }
             }
         }
     }
@@ -285,7 +287,14 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         }
     }
 
-
+    @Override
+    public void sendUserDisconnect(String username) {
+        try {
+            rmiClientInterface.onUserDisconnect(username);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override

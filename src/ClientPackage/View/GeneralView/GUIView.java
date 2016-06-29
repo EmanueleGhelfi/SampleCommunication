@@ -8,6 +8,7 @@ import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
+import Utilities.Class.Graphics;
 import Utilities.Exception.ActionNotPossibleException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -320,6 +321,11 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void onActionDone(Action action) {
 
+    }
+
+    @Override
+    public void onUserDisconnect(String username) {
+        Graphics.notification("User: "+username+" is offline");
     }
 
     public synchronized void registerBaseController(BaseController baseController){

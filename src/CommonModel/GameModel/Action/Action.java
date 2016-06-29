@@ -198,12 +198,4 @@ public abstract class Action implements Serializable {
     }
 
 
-    public void removeHelper(City kingCity, User user, Game game) {
-
-        for (User tmpUser: game.getUsers()) {
-            if(tmpUser.getUsersEmporium().contains(kingCity))
-                user.removeHelper();
-        }
-
-    }
 }

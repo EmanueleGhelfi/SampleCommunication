@@ -88,5 +88,10 @@ public class FakeCommunication extends BaseCommunication {
 
     }
 
+    @Override
+    public void sendUserDisconnect(String username) {
+
+    }
+
 
 }

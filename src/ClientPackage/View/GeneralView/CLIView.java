@@ -222,6 +222,11 @@ public class CLIView implements BaseView {
         System.out.println(action.toString());
     }
 
+    @Override
+    public void onUserDisconnect(String username) {
+        cliPrinterInterface.printError("User: "+username+" is offline!");
+    }
+
 
     public void printHelp() {
         cliPrinterInterface.printHelp(OptionsClass.constructOptions());

@@ -32,6 +32,7 @@ public class Constants {
     public static final String CODE_FINISH_TURN = "CODE_FINISH_TURN";
     public static final String CODE_FINISH = "CODE_FINISH";
     public static final String CODE_OLD_PERMIT_CARD_BONUS = "CODE_OLD_PERMIT_CARD_BONUS";
+    public static final String CODE_USER_DISCONNECT = "CODE_USER_DISCONNECT";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -52,6 +53,7 @@ public class Constants {
     public static final String NOTIFICATION_ICON = "Icon.png";
     public static final String NOTIFICATION_TEXT = "COFfee";
     public static final String CITY_REWARD_BONUS_INCORRECT = "Bonus not correct because of nobility bonus";
+
 
 
     //NETWORK
@@ -168,7 +170,7 @@ public class Constants {
     public static final String POLITIC_CARD = "POLITIC_CARD";
 
     //ROUND
-    public static final long ROUND_DURATION = 300000;
+    public static final long ROUND_DURATION = 20000;
 
     // Folder
     public  static String IMAGE_PATH= "/ClientPackage/View/GUIResources/Image/";

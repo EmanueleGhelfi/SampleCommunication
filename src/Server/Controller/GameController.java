@@ -244,6 +244,7 @@ public class GameController implements Serializable{
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
+                user.getBaseCommunication().ping();
                 onUserPass(user);
             }
         };
@@ -780,6 +781,13 @@ public class GameController implements Serializable{
     }
 
     public void onUserDisconnected(User user) {
+
+        users.forEach(user1 -> {
+            if(user1.isConnected()){
+                user1.getBaseCommunication().sendUserDisconnect(user.getUsername());
+            }
+        });
+
         if(buyPhase){
             onFinishBuyPhase(user);
         }

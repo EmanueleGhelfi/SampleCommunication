@@ -122,6 +122,10 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_OLD_PERMIT_CARD_BONUS,null);
     }
 
+    @Override
+    public void sendUserDisconnect(String username) {
+        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_USER_DISCONNECT,username);
+    }
 
 
     @Override

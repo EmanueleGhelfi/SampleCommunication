@@ -367,4 +367,8 @@ public class ClientController {
         }
         return toReturn;
     }
+
+    public void onUserDisconnect(String username) {
+        baseView.onUserDisconnect(username);
+    }
 }

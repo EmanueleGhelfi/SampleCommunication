@@ -235,6 +235,12 @@ public class ClientSocketService extends ClientService implements Runnable {
                 clientController.selectOldPermitCardBonus();
                 break;
             }
+
+            case Constants.CODE_USER_DISCONNECT:{
+                String username = gson.fromJson(communicationInfo.getInfo(),String.class);
+                clientController.onUserDisconnect(username);
+                break;
+            }
         }
     }
 }

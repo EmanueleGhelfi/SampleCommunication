@@ -356,4 +356,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         });
 
     }
+
+    @Override
+    public void onUserDisconnect(String username) throws RemoteException {
+        executorService.execute(()->{
+            clientController.onUserDisconnect(username);
+        });
+    }
 }

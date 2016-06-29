@@ -41,4 +41,6 @@ public interface RMIClientInterface extends Remote {
     void ping() throws RemoteException;
 
     void selectOldPermiCard() throws RemoteException;
+
+    void onUserDisconnect(String username) throws RemoteException;
 }

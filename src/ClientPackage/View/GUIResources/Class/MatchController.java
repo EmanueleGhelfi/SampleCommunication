@@ -332,6 +332,7 @@ public class MatchController implements BaseController {
     private void createLayers() {
         boardImageView.toFront();
         infoHBox.toFront();
+        timerIndicator.toFront();
         turnImage.toFront();
         bottomPane.toFront();
         nobilityPath.toFront();
