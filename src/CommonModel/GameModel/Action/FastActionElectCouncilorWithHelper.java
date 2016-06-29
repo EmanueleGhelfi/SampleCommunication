@@ -41,8 +41,7 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         Council council = null;
         if(super.checkActionCounter(user)) {
-            System.out.println("ELECT COUNCILOR "+user.getHelpers());
-            if (user.getHelpers().size() >= Constants.HELPER_LIMITATION_ELECT_COUNCILOR) {
+            if (user.getHelpers().size() >= Constants.HELPER_LIMITATION_ELECT_COUNCILOR && councilor!=null) {
                 user.setHelpers(user.getHelpers().size() - Constants.HELPER_LIMITATION_ELECT_COUNCILOR);
                 if (councilType.equals(Constants.REGION_COUNCIL)) {
                     Region councilRegion = game.getRegion(region);
@@ -57,7 +56,9 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
                 removeAction(game, user);
                 }
             else{
-                throw new ActionNotPossibleException(Constants.HELPER_EXCEPTION);
+                if(councilor!=null)
+                    throw new ActionNotPossibleException(Constants.HELPER_EXCEPTION);
+                else throw new ActionNotPossibleException("Councilor is null!");
             }
             }
         }
@@ -65,13 +66,6 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
 
     @Override
     public String toString() {
-       /* return "FastActionElectCouncilorWithHelper{" +
-                "councilor=" + councilor +
-                ", region=" + region +
-                ", king=" + king +
-                ", councilType='" + councilType + '\'' +
-                '}';
-        */
         String toReturn="[FAST ACTION] ";
         toReturn+="Elect a counilor with helper! \n"+
                 "Councilor: "+councilor;

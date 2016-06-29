@@ -27,7 +27,6 @@ public class Council implements Serializable {
         catch (IllegalStateException e){
             bank.addCouncilor(councilorQueue.remove());
             councilorQueue.add(councilorToAdd);
-            System.out.println(councilorQueue);
         }
     }
 

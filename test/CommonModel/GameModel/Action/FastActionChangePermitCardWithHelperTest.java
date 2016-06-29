@@ -35,14 +35,13 @@ public class FastActionChangePermitCardWithHelperTest {
         user.setUsername("MANU");
         user.setVictoryPathPosition(0);
         user.setFastActionCounter(2);
-        user.setHelpers(20);
 
     }
 
     @Test
     public void testChangePermitCards(){
-        // after change
-        ArrayList<PermitCard> permitCards = (ArrayList<PermitCard>) game.getPermitDeck(RegionName.HILL).getVisibleArray().clone();
+        user.setHelpers(20);
+        ArrayList<PermitCard> permitCards = (ArrayList<PermitCard>) game.getPermitDeck(RegionName.HILL).getVisibleArray();
         Action action = new FastActionChangePermitCardWithHelper(RegionName.HILL);
         try {
             action.doAction(game,user);
@@ -54,10 +53,15 @@ public class FastActionChangePermitCardWithHelperTest {
 
     @Test(expected = ActionNotPossibleException.class)
     public void testNull() throws ActionNotPossibleException {
-        // after change
-        ArrayList<PermitCard> permitCards = game.getPermitDeck(RegionName.HILL).getVisibleArray();
+        user.setHelpers(20);
         Action action = new FastActionChangePermitCardWithHelper(null);
+        action.doAction(game,user);
+    }
 
-            action.doAction(game,user);
+    @Test(expected = ActionNotPossibleException.class)
+    public void helperExc() throws ActionNotPossibleException{
+        user.setHelpers(0);
+        Action action = new FastActionChangePermitCardWithHelper(RegionName.HILL);
+        action.doAction(game,user);
     }
 }

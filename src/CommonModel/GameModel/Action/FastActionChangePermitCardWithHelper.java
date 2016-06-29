@@ -27,7 +27,7 @@ public class FastActionChangePermitCardWithHelper extends Action {
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // check
-        if(super.checkActionCounter(user)) {
+        if(super.checkActionCounter(user) && region!=null) {
             if (user.getHelpers().size() >= Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD) {
                 user.setHelpers(user.getHelpers().size() - Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD);
                 game.getPermitDeck(region).changePermitCardVisibile();
@@ -35,6 +35,9 @@ public class FastActionChangePermitCardWithHelper extends Action {
             } else {
                 throw new ActionNotPossibleException(Constants.HELPER_EXCEPTION);
             }
+        }
+        else{
+            throw new ActionNotPossibleException("Region is null");
         }
     }
 
