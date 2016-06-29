@@ -43,6 +43,7 @@ public class KingBonusCard implements Bonus,Serializable {
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
+        System.out.println("Dentro bonus!");
         victoryPointBonus.getBonus(user, game);
         game.popKingBonusCard();
     }
@@ -71,5 +72,13 @@ public class KingBonusCard implements Bonus,Serializable {
 
     public int getOrder() {
         return order;
+    }
+
+    @Override
+    public String toString() {
+        return "KingBonusCard{" +
+                "order=" + order +
+                ", victoryPointBonus=" + victoryPointBonus +
+                '}';
     }
 }

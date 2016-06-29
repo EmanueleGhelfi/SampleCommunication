@@ -52,6 +52,7 @@ public abstract class Action implements Serializable {
                 user.setFastActionCounter(user.getFastActionCounter()-1);
                 break;
         }
+        System.out.println("HERE I AM");
         // send a snapshot to all player
         game.getGameController().sendSnapshotToAll();
     }
@@ -102,7 +103,12 @@ public abstract class Action implements Serializable {
             // check king bonus and get it
             KingBonusCard kingBonusCard = game.getKingBonusCard();
             if (kingBonusCard != null){
+                System.out.println("Eccomi dentro");
+                System.out.println(kingBonusCard);
                 kingBonusCard.getBonus(user, game);
+            }
+            else{
+                System.out.println("Sono qua");
             }
         }
     }
@@ -119,7 +125,7 @@ public abstract class Action implements Serializable {
         if(correctPoliticCard == politicCards.size()){
             if(correctPoliticCard<Constants.FOUR_PARAMETER_BUY_PERMIT_CARD && correctPoliticCard>0)
                 newPositionInMoneyPath=Constants.TEN_PARAMETER_BUY_PERMIT_CARD -
-                        correctPoliticCard*(correctPoliticCard-Constants.ONE_PARAMETER_BUY_PERMIT_CARD);
+                        3*(correctPoliticCard-Constants.ONE_PARAMETER_BUY_PERMIT_CARD);
             else if(correctPoliticCard==Constants.FOUR_PARAMETER_BUY_PERMIT_CARD)
                 newPositionInMoneyPath = 0;
             newPositionInMoneyPath+=bonusNumber;

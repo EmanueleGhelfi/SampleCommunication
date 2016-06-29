@@ -92,7 +92,6 @@ public class Graphics {
         stopTransition.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                System.out.println("Scale transition effect changed boolean to: "+newValue);
                 if(newValue){
                     scaleTransition.stop();
                     node.setScaleX(1);

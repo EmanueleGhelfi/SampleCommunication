@@ -229,7 +229,6 @@ public class GameController implements Serializable{
     }
 
     private void changeRound(int nextUser) {
-        System.out.println("Change round");
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         userArrayList.get((nextUser) % game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
         userArrayList.get((nextUser) % game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
@@ -271,7 +270,13 @@ public class GameController implements Serializable{
             @Override
             public void run() {
                 for(Iterator<User> iterator = users.iterator(); iterator.hasNext();){
-                    iterator.next().getBaseCommunication().ping();
+                    try {
+                        iterator.next().getBaseCommunication().ping();
+                    }
+                    catch (Exception e){
+                        System.out.println("Exception");
+                        iterator.next();
+                    }
                 }
             }
         };
@@ -327,6 +332,7 @@ public class GameController implements Serializable{
 
             //TODO: READD TEN EMPORIUMS
 
+            /*
             for (User user :
                     users) {
                 int cont=0;
@@ -340,6 +346,7 @@ public class GameController implements Serializable{
 
                 }
             }
+            */
 
         }
 
@@ -804,6 +811,7 @@ public class GameController implements Serializable{
 
     public void cleanGame(){
         if (!userConnectedRoutine()){
+
             roundTimer.cancel();
             users.clear();
             GamesManager.getInstance().cancelThisGame(game, this);

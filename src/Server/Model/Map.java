@@ -295,7 +295,12 @@ public class Map implements Serializable {
         links.add(new Link(esti,hellar));
         links.add(new Link(indur,kultos));
         links.add(new Link(juvelar,lyram));
-        links.add(new Link(merkatim,hellar));
+        if(secondPart==2){
+            links.add(new Link(merkatim,juvelar));
+        }
+        else {
+            links.add(new Link(merkatim, hellar));
+        }
 
         ArrayList<City> cities = new ArrayList<>();
         cities.add(arkon);

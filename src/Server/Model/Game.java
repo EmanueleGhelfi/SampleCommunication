@@ -113,7 +113,7 @@ public class Game implements Serializable{
         }
         //king bonus
         for (int i = 1; i< Constants.KING_CARDS; i++){
-            kingBonusCards.add(new KingBonusCard(i));
+            kingBonusCards.add(new KingBonusCard(Constants.KING_CARDS-i));
         }
     }
 
@@ -226,7 +226,7 @@ public class Game implements Serializable{
      */
     public KingBonusCard getKingBonusCard() {
         try{
-            return kingBonusCards.pop();
+            return kingBonusCards.peek();
         } catch (EmptyStackException e){
             return null;
         }

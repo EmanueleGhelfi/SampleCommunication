@@ -54,7 +54,7 @@ public class MainActionBuildWithKingHelp extends Action {
 
 
                 System.out.println("New position in money path "+ newPositionInMoneyPath +" because correct politic card "+correctPoliticCard);
-                if ((kingPath.size()-1) * Constants.KING_PRICE +newPositionInMoneyPath< user.getCoinPathPosition()) {
+                if ((kingPath.size()-1) * Constants.KING_PRICE +newPositionInMoneyPath<= user.getCoinPathPosition()) {
                     for (City city : kingPath) {
                         //user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
                         game.getMoneyPath().goAhead(user,-Constants.KING_PRICE);

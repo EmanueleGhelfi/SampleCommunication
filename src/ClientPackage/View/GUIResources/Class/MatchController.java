@@ -1692,7 +1692,8 @@ public class MatchController implements BaseController {
                 councilors = clientController.getSnapshot().getCouncil(regionName);
                 ArrayList<ImageView> imageView = councilHashMap.get(regionName);
                 for(int i = 0; i< councilors.size();i++){
-                    imageView.get(i).setImage(ImageLoader.getInstance().getImage(councilors.get(i).getColor().getImageUrl(),imageView.get(i).getFitWidth(),imageView.get(i).getFitHeight()));
+                    //// TODO: 29/06/2016 check 
+                    imageView.get(i).setImage(ImageLoader.getInstance().getImage(councilors.get(i).getColor().getImageUrl(),imageView.get(i).getBoundsInLocal().getWidth(),imageView.get(i).getBoundsInParent().getHeight()));
                 }
             } catch (CouncilNotFoundException e) {
                 e.printStackTrace();
