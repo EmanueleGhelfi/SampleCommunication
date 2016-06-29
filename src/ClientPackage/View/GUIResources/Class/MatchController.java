@@ -12,6 +12,7 @@ import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
+import Utilities.Exception.ActionNotPossibleException;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
@@ -131,7 +132,7 @@ public class MatchController implements BaseController {
     @FXML private ImageView imageInfo5;
     @FXML private ImageView imageInfo6;
 
-    private SingleSelectionModel<Tab> selectionModel;
+    private SingleSelectionModel<Tab> selectionModel= tabPane.getSelectionModel();
 
     private ImageView turnImage = new ImageView();
     private HBox handHBox = new HBox();
@@ -244,7 +245,7 @@ public class MatchController implements BaseController {
         });
         //help();
 
-        selectionModel = tabPane.getSelectionModel();
+
         tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
 
         initHamburgerIcon();
@@ -1104,13 +1105,9 @@ public class MatchController implements BaseController {
     private void CreateSingleCity(double layoutX, double layoutY, City city) {
         ImageView imageView = new ImageView();
         imageView.getStyleClass().add("cityImage");
-        try {
             Image cityImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/City/"+city.getColor().getColor().toLowerCase()+".png",background.getHeight()*0.17,background.getWidth()/11);
             imageView.setImage(cityImage);
             imageView.setCache(true);
-        }
-        catch (Exception e){
-        }
         imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.17));
         imageView.fitWidthProperty().bind(background.widthProperty().divide(11));
         background.getChildren().add(imageView);
@@ -1214,7 +1211,9 @@ public class MatchController implements BaseController {
         jfxComboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                permitCardSelected[0] = clientController.getSnapshot().getCurrentUser().getPermitCards().get(newValue.intValue());
+                if(newValue.intValue()!=-1) {
+                    permitCardSelected[0] = clientController.getSnapshot().getCurrentUser().getPermitCards().get(newValue.intValue());
+                }
             }
         });
         jfxComboBox.setPromptText("Seleziona la carta permesso");
@@ -1226,8 +1225,13 @@ public class MatchController implements BaseController {
         jfxButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Action action = new MainActionBuildWithPermitCard(city, permitCardSelected[0]);
-                clientController.doAction(action);
+                if(permitCardSelected[0]!=null) {
+                    Action action = new MainActionBuildWithPermitCard(city, permitCardSelected[0]);
+                    clientController.doAction(action);
+                }
+                else{
+                    guiView.onActionNotPossibleException(new ActionNotPossibleException("You need to select a Permit card!"));
+                }
             }
         });
 

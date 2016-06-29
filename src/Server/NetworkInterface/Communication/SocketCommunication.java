@@ -160,17 +160,12 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
                         break;
                     }
                     case Constants.CODE_ACTION:{
-                        System.out.println("CODE ACTION"+communicationInfo.getInfo());
                         Action action = CommunicationInfo.getAction(communicationInfo.getInfo());
-                        System.out.println("Received action from user: "+action);
                         try {
                             user.getGame().getGameController().doAction(action,user);
                         } catch (ActionNotPossibleException e) {
-                            //printing exception
-                            System.out.println(e.getMessage());
                             // send exception to client
                             CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e.getMessage());
-                            //TODO: manage exception
                         }
                         break;
                     }
