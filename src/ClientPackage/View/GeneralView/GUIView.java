@@ -302,6 +302,8 @@ public class GUIView extends Application implements BaseView {
                 stage.setScene(scene);
                 stage.setMinHeight(600);
                 stage.setMinWidth(1200);
+                //stage.setWidth(1280);
+                //stage.setHeight(720);
                 stage.show();
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
