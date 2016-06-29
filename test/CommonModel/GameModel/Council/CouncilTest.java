@@ -53,7 +53,7 @@ public class CouncilTest {
 
 
     /**
-     *
+     * test adding in the queue
      */
     @Test
     public void testAddFirst(){

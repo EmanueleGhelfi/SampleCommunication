@@ -90,8 +90,12 @@ public class PermitDeck implements Deck,Serializable {
         }
     }
 
+    /**
+     *
+     * @return the visible permit card of this.region
+     */
     public ArrayList<PermitCard> getVisibleArray(){
-        return permitCardsVisible;
+        return (ArrayList<PermitCard>)permitCardsVisible.clone();
     }
 
 }

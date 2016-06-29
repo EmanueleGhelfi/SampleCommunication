@@ -36,6 +36,7 @@ public class User extends CurrentUser implements Serializable{
         permitCards = new ArrayList<>();
         oldPermitCards = new ArrayList<>();
         politicCards = new ArrayList<>();
+        helpers = new ArrayList<>();
         politicCardNumber = politicCards.size();
         mainActionCounter = 0;
         fastActionCounter = 0;
@@ -95,13 +96,6 @@ public class User extends CurrentUser implements Serializable{
 
     // new value of helpers
     public void setHelpers(int helpers) {
-        /*
-        this.helpers = new ArrayList<>();
-        for(int i =0; i< helpers; i++){
-            this.helpers.add(new Helper() );
-        }
-        System.out.println(this.getHelpers().size());
-        */
 
         if(helpers<this.helpers.size()){
             while (helpers<this.helpers.size()) {
