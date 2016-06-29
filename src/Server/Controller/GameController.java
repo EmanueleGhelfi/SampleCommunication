@@ -324,7 +324,10 @@ public class GameController implements Serializable{
             sendFinishMarketToAll();
 
 
-            if(game.getUsers().size()==2){
+            //count true user
+            long trueUser = game.getUsers().stream().filter(user -> !( user instanceof FakeUser)).count();
+
+            if(trueUser==2){
                 configurationForTwoPlayers();
             }
 
