@@ -79,8 +79,8 @@ public class GUIView extends Application implements BaseView {
         });
         this.stage.setScene(scene);
         this.stage.show();
-        stage.setMinHeight(500);
-        stage.setMinWidth(700);
+        stage.setMinHeight(550);
+        stage.setMinWidth(600);
     }
 
     @Override
@@ -122,8 +122,8 @@ public class GUIView extends Application implements BaseView {
         //stage.setResizable(false);
         this.stage.setScene(scene);
         this.stage.show();
-        stage.setMinHeight(500);
-        stage.setMinWidth(700);
+        stage.setMinHeight(600);
+        stage.setMinWidth(550);
     }
 
     @Override
@@ -144,8 +144,8 @@ public class GUIView extends Application implements BaseView {
                     scene = new Scene(screen);
                     stage.setScene(scene);
                     stage.show();
-                    stage.setMinHeight(500);
-                    stage.setMinWidth(700);
+                    stage.setMinHeight(600);
+                    stage.setMinWidth(800);
                     maps = mapArrayList;
                     if(waitingController!=null){
                         mapSelectionController.showMap(maps);

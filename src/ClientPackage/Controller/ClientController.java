@@ -5,11 +5,11 @@ import ClientPackage.NetworkInterface.ClientFactoryService;
 import ClientPackage.View.CLIResources.CLIColor;
 import ClientPackage.View.GeneralView.BaseView;
 import ClientPackage.View.GeneralView.FactoryView;
-import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.CityName;
 import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Market.BuyableWrapper;
@@ -312,12 +312,10 @@ public class ClientController {
     }
 
     public boolean amIAWinner() {
-        for (BaseUser baseUser : finalSnapshot) {
-            if (finalSnapshot.get(0).getVictoryPathPosition() > baseUser.getVictoryPathPosition()){
-                return false;
-            }
+        if (snapshot.getCurrentUser().getUsername().equals(finalSnapshot.get(0).getUsername())){
+            return true;
         }
-        return true;
+        return false;
     }
 
     public BaseUser getUserWithString(String selectedItem) {
@@ -342,9 +340,27 @@ public class ClientController {
         for (BaseUser baseUser : finalSnapshot) {
             if (baseUser.getUsername().equals(selectedItem)){
                 for (int i = 0; i < baseUser.getUsersEmporium().size(); i++) {
-                    toReturn.concat(baseUser.getUsersEmporium().get(i).getCityName().getCityName());
-                    if (i >= 1){
-                        toReturn.concat(", ");
+                    if (toReturn == ""){
+                        toReturn = baseUser.getUsersEmporium().get(i).getCityName().getCityName();
+                    } else {
+                        toReturn = toReturn.concat(", " + baseUser.getUsersEmporium().get(i).getCityName().getCityName());
+                    }
+                }
+            }
+        }
+        return toReturn;
+    }
+
+    public ArrayList<String> populateListView(String username) {
+        ArrayList<String> toReturn = new ArrayList<>();
+        if (snapshot.getUsersInGame().get(username).getPermitCards().size() == 0)
+            toReturn.add("NO CITY WHERE BUILD");
+        else {
+            for (PermitCard permitCard : snapshot.getUsersInGame().get(username).getPermitCards()) {
+                for (Character character : permitCard.getCityAcronimous()) {
+                    for (CityName cityName : CityName.values()) {
+                        if (cityName.getCityName().startsWith(character.toString()) && !toReturn.contains(cityName.getCityName()))
+                            toReturn.add(cityName.getCityName());
                     }
                 }
             }
