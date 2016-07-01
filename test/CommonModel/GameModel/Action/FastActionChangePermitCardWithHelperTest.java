@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotSame;
 
 /**
  * Created by Emanuele on 29/06/2016.

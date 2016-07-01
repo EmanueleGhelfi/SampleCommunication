@@ -1,16 +1,13 @@
 package Server.Model;
 
 import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
-import CommonModel.GameModel.Council.King;
 import Server.Controller.GamesManager;
 import Server.NetworkInterface.Communication.FakeCommunication;
 import Utilities.Class.Constants;
-import eu.hansolo.medusa.Gauge;
-import eu.hansolo.medusa.tools.ConicalGradient;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Emanuele on 29/06/2016.
@@ -32,6 +29,10 @@ public class GameTest {
         user.setVictoryPathPosition(0);
     }
 
+    /**
+     * Test king bonus card
+     * @throws Exception
+     */
     @Test
     public void getKingBonusCard() throws Exception {
         KingBonusCard kingBonusCard = game.getKingBonusCard();

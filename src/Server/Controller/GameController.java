@@ -63,7 +63,7 @@ public class GameController implements Serializable{
         try {
             availableMaps = Map.readAllMap();
         } catch (MapsNotFoundException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -694,9 +694,9 @@ public class GameController implements Serializable{
         Collections.sort(arrayList, new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                if (o1.getVictoryPathPosition() > o1.getVictoryPathPosition())
+                if (o1.getVictoryPathPosition() > o2.getVictoryPathPosition())
                     return -1;
-                if (o1.getVictoryPathPosition() > o1.getVictoryPathPosition())
+                if (o2.getVictoryPathPosition() > o1.getVictoryPathPosition())
                     return 1;
                 else
                     return 0;

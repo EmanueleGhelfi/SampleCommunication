@@ -3,8 +3,6 @@ package Server.Controller;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Emanuele on 27/06/2016.
  */

@@ -25,19 +25,16 @@ public class CityVisitor{
     }
 
     public ArrayList<City> visit(City city){
-        System.out.println("Visiting "+city.getCityName());
         ArrayList<City> visitedCity = new ArrayList<>();
         alreadyVisited.put(city,true);
         for (Object city1: neighborIndex.neighborListOf(city)) {
             City realCity = (City)city1;
-            System.out.println("Next city " + ((City) city1).getCityName());
             if(!alreadyVisited.containsKey(realCity) && usersEmporium.contains(realCity) && !realCity.equals(city)){
                 alreadyVisited.put(realCity,true);
                 visitedCity.add(realCity);
                 visitedCity.addAll(visit(realCity));
             }
             else{
-                System.out.println("In else");
             }
         }
         return visitedCity;

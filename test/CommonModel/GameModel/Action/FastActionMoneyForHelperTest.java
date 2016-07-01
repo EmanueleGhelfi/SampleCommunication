@@ -1,8 +1,5 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-import CommonModel.GameModel.City.RegionName;
-import CommonModel.GameModel.Council.Councilor;
 import Server.Controller.GamesManager;
 import Server.Model.Game;
 import Server.Model.User;
@@ -12,7 +9,7 @@ import Utilities.Exception.ActionNotPossibleException;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Emanuele on 01/07/2016.

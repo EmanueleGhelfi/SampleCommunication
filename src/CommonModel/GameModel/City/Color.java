@@ -19,7 +19,7 @@ public enum Color implements Serializable {
     Color() {
     }
 
-    private Color (String color, int cityNumber){
+     Color (String color, int cityNumber){
         this.color = color;
         this.cityNumber = cityNumber;
     }

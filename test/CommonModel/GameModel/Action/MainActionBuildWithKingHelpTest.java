@@ -2,9 +2,6 @@ package CommonModel.GameModel.Action;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.CityName;
-import CommonModel.GameModel.City.Color;
-import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
 import Server.Controller.GamesManager;
@@ -19,7 +16,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Emanuele on 01/07/2016.
