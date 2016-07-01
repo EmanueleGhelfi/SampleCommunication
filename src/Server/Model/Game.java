@@ -85,8 +85,6 @@ public class Game implements Serializable{
         //create Politic Card Deck
         createPoliticCards();
 
-        //create king
-        //king = new King();
     }
 
     private void createRegion() {

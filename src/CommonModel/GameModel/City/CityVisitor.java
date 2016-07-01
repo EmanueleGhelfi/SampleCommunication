@@ -43,8 +43,4 @@ public class CityVisitor{
         return visitedCity;
     }
 
-
-    public static void main(String[] args){
-
-    }
 }

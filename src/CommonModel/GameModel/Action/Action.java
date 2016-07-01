@@ -60,27 +60,13 @@ public abstract class Action implements Serializable {
 
     protected void removePoliticCard(ArrayList<PoliticCard> politicCards, User user, Game game){
         int cont2 =0;
-        /*
-        for(int cont1 = 0; cont1< politicCards.size();cont1++){
-            if(politicCards.get(cont1).equals(user.getPoliticCards().get(cont2))){
-                user.getPoliticCards().remove(cont2);
-                user.decrementPoliticCardNumber();
-                System.out.println("Decrementing politic card number");
-            }
-            else{
-                cont2++;
-            }
-        }
-        */
 
         for(int i = 0; i < politicCards.size(); i++){
             for(int j = 0; j< user.getPoliticCards().size();j++){
                 if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
-                    //TODO: test
                     game.removeFromMarketList(new BuyableWrapper(user.getPoliticCards().get(j),user.getUsername()));
                     user.getPoliticCards().remove(j);
                     user.decrementPoliticCardNumber();
-                    System.out.println("Decrementing politic card number");
                     break;
                 }
             }
@@ -104,12 +90,9 @@ public abstract class Action implements Serializable {
             // check king bonus and get it
             KingBonusCard kingBonusCard = game.getKingBonusCard();
             if (kingBonusCard != null){
-                System.out.println("Eccomi dentro");
-                System.out.println(kingBonusCard);
                 kingBonusCard.getBonus(user, game);
             }
             else{
-                System.out.println("Sono qua");
             }
         }
     }
@@ -134,7 +117,6 @@ public abstract class Action implements Serializable {
         else {
             throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
         }
-        System.out.println("NUOVA POS "+newPositionInMoneyPath+" bonus "+ bonusNumber);
         return newPositionInMoneyPath;
     }
 
@@ -157,7 +139,6 @@ public abstract class Action implements Serializable {
                 }
             }
         }
-        System.out.println("CARTE CORRETTE "+correctPoliticCard);
         return correctPoliticCard;
     }
 

@@ -44,7 +44,7 @@ public class MainActionBuildWithKingHelp extends Action {
 
         int helperToSpend=0;
         //true if the emporiums are not ten and i haven't build in that city
-        if(super.checkActionCounter(user) && pathIsCorrect(game) && politicCards.size()>0) {
+        if(super.checkActionCounter(user) && kingPath!=null && politicCards!=null && pathIsCorrect(game) && politicCards.size()>0) {
             if (checkEmporiumsAreNotTen(user) && kingPath.size() > 0 &&
                     checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
                 // city where king goes
@@ -60,26 +60,21 @@ public class MainActionBuildWithKingHelp extends Action {
                     //decrement helper
                     user.setHelpers(user.getHelpers().size() - helperToSpend);
 
-                    System.out.println("City where king wants to go " + kingCity);
                     // calculate correct politic card
                     correctPoliticCard = countCorrectPoliticCard(king, politicCards, bonusCounter);
                     // calculate money to spend
                     newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
 
-
-                    System.out.println("New position in money path " + newPositionInMoneyPath + " because correct politic card " + correctPoliticCard);
                     if ((kingPath.size() - 1) * Constants.KING_PRICE + newPositionInMoneyPath <= user.getCoinPathPosition()) {
                         for (City city : kingPath) {
                             //user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
                             game.getMoneyPath().goAhead(user, -Constants.KING_PRICE);
-                            System.out.println("Current position " + user.getCoinPathPosition());
                             //king.setCurrentCity(city);
                         }
                         king.setCurrentCity(kingCity);
 
                         // because of first element
                         game.getMoneyPath().goAhead(user, Constants.KING_PRICE);
-                        System.out.println("Current position " + user.getCoinPathPosition());
                         user.addEmporium(kingCity);
                         if (!kingCity.getColor().getColor().equals(Constants.PURPLE)) {
                             kingCity.getBonus().getBonus(user, game);
@@ -113,7 +108,7 @@ public class MainActionBuildWithKingHelp extends Action {
             }
         }
             else {
-                if (politicCards.size() == 0) {
+                if (politicCards == null || politicCards.size() == 0) {
                     throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
                 }
                 throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);

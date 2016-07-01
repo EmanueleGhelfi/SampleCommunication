@@ -163,7 +163,7 @@ public class Map implements Serializable {
         }
     }
 
-    private static Map writeGenericMap(int firstPart, int secondPart, int thirdPart, String mapName, String mapUrl, String mapPreview) {
+    public static Map writeGenericMap(int firstPart, int secondPart, int thirdPart, String mapName, String mapUrl, String mapPreview) {
         City arkon;
         City burgen;
         City castrum;

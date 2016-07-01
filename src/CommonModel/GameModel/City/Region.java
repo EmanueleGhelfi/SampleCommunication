@@ -94,14 +94,6 @@ public class Region implements Serializable, GotCouncil {
                 '}';
     }
 
-    public static void main(String[] args){
-        //System.out.println(Region.COAST);
-        Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
-                .registerTypeAdapterFactory(new EnumAdapterFactory())
-                .create();
-        //String region = gson.toJson(Region.COAST);
-        //System.out.println(region);
-    }
 
 
 }
