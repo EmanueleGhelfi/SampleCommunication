@@ -72,7 +72,6 @@ public class PermitDeck implements Deck,Serializable {
             for (int i = 0; i < permitCardsVisible.size(); i++) {
                 if(permitCardsVisible.get(i).equals(permitCard)){
                     PermitCard permitCardToReturn = permitCardsVisible.remove(i);
-                    System.out.println("Changing permit card visible");
                     permitCardsVisible.add(permitDeck.remove());
                     return permitCardToReturn;
                 }

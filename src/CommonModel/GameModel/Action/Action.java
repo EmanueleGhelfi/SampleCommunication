@@ -53,7 +53,6 @@ public abstract class Action implements Serializable {
                 user.setFastActionCounter(user.getFastActionCounter()-1);
                 break;
         }
-        System.out.println("HERE I AM");
         // send a snapshot to all player
         game.getGameController().sendSnapshotToAll();
     }

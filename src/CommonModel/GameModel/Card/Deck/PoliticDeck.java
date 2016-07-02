@@ -44,7 +44,11 @@ public class PoliticDeck implements Deck,Serializable {
 
     public void addToQueue(Set<PoliticCard> politicCardSet){
         for (PoliticCard politicCard: politicCardSet){
-            System.out.println(politicDeckQueue.offer(politicCard) + " SONO DENTRO ADDTOQUEUE");
+            politicDeckQueue.add(politicCard);
             }
         }
+
+    public int size(){
+        return politicDeckQueue.size();
+    }
 }
