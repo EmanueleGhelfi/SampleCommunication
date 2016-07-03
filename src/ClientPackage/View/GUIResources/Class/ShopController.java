@@ -338,7 +338,6 @@ public class ShopController implements BaseController {
     }
 
     private void shopPopOver(ImageView imageClicked, Class objectClass) {
-        //updateList();
         temporarySellList.clear();
         sellList.forEach(buyableWrapper -> {
             if (buyableWrapper.getBuyableObject().getClass().equals(objectClass)){

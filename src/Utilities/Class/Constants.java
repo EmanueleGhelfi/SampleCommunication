@@ -152,7 +152,6 @@ public class Constants {
     public static final int FOUR_PARAMETER_BUY_PERMIT_CARD = 4;
     public static final int ONE_PARAMETER_BUY_PERMIT_CARD = 1;
     public static final int MONEY_EARNED_ELECT_COUNCILOR = 4;
-    //todo: it was 2
     public static final int KING_PRICE = 2;
     public static final int EMPORIUMS_BUILDABLE = 10;
     public static final int KING_CARDS = 6;

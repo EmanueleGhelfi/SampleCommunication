@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by Emanuele on 13/05/2016.
  */
-//TODO
 public class CLIView implements BaseView {
 
     private Scanner reader = new Scanner(System.in);

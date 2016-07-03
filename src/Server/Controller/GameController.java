@@ -430,8 +430,6 @@ public class GameController implements Serializable{
                 System.out.println("L'oggetto è già in vendita!");
             }
         }
-        //TODO: check if it's ok
-        //sendSnapshotToAll();
         return true;
 
     }
