@@ -278,7 +278,8 @@ public class GameController implements Serializable{
                     }
                     catch (Exception e){
                         System.out.println("Exception");
-                        iterator.next();
+                        // todo: check
+                        break;
                     }
                 }
             }
@@ -290,7 +291,7 @@ public class GameController implements Serializable{
         user.getBaseCommunication().sendStartMarket();
     }
 
-    private void onAllUserDisconnected() {
+    private synchronized void onAllUserDisconnected() {
         roundTimer.cancel();
         GamesManager.getInstance().cancelThisGame(game, this);
     }
@@ -377,7 +378,7 @@ public class GameController implements Serializable{
     }
 
     /** disable market phase in all user */
-    private void sendFinishMarketToAll() {
+    private synchronized void sendFinishMarketToAll() {
         new Thread(()->{
             for (User user:users){
                 user.getBaseCommunication().disableMarketPhase();
@@ -468,7 +469,7 @@ public class GameController implements Serializable{
         else return false;
     }
 
-    public void onRemoveItem(BuyableWrapper item) {
+    public synchronized void onRemoveItem(BuyableWrapper item) {
         game.removeFromMarketList(item);
         sendSnapshotToAll();
     }
@@ -819,7 +820,7 @@ public class GameController implements Serializable{
         return false;
     }
 
-    public void cleanGame(){
+    public synchronized void cleanGame(){
         if (!userConnectedRoutine()){
 
             roundTimer.cancel();

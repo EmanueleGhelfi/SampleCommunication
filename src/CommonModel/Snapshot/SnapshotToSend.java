@@ -127,7 +127,7 @@ public class SnapshotToSend implements Serializable{
     }
 
     public ArrayList<BuyableWrapper> getMarketList() {
-        return marketList;
+        return (ArrayList<BuyableWrapper>) marketList.clone();
     }
 
     public Stack<KingBonusCard> getKingBonusCards() {

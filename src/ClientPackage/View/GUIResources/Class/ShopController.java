@@ -239,7 +239,7 @@ public class ShopController implements BaseController {
     private void updateList() {
         sellList = new ArrayList<>();
         SnapshotToSend snapshotTosend = clientController.getSnapshot();
-        buyList = snapshotTosend.getMarketList();
+        buyList =  snapshotTosend.getMarketList();
 
 
         for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
@@ -338,6 +338,7 @@ public class ShopController implements BaseController {
     }
 
     private void shopPopOver(ImageView imageClicked, Class objectClass) {
+        //updateList();
         temporarySellList.clear();
         sellList.forEach(buyableWrapper -> {
             if (buyableWrapper.getBuyableObject().getClass().equals(objectClass)){
@@ -389,12 +390,6 @@ public class ShopController implements BaseController {
 
     private void createBuyingPopOver() {
         innerPopOver = new PopOver();
-        /*
-        GridPane buyingSessionGridPane = new GridPane();
-        buyingSessionGridPane.setAlignment(Pos.CENTER);
-        buyingSessionGridPane.add(buyPane, 0, 0);
-        GridPane.setColumnSpan(buyPane, 2);
-        */
 
         if(buyPhase) {
             finishShopButton.setGraphic(finishShop);
@@ -423,13 +418,6 @@ public class ShopController implements BaseController {
             buyIt.setPreserveRatio(true);
             finishShop.setFitWidth(40);
             finishShop.setFitHeight(40);
-        /*
-        buyingSessionGridPane.add(finishShopButton, 0, 1);
-        buyingSessionGridPane.add(buyItButton, 1, 1);
-        buyingSessionGridPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(10));
-        buyingSessionGridPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(10));
-        innerPopOver.setContentNode(buyingSessionGridPane);
-        */
             innerPopOver.setContentNode(buyVBox);
             innerPopOver.show(paneWhereShowPopOver);
         }
@@ -688,7 +676,7 @@ public class ShopController implements BaseController {
         sellButton.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().divide(3));
         sellButton.setVisible(false);
 
-        sellButton.setOnAction(new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> onSell = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (!buttonToSell.getText().equals("REMOVE")) {
@@ -699,33 +687,21 @@ public class ShopController implements BaseController {
                     sellButton.setVisible(false);
                 }
                 else{
-                    trueList.remove(information);
+                    if(trueList.contains(information)) {
+                        trueList.remove(information);
+                    }
+                    else{
+                        clientController.removeItemFromMarket(information);
+                    }
                     information.setOnSale(false);
                     buttonToSell.setText("0");
                     sellButton.setVisible(true);
                 }
             }
-        });
+            };
+        sellButton.setOnAction(onSell);
 
-        buttonToSell.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (!buttonToSell.getText().equals("REMOVE")) {
-                    information.setOnSale(true);
-                    information.setCost(Integer.parseInt(buttonToSell.getText()));
-                    trueList.add(information);
-                    buttonToSell.setText("REMOVE");
-                    sellButton.setVisible(false);
-
-                }
-                else{
-                    trueList.remove(information);
-                    information.setOnSale(false);
-                    buttonToSell.setText("0");
-                    sellButton.setVisible(true);
-                }
-            }
-        });
+        buttonToSell.setOnAction(onSell);
 
         plusButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -753,9 +729,9 @@ public class ShopController implements BaseController {
             public void handle(MouseEvent event) {
                 if(!information.isOnSale()) {
                     sellButton.setVisible(true);
+                    plusButton.setVisible(true);
+                    minusButton.setVisible(true);
                 }
-                plusButton.setVisible(true);
-                minusButton.setVisible(true);
 
                     buttonToSell.setVisible(true);
                 ColorAdjust colorAdjust = new ColorAdjust();

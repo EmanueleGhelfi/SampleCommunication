@@ -132,7 +132,6 @@ public class MatchController implements BaseController {
     @FXML private ImageView imageInfo5;
     @FXML private ImageView imageInfo6;
 
-    private SingleSelectionModel<Tab> selectionModel= tabPane.getSelectionModel();
 
     private ImageView turnImage = new ImageView();
     private HBox handHBox = new HBox();
@@ -174,6 +173,8 @@ public class MatchController implements BaseController {
     private Gauge timerIndicator = new Gauge();
 
     private Timer timer = new Timer();
+
+    private SingleSelectionModel<Tab> selectionModel;
 
     public void setClientController(ClientController clientController, GUIView guiView) {
         this.clientController = clientController;
@@ -248,6 +249,7 @@ public class MatchController implements BaseController {
 
         tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
 
+        selectionModel = tabPane.getSelectionModel();
         initHamburgerIcon();
         bottomPane.setVisible(false);
         nobilityPath.setVisible(false);
