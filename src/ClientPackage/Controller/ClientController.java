@@ -312,10 +312,7 @@ public class ClientController {
     }
 
     public boolean amIAWinner() {
-        if (snapshot.getCurrentUser().getUsername().equals(finalSnapshot.get(0).getUsername())){
-            return true;
-        }
-        return false;
+        return snapshot.getCurrentUser().getUsername().equals(finalSnapshot.get(0).getUsername());
     }
 
     public BaseUser getUserWithString(String selectedItem) {

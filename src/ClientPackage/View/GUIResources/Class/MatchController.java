@@ -686,7 +686,7 @@ public class MatchController implements BaseController {
 
 
         moreActionNodeList.setSpacing(10);
-        gridPane.setMargin(moreActionNodeList, new Insets(0,0,20,20));
+        GridPane.setMargin(moreActionNodeList, new Insets(0,0,20,20));
         moreActionNodeList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
                 new KeyValue(showMore.rotateProperty(), expanded? 225:180 ,
                 Interpolator.EASE_BOTH));}});

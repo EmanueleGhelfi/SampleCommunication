@@ -461,10 +461,7 @@ public class GameController implements Serializable{
         }
         sendSnapshotToAll();
 
-        if(counter==buyableWrappers.size()){
-            return true;
-        }
-        else return false;
+        return counter == buyableWrappers.size();
     }
 
     public synchronized void onRemoveItem(BuyableWrapper item) {

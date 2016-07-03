@@ -31,10 +31,7 @@ public enum Color implements Serializable {
                 cityCounter++;
             }
         }
-        if (cityCounter == cityNumber){
-            return true;
-        }
-        return false;
+        return cityCounter == cityNumber;
     }
 
     public String getColor(){

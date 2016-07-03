@@ -74,7 +74,7 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
                 @Override
                 public void handle(MouseEvent event) {
                     ArrayList<PoliticCard> politicCardSelected = new ArrayList<PoliticCard>();
-                    Set<Node> jfxCheckBoxArrayList = (Set<Node>) vBox.lookupAll("#JFXCheckBox");
+                    Set<Node> jfxCheckBoxArrayList = vBox.lookupAll("#JFXCheckBox");
                     for (Node node : jfxCheckBoxArrayList) {
                         JFXCheckBox jfxCheckBoxTempTemp = (JFXCheckBox) node;
                         if (jfxCheckBoxTempTemp.isSelected()) {

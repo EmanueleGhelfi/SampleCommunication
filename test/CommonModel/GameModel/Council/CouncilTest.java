@@ -25,12 +25,7 @@ public class CouncilTest {
     public void setUp() throws Exception {
 
         game = new Game();
-        try {
-            user= new User(new FakeCommunication(), GamesManager.getInstance());
-        }
-        catch (Exception e){
-
-        }
+        user= new User(new FakeCommunication(), GamesManager.getInstance());
         user.setVictoryPathPosition(0);
     }
 

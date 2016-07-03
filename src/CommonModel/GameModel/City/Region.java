@@ -70,10 +70,7 @@ public class Region implements Serializable, GotCouncil {
                 cityCounter++;
             }
         }
-        if (cityCounter == cityNumber){
-            return true;
-        }
-        return false;
+        return cityCounter == cityNumber;
     }
 
     public RegionName getRegion() {

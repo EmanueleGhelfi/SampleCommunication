@@ -41,7 +41,7 @@ public class FastActionChangePermitCardWithHelperTest {
     @Test
     public void testChangePermitCards(){
         user.setHelpers(20);
-        ArrayList<PermitCard> permitCards = (ArrayList<PermitCard>) game.getPermitDeck(RegionName.HILL).getVisibleArray();
+        ArrayList<PermitCard> permitCards = game.getPermitDeck(RegionName.HILL).getVisibleArray();
         Action action = new FastActionChangePermitCardWithHelper(RegionName.HILL);
         try {
             action.doAction(game,user);
