@@ -142,7 +142,6 @@ public class MatchController implements BaseController {
     @FXML private ImageView userHelperImageView;
     @FXML private ImageView userPermitImageView;
 
-    private SingleSelectionModel<Tab> selectionModel;
 
 
     private ImageView turnImage = new ImageView();
