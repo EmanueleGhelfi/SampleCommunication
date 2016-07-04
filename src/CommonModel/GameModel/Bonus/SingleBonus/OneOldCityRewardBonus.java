@@ -1,6 +1,7 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Game;
 import Server.Model.User;
@@ -18,9 +19,28 @@ public class OneOldCityRewardBonus implements Bonus,Serializable {
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         if(user.getUsersEmporium().size()>0) {
-            user.addOptionalActionCounter();
-            user.getBaseCommunication().selectCityRewardBonus(new SnapshotToSend(game, user));
+            if(checkBonusType(user.getUsersEmporium())) {
+                user.addOptionalActionCounter();
+                user.getBaseCommunication().selectCityRewardBonus(new SnapshotToSend(game, user));
+            }
         }
+    }
+
+    private boolean checkBonusType(ArrayList<City> usersEmporium) {
+        boolean toReturn = true;
+        for(City city: usersEmporium){
+            toReturn=true;
+            for(Bonus bonus : city.getBonus().getBonusArrayList()){
+                if(bonus instanceof NobilityBonus){
+                    toReturn=false;
+                }
+            }
+            if(toReturn)
+                return true;
+        }
+
+        return toReturn;
+
     }
 
     @Override
