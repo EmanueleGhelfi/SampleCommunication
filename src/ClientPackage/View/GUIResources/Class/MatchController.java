@@ -649,12 +649,12 @@ public class MatchController implements BaseController {
         finishKing.disableProperty().bind(buildWithKingPhase.not());
         finishKing.setVisible(false);
         BooleanProperty animation = new SimpleBooleanProperty();
-        Graphics.scaleTransitionEffectCycle(finishKing, 1.2f, 1.2f, animation);
         buildWithKingPhase.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(newValue){
                     finishKing.setVisible(true);
+                    Graphics.scaleTransitionEffectCycle(finishKing, 1.2f, 1.2f, animation);
                     animation.setValue(false);
                 }
                 else{
