@@ -144,6 +144,7 @@ public class MatchController implements BaseController {
 
     private SingleSelectionModel<Tab> selectionModel;
 
+
     private ImageView turnImage = new ImageView();
     private HBox handHBox = new HBox();
 
@@ -1213,9 +1214,6 @@ public class MatchController implements BaseController {
         for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
             ImageView imageToAdd = new ImageView();
             imageToAdd.setId(userHashMap.getKey());
-            System.out.println("imageid" + userHashMap.getKey());
-            System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
-            imageToAdd.setMouseTransparent(true);
             imageToAdd.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png",imageView.getFitHeight(),imageView.getFitWidth()));
             imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(6));
             imageToAdd.setPreserveRatio(true);
