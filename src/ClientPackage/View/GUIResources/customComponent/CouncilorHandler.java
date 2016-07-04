@@ -10,6 +10,8 @@ import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
 import Utilities.Class.Constants;
+import Utilities.Class.Graphics;
+import Utilities.Class.Translator;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
@@ -58,6 +60,7 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
+        Graphics.playSomeSound("Button");
 
         VBox vBox = new VBox();
 
@@ -76,19 +79,20 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
         politicColors.clear();
         for(PoliticColor politicColor: clientController.getSnapshot().getBank().showCouncilor()){
             politicColors.add(politicColor);
-            jfxComboBox.getItems().add(new Label(politicColor.getColor()));
+            jfxComboBox.getItems().add(new Label(Translator.translatingToIta(politicColor.getColor())));
         }
         jfxComboBox.setPromptText("Scegli il consigliere che vuoi aggiungere");
         mainActionButton.getStyleClass().add("button-raised");
-        mainActionButton.setText("SCALZA GUADAGNANDO SOLDI!");
+        mainActionButton.setText("GUADAGNA SOLDI");
         mainActionButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Graphics.playSomeSound("Button");
                 int index = jfxComboBox.getSelectionModel().getSelectedIndex();
                 System.out.println("selected "+index);
                 //todo check getSelected Item != null
                 if(index!=-1) {
-                    System.out.println("value in combobox " + jfxComboBox.getSelectionModel().getSelectedItem().getText());
+                    System.out.println("value in combobox " + Translator.translatingToEng(jfxComboBox.getSelectionModel().getSelectedItem().getText()));
                     Councilor councilor = new Councilor(politicColors.get(index));
                     clientController.mainActionElectCouncilor(councilor, king, region);
                 }
@@ -97,14 +101,15 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
 
 
         fastActionButton.getStyleClass().add("button-raised");
-        fastActionButton.setText("SCALZA CON AIUTANTI!");
+        fastActionButton.setText("USA AIUTANTI");
         fastActionButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Graphics.playSomeSound("Button");
                 int index = jfxComboBox.getSelectionModel().getSelectedIndex();
                 System.out.println("selected "+index);
                 if(index!=-1) {
-                    System.out.println("value in combobox " + jfxComboBox.getSelectionModel().getSelectedItem().getText());
+                    System.out.println("value in combobox " + Translator.translatingToEng(jfxComboBox.getSelectionModel().getSelectedItem().getText()));
 
                     Councilor councilor = new Councilor(politicColors.get(index));
                     clientController.fastActionElectCouncilorWithHelper(councilor, king, region, councilType);

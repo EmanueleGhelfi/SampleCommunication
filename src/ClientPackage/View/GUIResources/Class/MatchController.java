@@ -12,6 +12,7 @@ import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
+import Utilities.Class.Translator;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
@@ -38,7 +39,9 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.RotateEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -131,6 +134,13 @@ public class MatchController implements BaseController {
     @FXML private ImageView imageInfo5;
     @FXML private ImageView imageInfo6;
 
+    @FXML private ImageView userMoneyImageView;
+    @FXML private ImageView userVictoryImageView;
+    @FXML private ImageView userNobilityImageView;
+    @FXML private ImageView userPoliticImageView;
+    @FXML private ImageView userHelperImageView;
+    @FXML private ImageView userPermitImageView;
+
     private SingleSelectionModel<Tab> selectionModel;
 
     private ImageView turnImage = new ImageView();
@@ -220,6 +230,7 @@ public class MatchController implements BaseController {
         });
 
         createGauge();
+        createOpponentTooltip();
 
         pulseCity.bind(buildWithKingPhase.not());
         createOverlay();
@@ -234,6 +245,12 @@ public class MatchController implements BaseController {
         GridPane.setValignment(oldPermitCardNodeList, VPos.BOTTOM);
         GridPane.setMargin(oldPermitCardNodeList, new Insets(0, 20, 20, 0));
         ///oldPermitCardNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not().and(hamburgerMenu.visibleProperty().not()));
+        oldPermitCardNodeList.onContextMenuRequestedProperty().addListener(new ChangeListener<EventHandler<? super ContextMenuEvent>>() {
+            @Override
+            public void changed(ObservableValue<? extends EventHandler<? super ContextMenuEvent>> observable, EventHandler<? super ContextMenuEvent> oldValue, EventHandler<? super ContextMenuEvent> newValue) {
+                Graphics.playSomeSound("PlusButton");
+            }
+        });
 
         hamburgerMenu.prefWidthProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -275,6 +292,16 @@ public class MatchController implements BaseController {
         */
     }
 
+    private void createOpponentTooltip() {
+        Tooltip.install(userColorImageView, new Tooltip("Colore"));
+        Tooltip.install(userMoneyImageView, new Tooltip("Posizione sul percorso della ricchezza"));
+        Tooltip.install(userVictoryImageView, new Tooltip("Posizione sul percorso della vittoria"));
+        Tooltip.install(userNobilityImageView, new Tooltip("Posizione sul percorso della nobiltà"));
+        Tooltip.install(userPoliticImageView, new Tooltip("Carte politiche"));
+        Tooltip.install(userHelperImageView, new Tooltip("Aiutanti"));
+        Tooltip.install(userPermitImageView, new Tooltip("Città su cui può edificare"));
+    }
+
     private void placeRegionBonus() {
         ImageView coastImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/CoastBonusCard.png",background.getWidth()*0.89,background.getHeight()*0.82));
         ImageView hillImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/HillBonusCard.png",background.getWidth()*0.89,background.getHeight()*0.82));
@@ -299,6 +326,9 @@ public class MatchController implements BaseController {
         Graphics.addShadow(mountainImage);
         Graphics.bringUpImages(coastImage, hillImage, mountainImage);
         background.getChildren().addAll(coastImage, hillImage, mountainImage);
+        Tooltip.install(coastImage, new Tooltip("Bonus della regione"));
+        Tooltip.install(hillImage, new Tooltip("Bonus della regione"));
+        Tooltip.install(mountainImage, new Tooltip("Bonus della regione"));
     }
 
     private void createHBoxMenu() {
@@ -311,15 +341,19 @@ public class MatchController implements BaseController {
         lessImageView.setFitHeight(40);
         moreImg.setGraphic(moreImageView);
         lessImg.setGraphic(lessImageView);
+        Tooltip.install(lessImg, new Tooltip("Carte permesso e consiglieri"));
+        Tooltip.install(moreImg, new Tooltip("Percorso della nobiltà"));
         moreImg.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Graphics.playSomeSound("Button");
                 showMore();
             }
         });
         lessImg.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Graphics.playSomeSound("Button");
                 showLess();
             }
         });
@@ -352,6 +386,7 @@ public class MatchController implements BaseController {
         boardImageView.setOpacity(0.2);
         boardImageView.fitWidthProperty().bind(gridPane.widthProperty());
         boardImageView.setFitHeight(60);
+        boardImageView.setMouseTransparent(true);
         //boardImageView.fitHeightProperty().bind(background.heightProperty().divide(13));
         gridPane.add(boardImageView, 0, 0);
         GridPane.setValignment(boardImageView, VPos.TOP);
@@ -360,7 +395,7 @@ public class MatchController implements BaseController {
         GridPane.setValignment(infoHBox, VPos.TOP);
         infoHBox.prefHeightProperty().bind(boardImageView.fitHeightProperty());
         infoHBox.prefWidthProperty().bind(gridPane.widthProperty().divide(2));
-        //setImageInInfo();
+        setImageInInfo();
 
         gridPane.add(turnImage, 0, 0);
         //GridPane.setMargin(turnImage, new Insets(20, 0, 0, 20));
@@ -398,18 +433,12 @@ public class MatchController implements BaseController {
     }
 
     private void setImageInInfo() {
-        imageInfo1.setFitHeight(50);
-        imageInfo2.setFitHeight(50);
-        imageInfo3.setFitHeight(50);
-        imageInfo4.setFitHeight(50);
-        imageInfo5.setFitHeight(50);
-        imageInfo6.setFitHeight(50);
-        imageInfo1.setPreserveRatio(true);
-        imageInfo2.setPreserveRatio(true);
-        imageInfo3.setPreserveRatio(true);
-        imageInfo4.setPreserveRatio(true);
-        imageInfo5.setPreserveRatio(true);
-        imageInfo6.setPreserveRatio(true);
+        Tooltip.install(imageInfo1, new Tooltip("Aiutanti"));
+        Tooltip.install(imageInfo2, new Tooltip("Posizione sul percorso della ricchezza"));
+        Tooltip.install(imageInfo3, new Tooltip("Posizione sul percorso della vittoria"));
+        Tooltip.install(imageInfo4, new Tooltip("Posizione sul percorso della nobiltà"));
+        Tooltip.install(imageInfo5, new Tooltip("Azioni veloci disponibili"));
+        Tooltip.install(imageInfo6, new Tooltip("Azioni principali disponibili"));
     }
 
     private void creteOldPermitCard() {
@@ -424,7 +453,7 @@ public class MatchController implements BaseController {
         bagButton.setPrefHeight(50);
         bagButton.setButtonType(JFXButton.ButtonType.RAISED);
         bagButton.setBackground(new Background(new BackgroundFill(null,new CornerRadii(40),null)));
-        bagButton.setTooltip(new Tooltip("Show old permit card"));
+        bagButton.setTooltip(new Tooltip("Vecchie carte permesso"));
         bagButton.setRotate(180);
         oldPermitCardNodeList.addAnimatedNode(bagButton, (expanded) -> new ArrayList<KeyValue>(){{ add(
                 new KeyValue(bagButton.rotateProperty(), expanded? 540:180 ,
@@ -615,17 +644,22 @@ public class MatchController implements BaseController {
         finishKing.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(20),null)));
         finishKing.setButtonType(JFXButton.ButtonType.FLAT);
         finishKing.setTextFill(Paint.valueOf("WHITE"));
-        finishKing.setOnAction(new FInishKingActionHandler(clientController,this));
+        finishKing.getStyleClass().add("button-raised");
+        finishKing.setOnAction(new FinishKingActionHandler(clientController,this));
         finishKing.disableProperty().bind(buildWithKingPhase.not());
         finishKing.setVisible(false);
+        BooleanProperty animation = new SimpleBooleanProperty();
+        Graphics.scaleTransitionEffectCycle(finishKing, 1.2f, 1.2f, animation);
         buildWithKingPhase.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(newValue){
                     finishKing.setVisible(true);
+                    animation.setValue(false);
                 }
                 else{
                     finishKing.setVisible(false);
+                    animation.setValue(true);
                 }
             }
         });
@@ -644,7 +678,7 @@ public class MatchController implements BaseController {
         imageMore.setFitWidth(30);
         showMore.setRotate(180);
         showMore.setButtonType(JFXButton.ButtonType.RAISED);
-        showMore.setTooltip(new Tooltip("Show more action"));
+        showMore.setTooltip(new Tooltip("Altre azioni"));
 
         //change turn
         JFXButton changeTurnAction = new JFXButton();
@@ -658,7 +692,7 @@ public class MatchController implements BaseController {
         changeTurnAction.setOnAction(new ChangeTurnHandler(this));
         showMore.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),new CornerRadii(30),null)));
         changeTurnAction.setRotate(180);
-        changeTurnAction.setTooltip(new Tooltip("Chage turn"));
+        changeTurnAction.setTooltip(new Tooltip("Passa"));
 
         // HELP
         JFXButton helpButton = new JFXButton();
@@ -676,13 +710,14 @@ public class MatchController implements BaseController {
         helpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Graphics.playSomeSound("Button");
                 SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                 selectionModel.selectNext();
                 tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
                 shopController.displayHelp();
             }
         });
-        helpButton.setTooltip(new Tooltip("Help"));
+        helpButton.setTooltip(new Tooltip("Aiuto"));
 
 
         moreActionNodeList.setSpacing(10);
@@ -690,7 +725,6 @@ public class MatchController implements BaseController {
         moreActionNodeList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
                 new KeyValue(showMore.rotateProperty(), expanded? 225:180 ,
                 Interpolator.EASE_BOTH));}});
-
         moreActionNodeList.addAnimatedNode(changeTurnAction);
 
         moreActionNodeList.setRotate(180);
@@ -714,12 +748,13 @@ public class MatchController implements BaseController {
         shopButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Graphics.playSomeSound("Button");
                 selectionModel.selectNext();
                 tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
             }
         });
         moreActionNodeList.addAnimatedNode(shopButton);
-        shopButton.setTooltip(new Tooltip("Go to shop"));
+        shopButton.setTooltip(new Tooltip("Negozio"));
 
         gridPane.add(moreActionNodeList,0,2);
         GridPane.setHalignment(moreActionNodeList,HPos.LEFT);
@@ -728,11 +763,12 @@ public class MatchController implements BaseController {
         for(Node node: moreActionNodeList.getChildren())
             Graphics.addShadow(node);
         moreActionNodeList.visibleProperty().bind(nobilityPath.visibleProperty().not());
+
     }
 
     private JFXButton getChangePermitCardButton(RegionName regionName) {
         JFXButton jfxButton = new JFXButton();
-        jfxButton.setTooltip(new Tooltip("Change permit card of "+regionName));
+        jfxButton.setTooltip(new Tooltip("Cambia le carte permesso della regione " + Translator.translatingToIta(regionName.getRegion())));
         jfxButton.setPrefHeight(50);
         jfxButton.setPrefWidth(50);
         ImageView regionImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+""+regionName+".png"));
@@ -743,6 +779,7 @@ public class MatchController implements BaseController {
         jfxButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Graphics.playSomeSound("Button");
                 Action action = new FastActionChangePermitCardWithHelper(regionName);
                 clientController.doAction(action);
             }
@@ -777,6 +814,7 @@ public class MatchController implements BaseController {
         politicLabel.setText(baseUser.getPoliticCardNumber()+"");
         helperLabel.setText(baseUser.getHelpers().size()+"");
         victoryLabel.setText(baseUser.getNobilityPathPosition().getPosition()+"");
+        permitListView.getItems().clear();
         permitListView.setItems(FXCollections.observableArrayList(clientController.populateListView(baseUser.getUsername())));
         nobilityLabel.setText(baseUser.getVictoryPathPosition()+"");
         userColorImageView.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + clientController.getSnapshot().getUsersInGame().get(baseUser.getUsername()).getUserColor().getColor() + ".png" , 41, 53));
@@ -787,8 +825,10 @@ public class MatchController implements BaseController {
         //hamburgerMenu.setPrefHeight(0);
         hamburgerMenu.setPrefWidth(0);
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburgerIcon);
+
         burgerTask.setRate(-1);
         //hamburgerIcon.toFront();
+        Tooltip.install(hamburgerIcon, new Tooltip("Info degli altri giocatori"));
         hamburgerIcon.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
             burgerTask.setRate(burgerTask.getRate()*-1);
             if(burgerTask.getRate()==1){
@@ -798,6 +838,7 @@ public class MatchController implements BaseController {
             else{
                 closeSlider();
             }
+            Graphics.playSomeSound("Button");
             burgerTask.play();
         });
     }
@@ -833,6 +874,7 @@ public class MatchController implements BaseController {
     }
 
     private void openSlider() {
+        Graphics.playSomeSound("PlusButton");
         hamburgerMenu.setVisible(true);
         hamburgerMenu.setScaleX(1);
         hamburgerMenu.setPrefWidth(0);
@@ -904,7 +946,7 @@ public class MatchController implements BaseController {
 
         */
         clientController.getSnapshot().getMap().getCity().forEach(city1 -> {
-            CreateSingleCity(CityPosition.getX(city1),CityPosition.getY(city1),city1);
+            createSingleCity(CityPosition.getX(city1),CityPosition.getY(city1),city1);
             if (!city1.getColor().getColor().equals(Constants.PURPLE)) {
                 createBonus(city1.getBonus().getBonusURL(), city1.getBonus().getBonusInfo(), city1);
             }
@@ -932,6 +974,7 @@ public class MatchController implements BaseController {
             imageView.fitWidthProperty().bind(background.widthProperty().divide(30));
             imageView.getStyleClass().add(city1.getCityName().getCityName());
             Label singleBonusInfo = new Label(bonusInfo.get(i));
+            singleBonusInfo.setMouseTransparent(true);
             singleBonusInfo.getStyleClass().add("bonusLabel");
             singleBonusInfo.setLabelFor(imageView);
             singleBonusInfo.setWrapText(true);
@@ -944,7 +987,6 @@ public class MatchController implements BaseController {
             imageView.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city1)));
             singleBonusInfo.layoutXProperty().bind(imageView.layoutXProperty().add(imageView.fitWidthProperty().divide(3)));
             singleBonusInfo.layoutYProperty().bind(imageView.layoutYProperty().add(imageView.fitHeightProperty().divide(3)));
-
 
 
             imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -977,6 +1019,7 @@ public class MatchController implements BaseController {
 
                     if(needToSelectOldBonus){
                         System.out.println("click on bonus");
+                        Graphics.playSomeSound("Button");
                         new Thread(()->{
                                 clientController.getCityRewardBonus(city1);
                         }).start();
@@ -989,6 +1032,8 @@ public class MatchController implements BaseController {
             });
         }
 
+        Set<Node> labelWhereCycle = background.lookupAll(".bonusLabel");
+        labelWhereCycle.forEach(Node::toFront);
     }
 
     private void createKingImage(double x, double y) {
@@ -1021,6 +1066,7 @@ public class MatchController implements BaseController {
             @Override
             public void handle(MouseEvent event) {
                 //showPopoverOnCity(city,imageView);
+                Graphics.playSomeSound("Button");
                 showKingPopover(kingImage);
             }
         });
@@ -1051,9 +1097,9 @@ public class MatchController implements BaseController {
             politicCardsCheckBox = new JFXCheckBox();
             String stringa;
             if (politicCard.getPoliticColor() == null) {
-                stringa = "MULTICOLOR";
+                stringa = "Multicolor";
             } else {
-                stringa = politicCard.getPoliticColor().getColor();
+                stringa = Translator.translatingToIta(politicCard.getPoliticColor().getColor());
             }
             politicCardsCheckBox.setText(stringa);
             politicCardsCheckBox.setId("JFXCheckBox");
@@ -1066,16 +1112,16 @@ public class MatchController implements BaseController {
                     else{
                         politicCardforBuildWithKing.remove(politicCard);
                     }
+                    Graphics.playSomeSound("Tick");
                 }
             });
             politicVBox.getChildren().add(politicCardsCheckBox);
         }
         politicVBox.setSpacing(10);
         JFXButton jfxButton = new JFXButton();
-        jfxButton.setButtonType(JFXButton.ButtonType.FLAT);
-        jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLUE"),null,null)));
-        jfxButton.setText("OK MAN");
-        jfxButton.setTextFill(Paint.valueOf("WHITE"));
+        //jfxButton.setButtonType(JFXButton.ButtonType.FLAT);
+        jfxButton.getStyleClass().add("button-raised");
+        jfxButton.setText("OKAY");
         jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -1083,11 +1129,12 @@ public class MatchController implements BaseController {
                     popOver.hide();
                     buildWithKingPhase.setValue(true);
                     startBuildWithKing();
+                    Graphics.playSomeSound("Button");
                 }
             }
         });
-
         vBox.getChildren().addAll(kingHBox,politicVBox,jfxButton);
+        VBox.setMargin(jfxButton, new Insets(0, 0, 0, 12));
         vBox.setSpacing(20);
         vBox.setPadding(new Insets(20,20,20,20));
         kingHBox.setAlignment(Pos.CENTER);
@@ -1105,7 +1152,7 @@ public class MatchController implements BaseController {
         }
     }
 
-    private void CreateSingleCity(double layoutX, double layoutY, City city) {
+    private void createSingleCity(double layoutX, double layoutY, City city) {
         ImageView imageView = new ImageView();
         imageView.getStyleClass().add("cityImage");
         System.out.println(city.getCityName().toString().toLowerCase());
@@ -1140,9 +1187,11 @@ public class MatchController implements BaseController {
             @Override
             public void handle(MouseEvent event) {
                 if(!buildWithKingPhase.get()) {
+                    Graphics.playSomeSound("Button");
                     showPopoverOnCity(city, imageView);
                 }
                 else {
+                    Graphics.playSomeSound("Button");
                     highlightCity(imageView,city);
                 }
             }
@@ -1152,6 +1201,7 @@ public class MatchController implements BaseController {
                 getCityName().getCityName()+""+city.getColor().getColor()+".png",imageView.getFitWidth(),imageView.getFitHeight()));
 
         cityName.setCache(true);
+        cityName.setMouseTransparent(true);
         background.getChildren().add(cityName);
         cityName.layoutXProperty().bind(imageView.layoutXProperty());
         cityName.layoutYProperty().bind(imageView.layoutYProperty());
@@ -1160,7 +1210,6 @@ public class MatchController implements BaseController {
 
         HBox emporiumHBox = new HBox();
         emporiumHBox.setId(city.getCityName().getCityName());
-        emporiumHBox.setMouseTransparent(true);
         background.getChildren().add(emporiumHBox);
         emporiumHBox.layoutXProperty().bind(background.widthProperty().multiply(CityPosition.getX(city)));
         emporiumHBox.layoutYProperty().bind(background.heightProperty().multiply(CityPosition.getY(city)).add(imageView.fitHeightProperty()).subtract(30));
@@ -1168,7 +1217,6 @@ public class MatchController implements BaseController {
         for (Map.Entry<String, BaseUser> userHashMap: clientController.getSnapshot().getUsersInGame().entrySet()){
             ImageView imageToAdd = new ImageView();
             imageToAdd.setId(userHashMap.getKey());
-            imageToAdd.setMouseTransparent(true);
             System.out.println("imageid" + userHashMap.getKey());
             System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
             imageToAdd.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png",imageView.getFitHeight(),imageView.getFitWidth()));
@@ -1177,6 +1225,10 @@ public class MatchController implements BaseController {
             imageToAdd.setVisible(false);
             imageToAdd.setCache(true);
             emporiumHBox.getChildren().add(imageToAdd);
+            if (userHashMap.getKey().equals("FakeUser"))
+                Tooltip.install(imageToAdd, new Tooltip("Emporio aggiuntivo"));
+            else
+                Tooltip.install(imageToAdd, new Tooltip("Emporio di " + userHashMap.getKey()));
         }
         Graphics.addShadow(cityName);
 
@@ -1227,13 +1279,14 @@ public class MatchController implements BaseController {
         });
         jfxComboBox.setPromptText("Seleziona la carta permesso");
 
-        JFXButton jfxButton = new JFXButton("Compra emporio!");
+        JFXButton jfxButton = new JFXButton("Compra emporio");
         jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("D73D00"),null,null)));
         jfxButton.setTextFill(Paint.valueOf("WHITE"));
 
         jfxButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Graphics.playSomeSound("Button");
                 Action action = new MainActionBuildWithPermitCard(city, permitCardSelected[0]);
                 clientController.doAction(action);
             }
@@ -1530,10 +1583,13 @@ public class MatchController implements BaseController {
     public void onFinishMarket() {
         selectionModel.selectFirst();
        //tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
+
+        /*
         if(tabPane.getStyle().contains( "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png'")){
             tabPane.setStyle(tabPane.getStyle().replace( "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')",
                     "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')"));
         }
+        */
 
 
 
@@ -1661,11 +1717,13 @@ public class MatchController implements BaseController {
                     startTimer();
                     Graphics.notification("E' il tuo turno!");
                     turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes1.png"));
+                    Tooltip.install(turnImage, new Tooltip("E' il tuo turno"));
                 }
                 else{
                     cancelTimer();
                     Graphics.notification("Turno finito!");
                     turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo1.png"));
+                    Tooltip.install(turnImage, new Tooltip("Non è il tuo turno"));
                 }
 
             }
@@ -1834,12 +1892,13 @@ public class MatchController implements BaseController {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Graphics.playSomeSound("Button");
                 Action action = new FastActionMoneyForHelper();
                 clientController.doAction(action);
             }
         };
 
-        String buttonText = "Compra aiutanti";
+        String buttonText = "Compra Aiutanti";
         String infoLabel = "Azione veloce: Compra un aiutante per tre monete!";
         showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
     }
@@ -1847,9 +1906,11 @@ public class MatchController implements BaseController {
     public void showDefaultPopOver(EventHandler<MouseEvent> eventHandler, String infoLabel, String buttonText, Node source){
         PopOver popOver = new PopOver();
         VBox vBox = new VBox();
-        JFXButton jfxButton = new JFXButton();
-        jfxButton.getStyleClass().add("button-raised-second");
-        jfxButton.setText(buttonText);
+        JFXButton jfxButton = new JFXButton(buttonText);
+        jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#FF5100"), null, null)));
+        jfxButton.setButtonType(JFXButton.ButtonType.RAISED);
+        jfxButton.setTextFill(Paint.valueOf("WHITE"));
+        //jfxButton.getStyleClass().add("button-raised");
         jfxButton.setOnMouseClicked(eventHandler);
         Label label = new Label();
         label.setText(infoLabel);
@@ -1857,6 +1918,7 @@ public class MatchController implements BaseController {
         vBox.getChildren().add(jfxButton);
         vBox.setSpacing(30);
         vBox.setPadding(new Insets(40,40,40,40));
+        vBox.setAlignment(Pos.CENTER);
         popOver.setContentNode(vBox);
         popOver.show(source);
     }
@@ -1865,13 +1927,14 @@ public class MatchController implements BaseController {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Graphics.playSomeSound("Button");
                 Action action = new FastActionNewMainAction();
                 clientController.doAction(action);
             }
         };
 
-        String buttonText = "Compra Azione!";
-        String infoLabel = "Azione veloce: Ottieni un azione principale per 3 aiutanti!!";
+        String buttonText = "Compra Azione";
+        String infoLabel = "Azione veloce: Ottieni un azione principale per 3 aiutanti";
 
         showDefaultPopOver(eventHandler,infoLabel,buttonText,(Node)event.getSource());
     }

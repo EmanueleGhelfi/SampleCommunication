@@ -3,6 +3,7 @@ package ClientPackage.View.GUIResources.customComponent;
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.MatchController;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import Utilities.Class.Graphics;
 import javafx.beans.property.BooleanProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -27,6 +28,7 @@ public class OldPermitCardHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
+        Graphics.playSomeSound("Button");
         if(needToSelectOldPermitCard.getValue()){
             clientController.onSelectOldPermitCard(permitCard);
             matchController.onSelectOldPermitCard();

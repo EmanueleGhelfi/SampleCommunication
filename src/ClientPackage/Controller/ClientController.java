@@ -97,7 +97,8 @@ public class ClientController {
                     method = Constants.CLI;
                     break;
                 default:
-                    System.out.println("Scelta non valida");
+                    //TODO
+                    method = Constants.GUI;
             }
         }
         return method;
@@ -354,7 +355,7 @@ public class ClientController {
     public ArrayList<String> populateListView(String username) {
         ArrayList<String> toReturn = new ArrayList<>();
         if (snapshot.getUsersInGame().get(username).getPermitCards().size() == 0)
-            toReturn.add("NO CITY WHERE BUILD");
+            toReturn.add("");
         else {
             for (PermitCard permitCard : snapshot.getUsersInGame().get(username).getPermitCards()) {
                 for (Character character : permitCard.getCityAcronimous()) {

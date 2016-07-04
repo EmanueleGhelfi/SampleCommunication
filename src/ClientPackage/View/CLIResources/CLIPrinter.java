@@ -118,7 +118,7 @@ public class CLIPrinter implements CLIPrinterInterface {
     @Override
     public String toStringFormatted(PoliticCard politicCard) {
         if(politicCard.isMultiColor()){
-            return "MULTICOLOR";
+            return "Multicolor";
         }
         else{
             return politicCard.getPoliticColor().getColor();

@@ -55,7 +55,7 @@
       </GridPane>
       <VBox alignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <children>
-            <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" onAction="#chooseMap" text="Choose" />
+            <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" onAction="#chooseMap" styleClass="button-raised" text="OKAY" />
          </children>
          <padding>
             <Insets bottom="25.0" />

@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -114,6 +115,12 @@ public class NobilityPathController implements BaseController {
         blueBonus.setPreserveRatio(true);
         yellowBonus.setPreserveRatio(true);
         kingBonus.setPreserveRatio(true);
+
+        Tooltip.install(greyBonus, new Tooltip("Bonus colore grigio"));
+        Tooltip.install(orangeBonus, new Tooltip("Bonus colore arancione"));
+        Tooltip.install(blueBonus, new Tooltip("Bonus colore blu"));
+        Tooltip.install(yellowBonus, new Tooltip("Bonus colore giallo"));
+        Tooltip.install(kingBonus, new Tooltip("Bonus del Re"));
 
 
         Graphics.bringUpImages(greyBonus, orangeBonus, yellowBonus, blueBonus, kingBonus);

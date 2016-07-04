@@ -21,7 +21,7 @@
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font></Label>
-            <JFXTextField fx:id="usernameText" alignment="CENTER" maxWidth="308.0" promptText="Inserisci qui il tuo nome" BorderPane.alignment="CENTER">
+            <JFXTextField fx:id="usernameText" alignment="CENTER" maxWidth="308.0" onAction="#onButtonLoginPressed" promptText="Inserisci qui il tuo nome" BorderPane.alignment="CENTER">
 
             </JFXTextField>
             <JFXButton fx:id="button" onAction="#onButtonLoginPressed" text="HERE WE GO">

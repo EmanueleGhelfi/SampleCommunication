@@ -8,6 +8,7 @@ import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
+import Utilities.Class.Graphics;
 import Utilities.Exception.ActionNotPossibleException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -274,6 +275,7 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void onActionNotPossibleException(ActionNotPossibleException e) {
         Platform.runLater(()->{
+            Graphics.playSomeSound("Error");
             Alert dlg = createAlert(Alert.AlertType.ERROR);
             dlg.setTitle("ERRORE NELLA MOSSA!");
             dlg.getDialogPane().setContentText("Azione non possibile!");

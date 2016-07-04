@@ -31,6 +31,7 @@ public class LoginController {
     @FXML private JFXButton button;
 
     public void onButtonLoginPressed(ActionEvent actionEvent) {
+        Graphics.playSomeSound("Button");
         System.out.println("On button login pressed");
         if (!usernameText.getText().isEmpty()) {
             clientController.onSendLogin(usernameText.getText());
@@ -45,6 +46,7 @@ public class LoginController {
         usernameText.setVisible(false);
         button.setVisible(false);
         startTimeout();
+        button.getStyleClass().add("button-raised");
     }
 
     private void startTimeout() {

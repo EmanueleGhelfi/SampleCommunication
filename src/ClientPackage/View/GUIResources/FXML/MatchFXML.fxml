@@ -265,34 +265,34 @@
                               <Image url="@../Image/profile.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <ImageView fx:id="userMoneyImageView" fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../Image/Money.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                        <ImageView fx:id="userVictoryImageView" fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../Image/ShieldTransparent.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="336.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                        <ImageView fx:id="userNobilityImageView" fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="336.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../Image/NobilityArrow.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                        <ImageView fx:id="userPoliticImageView" fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../Image/DrawACard.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="moneyLabel" text="Money" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Label fx:id="nobilityLabel" layoutX="145.0" layoutY="200.0" text="Nobility" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                        <ImageView fitHeight="53.0" fitWidth="41.0" layoutX="31.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                        <ImageView fx:id="userPermitImageView" fitHeight="53.0" fitWidth="41.0" layoutX="31.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../Image/PermitCard.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                        <ImageView fx:id="userHelperImageView" fitHeight="53.0" fitWidth="41.0" layoutX="29.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true" styleClass="hamburgerImage" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                            <image>
                               <Image url="@../Image/Helper.png" />
                            </image>
@@ -300,7 +300,7 @@
                         <Label fx:id="victoryLabel" layoutX="145.0" layoutY="141.0" text="Victory" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                         <Label fx:id="politicLabel" layoutX="88.0" layoutY="327.0" text="Politiche" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                         <Label fx:id="helperLabel" layoutX="88.0" layoutY="431.0" text="Helper" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                        <JFXListView fx:id="permitListView" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                        <JFXListView fx:id="permitListView" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                   <HBox fx:id="menuAllButtons" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">

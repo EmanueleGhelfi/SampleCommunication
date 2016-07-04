@@ -15,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -42,6 +43,7 @@ public class FinishMatchController implements Initializable {
     private JFXListView<String> ranking = new JFXListView<>();
     private ArrayList<String> usernameRanking = new ArrayList<>();
     private PopOver innerPopOver;
+    private PopOver popOverOfTheImage;
     private ImageView innerImage;
     private Pane innerPaneWhereShow = new Pane();
     private ImageView backgroundImage;
@@ -91,38 +93,71 @@ public class FinishMatchController implements Initializable {
             }
         });
         ranking.setStyle("-fx-background-color: transparent");
-        ranking.prefWidthProperty().bind(rootPane.widthProperty().divide(15));
+        ranking.prefWidthProperty().bind(rootPane.prefWidthProperty().divide(12));
         rootPane.getChildren().add(ranking);
         StackPane.setAlignment(ranking, Pos.BOTTOM_RIGHT);
-
         winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
         winnerOrLoser.setPreserveRatio(true);
-        StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
         rootPane.getChildren().add(winnerOrLoser);
+        StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
+        kingOrJester.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.1149));
+        kingOrJester.setPreserveRatio(true);
+        rootPane.getChildren().add(kingOrJester);
+        StackPane.setAlignment(kingOrJester, Pos.CENTER);
+        if(clientController.amIAWinner()) {
+            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
+            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
+            popOverOfTheImage = new PopOver();
+            StackPane stackPaneOfTheImage = new StackPane();
+            Text textOfImage = new Text();
+            textOfImage.setText("Felice della tua vittoria " + clientController.getSnapshot().getCurrentUser() + ".\n" +
+                        "Il mio cor si sollazza al saper che ho un erede di cotanta bravura.");
+            textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
+            stackPaneOfTheImage.getChildren().add(textOfImage);
+            StackPane.setAlignment(textOfImage, Pos.CENTER);
+            popOverOfTheImage.setContentNode(stackPaneOfTheImage);
+            popOverOfTheImage.show(kingOrJester);
+        }
+        if (!clientController.amIAWinner()){
+            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
+            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
+            popOverOfTheImage = new PopOver();
+            StackPane stackPaneOfTheImage = new StackPane();
+            Text textOfImage = new Text();
+            textOfImage.setText("Se vincer non saprai\nPrima o poi tu perirai\nForse meglio cambiar gioco\nPerchè bravo lo sei poco\n");
+            textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
+            stackPaneOfTheImage.getChildren().add(textOfImage);
+            StackPane.setAlignment(textOfImage, Pos.CENTER);
+            popOverOfTheImage.setContentNode(textOfImage);
+            popOverOfTheImage.show(kingOrJester);
+        }
+        /*
+        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
+        winnerOrLoser.setPreserveRatio(true);
+        rootPane.getChildren().add(winnerOrLoser);
+        StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
+        kingOrJester.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.1149));
+        kingOrJester.setPreserveRatio(true);
+
+
+        rootPane.getChildren().add(kingOrJester);
+        StackPane.setAlignment(kingOrJester, Pos.CENTER);
+        */
+
+
+    }
+
+    private void displayPopOverOfImage(boolean win) {
+        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
+        winnerOrLoser.setPreserveRatio(true);
+        rootPane.getChildren().add(winnerOrLoser);
+        StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
         kingOrJester.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.1149));
         kingOrJester.setPreserveRatio(true);
         rootPane.getChildren().add(kingOrJester);
         StackPane.setAlignment(kingOrJester, Pos.CENTER);
 
-        winnerOrLoser.toBack();
-        kingOrJester.toBack();
-        ranking.toBack();
-        backgroundImage.toBack();
-
-        if(clientController.amIAWinner()) {
-            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
-            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
-            displayPopOverOfImage(true);
-        } else if (!clientController.amIAWinner()){
-            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
-            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
-            displayPopOverOfImage(false);
-        }
-
-    }
-
-    private void displayPopOverOfImage(boolean win) {
-        PopOver popOver = new PopOver();
+        popOverOfTheImage = new PopOver();
         StackPane stackPaneOfTheImage = new StackPane();
         Text textOfImage = new Text();
         if (win)
@@ -133,8 +168,9 @@ public class FinishMatchController implements Initializable {
         textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
         stackPaneOfTheImage.getChildren().add(textOfImage);
         StackPane.setAlignment(textOfImage, Pos.CENTER);
-        popOver.setContentNode(stackPaneOfTheImage);
-        popOver.show(kingOrJester);
+        popOverOfTheImage.setContentNode(stackPaneOfTheImage);
+        popOverOfTheImage.show(kingOrJester);
+
     }
 
     private void displayInfo(String selectedItem) {

@@ -16,12 +16,12 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 14/06/2016.
  */
-public class FInishKingActionHandler implements EventHandler<ActionEvent>{
+public class FinishKingActionHandler implements EventHandler<ActionEvent>{
 
     private ClientController clientController;
     private MatchController matchController;
 
-    public FInishKingActionHandler(ClientController clientController, MatchController matchController) {
+    public FinishKingActionHandler(ClientController clientController, MatchController matchController) {
         this.clientController = clientController;
         this.matchController = matchController;
     }

@@ -4,6 +4,7 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.customComponent.ImageLoader;
 import Server.Model.Map;
 import Utilities.Class.CircularArrayList;
+import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -135,16 +136,19 @@ public class MapSelectionController implements Initializable {
         System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
     }
 
+    /*
     public void takeImage(){
         clientController.sendMap(mapArrayList.get(mapCounter));
         System.out.println("BUTTON PRESSED");
     }
+    */
 
     public void setClientController(ClientController clientController){
         this.clientController = clientController;
     }
 
     public void chooseMap(ActionEvent actionEvent) {
+        Graphics.playSomeSound("Button");
         clientController.sendMap(mapArrayList.get(mapCounter));
     }
 }

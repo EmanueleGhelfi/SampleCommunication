@@ -26,9 +26,9 @@ import tray.notification.TrayNotification;
  */
 public class Graphics {
 
-    public void playSomeSound(String path){
+    public static void playSomeSound(String path){
         try{
-            Media buttonSound = new Media(getClass().getResource(path).toString());
+            Media buttonSound = new Media(Graphics.class.getClassLoader().getResource("ClientPackage/View/GUIResources/Sound/" + path + ".wav").toString());
             MediaPlayer mediaPlayer = new MediaPlayer(buttonSound);
             mediaPlayer.play();
         }catch(Exception e){
