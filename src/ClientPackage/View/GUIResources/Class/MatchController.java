@@ -157,7 +157,7 @@ public class MatchController implements BaseController {
     private BooleanProperty stopPulseOldPermitCard = new SimpleBooleanProperty(false);
     private BooleanProperty stopPulseBonus = new SimpleBooleanProperty();
 
-    //Phase
+    //Phase parameter
     private boolean needToSelectOldBonus = false;
     private BooleanProperty needToSelectPermitCard = new SimpleBooleanProperty(false);
     private BooleanProperty needToSelectOldPermitCard = new SimpleBooleanProperty(false);
