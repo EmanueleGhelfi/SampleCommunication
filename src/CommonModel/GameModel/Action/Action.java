@@ -7,6 +7,7 @@ import CommonModel.GameModel.City.CityVisitor;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
 import CommonModel.GameModel.Market.BuyableWrapper;
+import Server.Model.FakeUser;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
@@ -58,27 +59,13 @@ public abstract class Action implements Serializable {
 
     protected void removePoliticCard(ArrayList<PoliticCard> politicCards, User user, Game game){
         int cont2 =0;
-        /*
-        for(int cont1 = 0; cont1< politicCards.size();cont1++){
-            if(politicCards.get(cont1).equals(user.getPoliticCards().get(cont2))){
-                user.getPoliticCards().remove(cont2);
-                user.decrementPoliticCardNumber();
-                System.out.println("Decrementing politic card number");
-            }
-            else{
-                cont2++;
-            }
-        }
-        */
 
         for(int i = 0; i < politicCards.size(); i++){
             for(int j = 0; j< user.getPoliticCards().size();j++){
                 if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
-                    //TODO: test
                     game.removeFromMarketList(new BuyableWrapper(user.getPoliticCards().get(j),user.getUsername()));
                     user.getPoliticCards().remove(j);
                     user.decrementPoliticCardNumber();
-                    System.out.println("Decrementing politic card number");
                     break;
                 }
             }
@@ -104,6 +91,8 @@ public abstract class Action implements Serializable {
             if (kingBonusCard != null){
                 kingBonusCard.getBonus(user, game);
             }
+            else{
+            }
         }
     }
 
@@ -119,7 +108,7 @@ public abstract class Action implements Serializable {
         if(correctPoliticCard == politicCards.size()){
             if(correctPoliticCard<Constants.FOUR_PARAMETER_BUY_PERMIT_CARD && correctPoliticCard>0)
                 newPositionInMoneyPath=Constants.TEN_PARAMETER_BUY_PERMIT_CARD -
-                        correctPoliticCard*(correctPoliticCard-Constants.ONE_PARAMETER_BUY_PERMIT_CARD);
+                        3*(correctPoliticCard-Constants.ONE_PARAMETER_BUY_PERMIT_CARD);
             else if(correctPoliticCard==Constants.FOUR_PARAMETER_BUY_PERMIT_CARD)
                 newPositionInMoneyPath = 0;
             newPositionInMoneyPath+=bonusNumber;
@@ -127,7 +116,6 @@ public abstract class Action implements Serializable {
         else {
             throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
         }
-        System.out.println("NUOVA POS "+newPositionInMoneyPath+" bonus "+ bonusNumber);
         return newPositionInMoneyPath;
     }
 
@@ -150,7 +138,6 @@ public abstract class Action implements Serializable {
                 }
             }
         }
-        System.out.println("CARTE CORRETTE "+correctPoliticCard);
         return correctPoliticCard;
     }
 
@@ -189,4 +176,6 @@ public abstract class Action implements Serializable {
             }
         }
     }
+
+
 }

@@ -101,22 +101,15 @@ public class MainBonus implements Bonus,Serializable {
     }
 
     private boolean checkIsAlreadyIn(ArrayList<Integer> randomIntArray, int randomInt) {
-        if (randomIntArray.contains(randomInt))
-            return true;
-        return false;
+        return randomIntArray.contains(randomInt);
     }
 
     private boolean intIsBadInt(int randomInt) {
-        if (randomInt == 7 || randomInt == 8 || randomInt == 9)
-            return true;
-        return false;
+        return randomInt == 7 || randomInt == 8 || randomInt == 9;
     }
 
     private boolean checkBadIntIsIn(ArrayList<Integer> randomIntArray) {
-        if (randomIntArray.contains(7) || randomIntArray.contains(8) || randomIntArray.contains(9)) {
-            return true;
-        }
-        return false;
+        return randomIntArray.contains(7) || randomIntArray.contains(8) || randomIntArray.contains(9);
     }
 
     /**

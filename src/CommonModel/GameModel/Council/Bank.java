@@ -30,10 +30,7 @@ public class Bank implements Serializable, Cloneable {
 
     public synchronized boolean checkCouncilor(PoliticColor politicColor) {
         int size = hashMapArrayList.get(politicColor).size();
-        if (size > 0 && size <= 4) {
-            return true;
-        }
-        return false;
+        return size > 0 && size <= 4;
     }
 
     public synchronized Councilor getCouncilor(PoliticColor politicColor){

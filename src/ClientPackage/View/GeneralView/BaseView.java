@@ -49,4 +49,6 @@ public interface BaseView {
     void selectOldPermitCardBonus();
 
     void onActionDone(Action action);
+
+    void onUserDisconnect(String username);
 }

@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by Emanuele on 13/05/2016.
  */
-//TODO
 public class CLIView implements BaseView {
 
     private Scanner reader = new Scanner(System.in);
@@ -220,6 +219,11 @@ public class CLIView implements BaseView {
     public void onActionDone(Action action) {
         cliPrinterInterface.printBlue("Sending Action to Server: ");
         System.out.println(action.toString());
+    }
+
+    @Override
+    public void onUserDisconnect(String username) {
+        cliPrinterInterface.printError("User: "+username+" is offline!");
     }
 
 

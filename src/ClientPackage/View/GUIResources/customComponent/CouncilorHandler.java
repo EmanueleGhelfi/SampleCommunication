@@ -89,8 +89,6 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
             public void handle(MouseEvent event) {
                 Graphics.playSomeSound("Button");
                 int index = jfxComboBox.getSelectionModel().getSelectedIndex();
-                System.out.println("selected "+index);
-                //todo check getSelected Item != null
                 if(index!=-1) {
                     System.out.println("value in combobox " + Translator.translatingToEng(jfxComboBox.getSelectionModel().getSelectedItem().getText()));
                     Councilor councilor = new Councilor(politicColors.get(index));
@@ -107,7 +105,6 @@ public class CouncilorHandler implements EventHandler<MouseEvent> {
             public void handle(MouseEvent event) {
                 Graphics.playSomeSound("Button");
                 int index = jfxComboBox.getSelectionModel().getSelectedIndex();
-                System.out.println("selected "+index);
                 if(index!=-1) {
                     System.out.println("value in combobox " + Translator.translatingToEng(jfxComboBox.getSelectionModel().getSelectedItem().getText()));
 

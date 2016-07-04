@@ -5,6 +5,6 @@ package CommonModel.GameModel.Council;
  */
 public interface GotCouncil {
 
-    public Council getCouncil();
+     Council getCouncil();
 
 }

@@ -10,7 +10,7 @@ public enum  RegionName {
 
     private String regionName;
 
-    private RegionName (String region){
+     RegionName (String region){
         this.regionName = region;
 
     }

@@ -35,4 +35,20 @@ public class Councilor implements Serializable, Cloneable{
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Councilor councilor = (Councilor) o;
+
+        return color == councilor.color;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return color != null ? color.hashCode() : 0;
+    }
 }

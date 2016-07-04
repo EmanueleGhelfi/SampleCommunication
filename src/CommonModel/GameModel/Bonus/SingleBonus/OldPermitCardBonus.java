@@ -17,8 +17,10 @@ public class OldPermitCardBonus implements Bonus,Serializable {
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
 
-        user.addOptionalActionCounter();
-        user.getBaseCommunication().selectOldPermitCard();
+        if(user.getOldPermitCards().size()>0 || user.getPermitCards().size()>0) {
+            user.addOptionalActionCounter();
+            user.getBaseCommunication().selectOldPermitCard();
+        }
 
     }
 

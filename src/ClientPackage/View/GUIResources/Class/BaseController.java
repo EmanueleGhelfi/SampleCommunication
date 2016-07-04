@@ -12,9 +12,9 @@ import java.util.ArrayList;
  */
 public interface BaseController {
 
-    public void updateView();
+     void updateView();
 
-    public void setClientController(ClientController clientController, GUIView guiView);
+     void setClientController(ClientController clientController, GUIView guiView);
 
     void setMyTurn(boolean myTurn, SnapshotToSend snapshot);
 

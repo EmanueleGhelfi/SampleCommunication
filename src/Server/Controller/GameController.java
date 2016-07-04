@@ -63,7 +63,7 @@ public class GameController implements Serializable{
         try {
             availableMaps = Map.readAllMap();
         } catch (MapsNotFoundException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -193,9 +193,10 @@ public class GameController implements Serializable{
         user.getBaseCommunication().finishTurn();
 
         for(int cont = 0; cont < users.size(); cont++){
-            System.out.println("GAMECONTROLLER <- Sending Snapshot to :" + users.get(cont).getUsername());
+            /*System.out.println("GAMECONTROLLER <- Sending Snapshot to :" + users.get(cont).getUsername());
             SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
             user.getBaseCommunication().sendSnapshot(snapshotToSend);
+            */
             if(user.equals(users.get(cont))){
                 nextUser = cont+1;
                 while (!users.get((nextUser)%game.getUsers().size()).isConnected() && nextUser%game.getUsers().size()!=cont){
@@ -229,12 +230,12 @@ public class GameController implements Serializable{
     }
 
     private void changeRound(int nextUser) {
-        System.out.println("Change round");
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
         userArrayList.get((nextUser) % game.getUsers().size()).setMainActionCounter(Constants.MAIN_ACTION_POSSIBLE);
         userArrayList.get((nextUser) % game.getUsers().size()).setFastActionCounter(Constants.FAST_ACTION_POSSIBLE);
         userArrayList.get((nextUser)%game.getUsers().size()).drawCard();
         userArrayList.get((nextUser) % game.getUsers().size()).getBaseCommunication().changeRound();
+        sendSnapshotToAll();
         startRoundTimer(userArrayList.get((nextUser)%game.getUsers().size()));
     }
 
@@ -243,6 +244,7 @@ public class GameController implements Serializable{
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
+                user.getBaseCommunication().ping();
                 onUserPass(user);
             }
         };
@@ -271,7 +273,14 @@ public class GameController implements Serializable{
             @Override
             public void run() {
                 for(Iterator<User> iterator = users.iterator(); iterator.hasNext();){
-                    iterator.next().getBaseCommunication().ping();
+                    try {
+                        iterator.next().getBaseCommunication().ping();
+                    }
+                    catch (Exception e){
+                        System.out.println("Exception");
+                        // todo: check
+                        break;
+                    }
                 }
             }
         };
@@ -282,7 +291,7 @@ public class GameController implements Serializable{
         user.getBaseCommunication().sendStartMarket();
     }
 
-    private void onAllUserDisconnected() {
+    private synchronized void onAllUserDisconnected() {
         roundTimer.cancel();
         GamesManager.getInstance().cancelThisGame(game, this);
     }
@@ -314,7 +323,10 @@ public class GameController implements Serializable{
             sendFinishMarketToAll();
 
 
-            if(game.getUsers().size()==2){
+            //count true user
+            long trueUser = game.getUsers().stream().filter(user -> !( user instanceof FakeUser)).count();
+
+            if(trueUser==2){
                 configurationForTwoPlayers();
             }
 
@@ -324,6 +336,7 @@ public class GameController implements Serializable{
 
             //TODO: READD TEN EMPORIUMS
 
+            /*
             for (User user :
                     users) {
                 int cont=0;
@@ -337,6 +350,7 @@ public class GameController implements Serializable{
 
                 }
             }
+            */
 
         }
 
@@ -364,7 +378,7 @@ public class GameController implements Serializable{
     }
 
     /** disable market phase in all user */
-    private void sendFinishMarketToAll() {
+    private synchronized void sendFinishMarketToAll() {
         new Thread(()->{
             for (User user:users){
                 user.getBaseCommunication().disableMarketPhase();
@@ -416,8 +430,6 @@ public class GameController implements Serializable{
                 System.out.println("L'oggetto è già in vendita!");
             }
         }
-        //TODO: check if it's ok
-        //sendSnapshotToAll();
         return true;
 
     }
@@ -449,13 +461,10 @@ public class GameController implements Serializable{
         }
         sendSnapshotToAll();
 
-        if(counter==buyableWrappers.size()){
-            return true;
-        }
-        else return false;
+        return counter == buyableWrappers.size();
     }
 
-    public void onRemoveItem(BuyableWrapper item) {
+    public synchronized void onRemoveItem(BuyableWrapper item) {
         game.removeFromMarketList(item);
         sendSnapshotToAll();
     }
@@ -681,9 +690,9 @@ public class GameController implements Serializable{
         Collections.sort(arrayList, new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                if (o1.getVictoryPathPosition() > o1.getVictoryPathPosition())
+                if (o1.getVictoryPathPosition() > o2.getVictoryPathPosition())
                     return -1;
-                if (o1.getVictoryPathPosition() > o1.getVictoryPathPosition())
+                if (o2.getVictoryPathPosition() > o1.getVictoryPathPosition())
                     return 1;
                 else
                     return 0;
@@ -768,6 +777,13 @@ public class GameController implements Serializable{
     }
 
     public void onUserDisconnected(User user) {
+
+        users.forEach(user1 -> {
+            if(user1.isConnected()){
+                user1.getBaseCommunication().sendUserDisconnect(user.getUsername());
+            }
+        });
+
         if(buyPhase){
             onFinishBuyPhase(user);
         }
@@ -799,8 +815,9 @@ public class GameController implements Serializable{
         return false;
     }
 
-    public void cleanGame(){
+    public synchronized void cleanGame(){
         if (!userConnectedRoutine()){
+
             roundTimer.cancel();
             users.clear();
             GamesManager.getInstance().cancelThisGame(game, this);

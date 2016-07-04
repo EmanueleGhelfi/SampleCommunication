@@ -136,7 +136,7 @@ public class Map implements Serializable {
         Map map5 = writeGenericMap(1,2,1,"Quinta Mappa", "/ClientPackage/View/GUIResources/Image/Map/ABA.png","/ClientPackage/View/GUIResources/Image/MapPreview/ABA.png");
         Map map6 = writeGenericMap(2,1,1,"Sesta Mappa", "/ClientPackage/View/GUIResources/Image/Map/BAA.png","/ClientPackage/View/GUIResources/Image/MapPreview/BAA.png");
         Map map7 = writeGenericMap(2,1,2,"Settima mappa", "/ClientPackage/View/GUIResources/Image/Map/BAB.png","/ClientPackage/View/GUIResources/Image/MapPreview/BAB.png");
-        Map map8 = writeGenericMap(2,2,1,"Ottava Mappa","/ClientPackage/View/GUIResources/Image/Map/BBA.png","/ClientPackage/View/GUIResources/Image/MapPreview/BBAma.png");
+        Map map8 = writeGenericMap(2,2,1,"Ottava Mappa","/ClientPackage/View/GUIResources/Image/Map/BBA.png","/ClientPackage/View/GUIResources/Image/MapPreview/BBA.png");
 
         ArrayList<Map> mapArray = new ArrayList<>();
         mapArray.add(map);
@@ -163,7 +163,7 @@ public class Map implements Serializable {
         }
     }
 
-    private static Map writeGenericMap(int firstPart, int secondPart, int thirdPart, String mapName, String mapUrl, String mapPreview) {
+    public static Map writeGenericMap(int firstPart, int secondPart, int thirdPart, String mapName, String mapUrl, String mapPreview) {
         City arkon;
         City burgen;
         City castrum;
@@ -295,7 +295,12 @@ public class Map implements Serializable {
         links.add(new Link(esti,hellar));
         links.add(new Link(indur,kultos));
         links.add(new Link(juvelar,lyram));
-        links.add(new Link(merkatim,hellar));
+        if(secondPart==2){
+            links.add(new Link(merkatim,juvelar));
+        }
+        else {
+            links.add(new Link(merkatim, hellar));
+        }
 
         ArrayList<City> cities = new ArrayList<>();
         cities.add(arkon);

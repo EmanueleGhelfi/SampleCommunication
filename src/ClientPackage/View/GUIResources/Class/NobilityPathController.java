@@ -51,7 +51,6 @@ public class NobilityPathController implements BaseController {
         nobilityPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("event x and y "+event.getX()/ backgroundImage.getFitWidth()+" "+event.getY()/ backgroundImage.getFitHeight());
             }
         });
         nobilityPath.setOpacity(0.8);
@@ -66,6 +65,16 @@ public class NobilityPathController implements BaseController {
     }
 
     private void placeBonusCard() {
+        ImageView greyBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/GreyBonusCard.png"));
+        greyBonus.setCache(true);
+        ImageView orangeBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/PinkBonusCard.png"));
+        orangeBonus.setCache(true);
+        ImageView blueBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/BlueBonusCard.png"));
+        blueBonus.setCache(true);
+        ImageView yellowBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/YellowBonusCard.png"));
+        yellowBonus.setCache(true);
+        kingBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/KingBonus1.png"));
+        /*
         ImageView greyBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/GreyBonusCard.png",true));
         greyBonus.setCache(true);
         ImageView orangeBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/PinkBonusCard.png",true));
@@ -75,6 +84,7 @@ public class NobilityPathController implements BaseController {
         ImageView yellowBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/YellowBonusCard.png",true));
         yellowBonus.setCache(true);
         kingBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/KingBonus1.png",true));
+        */
         kingBonus.setCache(true);
 
         greyBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
@@ -142,7 +152,6 @@ public class NobilityPathController implements BaseController {
             if (position != null) {
                 for (int i = 0; i < position.getBonus().getBonusURL().size(); i++) {
                     StackPane internalStackPane = new StackPane();
-                    System.out.println(position.getPosition() + " E' LA POSITION CON " + position.getBonus().getBonusURL().size() + " BONUS");
                     ImageView bonusImage = new ImageView(ImageLoader.getInstance().getImage(position.getBonus().getBonusURL().get(i)));
                     bonusImage.setCache(true);
                     internalStackPane.getChildren().add(bonusImage);
@@ -172,7 +181,7 @@ public class NobilityPathController implements BaseController {
 
     @Override
     public void updateView() {
-        kingBonus.setImage(new Image(Constants.IMAGE_PATH + "KingBonus" + clientController.getSnapshot().getKingBonusCards().firstElement().getOrder() + ".png"));
+        kingBonus.setImage(new Image(Constants.IMAGE_PATH + "KingBonus" + clientController.getSnapshot().getKingBonusCards().peek().getOrder() + ".png"));
     }
 
     @Override

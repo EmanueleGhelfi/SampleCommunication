@@ -32,6 +32,7 @@ public class Constants {
     public static final String CODE_FINISH_TURN = "CODE_FINISH_TURN";
     public static final String CODE_FINISH = "CODE_FINISH";
     public static final String CODE_OLD_PERMIT_CARD_BONUS = "CODE_OLD_PERMIT_CARD_BONUS";
+    public static final String CODE_USER_DISCONNECT = "CODE_USER_DISCONNECT";
 
     //GENERAL STRING
     public static final String GUI = "GUI";
@@ -150,7 +151,6 @@ public class Constants {
     public static final int FOUR_PARAMETER_BUY_PERMIT_CARD = 4;
     public static final int ONE_PARAMETER_BUY_PERMIT_CARD = 1;
     public static final int MONEY_EARNED_ELECT_COUNCILOR = 4;
-    //todo: it was 2
     public static final int KING_PRICE = 2;
     public static final int EMPORIUMS_BUILDABLE = 10;
     public static final int KING_CARDS = 6;
@@ -168,7 +168,7 @@ public class Constants {
     public static final String POLITIC_CARD = "POLITIC_CARD";
 
     //ROUND
-    public static final long ROUND_DURATION = 3000000;
+    public static final long ROUND_DURATION = 2000000;
 
     // Folder
     public  static String IMAGE_PATH= "/ClientPackage/View/GUIResources/Image/";

@@ -19,7 +19,7 @@ public enum Color implements Serializable {
     Color() {
     }
 
-    private Color (String color, int cityNumber){
+     Color (String color, int cityNumber){
         this.color = color;
         this.cityNumber = cityNumber;
     }
@@ -31,10 +31,7 @@ public enum Color implements Serializable {
                 cityCounter++;
             }
         }
-        if (cityCounter == cityNumber){
-            return true;
-        }
-        return false;
+        return cityCounter == cityNumber;
     }
 
     public String getColor(){

@@ -81,7 +81,6 @@ public class Graphics {
 
     public static Animation scaleTransitionEffectCycle (Node node, float toValueX, float toValueY, BooleanProperty stopTransition){
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500), node);
-        System.out.println("Scale transition effect");
         scaleTransition.setCycleCount(Animation.INDEFINITE);
         scaleTransition.setInterpolator(Interpolator.EASE_BOTH);
         scaleTransition.setFromX(node.getScaleX());
@@ -92,7 +91,6 @@ public class Graphics {
         stopTransition.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                System.out.println("Scale transition effect changed boolean to: "+newValue);
                 if(newValue){
                     scaleTransition.stop();
                     node.setScaleX(1);

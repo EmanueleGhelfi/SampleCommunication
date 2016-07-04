@@ -12,6 +12,7 @@ import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
+import Utilities.Exception.ActionNotPossibleException;
 import Utilities.Class.Translator;
 import Utilities.Exception.CouncilNotFoundException;
 import com.jfoenix.controls.*;
@@ -184,6 +185,8 @@ public class MatchController implements BaseController {
 
     private Timer timer = new Timer();
 
+    private SingleSelectionModel<Tab> selectionModel;
+
     public void setClientController(ClientController clientController, GUIView guiView) {
         this.clientController = clientController;
         this.guiView = guiView;
@@ -192,7 +195,6 @@ public class MatchController implements BaseController {
         guiView.registerBaseController(this);
         initController();
 
-        System.out.println("setting image");
         backgroundImage.setImage(ImageLoader.getInstance().getImage(currentSnapshot.getMap().getRealMap()));
         backgroundImage.setPreserveRatio(true);
         backgroundImage.setCache(true);
@@ -204,7 +206,6 @@ public class MatchController implements BaseController {
         backgroundImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
-                System.out.println("changed to "+newValue.getWidth()+" "+" "+newValue.getHeight());
                 background.setPrefWidth(newValue.getWidth());
                 background.setPrefHeight(newValue.getHeight());
                // gridPane.setPrefSize(background.getPrefWidth(),background.getMaxHeight());
@@ -224,8 +225,6 @@ public class MatchController implements BaseController {
         backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("image: "+newValue.doubleValue());
-                System.out.println("background "+ background.getWidth() );
             }
         });
 
@@ -265,9 +264,10 @@ public class MatchController implements BaseController {
         });
         //help();
 
-        selectionModel = tabPane.getSelectionModel();
+
         tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
 
+        selectionModel = tabPane.getSelectionModel();
         initHamburgerIcon();
         bottomPane.setVisible(false);
         nobilityPath.setVisible(false);
@@ -370,6 +370,7 @@ public class MatchController implements BaseController {
     private void createLayers() {
         boardImageView.toFront();
         infoHBox.toFront();
+        timerIndicator.toFront();
         turnImage.toFront();
         bottomPane.toFront();
         nobilityPath.toFront();
@@ -721,7 +722,7 @@ public class MatchController implements BaseController {
 
 
         moreActionNodeList.setSpacing(10);
-        gridPane.setMargin(moreActionNodeList, new Insets(0,0,20,20));
+        GridPane.setMargin(moreActionNodeList, new Insets(0,0,20,20));
         moreActionNodeList.addAnimatedNode(showMore, (expanded) -> new ArrayList<KeyValue>(){{ add(
                 new KeyValue(showMore.rotateProperty(), expanded? 225:180 ,
                 Interpolator.EASE_BOTH));}});
@@ -809,7 +810,7 @@ public class MatchController implements BaseController {
     }
 
     private void populateField(BaseUser baseUser) {
-        System.out.println("populate field");
+
         moneyLabel.setText(baseUser.getCoinPathPosition()+"");
         politicLabel.setText(baseUser.getPoliticCardNumber()+"");
         helperLabel.setText(baseUser.getHelpers().size()+"");
@@ -848,7 +849,7 @@ public class MatchController implements BaseController {
         //hamburgerIcon.setBackground(new Background(new BackgroundFill(Paint.valueOf("BLACK"),null,null)));
         final Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000),
-                new KeyValue(hamburgerMenu.prefWidthProperty(), 0)));
+                new KeyValue(hamburgerMenu.prefWidthProperty(), 0, Interpolator.EASE_OUT)));
 
         List<Node> nodes = hamburgerMenu.getChildren();
         nodes.forEach(node -> {
@@ -880,7 +881,7 @@ public class MatchController implements BaseController {
         hamburgerMenu.setPrefWidth(0);
         final Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),
-                new KeyValue(hamburgerMenu.prefWidthProperty(), backgroundImage.getFitWidth()/5)));
+                new KeyValue(hamburgerMenu.prefWidthProperty(), backgroundImage.getFitWidth()/5, Interpolator.EASE_OUT)));
 
         List<Node> nodes = hamburgerMenu.getChildren();
         nodes.forEach(node -> {
@@ -967,7 +968,6 @@ public class MatchController implements BaseController {
     private void createBonus(ArrayList<String> bonusURL, ArrayList<String> bonusInfo, City city1) {
         for(int i = 0; i< bonusURL.size();i++){
             ImageView imageView = new ImageView();
-            System.out.println("bonus url "+bonusURL.get(i));
             imageView.setImage(ImageLoader.getInstance().getImage(bonusURL.get(i)));
             imageView.setCache(true);
             imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.05));
@@ -1015,9 +1015,10 @@ public class MatchController implements BaseController {
                         pulseBonus.setValue(true);
                     }
 
-                    System.out.println("click on bonus");
+
 
                     if(needToSelectOldBonus){
+
                         System.out.println("click on bonus");
                         Graphics.playSomeSound("Button");
                         new Thread(()->{
@@ -1155,14 +1156,9 @@ public class MatchController implements BaseController {
     private void createSingleCity(double layoutX, double layoutY, City city) {
         ImageView imageView = new ImageView();
         imageView.getStyleClass().add("cityImage");
-        System.out.println(city.getCityName().toString().toLowerCase());
-        try {
             Image cityImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/City/"+city.getColor().getColor().toLowerCase()+".png",background.getHeight()*0.17,background.getWidth()/11);
             imageView.setImage(cityImage);
             imageView.setCache(true);
-        }
-        catch (Exception e){
-        }
         imageView.fitHeightProperty().bind(background.heightProperty().multiply(0.17));
         imageView.fitWidthProperty().bind(background.widthProperty().divide(11));
         background.getChildren().add(imageView);
@@ -1219,6 +1215,7 @@ public class MatchController implements BaseController {
             imageToAdd.setId(userHashMap.getKey());
             System.out.println("imageid" + userHashMap.getKey());
             System.out.println("User color "+userHashMap.getValue().getUserColor().getColor());
+            imageToAdd.setMouseTransparent(true);
             imageToAdd.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Emporia/" + userHashMap.getValue().getUserColor().getColor() + ".png",imageView.getFitHeight(),imageView.getFitWidth()));
             imageToAdd.fitHeightProperty().bind(imageView.fitHeightProperty().divide(6));
             imageToAdd.setPreserveRatio(true);
@@ -1273,8 +1270,9 @@ public class MatchController implements BaseController {
         jfxComboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("Selection changed to: "+newValue);
-                permitCardSelected[0] = clientController.getSnapshot().getCurrentUser().getPermitCards().get(newValue.intValue());
+                if(newValue.intValue()!=-1) {
+                    permitCardSelected[0] = clientController.getSnapshot().getCurrentUser().getPermitCards().get(newValue.intValue());
+                }
             }
         });
         jfxComboBox.setPromptText("Seleziona la carta permesso");
@@ -1287,8 +1285,13 @@ public class MatchController implements BaseController {
             @Override
             public void handle(ActionEvent event) {
                 Graphics.playSomeSound("Button");
-                Action action = new MainActionBuildWithPermitCard(city, permitCardSelected[0]);
-                clientController.doAction(action);
+                if(permitCardSelected[0]!=null) {
+                    Action action = new MainActionBuildWithPermitCard(city, permitCardSelected[0]);
+                    clientController.doAction(action);
+                }
+                else{
+                    guiView.onActionNotPossibleException(new ActionNotPossibleException("You need to select a Permit card!"));
+                }
             }
         });
 
@@ -1328,9 +1331,6 @@ public class MatchController implements BaseController {
         background.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("event x and y "+event.getX()/background.getWidth()+" "+event.getY()/background.getHeight());
-                System.out.println("Scene  "+event.getSceneX()+" "+event.getSceneY());
-                System.out.println("Altro "+event.getScreenX()+" "+event.getScreenY());
             }
         });
     }
@@ -1372,7 +1372,6 @@ public class MatchController implements BaseController {
                         imageViews.add(imageView);
                     }
                     catch (IllegalArgumentException e){
-                        System.out.println("not found image in match controller"+councilors.get(i).getColor().getImageUrl());
                     }
                     hBox.getChildren().add(imageView);
                 }
@@ -1407,7 +1406,6 @@ public class MatchController implements BaseController {
                 kingCouncil.add(imageView);
             }
             catch (IllegalArgumentException e){
-                System.out.println("not found image match controller"+councilor.getColor().getImageUrl());
             }
             kingHBox.getChildren().add(imageView);
         }
@@ -1569,9 +1567,6 @@ public class MatchController implements BaseController {
                     "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')"));
         }
 
-
-        System.out.println("[DEBUG] "+tabPane.getStyle());
-       // tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')");
     }
 
     @Override
@@ -1583,13 +1578,10 @@ public class MatchController implements BaseController {
     public void onFinishMarket() {
         selectionModel.selectFirst();
        //tabPane.setStyle("-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')");
-
-        /*
         if(tabPane.getStyle().contains( "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png'")){
             tabPane.setStyle(tabPane.getStyle().replace( "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png')",
                     "-fx-background-image: url('/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png')"));
         }
-        */
 
 
 
@@ -1628,7 +1620,6 @@ public class MatchController implements BaseController {
 
     @Override
     public void selectCityRewardBonus() {
-        System.out.println("Select city reward bonus");
         needToSelectOldBonus=true;
         stopPulseBonus.setValue(false);
         clientController.getSnapshot().getCurrentUser().getUsersEmporium().forEach(this::pulseBonus);
@@ -1647,7 +1638,7 @@ public class MatchController implements BaseController {
                 //path.getElements().add(new MoveTo(background.widthProperty().get()*CityPosition.getX(city1),background.heightProperty().get()*CityPosition.getY(city1)));
                 KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(), background.getWidth() * CityPosition.getX(city1), Interpolator.EASE_BOTH);
                 KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(), background.getHeight() * CityPosition.getY(city1), Interpolator.EASE_BOTH);
-                KeyFrame keyFrame = new KeyFrame(Duration.millis(500 * kingPath.indexOf(city1)), keyValueX, keyValueY);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(900 * kingPath.indexOf(city1)), keyValueX, keyValueY);
                 timeline.getKeyFrames().add(keyFrame);
             });
 
@@ -1750,7 +1741,8 @@ public class MatchController implements BaseController {
                 councilors = clientController.getSnapshot().getCouncil(regionName);
                 ArrayList<ImageView> imageView = councilHashMap.get(regionName);
                 for(int i = 0; i< councilors.size();i++){
-                    imageView.get(i).setImage(ImageLoader.getInstance().getImage(councilors.get(i).getColor().getImageUrl(),imageView.get(i).getFitWidth(),imageView.get(i).getFitHeight()));
+                    //// TODO: 29/06/2016 check
+                    imageView.get(i).setImage(ImageLoader.getInstance().getImage(councilors.get(i).getColor().getImageUrl(),imageView.get(i).getBoundsInLocal().getWidth(),imageView.get(i).getBoundsInParent().getHeight()));
                 }
             } catch (CouncilNotFoundException e) {
                 e.printStackTrace();
@@ -1786,7 +1778,6 @@ public class MatchController implements BaseController {
         setEmporiaVisibility();
 
         // reprint user's info
-        System.out.println("update view" +usersComboBox.getValue());
                 populateField(clientController.getSnapshot().getUsersInGame().get(usersComboBox.getValue()));
         /*
                 createPermitCard(coastHBox,clientController.getSnapshot().getVisiblePermitCards(),RegionName.COAST);
@@ -1940,7 +1931,6 @@ public class MatchController implements BaseController {
     }
 
     public void showMore() {
-        System.out.println("PREMUTO");
         if(bottomPane.isVisible()){
             bottomPane.setVisible(false);
         }

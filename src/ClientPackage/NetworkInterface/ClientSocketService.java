@@ -220,7 +220,7 @@ public class ClientSocketService extends ClientService implements Runnable {
                 break;
             }
             case Constants.CODE_EXCEPTION:{
-                ActionNotPossibleException actionNotPossibleException = new ActionNotPossibleException(communicationInfo.getInfo());
+                ActionNotPossibleException actionNotPossibleException = new ActionNotPossibleException(gson.fromJson(communicationInfo.getInfo(),String.class));
                 clientController.onActionNotPossible(actionNotPossibleException);
                 break;
             }
@@ -233,6 +233,12 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_OLD_PERMIT_CARD_BONUS:{
                 clientController.selectOldPermitCardBonus();
+                break;
+            }
+
+            case Constants.CODE_USER_DISCONNECT:{
+                String username = gson.fromJson(communicationInfo.getInfo(),String.class);
+                clientController.onUserDisconnect(username);
                 break;
             }
         }

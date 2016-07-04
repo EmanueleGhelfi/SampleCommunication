@@ -6,7 +6,6 @@ import java.util.ArrayList;
 /**
  * Created by Giulio on 15/05/2016.
  */
-//TODO rifare
 public enum PermitCardMountainCity implements Serializable {
 
     KLM('K', 'L', 'M'), LMN('L', 'M', 'N'), OK('O', 'K', null), ML('M', 'L', null), L('L', null, null), M('M', null, null), NO('N', 'O', null),

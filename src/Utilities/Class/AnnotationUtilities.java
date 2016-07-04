@@ -23,7 +23,6 @@ public class AnnotationUtilities {
             for (final Method method : allMethods) {
                 if (method.isAnnotationPresent(annotation)) {
                     Annotation annotInstance = method.getAnnotation(annotation);
-                    // TODO process annotInstance
                     methods.add(method);
                 }
             }

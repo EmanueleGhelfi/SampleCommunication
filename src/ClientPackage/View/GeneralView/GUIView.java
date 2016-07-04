@@ -58,7 +58,6 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void init() throws Exception {
         super.init();
-        System.out.println("EHIIIIII");
         this.clientController.setBaseView(this);
     }
 
@@ -109,7 +108,6 @@ public class GUIView extends Application implements BaseView {
     }
 
     private void changeStage() {
-        System.out.println("show waiting for start");
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.WAITING_FXML));
         Parent screen = null;
         try {
@@ -133,7 +131,7 @@ public class GUIView extends Application implements BaseView {
             @Override
             public void run() {
                 stage.setResizable(true);
-                System.out.println("show map page");
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MAP_SELECTION_FXML));
                 Parent screen = null;
                 try {
@@ -328,6 +326,11 @@ public class GUIView extends Application implements BaseView {
 
     }
 
+    @Override
+    public void onUserDisconnect(String username) {
+        Graphics.notification("User: "+username+" is offline");
+    }
+
     public synchronized void registerBaseController(BaseController baseController){
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);
@@ -353,7 +356,6 @@ public class GUIView extends Application implements BaseView {
                 timerTask=new TimerTask() {
                     @Override
                     public void run() {
-                        System.out.println("Finished resize ehehehe");
 
 
                         if(stage.getHeight()==newValue.doubleValue()) {

@@ -68,27 +68,7 @@ public class MainActionBuyPermitCard extends Action {
 
     // MAIN-TEST
     public static void main(String[] args){
-        Game game = new Game();
-        User user = null;
-        try {
-            user = new User(new RMICommunication("name"), GamesManager.getInstance());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        System.out.println(user);
-        ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-        politicCardArrayList.add(new PoliticCard(PoliticColor.WHITE,false));
-        politicCardArrayList.add(new PoliticCard(PoliticColor.WHITE,false));
-        politicCardArrayList.add(new PoliticCard(PoliticColor.ORANGE,false));
-        user.getPoliticCards().addAll(politicCardArrayList);
-        RegionName region = RegionName.MOUNTAIN;
-        PermitCard permitCard = new PermitCard(new MainBonus(1,5,9,false),null,region);
-        MainActionBuyPermitCard mainActionBuyPermitCard = new MainActionBuyPermitCard(politicCardArrayList,region,permitCard);
-        try {
-            mainActionBuyPermitCard.doAction(game,user);
-        } catch (ActionNotPossibleException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override

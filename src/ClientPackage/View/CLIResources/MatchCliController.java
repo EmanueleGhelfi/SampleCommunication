@@ -26,7 +26,6 @@ import Utilities.Class.TableBuilder;
 import Utilities.Exception.CouncilNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
-import dnl.utils.text.table.TextTable;
 import javafx.geometry.Pos;
 import org.apache.commons.cli.Options;
 
@@ -137,15 +136,6 @@ public class MatchCliController implements CliController  {
 
     }
 
-    private void printCity(Object[][] citiesToPrint) {
-        String[] columnNames = new String[]{"NAME","COLOR","BONUS"};
-        TextTable tt = new TextTable(columnNames, citiesToPrint);
-// this adds the numbering on the left
-        tt.setAddRowNumbering(true);
-// sort by the first column
-        tt.setSort(0);
-        tt.printTable();
-    }
 
     private void addCity(Object[][] citiesToPrint, int i, City city) {
         citiesToPrint[i] = new String[]{city.getCityName().getCityName(),city.getColor().getColor(),city.getBonus().toString()};
