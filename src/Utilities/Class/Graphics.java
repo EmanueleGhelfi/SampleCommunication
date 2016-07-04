@@ -36,6 +36,7 @@ public class Graphics {
         }
     }
 
+
     public static void bringUpImages(Node... nodes) {
         for (Node node: nodes) {
             BringUpHandler bringUpHandler = new BringUpHandler(node);
