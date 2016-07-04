@@ -295,7 +295,7 @@ public class Map implements Serializable {
         links.add(new Link(esti,hellar));
         links.add(new Link(indur,kultos));
         links.add(new Link(juvelar,lyram));
-        if(secondPart==2){
+        if(secondPart==1){
             links.add(new Link(merkatim,juvelar));
         }
         else {

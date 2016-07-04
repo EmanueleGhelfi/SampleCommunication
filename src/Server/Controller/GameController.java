@@ -193,10 +193,6 @@ public class GameController implements Serializable{
         user.getBaseCommunication().finishTurn();
 
         for(int cont = 0; cont < users.size(); cont++){
-            /*System.out.println("GAMECONTROLLER <- Sending Snapshot to :" + users.get(cont).getUsername());
-            SnapshotToSend snapshotToSend = new SnapshotToSend(game, user);
-            user.getBaseCommunication().sendSnapshot(snapshotToSend);
-            */
             if(user.equals(users.get(cont))){
                 nextUser = cont+1;
                 while (!users.get((nextUser)%game.getUsers().size()).isConnected() && nextUser%game.getUsers().size()!=cont){
@@ -206,7 +202,8 @@ public class GameController implements Serializable{
                 }
                 if (lastUser != nextUser % game.getUsers().size()) {
                     if ((nextUser % game.getUsers().size()) == cont) {
-                        onAllUserDisconnected();
+                        //onAllUserDisconnected();
+                        startMarket();
                     } else {
                         if (turnCounter <= 0) {
                             System.out.println("Starting market");
