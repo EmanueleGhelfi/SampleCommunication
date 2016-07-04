@@ -1580,7 +1580,7 @@ public class MatchController implements BaseController {
                 //path.getElements().add(new MoveTo(background.widthProperty().get()*CityPosition.getX(city1),background.heightProperty().get()*CityPosition.getY(city1)));
                 KeyValue keyValueX = new KeyValue(kingImage.layoutXProperty(), background.getWidth() * CityPosition.getX(city1), Interpolator.EASE_BOTH);
                 KeyValue keyValueY = new KeyValue(kingImage.layoutYProperty(), background.getHeight() * CityPosition.getY(city1), Interpolator.EASE_BOTH);
-                KeyFrame keyFrame = new KeyFrame(Duration.millis(500 * kingPath.indexOf(city1)), keyValueX, keyValueY);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(900 * kingPath.indexOf(city1)), keyValueX, keyValueY);
                 timeline.getKeyFrames().add(keyFrame);
             });
 
