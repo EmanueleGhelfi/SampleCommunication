@@ -42,7 +42,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.RotateEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -646,7 +645,7 @@ public class MatchController implements BaseController {
         finishKing.setButtonType(JFXButton.ButtonType.FLAT);
         finishKing.setTextFill(Paint.valueOf("WHITE"));
         finishKing.getStyleClass().add("button-raised");
-        finishKing.setOnAction(new FinishKingActionHandler(clientController,this));
+        finishKing.setOnAction(new FinishKingMoveHandler(clientController,this));
         finishKing.disableProperty().bind(buildWithKingPhase.not());
         finishKing.setVisible(false);
         BooleanProperty animation = new SimpleBooleanProperty();

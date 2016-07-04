@@ -16,12 +16,14 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 14/06/2016.
  */
-public class FinishKingActionHandler implements EventHandler<ActionEvent>{
+public class FinishKingMoveHandler implements EventHandler<ActionEvent>{
 
     private ClientController clientController;
     private MatchController matchController;
 
-    public FinishKingActionHandler(ClientController clientController, MatchController matchController) {
+
+
+    public FinishKingMoveHandler(ClientController clientController, MatchController matchController) {
         this.clientController = clientController;
         this.matchController = matchController;
     }
@@ -30,8 +32,6 @@ public class FinishKingActionHandler implements EventHandler<ActionEvent>{
     @Override
     public void handle(ActionEvent event) {
         if(matchController.getBuildWithKingPhase()){
-            //Action action = new MainActionBuildWithKingHelp((ArrayList<City>)matchController.getKingPathforBuild().clone(),(ArrayList<PoliticCard>)matchController.getPoliticCardforBuildWithKing().clone());
-
             ArrayList<City> citiesForBuildWithKing = (ArrayList<City>) matchController.getKingPathforBuild().clone();
             if((citiesForBuildWithKing.size())>0){
                 if(!citiesForBuildWithKing.get(0).equals(clientController.getSnapshot().getKing().getCurrentCity())){
