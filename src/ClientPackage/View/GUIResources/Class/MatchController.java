@@ -1120,7 +1120,9 @@ public class MatchController implements BaseController {
         politicVBox.setSpacing(10);
         JFXButton jfxButton = new JFXButton();
         //jfxButton.setButtonType(JFXButton.ButtonType.FLAT);
-        jfxButton.getStyleClass().add("button-raised");
+        jfxButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#FF5100"), null, null)));
+        jfxButton.setButtonType(JFXButton.ButtonType.RAISED);
+        jfxButton.setTextFill(Paint.valueOf("WHITE"));
         jfxButton.setText("OKAY");
         jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
