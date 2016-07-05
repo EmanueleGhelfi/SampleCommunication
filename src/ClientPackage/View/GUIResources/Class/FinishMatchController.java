@@ -10,15 +10,9 @@ import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -40,14 +34,13 @@ public class FinishMatchController implements Initializable {
     private GUIView baseView;
     private ImageView winnerOrLoser = new ImageView();
     private ImageView kingOrJester = new ImageView();
+    private ImageView innerImage;
     private JFXListView<String> ranking = new JFXListView<>();
     private ArrayList<String> usernameRanking = new ArrayList<>();
     private PopOver innerPopOver;
     private PopOver popOverOfTheImage;
-    private ImageView innerImage;
     private Pane innerPaneWhereShow = new Pane();
     private ImageView backgroundImage;
-    private Pane backgroundPane = new Pane();
 
     @FXML private StackPane rootPane;
 
@@ -66,22 +59,12 @@ public class FinishMatchController implements Initializable {
         backgroundImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/FinalBackground.png"));
         backgroundImage.fitWidthProperty().bind(rootPane.widthProperty());
         backgroundImage.fitHeightProperty().bind(rootPane.heightProperty());
-        rootPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                System.out.println("event x and y "+event.getX()/rootPane.getWidth()+" "+event.getY()/rootPane.getHeight());
-            }
-        });
         rootPane.getChildren().add(backgroundImage);
-
-
         innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.png"));
         innerImage.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(2));
         innerImage.setPreserveRatio(true);
         rootPane.getChildren().add(innerImage);
         StackPane.setAlignment(innerImage, Pos.BOTTOM_LEFT);
-
-
         for (BaseUser baseUser : clientController.getFinalSnapshot()) {
             usernameRanking.add(baseUser.getUsername());
         }
@@ -131,20 +114,6 @@ public class FinishMatchController implements Initializable {
             popOverOfTheImage.setContentNode(textOfImage);
             popOverOfTheImage.show(kingOrJester);
         }
-        /*
-        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
-        winnerOrLoser.setPreserveRatio(true);
-        rootPane.getChildren().add(winnerOrLoser);
-        StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
-        kingOrJester.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.1149));
-        kingOrJester.setPreserveRatio(true);
-
-
-        rootPane.getChildren().add(kingOrJester);
-        StackPane.setAlignment(kingOrJester, Pos.CENTER);
-        */
-
-
     }
 
     private void displayPopOverOfImage(boolean win) {
@@ -156,7 +125,6 @@ public class FinishMatchController implements Initializable {
         kingOrJester.setPreserveRatio(true);
         rootPane.getChildren().add(kingOrJester);
         StackPane.setAlignment(kingOrJester, Pos.CENTER);
-
         popOverOfTheImage = new PopOver();
         StackPane stackPaneOfTheImage = new StackPane();
         Text textOfImage = new Text();
@@ -170,7 +138,6 @@ public class FinishMatchController implements Initializable {
         StackPane.setAlignment(textOfImage, Pos.CENTER);
         popOverOfTheImage.setContentNode(stackPaneOfTheImage);
         popOverOfTheImage.show(kingOrJester);
-
     }
 
     private void displayInfo(String selectedItem) {
@@ -193,7 +160,5 @@ public class FinishMatchController implements Initializable {
         innerPopOver.setContentNode(popOverStackPane);
         innerPopOver.show(innerImage);
     }
-
-
 
 }

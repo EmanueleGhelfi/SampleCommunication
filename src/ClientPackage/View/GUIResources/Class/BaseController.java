@@ -4,7 +4,6 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
-
 import java.util.ArrayList;
 
 /**
@@ -35,4 +34,5 @@ public interface BaseController {
     void moveKing(ArrayList<City> kingPath);
 
     void selectOldPermitCardBonus();
+
 }
