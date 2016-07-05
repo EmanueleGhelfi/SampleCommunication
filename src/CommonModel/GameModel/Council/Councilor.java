@@ -1,12 +1,13 @@
 package CommonModel.GameModel.Council;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
+
 import java.io.Serializable;
 
 /**
  * Created by Giulio on 14/05/2016.
  */
-public class Councilor implements Serializable, Cloneable{
+public class Councilor implements Serializable, Cloneable {
 
     private PoliticColor color;
 

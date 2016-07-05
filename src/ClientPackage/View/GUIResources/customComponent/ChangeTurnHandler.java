@@ -11,10 +11,10 @@ import javafx.event.EventHandler;
  */
 public class ChangeTurnHandler implements EventHandler<ActionEvent> {
 
-    private MatchController matchController;
+    private final MatchController matchController;
 
     public ChangeTurnHandler(MatchController matchController) {
-        this.matchController=matchController;
+        this.matchController = matchController;
     }
 
     @Override

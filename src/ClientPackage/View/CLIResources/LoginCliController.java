@@ -28,7 +28,7 @@ public class LoginCliController implements CliController {
 
     @Override
     public void parseLine(String line) {
-        parser.parseInput(line,this,cliPrinter);
+        parser.parseInput(line, this, cliPrinter);
     }
 
     @Override
@@ -41,14 +41,13 @@ public class LoginCliController implements CliController {
         parser.printHelp();
     }
 
-    @Command (description = "Do login",name = "login", abbrev = "l")
+    @Command(description = "Do login", name = "login", abbrev = "l")
     public void onLogin(@Param(name = "name", description = "your name in game") String name) {
-        if(!loginDone) {
+        if (!loginDone) {
             System.out.println("sending login");
             clientController.onSendLogin(name);
             loginDone = true;
-        }
-        else{
+        } else {
             cliPrinter.printError("Login already done, sorry!");
         }
     }

@@ -21,9 +21,8 @@ public class GameTest {
     public void setUp() throws Exception {
         game = new Game();
         try {
-            user= new User(new FakeCommunication(),GamesManager.getInstance());
-        }
-        catch (Exception e){
+            user = new User(new FakeCommunication(), GamesManager.getInstance());
+        } catch (Exception e) {
 
         }
         user.setVictoryPathPosition(0);
@@ -31,6 +30,7 @@ public class GameTest {
 
     /**
      * Test king bonus card
+     *
      * @throws Exception
      */
     @Test
@@ -39,7 +39,7 @@ public class GameTest {
 
         System.out.println(kingBonusCard);
 
-        kingBonusCard.getBonus(user,game);
+        kingBonusCard.getBonus(user, game);
 
         assertEquals(user.getVictoryPathPosition(), Constants.FIRST_ARRIVED_KING_BONUS);
     }

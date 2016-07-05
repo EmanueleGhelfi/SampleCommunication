@@ -1,8 +1,9 @@
 package CommonModel.GameModel.Bonus.Generic;
 
-import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.util.ArrayList;
 
 /**

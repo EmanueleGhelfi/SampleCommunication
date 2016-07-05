@@ -8,8 +8,8 @@ public class Translator {
     public Translator() {
     }
 
-    public static String translatingToIta(String string){
-        switch (string){
+    public static String translatingToIta(String string) {
+        switch (string) {
             case Constants.BLUE:
                 return "Blu";
             case Constants.YELLOW:
@@ -35,8 +35,8 @@ public class Translator {
         }
     }
 
-    public static String translatingToEng(String string){
-        switch (string){
+    public static String translatingToEng(String string) {
+        switch (string) {
             case "Blu":
                 return Constants.BLUE;
             case "Giallo":

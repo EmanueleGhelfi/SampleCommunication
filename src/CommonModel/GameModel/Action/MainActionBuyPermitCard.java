@@ -1,14 +1,15 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.City.RegionName;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.RegionName;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -31,7 +32,7 @@ public class MainActionBuyPermitCard extends Action {
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        if(super.checkActionCounter(user) && politicCards.size()>0) {
+        if (super.checkActionCounter(user) && politicCards.size() > 0) {
             // count number of correct politic card
             int correctPoliticCard = 0;
             // region of permit card
@@ -43,7 +44,7 @@ public class MainActionBuyPermitCard extends Action {
             // calculate money to spend
             newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
             // go ahead in money path
-            game.getMoneyPath().goAhead(user, - newPositionInMoneyPath);
+            game.getMoneyPath().goAhead(user, -newPositionInMoneyPath);
             // re-add to game deck
             game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(politicCards));
             // remove cards from user
@@ -55,15 +56,14 @@ public class MainActionBuyPermitCard extends Action {
             permitCardToBuy.getBonus().getBonus(user, game);
             user.addPermitCard(permitCardToBuy);
             removeAction(game, user);
-        }
-        else{
+        } else {
             throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
         }
     }
 
     @Override
     public String toString() {
-        return "[MAIN ACTION] Buy permit card "+permitCard.getCityAcronimous()+" of region: "+userRegion.getRegion()+"";
+        return "[MAIN ACTION] Buy permit card " + permitCard.getCityAcronimous() + " of region: " + userRegion.getRegion() + "";
     }
 
 }

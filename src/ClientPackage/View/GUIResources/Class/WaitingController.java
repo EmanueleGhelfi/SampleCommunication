@@ -15,7 +15,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * Created by Giulio on 16/05/2016.
@@ -27,8 +30,10 @@ public class WaitingController {
     private ArrayList<String> typewriterArrayList = new ArrayList<>();
     private Timeline timeline = new Timeline();
 
-    @FXML private Label typewriterLabel;
-    @FXML private StackPane background;
+    @FXML
+    private Label typewriterLabel;
+    @FXML
+    private StackPane background;
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
@@ -39,7 +44,7 @@ public class WaitingController {
         typewriter();
     }
 
-    public void typewriter(){
+    public void typewriter() {
         int count = 0;
         Platform.runLater(new Runnable() {
             @Override
@@ -72,10 +77,10 @@ public class WaitingController {
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (count == typewriterArrayList.size()-1){
+                if (count == typewriterArrayList.size() - 1) {
                     Collections.shuffle(typewriterArrayList);
                 }
-                startingTimeOut(typewriterArrayList.get((count + 1)%typewriterArrayList.size()), count + 1);
+                startingTimeOut(typewriterArrayList.get((count + 1) % typewriterArrayList.size()), count + 1);
             }
         });
     }

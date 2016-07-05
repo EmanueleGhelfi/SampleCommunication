@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public abstract class BaseCommunication {
 
-    public abstract void setUser (User user);
+    public abstract void setUser(User user);
 
     public abstract void sendSnapshot(SnapshotToSend snapshotToSend);
 

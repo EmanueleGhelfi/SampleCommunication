@@ -5,13 +5,16 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import Utilities.Class.Constants;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collections;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by Emanuele on 14/05/2016.
  */
-public class PoliticDeck implements Deck,Serializable {
+public class PoliticDeck implements Deck, Serializable {
 
     // stack for shuffle
     private Stack<PoliticCard> politicDeckStack;
@@ -23,32 +26,32 @@ public class PoliticDeck implements Deck,Serializable {
 
     @Override
     public void createRandomDeck() {
-        for (PoliticColor politicColor: PoliticColor.values()) {
-            for(int cont = 0; cont< Constants.SINGLECOLOR_POLITIC_DECK_SIZE; cont++){
-                politicDeckStack.add(new PoliticCard(politicColor,false));
+        for (PoliticColor politicColor : PoliticColor.values()) {
+            for (int cont = 0; cont < Constants.SINGLECOLOR_POLITIC_DECK_SIZE; cont++) {
+                politicDeckStack.add(new PoliticCard(politicColor, false));
             }
         }
         // create multicolor
-        for (int cont = 0; cont<Constants.MULTICOLOR_POLITIC_DECK_SIZE;cont++){
-            politicDeckStack.add(new PoliticCard(null,true));
+        for (int cont = 0; cont < Constants.MULTICOLOR_POLITIC_DECK_SIZE; cont++) {
+            politicDeckStack.add(new PoliticCard(null, true));
         }
         Collections.shuffle(politicDeckStack);
-        for(PoliticCard politicCard: politicDeckStack){
+        for (PoliticCard politicCard : politicDeckStack) {
             politicDeckQueue.add(politicCard);
         }
     }
 
-    public PoliticCard drawACard(){
+    public PoliticCard drawACard() {
         return politicDeckQueue.remove();
     }
 
-    public void addToQueue(Set<PoliticCard> politicCardSet){
-        for (PoliticCard politicCard: politicCardSet){
+    public void addToQueue(Set<PoliticCard> politicCardSet) {
+        for (PoliticCard politicCard : politicCardSet) {
             politicDeckQueue.add(politicCard);
-            }
         }
+    }
 
-    public int size(){
+    public int size() {
         return politicDeckQueue.size();
     }
 }

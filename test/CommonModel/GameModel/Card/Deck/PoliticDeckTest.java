@@ -10,9 +10,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Emanuele on 02/07/2016.
@@ -44,11 +43,11 @@ public class PoliticDeckTest {
         politicCards.add(politicDeck.drawACard());
         politicCards.add(politicDeck.drawACard());
 
-        assertEquals(initSize-politicCards.size(),politicDeck.size());
+        assertEquals(initSize - politicCards.size(), politicDeck.size());
 
         politicDeck.addToQueue(new HashSet<>(politicCards));
 
-        assertEquals(initSize,politicDeck.size());
+        assertEquals(initSize, politicDeck.size());
 
     }
 }

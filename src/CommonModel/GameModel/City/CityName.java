@@ -1,6 +1,7 @@
 package CommonModel.GameModel.City;
 
 import Utilities.Class.Constants;
+
 import java.io.Serializable;
 
 /**
@@ -8,7 +9,7 @@ import java.io.Serializable;
  */
 public enum CityName implements Serializable {
 
-    ARKON(Constants.ARKON), BURGEN(Constants.BURGEN),CASTRUM(Constants.CASTRUM), DORFUL(Constants.DORFUL), ESTI(Constants.ESTI), FRAMEK(Constants.FRAMEK), GRADEN(Constants.GRADEN), HELLAR(Constants.HELLAR),
+    ARKON(Constants.ARKON), BURGEN(Constants.BURGEN), CASTRUM(Constants.CASTRUM), DORFUL(Constants.DORFUL), ESTI(Constants.ESTI), FRAMEK(Constants.FRAMEK), GRADEN(Constants.GRADEN), HELLAR(Constants.HELLAR),
     INDUR(Constants.INDUR), JUVELAR(Constants.JUVELAR), KULTOS(Constants.KULTOS), LYRAM(Constants.LYRAM), MERKATIM(Constants.MERKATIM), NARIS(Constants.NARIS), OSIUM(Constants.OSIUM);
 
     private String cityName;
@@ -16,7 +17,7 @@ public enum CityName implements Serializable {
     CityName() {
     }
 
-    CityName (String cityName){
+    CityName(String cityName) {
         this.cityName = cityName;
     }
 

@@ -28,7 +28,7 @@ public class MainActionBuildWithPermitCardTest {
     @Before
     public void setUp() throws Exception {
         game = new Game();
-        user= new User(new FakeCommunication(), GamesManager.getInstance());
+        user = new User(new FakeCommunication(), GamesManager.getInstance());
         user.setGame(game);
         user.setUsername("MANU");
         user.setVictoryPathPosition(0);
@@ -42,7 +42,7 @@ public class MainActionBuildWithPermitCardTest {
         Map map = Map.readAllMap().get(0);
         game.setMap(map);
 
-        King king = new King(game.getMap().getLinks().get(0).getCity1(),game.getBank());
+        King king = new King(game.getMap().getLinks().get(0).getCity1(), game.getBank());
         game.setKing(king);
 
         game.addUserToGame(user);
@@ -51,22 +51,22 @@ public class MainActionBuildWithPermitCardTest {
 
     @Test
     public void testBuyPermit() throws Exception {
-        
-        City cityToBuild=null;
+
+        City cityToBuild = null;
 
         PermitCard permitCard = game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0);
 
         user.addPermitCard(permitCard);
 
-        for(City city: game.getMap().getCity()){
-            if(city.getCityName().getCityName().charAt(0) == permitCard.getCityAcronimous().get(0)){
-                cityToBuild=city;
+        for (City city : game.getMap().getCity()) {
+            if (city.getCityName().getCityName().charAt(0) == permitCard.getCityAcronimous().get(0)) {
+                cityToBuild = city;
                 break;
             }
         }
 
-        Action action = new MainActionBuildWithPermitCard(cityToBuild,permitCard);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithPermitCard(cityToBuild, permitCard);
+        action.doAction(game, user);
 
         assertTrue(user.getUsersEmporium().contains(cityToBuild));
 
@@ -78,32 +78,32 @@ public class MainActionBuildWithPermitCardTest {
 
     @Test(expected = ActionNotPossibleException.class)
     public void testNull() throws ActionNotPossibleException {
-        City cityToBuild=null;
+        City cityToBuild = null;
 
         PermitCard permitCard = null;
 
 
-        Action action = new MainActionBuildWithPermitCard(cityToBuild,permitCard);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithPermitCard(cityToBuild, permitCard);
+        action.doAction(game, user);
 
     }
 
     @Test(expected = ActionNotPossibleException.class)
     public void testPermitNotPresent() throws ActionNotPossibleException {
-        City cityToBuild=null;
+        City cityToBuild = null;
 
         PermitCard permitCard = game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0);
 
 
-        for(City city: game.getMap().getCity()){
-            if(city.getCityName().getCityName().charAt(0) == permitCard.getCityAcronimous().get(0)){
-                cityToBuild=city;
+        for (City city : game.getMap().getCity()) {
+            if (city.getCityName().getCityName().charAt(0) == permitCard.getCityAcronimous().get(0)) {
+                cityToBuild = city;
                 break;
             }
         }
 
-        Action action = new MainActionBuildWithPermitCard(cityToBuild,permitCard);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithPermitCard(cityToBuild, permitCard);
+        action.doAction(game, user);
 
     }
 }

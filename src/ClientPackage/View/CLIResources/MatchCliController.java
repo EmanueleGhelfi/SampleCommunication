@@ -26,21 +26,19 @@ import Utilities.Class.TableBuilder;
 import Utilities.Exception.CouncilNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
-import javafx.geometry.Pos;
 import org.apache.commons.cli.Options;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
-import java.util.concurrent.ExecutorService;
+import java.util.ArrayList;
 
 import static ClientPackage.View.CLIResources.CLIColor.*;
 
 /**
  * Manage user input on CommandLine
  */
-public class MatchCliController implements CliController  {
+public class MatchCliController implements CliController {
 
     private boolean isMyTurn = false;
     private Options matchOptions;
@@ -53,8 +51,8 @@ public class MatchCliController implements CliController  {
 
     public MatchCliController(CLIView cliView, ClientController clientController) {
 
-        this.cliView=cliView;
-        this.clientController=clientController;
+        this.cliView = cliView;
+        this.clientController = clientController;
         this.matchOptions = OptionsClass.createMatchOptions();
         this.clientController = clientController;
         cliParser = new CLIParser(this.getClass());
@@ -66,40 +64,38 @@ public class MatchCliController implements CliController  {
 
     public void onYourTurn() {
         snapshotToSend = cliView.getSnapshot();
-        isMyTurn=true;
-        System.out.println(ANSI_RED+"Turno iniziato"+ANSI_RESET);
+        isMyTurn = true;
+        System.out.println(ANSI_RED + "Turno iniziato" + ANSI_RESET);
         //cliPrinter.printHelp(matchOptions);
     }
 
 
-
-
     private ArrayList<City> selectKingPath() throws IOException {
 
-        ArrayList<City> cities= new ArrayList<>();
+        ArrayList<City> cities = new ArrayList<>();
         cliPrinter.printBlue("Select city king: ");
 
-        System.out.println("Città corrente del re: "+ cliPrinter.toStringFormatted(clientController.getSnapshot().getKing().getCurrentCity()));
+        System.out.println("Città corrente del re: " + cliPrinter.toStringFormatted(clientController.getSnapshot().getKing().getCurrentCity()));
 
         cliPrinter.printBlue("Links");
 
-        for(Link link: clientController.getSnapshot().getMap().getLinks()){
+        for (Link link : clientController.getSnapshot().getMap().getLinks()) {
             System.out.println(link);
         }
 
         cliPrinter.printBlue("Cities \t\t\t\t\t\t Region \t\t\t\t\t\t Color");
-        for(City city: clientController.getSnapshot().getMap().getCity()){
+        for (City city : clientController.getSnapshot().getMap().getCity()) {
             System.out.println(cliPrinter.toStringFormatted(city));
         }
 
         boolean correct = false;
-        String[] selectedArray= {};
+        String[] selectedArray = {};
         //Object[][] citiesToPrint = new Object[clientController.getSnapshot().getMap().getCity().size()][10];
         while (!correct && isMyTurn) {
             cliPrinter.printBlue("Inserisci i numeri delle città seguite da uno spazio: ");
             TableBuilder tableBuilder = new TableBuilder();
-            tableBuilder.addRow("Number ", "CITY","COLOR", "BONUS");
-            tableBuilder.addRow("-------","--------","-----------","----------------");
+            tableBuilder.addRow("Number ", "CITY", "COLOR", "BONUS");
+            tableBuilder.addRow("-------", "--------", "-----------", "----------------");
             for (int i = 0; i < clientController.getSnapshot().getMap().getCity().size(); i++) {
                 System.out.println(" " + i + ". \t\t\t\t" + cliPrinter.
                         toStringFormatted(clientController.getSnapshot().getMap().getCity().get(i)));
@@ -120,7 +116,7 @@ public class MatchCliController implements CliController  {
             }
         }
 
-        if(isMyTurn) {
+        if (isMyTurn) {
             for (int i = 0; i < selectedArray.length; i++) {
                 cities.add(clientController.getSnapshot().getMap().getCity().get(Integer.parseInt(selectedArray[i])));
             }
@@ -138,7 +134,7 @@ public class MatchCliController implements CliController  {
 
 
     private void addCity(Object[][] citiesToPrint, int i, City city) {
-        citiesToPrint[i] = new String[]{city.getCityName().getCityName(),city.getColor().getColor(),city.getBonus().toString()};
+        citiesToPrint[i] = new String[]{city.getCityName().getCityName(), city.getColor().getColor(), city.getBonus().toString()};
     }
 
 
@@ -146,20 +142,20 @@ public class MatchCliController implements CliController  {
         boolean done = false;
         boolean correct = false;
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-        String[] selectedArray= {};
+        String[] selectedArray = {};
         while (!done && !correct && isMyTurn) {
             cliPrinter.printBlue("Inserisci i numeri delle carte separati da uno spazio: ");
             for (int i = 0; i < politicCards.size(); i++) {
                 System.out.println(" " + i + ". " + cliPrinter.toStringFormatted(politicCards.get(i)));
             }
 
-            while (!scanner.ready() && isMyTurn){
+            while (!scanner.ready() && isMyTurn) {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                 }
             }
-            if(isMyTurn) {
+            if (isMyTurn) {
                 String selected = scanner.readLine();
 
                 selectedArray = selected.split(" ");
@@ -168,7 +164,7 @@ public class MatchCliController implements CliController  {
             }
         }
 
-        if(isMyTurn) {
+        if (isMyTurn) {
             for (int i = 0; i < selectedArray.length; i++) {
                 System.out.println("You have selected " + cliPrinter.toStringFormatted(politicCards.get(Integer.parseInt(selectedArray[i]))));
                 politicCardArrayList.add(politicCards.get(Integer.parseInt(selectedArray[i])));
@@ -183,8 +179,7 @@ public class MatchCliController implements CliController  {
 
         try {
             RegionName.valueOf(s.toUpperCase());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
@@ -192,10 +187,9 @@ public class MatchCliController implements CliController  {
     }
 
 
-
     private PermitCard selectPermitCard(ArrayList<PermitCard> permitCards) {
         int scelta = -2;
-        while ((scelta<0 || scelta>permitCards.size()) && (scelta!=-1) && isMyTurn){
+        while ((scelta < 0 || scelta > permitCards.size()) && (scelta != -1) && isMyTurn) {
             try {
                 while (!scanner.ready() && isMyTurn) {
                     Thread.sleep(200);
@@ -207,12 +201,10 @@ public class MatchCliController implements CliController  {
 
                         return permitCards.get(scelta);
                     }
-                }
-                else{
+                } else {
                     System.out.println("turno finito");
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Invalid input!");
             }
 
@@ -223,64 +215,61 @@ public class MatchCliController implements CliController  {
     }
 
 
-
-    @Command (description = "Show permit card", name = "showPermit", abbrev = "sp")
+    @Command(description = "Show permit card", name = "showPermit", abbrev = "sp")
     public void showPermitCard() {
-        for(RegionName regionName: RegionName.values()) {
-            System.out.println(CLIColor.ANSI_RED+" "+regionName+" "+CLIColor.ANSI_RESET);
-            for (PermitCard permitCard: clientController.getSnapshot().getVisibleRegionPermitCard(regionName)){
+        for (RegionName regionName : RegionName.values()) {
+            System.out.println(CLIColor.ANSI_RED + " " + regionName + " " + CLIColor.ANSI_RESET);
+            for (PermitCard permitCard : clientController.getSnapshot().getVisibleRegionPermitCard(regionName)) {
                 System.out.println(cliPrinter.toStringFormatted(permitCard));
             }
         }
     }
 
 
-
-
-    @Command (description = "Show your status", name = "showStatus", abbrev = "st")
+    @Command(description = "Show your status", name = "showStatus", abbrev = "st")
     public void showStatus() {
         System.out.println("-----------------------------------------------------------------");
         CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
-        System.out.println(ANSI_RED+"STATUS: \n"+ANSI_RESET);
+        System.out.println(ANSI_RED + "STATUS: \n" + ANSI_RESET);
         cliPrinter.printBlue("Politic Card: ");
-        for (PoliticCard politicCard: currentUser.getPoliticCards()){
-            System.out.println("\t"+cliPrinter.toStringFormatted(politicCard)+"");
+        for (PoliticCard politicCard : currentUser.getPoliticCards()) {
+            System.out.println("\t" + cliPrinter.toStringFormatted(politicCard) + "");
         }
 
         cliPrinter.printBlue("Permit Card:\n");
-        for (PermitCard permitCard: currentUser.getPermitCards()){
-            System.out.println("\t"+cliPrinter.toStringFormatted(permitCard));
+        for (PermitCard permitCard : currentUser.getPermitCards()) {
+            System.out.println("\t" + cliPrinter.toStringFormatted(permitCard));
         }
 
         cliPrinter.printBlue("Posizioni:");
-        System.out.println("\t Nobility Path: "+currentUser.getNobilityPathPosition().getPosition());
-        System.out.println("\t Money Path: "+currentUser.getCoinPathPosition());
-        System.out.println("\t Nobility Path: "+currentUser.getNobilityPathPosition().getPosition());
-        System.out.println("Aiutanti : "+currentUser.getHelpers().size());
+        System.out.println("\t Nobility Path: " + currentUser.getNobilityPathPosition().getPosition());
+        System.out.println("\t Money Path: " + currentUser.getCoinPathPosition());
+        System.out.println("\t Nobility Path: " + currentUser.getNobilityPathPosition().getPosition());
+        System.out.println("Aiutanti : " + currentUser.getHelpers().size());
 
         System.out.println("Le tue Città:");
 
-        for (City city: currentUser.getUsersEmporium()){
+        for (City city : currentUser.getUsersEmporium()) {
             System.out.println("\t " + cliPrinter.toStringFormatted(city));
         }
 
         cliPrinter.printBlue("Le tue azioni: ");
-        System.out.println("Azioni Principali:  "+currentUser.getMainActionCounter());
-        System.out.println("Azioni veloci :"+currentUser.getFastActionCounter());
+        System.out.println("Azioni Principali:  " + currentUser.getMainActionCounter());
+        System.out.println("Azioni veloci :" + currentUser.getFastActionCounter());
 
         System.out.println("Fine status\n ");
         System.out.println("-----------------------------------------------------------------");
     }
 
-    @Command(name = "finish",description = "Finish your turn", abbrev = "f")
-    public void finishTurn(){
-        isMyTurn=false;
+    @Command(name = "finish", description = "Finish your turn", abbrev = "f")
+    public void finishTurn() {
+        isMyTurn = false;
         clientController.onFinishTurn();
     }
 
     @Override
     public void parseLine(String line) {
-        cliParser.parseInput(line,this,cliPrinter);
+        cliParser.parseInput(line, this, cliPrinter);
     }
 
     @Override
@@ -294,11 +283,10 @@ public class MatchCliController implements CliController  {
     }
 
 
-
     @Command(abbrev = "pc", description = "Show available Politic Color", name = "politicColor")
-    public void showPoliticColor(){
+    public void showPoliticColor() {
         cliPrinter.printBlue("Available Politic Color");
-        for(PoliticColor politicColor: clientController.getSnapshot().getBank().showCouncilor()){
+        for (PoliticColor politicColor : clientController.getSnapshot().getBank().showCouncilor()) {
             System.out.println(politicColor);
         }
     }
@@ -306,16 +294,16 @@ public class MatchCliController implements CliController  {
     @Command(abbrev = "svp", name = "visiblePermit", description = "Show visible Permit Card")
     public void permit() {
         cliPrinter.printBlue("Here are Visible Permit Card");
-        for(RegionName regionName:RegionName.values()){
-            cliPrinter.printBlue("\t "+ regionName);
-            for(PermitCard permitCard:clientController.getSnapshot().getVisiblePermitCards().get(regionName)){
+        for (RegionName regionName : RegionName.values()) {
+            cliPrinter.printBlue("\t " + regionName);
+            for (PermitCard permitCard : clientController.getSnapshot().getVisiblePermitCards().get(regionName)) {
                 System.out.println(cliPrinter.toStringFormatted(permitCard));
             }
         }
     }
 
 
-    @Command(description = ""+CLIColor.ANSI_RED+"|MAIN ACTION|"+CLIColor.ANSI_RESET+" Build an empory with king help",
+    @Command(description = "" + CLIColor.ANSI_RED + "|MAIN ACTION|" + CLIColor.ANSI_RESET + " Build an empory with king help",
             abbrev = "bk", name = "buildKing")
     public void buildWithKing() {
 
@@ -331,7 +319,7 @@ public class MatchCliController implements CliController  {
             e.printStackTrace();
         }
 
-        if(isMyTurn) {
+        if (isMyTurn) {
             ArrayList<City> cities = null;
             try {
                 cities = selectKingPath();
@@ -339,19 +327,19 @@ public class MatchCliController implements CliController  {
                 e.printStackTrace();
             }
 
-            if(cities!=null && isMyTurn) {
-                System.out.println(politicCardArrayList+" "+cities);
+            if (cities != null && isMyTurn) {
+                System.out.println(politicCardArrayList + " " + cities);
                 Action action = new MainActionBuildWithKingHelp(cities, politicCardArrayList);
                 clientController.doAction(action);
             }
         }
     }
 
-    @Command (description = ""+CLIColor.ANSI_RED+"|MAIN ACTION|"+CLIColor.ANSI_RESET+"Build an empory with permitCard", name = "buildEmpory", abbrev = "be")
-    public void buildEmporium(@Param(name="city", description="The city when you want to build")String city) {
+    @Command(description = "" + CLIColor.ANSI_RED + "|MAIN ACTION|" + CLIColor.ANSI_RESET + "Build an empory with permitCard", name = "buildEmpory", abbrev = "be")
+    public void buildEmporium(@Param(name = "city", description = "The city when you want to build") String city) {
 
-        if(Validator.isValidCity(city)) {
-            if(clientController.getSnapshot().getCurrentUser().getPermitCards().size()>0) {
+        if (Validator.isValidCity(city)) {
+            if (clientController.getSnapshot().getCurrentUser().getPermitCards().size() > 0) {
                 System.out.println(ANSI_BLUE + " Select a permit card for build in " + city + ": " + ANSI_RESET);
                 System.out.println("(-1 for cancel)");
                 CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
@@ -364,31 +352,29 @@ public class MatchCliController implements CliController  {
                     Action action = new MainActionBuildWithPermitCard(selectedCity, permitCard);
                     clientController.doAction(action);
                 }
-            }
-            else{
+            } else {
                 cliPrinter.printError("Sorry, you have 0 permit card, so you can't build an empory!");
             }
-        }
-        else{
+        } else {
             cliPrinter.printError("City not valid!");
         }
 
     }
 
-    @Command (description = ""+CLIColor.ANSI_RED+"|MAIN ACTION|"+CLIColor.ANSI_RESET+" Buy a permit card in selected region", name = "buyPermit", abbrev = "bp")
+    @Command(description = "" + CLIColor.ANSI_RED + "|MAIN ACTION|" + CLIColor.ANSI_RESET + " Buy a permit card in selected region", name = "buyPermit", abbrev = "bp")
     public void buyPermit(@Param(name = "Region", description = "region where you want to buy") String region) {
-        if(Validator.isValidRegion(region)){
+        if (Validator.isValidRegion(region)) {
             cliPrinter.printBlue("Select a permit card: ");
             RegionName regionName = Validator.getRegion(region);
-            for(PermitCard permitCard: clientController.getSnapshot().getVisibleRegionPermitCard(regionName)){
-                System.out.println(" "+clientController.getSnapshot().getVisibleRegionPermitCard(regionName)
-                        .indexOf(permitCard)+". "+cliPrinter.toStringFormatted(permitCard));
+            for (PermitCard permitCard : clientController.getSnapshot().getVisibleRegionPermitCard(regionName)) {
+                System.out.println(" " + clientController.getSnapshot().getVisibleRegionPermitCard(regionName)
+                        .indexOf(permitCard) + ". " + cliPrinter.toStringFormatted(permitCard));
             }
 
             CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
             PermitCard permitCardSelected = selectPermitCard(clientController.getSnapshot().getVisibleRegionPermitCard(regionName));
 
-            if(permitCardSelected!=null) {
+            if (permitCardSelected != null) {
                 cliPrinter.printBlue("Select politic card for: " + regionName);
 
                 try {
@@ -403,14 +389,11 @@ public class MatchCliController implements CliController  {
                 } catch (CouncilNotFoundException e) {
                     e.printStackTrace();
                 }
-            }
-
-            else{
-                if(isMyTurn) {
+            } else {
+                if (isMyTurn) {
                     cliPrinter.printError("Sorry, invalid selection!");
                     buyPermit(region);
-                }
-                else{
+                } else {
 
                     System.out.println("finished turn");
                 }
@@ -422,7 +405,7 @@ public class MatchCliController implements CliController  {
     }
 
 
-    @Command (description = ""+CLIColor.ANSI_RED+"|FAST OR MAIN ACTION|"+CLIColor.ANSI_RESET+"Elect councilor", name = "electCouncilor", abbrev = "ec")
+    @Command(description = "" + CLIColor.ANSI_RED + "|FAST OR MAIN ACTION|" + CLIColor.ANSI_RESET + "Elect councilor", name = "electCouncilor", abbrev = "ec")
     public void getElectCouncilorArgs(@Param(name = "type", description = "helper or money") String type,
                                       @Param(name = "region", description = "King or region name") String region,
                                       @Param(name = "Politic Color", description = "Color of councilor that you want to elect") String color) {
@@ -430,16 +413,16 @@ public class MatchCliController implements CliController  {
 
         PoliticColor selectedPoliticColor = null;
         RegionName regionName = null;
-        King king=null;
+        King king = null;
 
 
-        for(PoliticColor politicColor: PoliticColor.values()){
-            if(politicColor.getColor().equalsIgnoreCase(color)){
-                selectedPoliticColor=politicColor;
+        for (PoliticColor politicColor : PoliticColor.values()) {
+            if (politicColor.getColor().equalsIgnoreCase(color)) {
+                selectedPoliticColor = politicColor;
             }
         }
 
-        if(clientController.getSnapshot().getBank().showCouncilor().contains(selectedPoliticColor)) {
+        if (clientController.getSnapshot().getBank().showCouncilor().contains(selectedPoliticColor)) {
 
             if (!checkValidRegion(region)) {
                 if (region.equalsIgnoreCase("king")) {
@@ -471,46 +454,43 @@ public class MatchCliController implements CliController  {
                 cliPrinter.printError("SYNTAX ERROR");
 
 
-        }
-        else {
+        } else {
             System.out.println("Councilor not present in back, sorry!");
         }
     }
 
 
-    @Command(abbrev = "bh", description = ""+CLIColor.ANSI_RED+"|FAST ACTION|"+CLIColor.ANSI_RESET+"Buy helper for money", name = "buyHelper")
-    public void buyHelper(){
+    @Command(abbrev = "bh", description = "" + CLIColor.ANSI_RED + "|FAST ACTION|" + CLIColor.ANSI_RESET + "Buy helper for money", name = "buyHelper")
+    public void buyHelper() {
         Action action = new FastActionMoneyForHelper();
         clientController.doAction(action);
     }
 
 
-    @Command(abbrev = "ba", description = ""+CLIColor.ANSI_RED+"|FAST ACTION|"+CLIColor.ANSI_RESET+"Buy a Main action for" + Constants.HELPER_LIMITATION_NEW_MAIN_ACTION+" Helper", name = "buyAction")
-    public void buyMainAction(){
+    @Command(abbrev = "ba", description = "" + CLIColor.ANSI_RED + "|FAST ACTION|" + CLIColor.ANSI_RESET + "Buy a Main action for" + Constants.HELPER_LIMITATION_NEW_MAIN_ACTION + " Helper", name = "buyAction")
+    public void buyMainAction() {
         Action action = new FastActionNewMainAction();
         clientController.doAction(action);
     }
 
 
-    @Command (description = ""+CLIColor.ANSI_RED+"|FAST ACTION|"+CLIColor.ANSI_RESET+"Change permit card", name = "changePermit", abbrev = "cp")
-    public void changePermitAction(@Param(name="region", description="Region of the permit card that you want to change")String arg) {
+    @Command(description = "" + CLIColor.ANSI_RED + "|FAST ACTION|" + CLIColor.ANSI_RESET + "Change permit card", name = "changePermit", abbrev = "cp")
+    public void changePermitAction(@Param(name = "region", description = "Region of the permit card that you want to change") String arg) {
         try {
             RegionName regionName = null;
 
-            for(RegionName tmpRegion: RegionName.values()){
-                if(tmpRegion.getRegion().equalsIgnoreCase(arg)){
-                    regionName=tmpRegion;
+            for (RegionName tmpRegion : RegionName.values()) {
+                if (tmpRegion.getRegion().equalsIgnoreCase(arg)) {
+                    regionName = tmpRegion;
                 }
             }
-            if(regionName!=null) {
+            if (regionName != null) {
                 Action action = new FastActionChangePermitCardWithHelper(regionName);
                 clientController.doAction(action);
-            }
-            else{
+            } else {
                 cliPrinter.printError("ERROR IN REGION NAME");
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error in region Name");
         }
 
@@ -518,43 +498,43 @@ public class MatchCliController implements CliController  {
 
 
     public void onFinisTurn() {
-        isMyTurn=false;
+        isMyTurn = false;
     }
 
 
     @Command(description = "Show nobility Path", name = "showNobility", abbrev = "sn")
-    public void showNobility(){
-        for(Position position: clientController.getSnapshot().getNobilityPathPosition()){
+    public void showNobility() {
+        for (Position position : clientController.getSnapshot().getNobilityPathPosition()) {
             System.out.println(position.toString());
         }
     }
 
-    @Command(description = "Show City Bonus",name = "showCity",abbrev = "sc")
-    public void showCity(){
-        cliPrinter.printBlue(String.format("%-30s %-50s","CITY","BONUS"));
-        for(City city: clientController.getSnapshot().getMap().getCity()){
+    @Command(description = "Show City Bonus", name = "showCity", abbrev = "sc")
+    public void showCity() {
+        cliPrinter.printBlue(String.format("%-30s %-50s", "CITY", "BONUS"));
+        for (City city : clientController.getSnapshot().getMap().getCity()) {
             String bonusToPrint = "";
-            if(city.getBonus()!=null){
-                bonusToPrint=String.format("%-50s",city.getBonus().toString());
+            if (city.getBonus() != null) {
+                bonusToPrint = String.format("%-50s", city.getBonus().toString());
             }
-            System.out.println(String.format("%-30s",city.getCityName())+ bonusToPrint);
+            System.out.println(String.format("%-30s", city.getCityName()) + bonusToPrint);
         }
     }
 
     public void selectPermitCard() {
 
-        for(RegionName regionName: RegionName.values()){
+        for (RegionName regionName : RegionName.values()) {
             cliPrinter.printBlue("REGIONE" + regionName);
-            for(PermitCard permitCard: clientController.getSnapshot().getVisibleRegionPermitCard(regionName)){
-                System.out.println(clientController.getSnapshot().getVisibleRegionPermitCard(regionName).indexOf(permitCard)+
-                        ". "+ cliPrinter.toStringFormatted(permitCard));
+            for (PermitCard permitCard : clientController.getSnapshot().getVisibleRegionPermitCard(regionName)) {
+                System.out.println(clientController.getSnapshot().getVisibleRegionPermitCard(regionName).indexOf(permitCard) +
+                        ". " + cliPrinter.toStringFormatted(permitCard));
             }
         }
 
         cliPrinter.printBlue("Select a region and a permit card separated by a blank space (like this: mountain 1)");
 
         try {
-            while (!scanner.ready() && isMyTurn){
+            while (!scanner.ready() && isMyTurn) {
                 Thread.sleep(200);
             }
         } catch (IOException e) {
@@ -563,29 +543,26 @@ public class MatchCliController implements CliController  {
             e.printStackTrace();
         }
 
-        if(isMyTurn){
+        if (isMyTurn) {
             try {
                 String line = scanner.readLine();
                 String[] parsed = line.split(" ");
 
-                if(parsed.length>1 && Validator.isValidRegion(parsed[0])){
+                if (parsed.length > 1 && Validator.isValidRegion(parsed[0])) {
                     try {
-                        if (Integer.parseInt(parsed[1])>=0 && Integer.parseInt(parsed[1])<=1) {
+                        if (Integer.parseInt(parsed[1]) >= 0 && Integer.parseInt(parsed[1]) <= 1) {
                             RegionName regionName = Validator.getRegion(parsed[0]);
                             PermitCard permitCard = clientController.getSnapshot().getVisibleRegionPermitCard(regionName)
                                     .get(Integer.parseInt(parsed[1]));
                             clientController.onSelectPermitCard(permitCard);
-                        }
-                        else{
+                        } else {
                             selectPermitCard();
                         }
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         selectPermitCard();
                     }
 
-                }
-                else{
+                } else {
                     selectPermitCard();
                 }
             } catch (IOException e) {
@@ -598,7 +575,7 @@ public class MatchCliController implements CliController  {
 
     public void selectCityRewardBonus() {
         cliPrinter.printBlue("You can choose a bonus of you city! Note that you can't choose a victory bonus!");
-        if(clientController.getSnapshot().getCurrentUser().getUsersEmporium().size()>0) {
+        if (clientController.getSnapshot().getCurrentUser().getUsersEmporium().size() > 0) {
             cliPrinter.printBlue("\t\t\tCITY\t\t\t BONUS");
             for (City city : clientController.getSnapshot().getCurrentUser().getUsersEmporium()) {
                 System.out.println("" + clientController.getSnapshot().getCurrentUser().getUsersEmporium().indexOf(city) + ".\t\t\t"
@@ -634,18 +611,17 @@ public class MatchCliController implements CliController  {
             } catch (IOException e) {
 
             }
-        }
-        else{
+        } else {
             cliPrinter.printError("You can't choose a city because you have 0 empory, sorry!");
         }
     }
 
     public void selectOldPermitCardBonus() {
 
-       cliPrinter.printBlue("Select an old permit card bonus!");
+        cliPrinter.printBlue("Select an old permit card bonus!");
 
-        if(clientController.getSnapshot().getCurrentUser().getOldPermitCards().size()>0 ||
-                clientController.getSnapshot().getCurrentUser().getPermitCards().size()>0) {
+        if (clientController.getSnapshot().getCurrentUser().getOldPermitCards().size() > 0 ||
+                clientController.getSnapshot().getCurrentUser().getPermitCards().size() > 0) {
 
             if (clientController.getSnapshot().getCurrentUser().getPermitCards().size() > 0) {
                 System.out.println("CURRENT PERMIT CARD:");
@@ -708,7 +684,7 @@ public class MatchCliController implements CliController  {
 
     }
 
-    @Command(name = "showEnemy", abbrev ="se", description = "Show other user status")
+    @Command(name = "showEnemy", abbrev = "se", description = "Show other user status")
     public void showUsers() {
 
         cliPrinter.printGreen("YOUR ENEMY:");
@@ -720,29 +696,29 @@ public class MatchCliController implements CliController  {
     }
 
 
-    public void printUser(BaseUser baseUser){
-            System.out.println("-----------------------------------------------------------------");
-            System.out.println(ANSI_RED+"STATUS: "+baseUser.getUsername()+ANSI_RESET);
-            cliPrinter.printBlue("Politic Card: ");
+    public void printUser(BaseUser baseUser) {
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(ANSI_RED + "STATUS: " + baseUser.getUsername() + ANSI_RESET);
+        cliPrinter.printBlue("Politic Card: ");
 
-            cliPrinter.printBlue("Permit Card:\n");
-            for (PermitCard permitCard: baseUser.getPermitCards()){
-                System.out.println("\t"+cliPrinter.toStringFormatted(permitCard));
-            }
-
-            cliPrinter.printBlue("Posizioni:");
-            System.out.println("\t Nobility Path: "+baseUser.getNobilityPathPosition().getPosition());
-            System.out.println("\t Money Path: "+baseUser.getCoinPathPosition());
-            System.out.println("\t Nobility Path: "+baseUser.getNobilityPathPosition().getPosition());
-            System.out.println("Aiutanti : "+baseUser.getHelpers().size());
-
-            System.out.println("Le tue Città:");
-
-            for (City city: baseUser.getUsersEmporium()){
-                System.out.println("\t " + cliPrinter.toStringFormatted(city));
-            }
-
-            System.out.println("Fine status\n ");
-            System.out.println("-----------------------------------------------------------------");
+        cliPrinter.printBlue("Permit Card:\n");
+        for (PermitCard permitCard : baseUser.getPermitCards()) {
+            System.out.println("\t" + cliPrinter.toStringFormatted(permitCard));
         }
+
+        cliPrinter.printBlue("Posizioni:");
+        System.out.println("\t Nobility Path: " + baseUser.getNobilityPathPosition().getPosition());
+        System.out.println("\t Money Path: " + baseUser.getCoinPathPosition());
+        System.out.println("\t Nobility Path: " + baseUser.getNobilityPathPosition().getPosition());
+        System.out.println("Aiutanti : " + baseUser.getHelpers().size());
+
+        System.out.println("Le tue Città:");
+
+        for (City city : baseUser.getUsersEmporium()) {
+            System.out.println("\t " + cliPrinter.toStringFormatted(city));
+        }
+
+        System.out.println("Fine status\n ");
+        System.out.println("-----------------------------------------------------------------");
+    }
 }

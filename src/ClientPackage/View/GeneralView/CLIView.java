@@ -2,19 +2,13 @@ package ClientPackage.View.GeneralView;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.CLIResources.*;
-import ClientPackage.View.GUIResources.Class.MatchController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
-import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
-import java.awt.*;
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -22,7 +16,6 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -43,27 +36,27 @@ public class CLIView implements BaseView {
     private AtomicBoolean needToRead = new AtomicBoolean(true);
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    private ExecutorService executorService= Executors.newSingleThreadExecutor();
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private Future futureTask;
 
     public CLIView(ClientController clientController) {
         this.clientController = clientController;
         this.clientController.setBaseView(this);
-        matchCliController= new MatchCliController(this,clientController);
-        shopCliController = new ShopCliController(this,clientController);
-        loginCliController = new LoginCliController(this,clientController);
+        matchCliController = new MatchCliController(this, clientController);
+        shopCliController = new ShopCliController(this, clientController);
+        loginCliController = new LoginCliController(this, clientController);
     }
 
     @Override
     public void initView() {
-        currentController=loginCliController;
+        currentController = loginCliController;
         printWelcome();
         getInput();
     }
 
     private void getInput() {
-        Runnable runnable= ()-> {
+        Runnable runnable = () -> {
             String input = "";
             if (first) {
                 currentController.printHelp();
@@ -102,23 +95,22 @@ public class CLIView implements BaseView {
     public void showMap(ArrayList<Map> mapArrayList) {
         needToRead.set(false);
         System.out.println("Select map: \n");
-        for(Map map : mapArrayList){
-            System.out.println(cliPrinterInterface.toStringFormatted(map)+"\n");
+        for (Map map : mapArrayList) {
+            System.out.println(cliPrinterInterface.toStringFormatted(map) + "\n");
         }
-        int scelta=-1;
-        do{
-            try{
-                scelta=reader.nextInt();
-                if(scelta>=0 && scelta<mapArrayList.size()){
+        int scelta = -1;
+        do {
+            try {
+                scelta = reader.nextInt();
+                if (scelta >= 0 && scelta < mapArrayList.size()) {
                     clientController.sendMap(mapArrayList.get(scelta));
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 cliPrinterInterface.printError("ERROR IN MAP SELECTION, RETRY!");
                 reader.nextLine();
             }
 
-        }while (scelta<0 || scelta>=mapArrayList.size());
+        } while (scelta < 0 || scelta >= mapArrayList.size());
 
     }
 
@@ -134,7 +126,7 @@ public class CLIView implements BaseView {
 
     @Override
     public void turnFinished() {
-        System.out.println(" "+CLIColor.ANSI_RED+" Turno finito "+CLIColor.ANSI_RESET);
+        System.out.println(" " + CLIColor.ANSI_RED + " Turno finito " + CLIColor.ANSI_RESET);
         futureTask.cancel(true);
         matchCliController.onFinisTurn();
         getInput();
@@ -165,7 +157,7 @@ public class CLIView implements BaseView {
 
     @Override
     public void onFinishMarket() {
-        currentController=matchCliController;
+        currentController = matchCliController;
         shopCliController.onFinishBuyPhase();
     }
 
@@ -185,13 +177,13 @@ public class CLIView implements BaseView {
 
     @Override
     public void onMoveKing(ArrayList<City> kingPath) {
-            cliPrinterInterface.printBlue(" King moved to "+kingPath.get(kingPath.size()-1).getCityName()+ " Bonus: "+kingPath.get(kingPath.size()-1).getBonus());
+        cliPrinterInterface.printBlue(" King moved to " + kingPath.get(kingPath.size() - 1).getCityName() + " Bonus: " + kingPath.get(kingPath.size() - 1).getBonus());
     }
 
     @Override
     public void onActionNotPossibleException(ActionNotPossibleException e) {
         cliPrinterInterface.printError("AZIONE NON POSSIBILE!");
-        System.out.println(CLIColor.ANSI_RED+" "+e.getMessage()+" "+CLIColor.ANSI_RESET);
+        System.out.println(CLIColor.ANSI_RED + " " + e.getMessage() + " " + CLIColor.ANSI_RESET);
     }
 
     @Override
@@ -214,7 +206,7 @@ public class CLIView implements BaseView {
 
     @Override
     public void onUserDisconnect(String username) {
-        cliPrinterInterface.printError("User: "+username+" is offline!");
+        cliPrinterInterface.printError("User: " + username + " is offline!");
     }
 
 
@@ -227,7 +219,7 @@ public class CLIView implements BaseView {
     }
 
 
-    public void printWelcome(){
+    public void printWelcome() {
         System.out.println("                                                                                                                                                          \n" +
                 "                                                                                     ,----..                                                              \n" +
                 "  ,----..                                                         ,--,              /   /   \\                      ,---,.                                 \n" +

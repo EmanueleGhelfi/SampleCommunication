@@ -23,9 +23,8 @@ public class FastActionMoneyForHelperTest {
     public void setUp() throws Exception {
         game = new Game();
         try {
-            user= new User(new FakeCommunication(), GamesManager.getInstance());
-        }
-        catch (Exception e){
+            user = new User(new FakeCommunication(), GamesManager.getInstance());
+        } catch (Exception e) {
 
         }
         user.setGame(game);
@@ -40,10 +39,10 @@ public class FastActionMoneyForHelperTest {
         int helper = user.getHelpers().size();
         int fastAction = user.getFastActionCounter();
         Action action = new FastActionMoneyForHelper();
-        action.doAction(game,user);
-        assertEquals(coin-Constants.MONEY_LIMITATION_MONEY_FOR_HELPER,user.getCoinPathPosition());
-        assertEquals(helper+1,user.getHelpers().size());
-        assertEquals(fastAction-1,user.getFastActionCounter());
+        action.doAction(game, user);
+        assertEquals(coin - Constants.MONEY_LIMITATION_MONEY_FOR_HELPER, user.getCoinPathPosition());
+        assertEquals(helper + 1, user.getHelpers().size());
+        assertEquals(fastAction - 1, user.getFastActionCounter());
     }
 
     @Test(expected = ActionNotPossibleException.class)
@@ -53,9 +52,9 @@ public class FastActionMoneyForHelperTest {
         int helper = user.getHelpers().size();
         int fastAction = user.getFastActionCounter();
         Action action = new FastActionMoneyForHelper();
-        action.doAction(game,user);
-        assertEquals(coin,user.getCoinPathPosition());
-        assertEquals(helper,user.getHelpers().size());
-        assertEquals(fastAction,user.getFastActionCounter());
+        action.doAction(game, user);
+        assertEquals(coin, user.getCoinPathPosition());
+        assertEquals(helper, user.getHelpers().size());
+        assertEquals(fastAction, user.getFastActionCounter());
     }
 }

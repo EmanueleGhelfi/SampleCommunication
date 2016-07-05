@@ -1,14 +1,12 @@
 package RMIInterface;
 
-import ClientPackage.NetworkInterface.ClientRMIService;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.Market.BuyableObject;
 import CommonModel.GameModel.Market.BuyableWrapper;
-import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by Emanuele on 09/05/2016.
  */
-public interface RMIClientHandler extends Remote{
+public interface RMIClientHandler extends Remote {
 
     boolean tryToSetName(String username) throws RemoteException;
 

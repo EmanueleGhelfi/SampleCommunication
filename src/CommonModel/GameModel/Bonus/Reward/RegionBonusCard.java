@@ -2,11 +2,12 @@ package CommonModel.GameModel.Bonus.Reward;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.SingleBonus.VictoryPointBonus;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

@@ -9,18 +9,18 @@ import javafx.scene.input.MouseEvent;
  */
 public class BringUpHandler implements EventHandler<MouseEvent> {
 
-    private Node node;
+    private final Node node;
 
     public BringUpHandler(Node node) {
-        this.node=node;
+        this.node = node;
     }
 
     @Override
     public void handle(MouseEvent event) {
-        node.setTranslateY(-3);
+        this.node.setTranslateY(-3);
     }
 
-    public void setNormalPosition(){
-        node.setTranslateY(3);
+    public void setNormalPosition() {
+        this.node.setTranslateY(3);
     }
 }

@@ -1,8 +1,6 @@
 package Utilities.Class;
 
 
-
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
@@ -11,26 +9,23 @@ import java.util.List;
 /**
  * Created by Emanuele on 27/06/2016.
  */
-public class TableBuilder
-{
+public class TableBuilder {
     List<String[]> rows = new LinkedList<String[]>();
 
-    public void addRow(String... cols)
-    {
+    public void addRow(String... cols) {
         rows.add(cols);
     }
 
-    private int[] colWidths()
-    {
+    private int[] colWidths() {
         int cols = -1;
 
-        for(String[] row : rows)
+        for (String[] row : rows)
             cols = Math.max(cols, row.length);
 
         int[] widths = new int[cols];
 
-        for(String[] row : rows) {
-            for(int colNum = 0; colNum < row.length; colNum++) {
+        for (String[] row : rows) {
+            for (int colNum = 0; colNum < row.length; colNum++) {
                 widths[colNum] =
                         Math.max(
                                 widths[colNum],
@@ -42,14 +37,13 @@ public class TableBuilder
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder buf = new StringBuilder();
 
         int[] colWidths = colWidths();
 
-        for(String[] row : rows) {
-            for(int colNum = 0; colNum < row.length; colNum++) {
+        for (String[] row : rows) {
+            for (int colNum = 0; colNum < row.length; colNum++) {
                 buf.append(
                         StringUtils.rightPad(
                                 StringUtils.defaultString(

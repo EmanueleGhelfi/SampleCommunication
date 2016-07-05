@@ -16,7 +16,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.transform.Rotate;
 
@@ -33,7 +35,8 @@ public class NobilityPathController implements BaseController {
     private NobilityPathController nobilityPathController = this;
     private MatchController matchController;
 
-    @FXML private Pane nobilityPath;
+    @FXML
+    private Pane nobilityPath;
 
 
     private void createGridPane() {
@@ -47,7 +50,7 @@ public class NobilityPathController implements BaseController {
         nobilityPath.setOpacity(0.8);
         nobilityPath.prefHeightProperty().bind(matchController.getBackground().prefHeightProperty().divide(4));
         nobilityPath.prefWidthProperty().bind(matchController.getBackground().prefWidthProperty());
-        backgroundImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png",nobilityPath.getPrefWidth(),nobilityPath.getPrefHeight()));
+        backgroundImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png", nobilityPath.getPrefWidth(), nobilityPath.getPrefHeight()));
         backgroundImage.setCache(true);
         nobilityPath.getChildren().add(backgroundImage);
         createPath();
@@ -55,15 +58,15 @@ public class NobilityPathController implements BaseController {
     }
 
     private void placeBonusCard() {
-        ImageView greyBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/GreyBonusCard.png"));
+        ImageView greyBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GreyBonusCard.png"));
         greyBonus.setCache(true);
-        ImageView orangeBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/PinkBonusCard.png"));
+        ImageView orangeBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/PinkBonusCard.png"));
         orangeBonus.setCache(true);
-        ImageView blueBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/BlueBonusCard.png"));
+        ImageView blueBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/BlueBonusCard.png"));
         blueBonus.setCache(true);
-        ImageView yellowBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/YellowBonusCard.png"));
+        ImageView yellowBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YellowBonusCard.png"));
         yellowBonus.setCache(true);
-        kingBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/KingBonus1.png"));
+        kingBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingBonus1.png"));
         kingBonus.setCache(true);
         greyBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
         orangeBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
@@ -164,14 +167,6 @@ public class NobilityPathController implements BaseController {
 
     @Override
     public void onFinishMarket() {
-    }
-
-    @Override
-    public void onResizeHeight(double height, double width) {
-    }
-
-    @Override
-    public void onResizeWidth(double width, double height) {
     }
 
     @Override

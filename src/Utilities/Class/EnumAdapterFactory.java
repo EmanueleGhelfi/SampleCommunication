@@ -26,6 +26,7 @@ public class EnumAdapterFactory implements TypeAdapterFactory {
 
     public class EnumTypeAdapter<T> extends TypeAdapter<T> {
 
+        @Override
         public void write(JsonWriter out, T value) throws IOException {
             if (value == null) {
                 out.nullValue();
@@ -51,6 +52,7 @@ public class EnumAdapterFactory implements TypeAdapterFactory {
             out.endObject();
         }
 
+        @Override
         public T read(JsonReader in) throws IOException {
             return null;
         }

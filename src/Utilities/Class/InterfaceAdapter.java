@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
  * Interface for deserialize and serialize object implementing a common interface
  * Created by Emanuele on 19/05/2016.
  */
-public final class InterfaceAdapter<T> implements JsonSerializer<T>,JsonDeserializer<T> {
+public final class InterfaceAdapter<T> implements JsonSerializer<T>, JsonDeserializer<T> {
 
     /**
      * Called when you call gson.fromJson(object,yourClass.class)
@@ -50,7 +50,8 @@ public final class InterfaceAdapter<T> implements JsonSerializer<T>,JsonDeserial
      */
     private JsonElement get(final JsonObject wrapper, String memberName) {
         final JsonElement elem = wrapper.get(memberName);
-        if (elem == null) throw new JsonParseException("no '" + memberName + "' member found in what was expected to be an interface wrapper");
+        if (elem == null)
+            throw new JsonParseException("no '" + memberName + "' member found in what was expected to be an interface wrapper");
         return elem;
     }
 }

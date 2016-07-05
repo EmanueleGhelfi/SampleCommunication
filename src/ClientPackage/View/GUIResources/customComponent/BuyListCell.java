@@ -1,4 +1,4 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import ClientPackage.View.GUIResources.Class.ShopController;
 import CommonModel.GameModel.Market.BuyableWrapper;
@@ -10,7 +10,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -18,65 +17,44 @@ import javafx.scene.layout.GridPane;
  */
 public class BuyListCell extends JFXListCell<BuyableWrapper> {
 
-
-    JFXListView jfxListView;
-    ShopController shopController;
+    private final JFXListView jfxListView;
+    private final ShopController shopController;
 
     public BuyListCell(JFXListView listView, ShopController shopController) {
-        this.jfxListView = listView;
+        jfxListView = listView;
         this.shopController = shopController;
     }
 
     @Override
     public void updateItem(BuyableWrapper item, boolean empty) {
         super.updateItem(item, empty);
-        if(!empty) {
+        if (!empty) {
             BuyableWrapper currentObject = item;
-
             GridPane gridPane = new GridPane();
             Label labelName = new Label(currentObject.getUsername());
-            Label labelCost = new Label(currentObject.getCost()+"");
+            Label labelCost = new Label(currentObject.getCost() + "");
             Label labelInfo = new Label(currentObject.getBuyableObject().getInfo());
-
             JFXCheckBox checkBox = new JFXCheckBox();
             checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                    System.out.println("checked");
-                    if(newValue){
-                        shopController.addItemToBuy(item);
-                    }
-                    else{
-                        shopController.removeItemToBuy(item);
+                    if (newValue) {
+                        BuyListCell.this.shopController.addItemToBuy(item);
+                    } else {
+                        BuyListCell.this.shopController.removeItemToBuy(item);
                     }
                 }
             });
-            /*
-            ColumnConstraints col1 = new ColumnConstraints();
-            col1.setPercentWidth(20);
-            ColumnConstraints col2 = new ColumnConstraints();
-            col2.setPercentWidth(40);
-            ColumnConstraints col3 = new ColumnConstraints();
-            col3.setPercentWidth(20);
-            ColumnConstraints col4 = new ColumnConstraints();
-            col3.setPercentWidth(20);
-            */
-
-
-            //gridPane.getColumnConstraints().addAll(col1,col2,col3,col4);
-            gridPane.add(labelName,0,0);
-            gridPane.add(labelInfo,1,0);
-            gridPane.add(labelCost,2,0);
-            gridPane.add(checkBox,3,0);
-            gridPane.setPadding(new Insets(20,20,20,20));
+            gridPane.add(labelName, 0, 0);
+            gridPane.add(labelInfo, 1, 0);
+            gridPane.add(labelCost, 2, 0);
+            gridPane.add(checkBox, 3, 0);
+            gridPane.setPadding(new Insets(20, 20, 20, 20));
             gridPane.setAlignment(Pos.CENTER);
             gridPane.setHgap(20);
-
-            setGraphic(gridPane);
-
-        }
-        else {
-            setGraphic(null);
+            this.setGraphic(gridPane);
+        } else {
+            this.setGraphic(null);
         }
     }
 }

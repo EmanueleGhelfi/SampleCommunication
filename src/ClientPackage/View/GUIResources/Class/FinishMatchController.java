@@ -5,11 +5,11 @@ import ClientPackage.View.GUIResources.CustomComponent.ImageLoader;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.Snapshot.BaseUser;
 import Utilities.Class.Constants;
+import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,14 +21,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 /**
  * Created by Giulio on 25/06/2016.
  */
-public class FinishMatchController implements Initializable {
+public class FinishMatchController {
 
     private ClientController clientController;
     private GUIView baseView;
@@ -42,12 +40,8 @@ public class FinishMatchController implements Initializable {
     private Pane innerPaneWhereShow = new Pane();
     private ImageView backgroundImage;
 
-    @FXML private StackPane rootPane;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    @FXML
+    private StackPane rootPane;
 
     public void setClientController(ClientController clientController, GUIView baseView) {
         this.clientController = clientController;
@@ -72,6 +66,7 @@ public class FinishMatchController implements Initializable {
         ranking.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Graphics.playSomeSound(Constants.BUTTON);
                 displayInfo(ranking.getSelectionModel().getSelectedItem());
             }
         });
@@ -87,21 +82,21 @@ public class FinishMatchController implements Initializable {
         kingOrJester.setPreserveRatio(true);
         rootPane.getChildren().add(kingOrJester);
         StackPane.setAlignment(kingOrJester, Pos.CENTER);
-        if(clientController.amIAWinner()) {
+        if (clientController.amIAWinner()) {
             winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
             kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
             popOverOfTheImage = new PopOver();
             StackPane stackPaneOfTheImage = new StackPane();
             Text textOfImage = new Text();
             textOfImage.setText("Felice della tua vittoria " + clientController.getSnapshot().getCurrentUser() + ".\n" +
-                        "Il mio cor si sollazza al saper che ho un erede di cotanta bravura.");
+                    "Il mio cor si sollazza al saper che ho un erede di cotanta bravura.");
             textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
             stackPaneOfTheImage.getChildren().add(textOfImage);
             StackPane.setAlignment(textOfImage, Pos.CENTER);
             popOverOfTheImage.setContentNode(stackPaneOfTheImage);
             popOverOfTheImage.show(kingOrJester);
         }
-        if (!clientController.amIAWinner()){
+        if (!clientController.amIAWinner()) {
             winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
             kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
             popOverOfTheImage = new PopOver();
@@ -153,7 +148,7 @@ public class FinishMatchController implements Initializable {
                 + "Grande personaggio fu questo " + baseUser.getUsername() + ". Mi ricorderò sempre di quel giorno che mi fece vedere le sue " + baseUser.getPoliticCardNumber()
                 + " prestigiose carte politiche con cui poteva soddisfare qualsiasi consiglio.\n"
                 + "In tutto il mondo è noto il suo nome. Ovunque si sa che il magnifico " + baseUser.getUsername() + " riuscì a costruire empori in molte città, come\n"
-                + clientController.getUserBuilding(selectedItem) +"\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
+                + clientController.getUserBuilding(selectedItem) + "\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
         innerText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15));
         popOverStackPane.getChildren().add(innerText);
         innerPopOver = new PopOver();

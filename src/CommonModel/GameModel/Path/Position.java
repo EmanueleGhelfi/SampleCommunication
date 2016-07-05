@@ -1,6 +1,7 @@
 package CommonModel.GameModel.Path;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
+
 import java.io.Serializable;
 
 /**
@@ -10,7 +11,7 @@ import java.io.Serializable;
 /**
  * Position in nobility path
  */
-public class Position implements Serializable{
+public class Position implements Serializable {
 
     private int position;
     private Bonus bonus;
@@ -26,6 +27,7 @@ public class Position implements Serializable{
     public int getPosition() {
         return position;
     }
+
     public Bonus getBonus() {
         return bonus;
     }
@@ -33,6 +35,6 @@ public class Position implements Serializable{
     @Override
     public String toString() {
 
-        return ""+position +"\t ---> \t\t Bonus:\t\t "+bonus.toString();
+        return "" + position + "\t ---> \t\t Bonus:\t\t " + bonus.toString();
     }
 }

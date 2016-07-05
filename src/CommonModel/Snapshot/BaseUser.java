@@ -6,9 +6,9 @@ import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Path.Position;
 import Server.Model.FakeUser;
 import Server.Model.User;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Emanuele on 18/05/2016.
@@ -32,7 +32,7 @@ public class BaseUser implements Serializable {
     public BaseUser() {
     }
 
-    public BaseUser(User user){
+    public BaseUser(User user) {
         this.username = user.getUsername();
         this.userColor = user.getUserColor();
         this.connected = user.isConnected();
@@ -44,7 +44,7 @@ public class BaseUser implements Serializable {
         this.permitCards = user.getPermitCards();
         this.oldPermitCards = user.getOldPermitCards();
         this.politicCardNumber = user.getPoliticCardSize();
-        if (user instanceof FakeUser){
+        if (user instanceof FakeUser) {
             fakeUser = true;
         }
     }
@@ -68,32 +68,47 @@ public class BaseUser implements Serializable {
     public boolean isConnected() {
         return connected;
     }
+
     public ArrayList<Helper> getHelpers() {
         return helpers;
     }
+
     public Position getNobilityPathPosition() {
         return nobilityPathPosition;
     }
+
     public ArrayList<PermitCard> getOldPermitCards() {
         return oldPermitCards;
     }
+
     public ArrayList<PermitCard> getPermitCards() {
         return permitCards;
     }
-    public String getUsername() {return username;}
-    public UserColor getUserColor() {return userColor;}
+
+    public String getUsername() {
+        return username;
+    }
+
+    public UserColor getUserColor() {
+        return userColor;
+    }
+
     public void setUserColor(UserColor userColor) {
         this.userColor = userColor;
     }
+
     public ArrayList<City> getUsersEmporium() {
         return usersEmporium;
     }
+
     public int getVictoryPathPosition() {
         return victoryPathPosition;
     }
+
     public int getCoinPathPosition() {
         return coinPathPosition;
     }
+
     public int getPoliticCardNumber() {
         return politicCardNumber;
     }

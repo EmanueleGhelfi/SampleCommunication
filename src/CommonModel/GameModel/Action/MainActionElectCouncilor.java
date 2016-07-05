@@ -1,14 +1,15 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.City.RegionName;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.King;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.io.Serializable;
 
 /**
@@ -22,9 +23,10 @@ public class MainActionElectCouncilor extends Action implements Serializable {
 
     /**
      * Create MainActionElectCouncilor action
+     *
      * @param councilorToAdd
-     * @param king null if you want to add councilor to region's council
-     * @param region null if you want to add councilor to king's council
+     * @param king           null if you want to add councilor to region's council
+     * @param region         null if you want to add councilor to king's council
      */
     public MainActionElectCouncilor(Councilor councilorToAdd, King king, RegionName region) {
         this.councilorToAdd = councilorToAdd;
@@ -36,7 +38,7 @@ public class MainActionElectCouncilor extends Action implements Serializable {
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         Council council = null;
-        if(super.checkActionCounter(user)) {
+        if (super.checkActionCounter(user)) {
             if (king == null) {
                 Region councilRegion = game.getRegion(region);
                 council = councilRegion.getCouncil();
@@ -54,14 +56,13 @@ public class MainActionElectCouncilor extends Action implements Serializable {
 
     @Override
     public String toString() {
-        String region ="";
-        if(king==null){
-            region="KING";
-        }
-        else {
+        String region = "";
+        if (king == null) {
+            region = "KING";
+        } else {
             //TODO nullPointer
-            region=this.region.getRegion();
+            region = this.region.getRegion();
         }
-        return "[MAIN ACTION] Elect councilor for money. Councilor: "+councilorToAdd+" In region "+region;
+        return "[MAIN ACTION] Elect councilor for money. Councilor: " + councilorToAdd + " In region " + region;
     }
 }

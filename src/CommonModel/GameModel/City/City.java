@@ -5,7 +5,6 @@ import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Exception.ActionNotPossibleException;
-import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 
@@ -32,11 +31,11 @@ public class City implements Serializable {
         this.cityColor = cityColor;
         this.cityName = cityName;
         this.cityRegion = cityRegion;
-        bonus=null;
+        bonus = null;
     }
 
-    public void createRandomBonus(){
-        bonus = new MainBonus(1,2,5,false);
+    public void createRandomBonus() {
+        bonus = new MainBonus(1, 2, 5, false);
     }
 
     @Override
@@ -70,9 +69,11 @@ public class City implements Serializable {
     public Bonus getBonus() {
         return bonus;
     }
+
     public RegionName getRegion() {
         return cityRegion;
     }
+
     public Color getColor() {
         return cityColor;
     }
@@ -82,6 +83,6 @@ public class City implements Serializable {
     }
 
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-        bonus.getBonus(user,game);
+        bonus.getBonus(user, game);
     }
 }

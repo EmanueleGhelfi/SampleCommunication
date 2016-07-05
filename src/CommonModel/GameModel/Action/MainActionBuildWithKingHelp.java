@@ -10,6 +10,7 @@ import Utilities.Exception.ActionNotPossibleException;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.NeighborIndex;
 import org.jgrapht.graph.DefaultEdge;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
@@ -27,7 +28,7 @@ public class MainActionBuildWithKingHelp extends Action {
     public MainActionBuildWithKingHelp(ArrayList<City> kingPath, ArrayList<PoliticCard> politicCards) {
         this.kingPath = kingPath;
         this.politicCards = politicCards;
-        this.actionType=Constants.MAIN_ACTION;
+        this.actionType = Constants.MAIN_ACTION;
     }
 
     @Override
@@ -39,9 +40,9 @@ public class MainActionBuildWithKingHelp extends Action {
         //this is the new position of the user in money path
         int newPositionInMoneyPath = 0;
 
-        int helperToSpend=0;
+        int helperToSpend = 0;
         //true if the emporiums are not ten and i haven't build in that city
-        if(super.checkActionCounter(user) && kingPath!=null && politicCards!=null && pathIsCorrect(game) && politicCards.size()>0) {
+        if (super.checkActionCounter(user) && kingPath != null && politicCards != null && pathIsCorrect(game) && politicCards.size() > 0) {
             if (checkEmporiumsAreNotTen(user) && kingPath.size() > 0 &&
                     checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
                 // city where king goes
@@ -97,24 +98,23 @@ public class MainActionBuildWithKingHelp extends Action {
             } else {
                 throw new ActionNotPossibleException(Constants.EMPORIUM_PRESENT_EXCEPTION);
             }
-        }
-            else {
-                if (politicCards == null || politicCards.size() == 0) {
-                    throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
-                }
-                throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);
+        } else {
+            if (politicCards == null || politicCards.size() == 0) {
+                throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
             }
+            throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);
+        }
 
     }
 
     private boolean pathIsCorrect(Game game) {
-        UndirectedGraph<City,DefaultEdge> mapGraph = game.getMap().getMapGraph();
-        if(kingPath.size()>0 && !kingPath.get(0).equals(game.getKing().getCurrentCity())){
+        UndirectedGraph<City, DefaultEdge> mapGraph = game.getMap().getMapGraph();
+        if (kingPath.size() > 0 && !kingPath.get(0).equals(game.getKing().getCurrentCity())) {
             return false;
         }
-        for(int i = 0; i<kingPath.size()-1;i++){
-            NeighborIndex<City,DefaultEdge> neighborIndex = new NeighborIndex(mapGraph);
-            if(!(neighborIndex.neighborListOf(kingPath.get(i)).contains(kingPath.get(i+1)))){
+        for (int i = 0; i < kingPath.size() - 1; i++) {
+            NeighborIndex<City, DefaultEdge> neighborIndex = new NeighborIndex(mapGraph);
+            if (!(neighborIndex.neighborListOf(kingPath.get(i)).contains(kingPath.get(i + 1)))) {
                 return false;
             }
         }
@@ -125,7 +125,7 @@ public class MainActionBuildWithKingHelp extends Action {
         ExecutorService executorService = Executors.newCachedThreadPool();
         game.getUsers().forEach(user1 -> {
 
-            Runnable runnable =()-> {
+            Runnable runnable = () -> {
                 user1.getBaseCommunication().moveKing(kingPath);
             };
 
@@ -135,9 +135,9 @@ public class MainActionBuildWithKingHelp extends Action {
 
     @Override
     public String toString() {
-        if(kingPath.size()==0){
+        if (kingPath.size() == 0) {
             return "";
         }
-        return "[MAIN ACTION] Build an empory in city " + kingPath.get(kingPath.size()-1).getCityName()+" with king help.\n";
+        return "[MAIN ACTION] Build an empory in city " + kingPath.get(kingPath.size() - 1).getCityName() + " with king help.\n";
     }
 }

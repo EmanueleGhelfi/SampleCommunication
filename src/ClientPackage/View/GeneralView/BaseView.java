@@ -2,7 +2,6 @@ package ClientPackage.View.GeneralView;
 
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
-import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
