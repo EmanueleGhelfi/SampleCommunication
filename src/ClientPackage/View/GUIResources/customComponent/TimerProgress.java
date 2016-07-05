@@ -1,11 +1,10 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.MatchController;
 import Utilities.Class.Constants;
 import eu.hansolo.medusa.Gauge;
 import javafx.application.Platform;
-
 import java.util.TimerTask;
 
 /**
@@ -27,9 +26,7 @@ public class TimerProgress extends TimerTask {
 
     @Override
     public void run() {
-
         time-=1000;
-
         if(time>=0) {
             Platform.runLater(new Runnable() {
                 @Override
@@ -38,7 +35,6 @@ public class TimerProgress extends TimerTask {
                 }
             });
         }
-
         if(time==0){
             clientController.onFinishTurn();
         }

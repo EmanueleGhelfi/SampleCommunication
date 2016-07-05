@@ -11,4 +11,5 @@ public class ClientMain {
         ClientController clientController = ClientController.getInstance();
         clientController.init();
     }
+
 }

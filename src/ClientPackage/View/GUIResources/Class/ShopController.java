@@ -1,11 +1,10 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.customComponent.ImageLoader;
+import ClientPackage.View.GUIResources.CustomComponent.ImageLoader;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Market.BuyableWrapper;
@@ -13,9 +12,6 @@ import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXButton;
-
-import javafx.animation.PathTransition;
-import javafx.animation.PathTransitionBuilder;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -31,17 +27,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.PathElement;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -61,32 +51,26 @@ public class ShopController implements BaseController {
     private ScrollPane buyScrollPane = new ScrollPane();
     private ScrollPane sellScrollPane = new ScrollPane();
     private VBox buyVBox = new VBox();
-    private VBox sellVBox = new VBox();
-
     private Button innerButton;
     private PopOver innerPopOver;
     private Pane paneWhereShowPopOver = new Pane();
-    private boolean confirming = true;
     private ArrayList<BuyableWrapper> sellList = new ArrayList<>();
     private ArrayList<BuyableWrapper> temporarySellList = new ArrayList<>();
     private ArrayList<BuyableWrapper> buyList = new ArrayList<>();
     private ArrayList<BuyableWrapper> toBuy = new ArrayList<>();
     private ArrayList<BuyableWrapper> trueList = new ArrayList<>();
     private ShopController shopController = this;
-
     private ImageView buyIt = new ImageView();
     private ImageView finishShop = new ImageView();
-    JFXButton finishShopButton = new JFXButton();
-    JFXButton buyItButton = new JFXButton("");
-
-    @FXML private GridPane shop;
-    @FXML private Pane paneBackground;
-
+    private JFXButton finishShopButton = new JFXButton();
+    private JFXButton buyItButton = new JFXButton("");
     private boolean marketPhase = false;
     private boolean sellPhase = false;
     private boolean buyPhase = false;
     private MatchController matchController;
 
+    @FXML private GridPane shop;
+    @FXML private Pane paneBackground;
 
     @Override
     public void setClientController(ClientController clientController, GUIView guiView) {
@@ -99,7 +83,6 @@ public class ShopController implements BaseController {
         createDeck();
         setArrow();
         setMarketPane();
-
     }
 
     private void setArrow() {
@@ -116,7 +99,6 @@ public class ShopController implements BaseController {
         backArrow.prefHeightProperty().bind(backgroundImage.fitHeightProperty().divide(6));
         backArrow.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3964));
         backArrow.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.7619));
-
         backArrow.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -125,9 +107,7 @@ public class ShopController implements BaseController {
                 matchController.onFinishMarket();
             }
         });
-
         BooleanProperty stopPulse  = new SimpleBooleanProperty(false);
-
         backArrow.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -135,14 +115,12 @@ public class ShopController implements BaseController {
                 Graphics.scaleTransitionEffectCycle(backArrow, 1.2f, 1.2f, stopPulse);
             }
         });
-
         backArrow.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 stopPulse.setValue(true);
             }
         });
-
     }
 
     private void setMarketPane() {
@@ -150,8 +128,6 @@ public class ShopController implements BaseController {
         sellScrollPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(2));
         sellScrollPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
         sellScrollPane.setContent(sellPane);
-
-
         buyPane.setPrefColumns(2);
         buyScrollPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(3));
         buyScrollPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(3));
@@ -173,24 +149,19 @@ public class ShopController implements BaseController {
         backgroundImage.fitWidthProperty().bind(shop.widthProperty());
         shop.prefWidthProperty().bind(paneBackground.prefWidthProperty());
         shop.prefHeightProperty().bind(paneBackground.prefHeightProperty());
-
         paneBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("event x and y "+event.getX()/paneBackground.getWidth()+" "+event.getY()/paneBackground.getHeight());
             }
         });
         backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("image: "+newValue.doubleValue());
-                System.out.println("background "+ shop.getWidth() );
             }
         });
         backgroundImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
-                System.out.println("changed to "+newValue.getWidth()+" "+" "+newValue.getHeight());
                 paneBackground.setPrefWidth(newValue.getWidth());
                 paneBackground.setPrefHeight(newValue.getHeight());
 
@@ -242,23 +213,18 @@ public class ShopController implements BaseController {
         sellList = new ArrayList<>();
         SnapshotToSend snapshotTosend = clientController.getSnapshot();
         buyList =  snapshotTosend.getMarketList();
-
-
         for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
             BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
             sellList.add(buyableWrapperTmp);
         }
-
         for(PermitCard permitCard: snapshotTosend.getCurrentUser().getPermitCards()){
             BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername());
             sellList.add(buyableWrapperTmp);
         }
-
         for(Helper helper: snapshotTosend.getCurrentUser().getHelpers()){
             BuyableWrapper buyableWrapper = new BuyableWrapper(helper,snapshotTosend.getCurrentUser().getUsername());
             sellList.add(buyableWrapper);
         }
-
         for(Iterator<BuyableWrapper> itr = buyList.iterator(); itr.hasNext();){
             BuyableWrapper buyableWrapper = itr.next();
             if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
@@ -267,18 +233,15 @@ public class ShopController implements BaseController {
                 itr.remove();
             }
         }
-
         populateSellAndBuyPane();
     }
 
     private void populateSellAndBuyPane() {
         sellPane.getChildren().clear();
         buyPane.getChildren().clear();
-
         for (BuyableWrapper buyableWrapper : temporarySellList) {
             sellPane.getChildren().add(addSalableItems(buyableWrapper));
         }
-
         for (BuyableWrapper buyableWrapper : buyList) {
             buyPane.getChildren().add(addBuyableItems(buyableWrapper));
         }
@@ -301,16 +264,12 @@ public class ShopController implements BaseController {
         permitCardDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
         helperDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(15));
         helperDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(15));
-
         Tooltip.install(politicCardDeck, new Tooltip("Carte politica in vendita"));
         Tooltip.install(permitCardDeck, new Tooltip("Carte permesso in vendita"));
         Tooltip.install(helperDeck, new Tooltip("Aiutanti in vendita"));
-
-        // add effect
         Graphics.addBorder(politicCardDeck);
         Graphics.addBorder(helperDeck);
         Graphics.addBorder(permitCardDeck);
-
     }
 
     private void settingDeckActions() {
@@ -400,7 +359,6 @@ public class ShopController implements BaseController {
 
     private void createBuyingPopOver() {
         innerPopOver = new PopOver();
-
         if(buyPhase) {
             finishShopButton.setGraphic(finishShop);
             finishShopButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -414,7 +372,6 @@ public class ShopController implements BaseController {
                     clientController.sendFinishedBuyPhase();
                 }
             });
-
             buyItButton.setGraphic(buyIt);
             buyItButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -424,7 +381,6 @@ public class ShopController implements BaseController {
                     //toBuy.clear();
                 }
             });
-
             buyIt.setFitHeight(40);
             buyIt.setFitWidth(40);
             buyIt.setPreserveRatio(true);
@@ -436,7 +392,6 @@ public class ShopController implements BaseController {
         else{
             nothingToDoPopOver();
         }
-
     }
 
     private void nothingToDoPopOver() {
@@ -452,7 +407,6 @@ public class ShopController implements BaseController {
 
     @Override
     public void onStartMarket() {
-
         Graphics.notification("Start Market");
         marketPhase=true;
         sellPhase=true;
@@ -516,36 +470,29 @@ public class ShopController implements BaseController {
 
     @Override
     public void onResizeHeight(double height, double width) {
-
     }
 
     @Override
     public void onResizeWidth(double width, double height) {
-
     }
 
     @Override
     public void selectPermitCard() {
-
     }
 
     @Override
     public void selectCityRewardBonus() {
-
     }
 
     @Override
     public void moveKing(ArrayList<City> baseController) {
-
     }
 
     @Override
     public void selectOldPermitCardBonus() {
-
     }
 
     public void addItemToBuy(BuyableWrapper item) {
-        System.out.println("adding item :"+item);
         if(!toBuy.contains(item)){
             toBuy.add(item);
         }
@@ -592,7 +539,6 @@ public class ShopController implements BaseController {
                 toBuy.add(information);
             }
         });
-
         Label label = new Label(information.getBuyableObject().getInfo());
         if(information.getBuyableObject() instanceof PermitCard){
             baseGridPane.add(label,1,0);
@@ -611,12 +557,10 @@ public class ShopController implements BaseController {
                 itemBackground.setEffect(colorAdjust);
             }
         });
-
         baseGridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 button.setVisible(false);
-               // label.setVisible(false);
                 itemBackground.setEffect(null);
             }
         });
@@ -651,12 +595,10 @@ public class ShopController implements BaseController {
         buttonToSell.setButtonType(JFXButton.ButtonType.FLAT);
         if (information.isOnSale()){
             buttonToSell.setText("RIMUOVI");
-            System.out.println(information.getBuyableObject().getUrl() + " ADDED");
         } else {
             buttonToSell.setText("0");
         }
-
-        Image itemOnSaleImage = null;
+        Image itemOnSaleImage;
         Image upperImage;
         Image downerImage;
         ImageView itemOnSaleImageView = new ImageView();
@@ -681,7 +623,6 @@ public class ShopController implements BaseController {
         }
         ImageView upper = new ImageView(upperImage);
         ImageView downer = new ImageView(downerImage);
-
         JFXButton plusButton = new JFXButton("");
         plusButton.setGraphic(upper);
         JFXButton minusButton = new JFXButton("");
@@ -692,7 +633,6 @@ public class ShopController implements BaseController {
         sellButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("4F6161"),null,null)));
         sellButton.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().divide(3));
         sellButton.setVisible(false);
-
         EventHandler<ActionEvent> onSell = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -718,9 +658,7 @@ public class ShopController implements BaseController {
             }
             };
         sellButton.setOnAction(onSell);
-
         buttonToSell.setOnAction(onSell);
-
         plusButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -774,7 +712,6 @@ public class ShopController implements BaseController {
         baseGridPane.add(itemOnSaleImageView, 0, 0);
         GridPane.setColumnSpan(itemOnSaleImageView, 3);
         GridPane.setRowSpan(itemOnSaleImageView, 3);
-
         baseGridPane.add(plusButton, 2, 1);
         baseGridPane.add(buttonToSell, 1, 1);
         baseGridPane.add(minusButton, 0, 1);
@@ -820,12 +757,6 @@ public class ShopController implements BaseController {
                 "Per compiere un'azione principale o veloce basta selezionare l'oggetto inerente. Per esempio:\n" +
                 "puoi acquistare una nuova azione principale cliccando sulla stella nelle tue info,\n" +
                 "se invece vuoi cambiare le carte permesso visibili basta cliccarci sopra.\n" +
-                /*
-                "Per scalzare un consigliere puoi cliccare sopra il consiglio.\n" +
-                "Per acquistare una tessera permesso scegli quella che vuoi e clicca." +
-                "Per costruire un emporio basta cliccare sulla città.\n" +
-                "Per costruire con l'aiuto del Re basta cliccare sopra la corona." +
-                */
                 "Io sono il mercante, e nella fase di mercato gestirò il mercato.\n" +
                 "Per vendere clicca sulle immagini sul bancone e poi dimmelo. Per comprare chiedi a me.\n" +
                 "Buon proseguimento!";

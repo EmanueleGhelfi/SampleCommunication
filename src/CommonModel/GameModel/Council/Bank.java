@@ -46,14 +46,6 @@ public class Bank implements Serializable, Cloneable {
 
     public synchronized ArrayList<PoliticColor> showCouncilor(){
         ArrayList<PoliticColor> colorToShow = new ArrayList<>();
-                /*hashMapArrayList.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().size() > 0)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toCollection(ArrayList::new));
-        System.out.println(colorToShow);
-        */
-
         for(PoliticColor politicColor: PoliticColor.values()){
             if(hashMapArrayList.get(politicColor).size()>0){
                 colorToShow.add(politicColor);

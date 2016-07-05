@@ -1,7 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.customComponent.*;
+import ClientPackage.View.GUIResources.CustomComponent.*;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.Action.*;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
@@ -50,7 +50,6 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import org.controlsfx.control.HiddenSidesPane;
 import org.controlsfx.control.PopOver;
-
 import java.util.ArrayList;
 
 /**
@@ -793,7 +792,6 @@ public class MatchController implements BaseController {
                         pulseBonus.setValue(true);
                     }
                     if(needToSelectOldBonus){
-                        System.out.println("click on bonus");
                         Graphics.playSomeSound("Button");
                         new Thread(()->{
                                 clientController.getCityRewardBonus(city1);
@@ -1463,7 +1461,6 @@ public class MatchController implements BaseController {
             Node region = bottomPane.lookup("."+regionName.name());
             Set<Node> labels = region.lookupAll(".permitLabel");
             Set<Node> gridPanes = region.lookupAll(".gridPanePermitCard");
-            Set<Node> imageViews = region.lookupAll(".visiblePermitCard");
             ArrayList<Node> labelsList = new ArrayList<>();
             labelsList.addAll(labels);
             ArrayList<Node> gridPanesList = new ArrayList<>();
@@ -1605,6 +1602,19 @@ public class MatchController implements BaseController {
         hidePermitCardHightLight(".myPermitCard",gridPane);
     }
 
+    public Pane getBackground() {
+        return background;
+    }
+    public boolean getBuildWithKingPhase() {
+        return buildWithKingPhase.get();
+    }
+    public ArrayList<City> getKingPathforBuild() {
+        return kingPathforBuild;
+    }
+    public ArrayList<PoliticCard> getPoliticCardforBuildWithKing() {
+        return politicCardforBuildWithKing;
+    }
+
     private class PermitButtonHandler implements EventHandler<MouseEvent>{
 
         private RegionName regionName;
@@ -1618,23 +1628,6 @@ public class MatchController implements BaseController {
             Action action = new FastActionChangePermitCardWithHelper(regionName);
             clientController.doAction(action);
         }
-    }
-
-
-    public Pane getBackground() {
-        return background;
-    }
-
-    public boolean getBuildWithKingPhase() {
-        return buildWithKingPhase.get();
-    }
-
-    public ArrayList<City> getKingPathforBuild() {
-        return kingPathforBuild;
-    }
-
-    public ArrayList<PoliticCard> getPoliticCardforBuildWithKing() {
-        return politicCardforBuildWithKing;
     }
 
 }

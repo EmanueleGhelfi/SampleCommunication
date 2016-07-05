@@ -5,7 +5,6 @@ import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import CommonModel.GameModel.City.CityFactory;
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,7 +32,6 @@ public class PermitDeck implements Deck,Serializable {
     @Override
     public void createRandomDeck() {
         //create a deck for this region
-        System.out.println("creating deck of: "+region);
         ArrayList<ArrayList<Character>> citiesPermitCard = CityFactory.getCity(region);
         Collections.shuffle(citiesPermitCard);
         if(citiesPermitCard!=null) {
@@ -45,12 +43,10 @@ public class PermitDeck implements Deck,Serializable {
                 permitDeck.add(permitCard);
             }
             permitCardsVisible = new ArrayList<>();
-
             permitCardsVisible.add(permitDeck.remove());
             permitCardsVisible.add(permitDeck.remove());
         }
         else{
-            System.out.println("Cities permit card null");
         }
     }
 

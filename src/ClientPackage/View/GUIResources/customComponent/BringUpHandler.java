@@ -1,8 +1,7 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -14,7 +13,6 @@ public class BringUpHandler implements EventHandler<MouseEvent> {
 
     public BringUpHandler(Node node) {
         this.node=node;
-
     }
 
     @Override

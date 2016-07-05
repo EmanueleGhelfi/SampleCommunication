@@ -78,4 +78,5 @@ public class FastActionElectCouncilorWithHelper extends Action implements Serial
 
         return toReturn;
     }
+
 }

@@ -5,18 +5,13 @@ package ClientPackage.View.GUIResources.Class;
  */
 
 import ClientPackage.Controller.ClientController;
-import Server.Model.Map;
 import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.paint.Paint;
-
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,7 +27,6 @@ public class LoginController {
 
     public void onButtonLoginPressed(ActionEvent actionEvent) {
         Graphics.playSomeSound("Button");
-        System.out.println("On button login pressed");
         if (!usernameText.getText().isEmpty()) {
             clientController.onSendLogin(usernameText.getText());
         } else {

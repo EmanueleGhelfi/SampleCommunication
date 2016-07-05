@@ -2,7 +2,6 @@ package CommonModel.GameModel.Action;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.CityVisitor;
 import CommonModel.GameModel.Council.King;
 import Server.Model.Game;
 import Server.Model.User;
@@ -11,7 +10,6 @@ import Utilities.Exception.ActionNotPossibleException;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.NeighborIndex;
 import org.jgrapht.graph.DefaultEdge;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
@@ -31,7 +29,6 @@ public class MainActionBuildWithKingHelp extends Action {
         this.politicCards = politicCards;
         this.actionType=Constants.MAIN_ACTION;
     }
-
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
@@ -56,15 +53,12 @@ public class MainActionBuildWithKingHelp extends Action {
                 }
                 // if user can build
                 if (user.getHelpers().size() >= helperToSpend) {
-
                     //decrement helper
                     user.setHelpers(user.getHelpers().size() - helperToSpend);
-
                     // calculate correct politic card
                     correctPoliticCard = countCorrectPoliticCard(king, politicCards, bonusCounter);
                     // calculate money to spend
                     newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
-
                     if ((kingPath.size() - 1) * Constants.KING_PRICE + newPositionInMoneyPath <= user.getCoinPathPosition()) {
                         for (City city : kingPath) {
                             //user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
@@ -72,7 +66,6 @@ public class MainActionBuildWithKingHelp extends Action {
                             //king.setCurrentCity(city);
                         }
                         king.setCurrentCity(kingCity);
-
                         // because of first element
                         game.getMoneyPath().goAhead(user, Constants.KING_PRICE);
                         user.addEmporium(kingCity);
@@ -90,11 +83,9 @@ public class MainActionBuildWithKingHelp extends Action {
                     game.getPoliticCards().addToQueue(new HashSet<>(politicCards));
                     // remove cards from user
                     removePoliticCard(politicCards, user, game);
-
                     //check region and color bonus
                     checkRegionBonus(kingCity, user, game);
                     checkColorBonus(kingCity, user, game);
-
                     moveKing(game, user);
                     removeAction(game, user);
                     if (user.getUsersEmporium().size() == 10) {
@@ -116,18 +107,14 @@ public class MainActionBuildWithKingHelp extends Action {
 
     }
 
-
-
     private boolean pathIsCorrect(Game game) {
         UndirectedGraph<City,DefaultEdge> mapGraph = game.getMap().getMapGraph();
         if(kingPath.size()>0 && !kingPath.get(0).equals(game.getKing().getCurrentCity())){
-            System.out.println("First city isn't king city");
             return false;
         }
         for(int i = 0; i<kingPath.size()-1;i++){
             NeighborIndex<City,DefaultEdge> neighborIndex = new NeighborIndex(mapGraph);
             if(!(neighborIndex.neighborListOf(kingPath.get(i)).contains(kingPath.get(i+1)))){
-                System.out.println("PATH NOT CORRECT because of "+kingPath.get(i).getCityName() +" and "+kingPath.get(i+1).getCityName());
                 return false;
             }
         }

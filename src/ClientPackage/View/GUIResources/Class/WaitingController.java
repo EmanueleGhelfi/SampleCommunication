@@ -1,40 +1,21 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import Server.Model.Map;
-import Utilities.Class.CircularArrayList;
-import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXSpinner;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
-
-import java.net.URL;
-import java.sql.Time;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Created by Giulio on 16/05/2016.
@@ -44,8 +25,8 @@ public class WaitingController {
     private ClientController clientController;
     private JFXSpinner jfxSpinner = new JFXSpinner();
     private ArrayList<String> typewriterArrayList = new ArrayList<>();
-    private String stringToPrint;
     private Timeline timeline = new Timeline();
+
     @FXML private Label typewriterLabel;
     @FXML private StackPane background;
 
@@ -53,12 +34,10 @@ public class WaitingController {
         this.clientController = clientController;
         background.getChildren().add(jfxSpinner);
         jfxSpinner.setRadius(200);
-        //jfxSpinner.radiusProperty().bind(background.widthProperty().divide(7));
         StackPane.setAlignment(jfxSpinner, Pos.CENTER);
         StackPane.setAlignment(typewriterLabel, Pos.CENTER);
         typewriter();
     }
-
 
     public void typewriter(){
         int count = 0;

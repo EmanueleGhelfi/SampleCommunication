@@ -1,6 +1,5 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;

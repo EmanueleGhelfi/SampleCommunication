@@ -16,7 +16,6 @@ import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -169,7 +168,6 @@ public class ClientSocketService extends ClientService implements Runnable {
             }
             case Constants.CODE_SNAPSHOT:{
                 SnapshotToSend snapshotToSend = CommunicationInfo.getSnapshot(communicationInfo.getInfo());
-                //SnapshotToSend snapshotToSend = gson.fromJson(communicationInfo.getInfo(),SnapshotToSend.class);
                 clientController.setSnapshot(snapshotToSend);
                 break;
             }

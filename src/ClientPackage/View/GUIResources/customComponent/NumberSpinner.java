@@ -1,8 +1,5 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
-
-
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.ObjectProperty;
@@ -19,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javax.swing.JSpinner;
 
 /**
  * Created by Emanuele on 30/05/2016.
@@ -52,14 +48,9 @@ public class NumberSpinner extends HBox {
         super();
         this.setId(NUMBER_SPINNER);
         this.stepWitdhProperty.set(stepWidth);
-
-        // TextField
         numberField = new NumberTextField(value, nf);
         numberField.setId(NUMBER_FIELD);
-
-        // Enable arrow keys for dec/inc
         numberField.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.DOWN) {
@@ -72,13 +63,10 @@ public class NumberSpinner extends HBox {
                 }
             }
         });
-
-        // Painting the up and down arrows
         Path arrowUp = new Path();
         arrowUp.setId(ARROW);
         arrowUp.getElements().addAll(new MoveTo(-ARROW_SIZE, 0), new LineTo(ARROW_SIZE, 0),
                 new LineTo(0, -ARROW_SIZE), new LineTo(-ARROW_SIZE, 0));
-        // mouse clicks should be forwarded to the underlying button
         arrowUp.setMouseTransparent(true);
 
         Path arrowDown = new Path();
@@ -86,15 +74,8 @@ public class NumberSpinner extends HBox {
         arrowDown.getElements().addAll(new MoveTo(-ARROW_SIZE, 0), new LineTo(ARROW_SIZE, 0),
                 new LineTo(0, ARROW_SIZE), new LineTo(-ARROW_SIZE, 0));
         arrowDown.setMouseTransparent(true);
-
-        // the spinner buttons scale with the textfield size
-        // TODO: the following approach leads to the desired result, but it is
-        // not fully understood why and obviously it is not quite elegant
         buttonHeight = numberField.heightProperty().subtract(3).divide(2);
-        // give unused space in the buttons VBox to the incrementBUtton
         spacing = numberField.heightProperty().subtract(2).subtract(buttonHeight.multiply(2));
-
-        // inc/dec buttons
         VBox buttons = new VBox();
         buttons.setId(BUTTONS_BOX);
         incrementButton = new Button();
@@ -112,12 +93,9 @@ public class NumberSpinner extends HBox {
                 ae.consume();
             }
         });
-
-        // Paint arrow path on button using a StackPane
         StackPane incPane = new StackPane();
         incPane.getChildren().addAll(incrementButton, arrowUp);
         incPane.setAlignment(Pos.CENTER);
-
         decrementButton = new Button();
         decrementButton.setId(SPINNER_BUTTON_DOWN);
         decrementButton.prefWidthProperty().bind(numberField.heightProperty());
@@ -125,7 +103,6 @@ public class NumberSpinner extends HBox {
         decrementButton.maxHeightProperty().bind(buttonHeight);
         decrementButton.prefHeightProperty().bind(buttonHeight);
         decrementButton.minHeightProperty().bind(buttonHeight);
-
         decrementButton.setFocusTraversable(false);
         decrementButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -139,7 +116,6 @@ public class NumberSpinner extends HBox {
         StackPane decPane = new StackPane();
         decPane.getChildren().addAll(decrementButton, arrowDown);
         decPane.setAlignment(Pos.CENTER);
-
         buttons.getChildren().addAll(incPane, decPane);
         this.getChildren().addAll(numberField, buttons);
     }
@@ -162,24 +138,8 @@ public class NumberSpinner extends HBox {
         numberField.setNumber(value);
     }
 
-    public final void setNumber(Integer value) {
-        numberField.setNumber(value);
-    }
-
     public ObjectProperty<Integer> numberProperty() {
         return numberField.numberProperty();
     }
 
-    public final Integer getNumber() {
-        return numberField.getNumber();
-    }
-
-    // debugging layout bounds
-    public void dumpSizes() {
-        System.out.println("numberField (layout)=" + numberField.getLayoutBounds());
-        System.out.println("buttonInc (layout)=" + incrementButton.getLayoutBounds());
-        System.out.println("buttonDec (layout)=" + decrementButton.getLayoutBounds());
-        System.out.println("binding=" + buttonHeight.toString());
-        System.out.println("spacing=" + spacing.toString());
-    }
 }

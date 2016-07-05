@@ -1,7 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.customComponent.ImageLoader;
+import ClientPackage.View.GUIResources.CustomComponent.ImageLoader;
 import Server.Model.Map;
 import Utilities.Class.CircularArrayList;
 import Utilities.Class.Graphics;
@@ -11,13 +11,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -98,12 +95,6 @@ public class MapSelectionController implements Initializable {
         prevImageView.setImage(prevImage);
         thisImageView.setImage(thisImage);
         nextImageView.setImage(nextImage);
-
-        /*
-        prevImage = new Image(this.mapArrayList.get(mapCounter - 1).getMapPreview());
-        thisImage = new Image(this.mapArrayList.get(mapCounter).getMapPreview());
-        nextImage = new Image(this.mapArrayList.get(mapCounter + 1).getMapPreview());
-        */
     }
 
     public void nextVisibleMap(){
@@ -123,25 +114,7 @@ public class MapSelectionController implements Initializable {
         prevImageView.setImage(prevImage);
         thisImageView.setImage(thisImage);
         nextImageView.setImage(nextImage);
-        /*
-        prevImage = new Image(mapArrayList.get(mapCounter - 1).getMapPreview());
-        thisImage = new Image(mapArrayList.get(mapCounter).getMapPreview());
-        nextImage = new Image(mapArrayList.get(mapCounter + 1).getMapPreview());
-        prevImageView.setImage(prevImage);
-        thisImageView.setImage(thisImage);
-        nextImageView.setImage(nextImage);
-        */
-        System.out.println(mapArrayList.get(mapCounter - 1).getMapName());
-        System.out.println(mapArrayList.get(mapCounter).getMapName() + " in mezzo");
-        System.out.println(mapArrayList.get(mapCounter + 1).getMapName() + " mapcounter -> " + mapCounter);
     }
-
-    /*
-    public void takeImage(){
-        clientController.sendMap(mapArrayList.get(mapCounter));
-        System.out.println("BUTTON PRESSED");
-    }
-    */
 
     public void setClientController(ClientController clientController){
         this.clientController = clientController;

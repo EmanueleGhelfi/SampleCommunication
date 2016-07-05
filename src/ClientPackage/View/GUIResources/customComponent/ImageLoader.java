@@ -1,8 +1,7 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
-
 import java.util.HashMap;
 
 /**
@@ -26,13 +25,9 @@ public class ImageLoader {
         return imageLoader;
     }
 
-
-
-
     public Image getImage(String path){
         if(!imageHashMap.containsKey(path)){
             Image image=null;
-            //TODO: Improve
             if(!path.contains("Map")) {
                  image = new Image(path,true);
             }
@@ -47,7 +42,6 @@ public class ImageLoader {
     public Image getImage(String path, double width, double height) {
         if(!imageHashMap.containsKey(path)){
             Image image=null;
-            //TODO: Improve
             if(!path.contains("Map")) {
                 image = new Image(path,width,height,true, true,true);
             }

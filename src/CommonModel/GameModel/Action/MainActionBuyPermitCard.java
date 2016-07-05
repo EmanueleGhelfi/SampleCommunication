@@ -1,10 +1,6 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.Bonus.Generic.MainBonus;
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.City.RegionName;
-import Server.Controller.GamesManager;
-import Server.NetworkInterface.Communication.RMICommunication;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
@@ -13,7 +9,6 @@ import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.Region;
 import Server.Model.Game;
 import Server.Model.User;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -66,13 +61,9 @@ public class MainActionBuyPermitCard extends Action {
         }
     }
 
-    // MAIN-TEST
-    public static void main(String[] args){
-
-    }
-
     @Override
     public String toString() {
         return "[MAIN ACTION] Buy permit card "+permitCard.getCityAcronimous()+" of region: "+userRegion.getRegion()+"";
     }
+
 }

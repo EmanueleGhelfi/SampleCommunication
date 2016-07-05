@@ -34,7 +34,6 @@ public class CLIView implements BaseView {
     private CLIPrinterInterface cliPrinterInterface = new CLIPrinter();
     private CLIParser cliParser = new CLIParser(this.getClass());
     private ClientController clientController;
-    // for showing help
     private boolean first = true;
     private MatchCliController matchCliController;
     private ShopCliController shopCliController;
@@ -49,7 +48,6 @@ public class CLIView implements BaseView {
     private Future futureTask;
 
     public CLIView(ClientController clientController) {
-        // to implement
         this.clientController = clientController;
         this.clientController.setBaseView(this);
         matchCliController= new MatchCliController(this,clientController);
@@ -65,7 +63,6 @@ public class CLIView implements BaseView {
     }
 
     private void getInput() {
-
         Runnable runnable= ()-> {
             String input = "";
             if (first) {
@@ -87,11 +84,7 @@ public class CLIView implements BaseView {
                 }
             }
         };
-
-        //executorService.execute(runnable);
         futureTask = executorService.submit(runnable);
-
-
     }
 
     @Override
@@ -155,8 +148,6 @@ public class CLIView implements BaseView {
 
     @Override
     public void updateSnapshot() {
-        //cliPrinterInterface.toStringFormatted(clientController.getSnapshot());
-        //matchCliController.showStatus();
     }
 
     @Override

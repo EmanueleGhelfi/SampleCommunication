@@ -1,6 +1,6 @@
 package Utilities.Class;
 
-import ClientPackage.View.GUIResources.customComponent.BringUpHandler;
+import ClientPackage.View.GUIResources.CustomComponent.BringUpHandler;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -36,7 +36,6 @@ public class Graphics {
         }
     }
 
-
     public static void bringUpImages(Node... nodes) {
         for (Node node: nodes) {
             BringUpHandler bringUpHandler = new BringUpHandler(node);
@@ -67,17 +66,6 @@ public class Graphics {
         borderGlow.setWidth(depth);
         borderGlow.setHeight(depth);
         node.setEffect(borderGlow);
-    }
-
-    public static void scaleTransition(Node node, float toValueX, float toValueY, int duration) {
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(duration), node);
-        scaleTransition.setCycleCount(1);
-        scaleTransition.setInterpolator(Interpolator.EASE_BOTH);
-        scaleTransition.setFromX(node.getScaleX());
-        scaleTransition.setFromY(node.getScaleY());
-        scaleTransition.setToX(toValueX);
-        scaleTransition.setToY(toValueY);
-        scaleTransition.playFromStart();
     }
 
     public static Animation scaleTransitionEffectCycle (Node node, float toValueX, float toValueY, BooleanProperty stopTransition){
@@ -120,18 +108,14 @@ public class Graphics {
     }
 
     public static void addBorder(Node node) {
-
         node.getStyleClass().add("bordered");
-
         DropShadow ds = new DropShadow( 10, Color.AQUA );
-
         node.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 node.setEffect(ds);
             }
         });
-
         node.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

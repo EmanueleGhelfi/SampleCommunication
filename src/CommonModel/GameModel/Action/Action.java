@@ -7,7 +7,6 @@ import CommonModel.GameModel.City.CityVisitor;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
 import CommonModel.GameModel.Market.BuyableWrapper;
-import Server.Model.FakeUser;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
@@ -29,17 +28,16 @@ public abstract class Action implements Serializable {
         switch (actionType){
             case Constants.FAST_ACTION:
                 if(user.getFastActionCounter()<=0){
-                    throw new ActionNotPossibleException("You don't have fast action!");
+                    throw new ActionNotPossibleException("Non hai azioni veloci!");
                 }
                 else return true;
             case Constants.MAIN_ACTION:
                 if(user.getMainActionCounter()<=0){
-                    System.out.println("Not your turn");
-                    throw new ActionNotPossibleException("You don't have main action!");
+                    throw new ActionNotPossibleException("Non hai azioni principali!");
                 }
                 else return true;
             default:
-                throw new ActionNotPossibleException("Action type unknown");
+                throw new ActionNotPossibleException("Azione non possibile");
         }
 
     }
@@ -58,8 +56,6 @@ public abstract class Action implements Serializable {
     }
 
     protected void removePoliticCard(ArrayList<PoliticCard> politicCards, User user, Game game){
-        int cont2 =0;
-
         for(int i = 0; i < politicCards.size(); i++){
             for(int j = 0; j< user.getPoliticCards().size();j++){
                 if(politicCards.get(i).equals(user.getPoliticCards().get(j))){
@@ -146,7 +142,7 @@ public abstract class Action implements Serializable {
      */
     protected boolean checkEmporiumsAreNotTen(User user) throws ActionNotPossibleException {
         if (user.getUsersEmporium().size()>=Constants.EMPORIUMS_BUILDABLE){
-            throw new ActionNotPossibleException("Ten emporiums!!!");
+            throw new ActionNotPossibleException("Hai già edificato 10 empori");
         }
         return true;
     }
@@ -154,13 +150,9 @@ public abstract class Action implements Serializable {
     protected boolean checkEmporiumsIsAlreadyPresent(User user, City cityWantToBuildIn) throws  ActionNotPossibleException{
         for(City city: user.getUsersEmporium()){
             if (cityWantToBuildIn.equals(city))
-                throw new ActionNotPossibleException("Emporiums already present!");
+                throw new ActionNotPossibleException("Emporio già costruito");
         }
         return true;
-    }
-
-    String getActionType(){
-        return actionType;
     }
 
     void getNearCityBonus(Game game, User user,City city) throws ActionNotPossibleException {
@@ -171,8 +163,6 @@ public abstract class Action implements Serializable {
                 //cityToVisit.getBonus().getBonus(user, game);
                 if (!city.getColor().getColor().equals(Constants.PURPLE))
                     cityToGetBonus.getBonus(user,game);
-            } else {
-                System.out.println(" " + cityToVisit + " has null bonus or is null");
             }
         }
     }

@@ -39,9 +39,9 @@ public class ClientController {
     private ClientService clientService;
     private BufferedReader inKeyboard;
     private BaseView baseView;
-    private static ClientController clientController;
     private SnapshotToSend snapshot;
     private ArrayList<BaseUser> finalSnapshot = new ArrayList<>();
+    private static ClientController clientController;
 
     private ClientController(){
     }
@@ -97,8 +97,8 @@ public class ClientController {
                     method = Constants.CLI;
                     break;
                 default:
-                    //TODO
                     method = Constants.GUI;
+                    break;
             }
         }
         return method;
@@ -151,8 +151,6 @@ public class ClientController {
         baseView.updateSnapshot();
     }
 
-
-
     public void showMap(ArrayList<Map> mapArrayList) {
         baseView.showMap(mapArrayList);
     }
@@ -204,10 +202,6 @@ public class ClientController {
         return snapshot;
     }
 
-    public void mainActionBuyPermitCard(String text) {
-        //Action action = new MainActionBuyPermitCard(snapshot.getVisiblePermitCards().get(text));
-    }
-
     public void mainActionBuyPermitCard(PermitCard permitCard, ArrayList<PoliticCard> politicCards) {
         Action action = new MainActionBuyPermitCard(politicCards,permitCard.getRetroType(),permitCard);
         try {
@@ -217,7 +211,6 @@ public class ClientController {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -260,7 +253,6 @@ public class ClientController {
     public void sendFinishedBuyPhase() {
         clientService.sendFinishedBuyPhase();
     }
-
 
     public void onFinishBuyPhase() {
         baseView.onFinishMarket();

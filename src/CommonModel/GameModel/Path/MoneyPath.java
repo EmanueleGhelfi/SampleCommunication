@@ -25,7 +25,6 @@ public class MoneyPath implements Path, Serializable {
                 throw new ActionNotPossibleException(Constants.MONEY_PATH_EXCEPTION);
             }
             else {
-                System.out.println("Sono qua!");
                 user.setCoinPathPosition(user.getCoinPathPosition()+value);
             }
         }

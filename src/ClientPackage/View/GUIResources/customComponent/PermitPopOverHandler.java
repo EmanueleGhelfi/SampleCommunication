@@ -1,11 +1,10 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.MatchController;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.RegionName;
 import Utilities.Class.Constants;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -29,8 +28,7 @@ public class PermitPopOverHandler implements EventHandler<MouseEvent> {
     private int order;
     private RegionName regionName;
     private MatchController matchController;
-    PopOver popOverZoom = new PopOver();
-
+    private PopOver popOverZoom = new PopOver();
 
     public PermitPopOverHandler(ClientController clientController, RegionName regionName, int i, MatchController matchController) {
         this.clientController = clientController;
@@ -75,7 +73,6 @@ public class PermitPopOverHandler implements EventHandler<MouseEvent> {
             GridPane.setHalignment(bonusInfoPopOver, HPos.CENTER);
             GridPane.setValignment(bonusInfoPopOver, VPos.CENTER);
         }
-
         HBox hBox = new HBox(popOverGridPane);
         hBox.setPadding(new Insets(20,20,20,20));
         if(event.getX()/matchController.getBackground().getWidth()>0.5){

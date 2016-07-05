@@ -4,7 +4,6 @@ import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
@@ -53,10 +52,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             rmiHandlerName = rmiListenerInterface.Connect();
             rmiClientHandler = (RMIClientHandler) registry.lookup(rmiHandlerName);
             System.out.println("Connected to server");
-            // get ip address and sends it to server with the name of remote object
-            //String ip = getIP();
-            //String name = generateName();
-            //registry.rebind(name,this);
             rmiClientHandler.sendRemoteClientObject(this);
             return true;
         } catch (RemoteException e) {
@@ -69,7 +64,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendName(String name) {
-
         Runnable runnable = ()-> {
             try {
                 boolean result = rmiClientHandler.tryToSetName(name);
@@ -96,7 +90,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             }
         };
         executorService.execute(runnable);
-
     }
 
     @Override
@@ -113,7 +106,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
-
         Runnable runnable = ()-> {
             try {
                 if (rmiClientHandler.sendBuyableObject(realSaleList)) {
@@ -185,7 +177,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         }
         };
         executorService.execute(runnable);
-
     }
 
     @Override
@@ -223,27 +214,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         };
         executorService.execute(runnable);
     }
-
-    //OLD VERSION
-    private String generateName() {
-        String randomSequence="";
-        Random randomGenerator = new Random();
-        int sequenceLength = 5;
-        for (int idx = 1; idx <= sequenceLength; ++idx) {
-            int randomInt = randomGenerator.nextInt(10);
-
-            randomSequence = randomSequence + randomInt;
-        }
-        return randomSequence;
-    }
-
-    //OLD VERSION
-    public String getIP() throws UnknownHostException {
-        InetAddress IP=InetAddress.getLocalHost();
-
-        return IP.getHostAddress();
-    }
-
 
     /*** REGION OF METHODS CALLED BY SERVER **/
 

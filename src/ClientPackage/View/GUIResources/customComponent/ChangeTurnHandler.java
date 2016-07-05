@@ -1,4 +1,4 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.MatchController;
@@ -23,4 +23,5 @@ public class ChangeTurnHandler implements EventHandler<ActionEvent> {
         ClientController clientController = ClientController.getInstance();
         clientController.onFinishTurn();
     }
+
 }

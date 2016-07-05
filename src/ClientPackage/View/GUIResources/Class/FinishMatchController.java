@@ -1,7 +1,7 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.customComponent.ImageLoader;
+import ClientPackage.View.GUIResources.CustomComponent.ImageLoader;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.Snapshot.BaseUser;
 import Utilities.Class.Constants;

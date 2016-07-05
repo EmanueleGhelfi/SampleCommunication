@@ -4,7 +4,6 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.*;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
-import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -24,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -85,7 +83,6 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void initView() {
-        // This initializes JavaFx application
         Application.launch();
     }
 
@@ -118,7 +115,6 @@ public class GUIView extends Application implements BaseView {
         waitingController = loader.getController();
         waitingController.setClientController(clientController);
         scene = new Scene(screen);
-        //stage.setResizable(false);
         this.stage.setScene(scene);
         this.stage.show();
         stage.setMinHeight(600);
@@ -174,7 +170,6 @@ public class GUIView extends Application implements BaseView {
                 matchController.setClientController(clientController, baseView);
                 matchController.setMyTurn(myTurn, snapshotToSend);
                 Scene scene = new Scene(screen);
-                //stage= new Stage();
                 stage.setScene(scene);
                 stage.setMinHeight(600);
                 stage.setMinWidth(1200);
@@ -186,7 +181,6 @@ public class GUIView extends Application implements BaseView {
                         System.exit(0);
                     }
                 });
-                //resizingWindow();
             }
         });
     }
@@ -198,7 +192,6 @@ public class GUIView extends Application implements BaseView {
             Platform.runLater(()->{
                 matchController.setMyTurn(false, clientController.getSnapshot());
             });
-
         }
         myTurn=false;
     }
@@ -222,7 +215,6 @@ public class GUIView extends Application implements BaseView {
                     baseController.updateView();
                 }
             });
-
         }
     }
 
@@ -302,8 +294,6 @@ public class GUIView extends Application implements BaseView {
                 stage.setScene(scene);
                 stage.setMinHeight(600);
                 stage.setMinWidth(1200);
-                //stage.setWidth(1280);
-                //stage.setHeight(720);
                 stage.show();
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
@@ -323,7 +313,6 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void onActionDone(Action action) {
-
     }
 
     @Override
@@ -338,37 +327,29 @@ public class GUIView extends Application implements BaseView {
     }
 
     public void resizingWindow(){
-
         final ChangeListener<Number> listener = new ChangeListener<Number>() {
             final Timer timer = new Timer();
             TimerTask timerTask = null;
             final long delayTime = 200;
-
             double width= stage.getWidth();
             double height = stage.getHeight();
-
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if(timerTask!=null){
                     timerTask.cancel();
                 }
-
                 timerTask=new TimerTask() {
                     @Override
                     public void run() {
-
-
                         if(stage.getHeight()==newValue.doubleValue()) {
                             if (!(stage.getWidth() < stage.getHeight() / 0.6 + 5 && stage.getWidth() > stage.getHeight() / 0.6 + 5)) {
                                 System.out.println("cambiata width");
                                 stage.setWidth(stage.getHeight() / 0.6);
                                 for (BaseController baseController : baseControllerList) {
                                     baseController.onResizeHeight(stage.getHeight(),scene.getWidth());
-                                    //baseController.onResizeWidth(newSceneHeight.doubleValue()*1.7784);
                                 }
                             }
                         }
-
                         if(stage.getWidth()==newValue.doubleValue()) {
                             if (!(stage.getHeight() < stage.getWidth() * 0.6 + 5 && stage.getHeight() > stage.getWidth() * 0.6 - 5)) {
                                 System.out.println("cambiata height");
@@ -385,21 +366,13 @@ public class GUIView extends Application implements BaseView {
                 timer.schedule(timerTask,delayTime);
             }
         };
-
         stage.widthProperty().addListener(listener);
         stage.heightProperty().addListener(listener);
-
-
-
 
     }
 
     public Scene getScene() {
         return scene;
-    }
-
-    public Stage getStage() {
-        return stage;
     }
 
     private Alert createAlert(Alert.AlertType type) {
