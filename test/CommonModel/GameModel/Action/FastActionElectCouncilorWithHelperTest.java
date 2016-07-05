@@ -30,62 +30,61 @@ public class FastActionElectCouncilorWithHelperTest {
 
     @Before
     public void setUp() throws Exception {
-        game = new Game();
+        this.game = new Game();
         try {
-            user= new User(new FakeCommunication(), GamesManager.getInstance());
-        }
-        catch (Exception e){
+            this.user = new User(new FakeCommunication(), GamesManager.getInstance());
+        } catch (Exception e) {
 
         }
-        user.setGame(game);
-        user.setFastActionCounter(4);
+        this.user.setGame(this.game);
+        this.user.setFastActionCounter(4);
     }
 
     @Test
     public void testElectMain() throws Exception {
-         user.setHelpers(4);
-        int initHelper = user.getHelpers().size();
-        int initFast = user.getFastActionCounter();
-        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL,null,new Councilor(PoliticColor.BLACK), Constants.REGION_COUNCIL);
-        action.doAction(game,user);
-        assertEquals(initHelper-1,user.getHelpers().size());
-        assertEquals(user.getFastActionCounter(),initFast-1);
-        ArrayList<Councilor> councilors = new ArrayList<>(game.getRegion(RegionName.HILL).getCouncil().getCouncil());
-        assertEquals(new Councilor(PoliticColor.BLACK),councilors.get(councilors.size()-1));
+        this.user.setHelpers(4);
+        int initHelper = this.user.getHelpers().size();
+        int initFast = this.user.getFastActionCounter();
+        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL, null, new Councilor(PoliticColor.BLACK), Constants.REGION_COUNCIL);
+        action.doAction(this.game, this.user);
+        assertEquals(initHelper - 1, this.user.getHelpers().size());
+        assertEquals(this.user.getFastActionCounter(), initFast - 1);
+        ArrayList<Councilor> councilors = new ArrayList<>(this.game.getRegion(RegionName.HILL).getCouncil().getCouncil());
+        assertEquals(new Councilor(PoliticColor.BLACK), councilors.get(councilors.size() - 1));
     }
 
     @Test
     public void testElectKing() throws ActionNotPossibleException {
-        King king = new King(new City(Color.BLUE, CityName.CASTRUM,RegionName.COAST),game.getBank());
-        game.setKing(king);
-        user.setHelpers(4);
-        int initHelper = user.getHelpers().size();
-        int initFast = user.getFastActionCounter();
-        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL,king,new Councilor(PoliticColor.BLACK), Constants.KING_COUNCIL);
-        action.doAction(game,user);
-        assertEquals(initHelper-1,user.getHelpers().size());
-        assertEquals(user.getFastActionCounter(),initFast-1);
-        ArrayList<Councilor> councilors = new ArrayList<>(game.getKing().getCouncil().getCouncil());
-        assertEquals(new Councilor(PoliticColor.BLACK),councilors.get(councilors.size()-1));
+        King king = new King(new City(Color.BLUE, CityName.CASTRUM, RegionName.COAST), this.game.getBank());
+        this.game.setKing(king);
+        this.user.setHelpers(4);
+        int initHelper = this.user.getHelpers().size();
+        int initFast = this.user.getFastActionCounter();
+        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL, king, new Councilor(PoliticColor.BLACK), Constants.KING_COUNCIL);
+        action.doAction(this.game, this.user);
+        assertEquals(initHelper - 1, this.user.getHelpers().size());
+        assertEquals(this.user.getFastActionCounter(), initFast - 1);
+        ArrayList<Councilor> councilors = new ArrayList<>(this.game.getKing().getCouncil().getCouncil());
+        assertEquals(new Councilor(PoliticColor.BLACK), councilors.get(councilors.size() - 1));
     }
 
 
-    @Test (expected = ActionNotPossibleException.class)
-    public void testActionNotPossible() throws Exception{
-        user.setHelpers(0);
-        int initFast = user.getFastActionCounter();
-        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL,null,new Councilor(PoliticColor.BLACK), Constants.REGION_COUNCIL);
-        action.doAction(game,user);
-        assertEquals(user.getFastActionCounter(),initFast);
+    @Test(expected = ActionNotPossibleException.class)
+    public void testActionNotPossible() throws Exception {
+        this.user.setHelpers(0);
+        int initFast = this.user.getFastActionCounter();
+        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL, null, new Councilor(PoliticColor.BLACK), Constants.REGION_COUNCIL);
+        action.doAction(this.game, this.user);
+        assertEquals(this.user.getFastActionCounter(), initFast);
     }
 
-    @Test (expected = ActionNotPossibleException.class)
+    @Test(expected = ActionNotPossibleException.class)
     public void testNull() throws ActionNotPossibleException {
-        user.setHelpers(4);
-        int initHelper = user.getHelpers().size();
-        int initFast = user.getFastActionCounter();
-        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL,null,null, Constants.REGION_COUNCIL);
-        action.doAction(game,user);
-        assertEquals(user.getFastActionCounter(),initFast);
+        this.user.setHelpers(4);
+        int initHelper = this.user.getHelpers().size();
+        int initFast = this.user.getFastActionCounter();
+        Action action = new FastActionElectCouncilorWithHelper(RegionName.HILL, null, null, Constants.REGION_COUNCIL);
+        action.doAction(this.game, this.user);
+        assertEquals(this.user.getFastActionCounter(), initFast);
     }
 }

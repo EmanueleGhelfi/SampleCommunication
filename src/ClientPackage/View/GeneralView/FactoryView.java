@@ -10,7 +10,7 @@ import Utilities.Exception.ViewException;
 public class FactoryView {
 
     public static BaseView getBaseView(String viewType, ClientController clientController) throws ViewException {
-        switch (viewType){
+        switch (viewType) {
             case Constants.GUI:
                 return new GUIView(clientController);
             case Constants.CLI:

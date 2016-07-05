@@ -6,9 +6,9 @@ import CommonModel.GameModel.Council.Helper;
 import CommonModel.GameModel.Path.Position;
 import Server.Model.FakeUser;
 import Server.Model.User;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Emanuele on 18/05/2016.
@@ -26,79 +26,94 @@ public class BaseUser implements Serializable {
     protected ArrayList<PermitCard> permitCards;
     protected ArrayList<PermitCard> oldPermitCards;
     protected int politicCardNumber;
-    protected boolean fakeUser = false;
+    protected boolean fakeUser;
 
     // default constructor for inheritance. Obligatory! Do not cancel!
     public BaseUser() {
     }
 
-    public BaseUser(User user){
-        this.username = user.getUsername();
-        this.userColor = user.getUserColor();
-        this.connected = user.isConnected();
-        this.coinPathPosition = user.getCoinPathPosition();
-        this.victoryPathPosition = user.getVictoryPathPosition();
-        this.nobilityPathPosition = user.getNobilityPathPosition();
-        this.usersEmporium = user.getUsersEmporium();
-        this.helpers = user.getHelpers();
-        this.permitCards = user.getPermitCards();
-        this.oldPermitCards = user.getOldPermitCards();
-        this.politicCardNumber = user.getPoliticCardSize();
-        if (user instanceof FakeUser){
-            fakeUser = true;
+    public BaseUser(User user) {
+        username = user.getUsername();
+        userColor = user.getUserColor();
+        connected = user.isConnected();
+        coinPathPosition = user.getCoinPathPosition();
+        victoryPathPosition = user.getVictoryPathPosition();
+        nobilityPathPosition = user.getNobilityPathPosition();
+        usersEmporium = user.getUsersEmporium();
+        helpers = user.getHelpers();
+        permitCards = user.getPermitCards();
+        oldPermitCards = user.getOldPermitCards();
+        politicCardNumber = user.getPoliticCardSize();
+        if (user instanceof FakeUser) {
+            this.fakeUser = true;
         }
     }
 
     @Override
     public String toString() {
         return "BaseUser{" +
-                "username='" + username + '\'' +
-                ", connected=" + connected +
-                ", coinPathPosition=" + coinPathPosition +
-                ", victoryPathPosition=" + victoryPathPosition +
-                ", nobilityPathPosition=" + nobilityPathPosition +
-                ", usersEmporium=" + usersEmporium +
-                ", helpers=" + helpers.size() +
-                ", permitCards=" + permitCards +
-                ", oldPermitCards=" + oldPermitCards +
-                ", politicCardNumber=" + politicCardNumber +
+                "username='" + this.username + '\'' +
+                ", connected=" + this.connected +
+                ", coinPathPosition=" + this.coinPathPosition +
+                ", victoryPathPosition=" + this.victoryPathPosition +
+                ", nobilityPathPosition=" + this.nobilityPathPosition +
+                ", usersEmporium=" + this.usersEmporium +
+                ", helpers=" + this.helpers.size() +
+                ", permitCards=" + this.permitCards +
+                ", oldPermitCards=" + this.oldPermitCards +
+                ", politicCardNumber=" + this.politicCardNumber +
                 '}';
     }
 
     public boolean isConnected() {
-        return connected;
+        return this.connected;
     }
+
     public ArrayList<Helper> getHelpers() {
-        return helpers;
+        return this.helpers;
     }
+
     public Position getNobilityPathPosition() {
-        return nobilityPathPosition;
+        return this.nobilityPathPosition;
     }
+
     public ArrayList<PermitCard> getOldPermitCards() {
-        return oldPermitCards;
+        return this.oldPermitCards;
     }
+
     public ArrayList<PermitCard> getPermitCards() {
-        return permitCards;
+        return this.permitCards;
     }
-    public String getUsername() {return username;}
-    public UserColor getUserColor() {return userColor;}
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public UserColor getUserColor() {
+        return this.userColor;
+    }
+
     public void setUserColor(UserColor userColor) {
         this.userColor = userColor;
     }
+
     public ArrayList<City> getUsersEmporium() {
-        return usersEmporium;
+        return this.usersEmporium;
     }
+
     public int getVictoryPathPosition() {
-        return victoryPathPosition;
+        return this.victoryPathPosition;
     }
+
     public int getCoinPathPosition() {
-        return coinPathPosition;
+        return this.coinPathPosition;
     }
+
     public int getPoliticCardNumber() {
-        return politicCardNumber;
+        return this.politicCardNumber;
     }
 
     public boolean isFakeUser() {
-        return fakeUser;
+        return this.fakeUser;
     }
 }

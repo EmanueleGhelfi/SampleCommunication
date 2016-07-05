@@ -5,11 +5,10 @@ package Utilities.Exception;
  */
 public class ViewException extends Exception {
 
-    public ViewException (){
-        super();
+    public ViewException() {
     }
 
-    public ViewException(String exception){
+    public ViewException(String exception) {
         super(exception);
     }
 

@@ -10,6 +10,10 @@ import java.util.ArrayList;
  */
 public class FakeUser extends User {
 
+    public FakeUser() {
+        usersEmporium = new ArrayList<>();
+    }
+
     @Override
     public boolean isConnected() {
         return false;
@@ -23,10 +27,6 @@ public class FakeUser extends User {
     @Override
     public int getPoliticCardSize() {
         return 0;
-    }
-
-    public FakeUser(){
-        this.usersEmporium = new ArrayList<>();
     }
 
 }

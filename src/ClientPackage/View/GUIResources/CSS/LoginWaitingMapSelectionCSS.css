@@ -2,10 +2,10 @@
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/LoginBackground.png");
 }
 
-.button-raised{
+.button-raised {
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 10px;
     -fx-button-type: RAISED;
-    -fx-background-color: rgb(255,81,0);
+    -fx-background-color: rgb(255, 81, 0);
     -fx-text-fill: WHITE;
 }

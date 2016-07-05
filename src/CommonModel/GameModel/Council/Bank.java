@@ -1,22 +1,17 @@
 package CommonModel.GameModel.Council;
 
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.stream.Collectors;
 
 /**
  * Created by Giulio on 16/06/2016.
  */
 public class Bank implements Serializable, Cloneable {
 
-    private HashMap<PoliticColor, ArrayList<Councilor>> hashMapArrayList = new HashMap<>();
+    private final HashMap<PoliticColor, ArrayList<Councilor>> hashMapArrayList = new HashMap<>();
 
     public Bank() {
         for (PoliticColor politicColor : PoliticColor.values()) {
@@ -24,30 +19,30 @@ public class Bank implements Serializable, Cloneable {
             for (int i = 0; i < 4; i++) {
                 politicColorArrayList.add(new Councilor(politicColor));
             }
-            hashMapArrayList.put(politicColor, politicColorArrayList);
+            this.hashMapArrayList.put(politicColor, politicColorArrayList);
         }
     }
 
     public synchronized boolean checkCouncilor(PoliticColor politicColor) {
-        int size = hashMapArrayList.get(politicColor).size();
+        int size = this.hashMapArrayList.get(politicColor).size();
         return size > 0 && size <= 4;
     }
 
-    public synchronized Councilor getCouncilor(PoliticColor politicColor){
-        if(checkCouncilor(politicColor)) {
-            return hashMapArrayList.get(politicColor).remove(hashMapArrayList.get(politicColor).size()-1);
+    public synchronized Councilor getCouncilor(PoliticColor politicColor) {
+        if (this.checkCouncilor(politicColor)) {
+            return this.hashMapArrayList.get(politicColor).remove(this.hashMapArrayList.get(politicColor).size() - 1);
         }
         return null;
     }
 
-    public synchronized void addCouncilor(Councilor councilor){
-        hashMapArrayList.get(councilor.getColor()).add(councilor);
+    public synchronized void addCouncilor(Councilor councilor) {
+        this.hashMapArrayList.get(councilor.getColor()).add(councilor);
     }
 
-    public synchronized ArrayList<PoliticColor> showCouncilor(){
+    public synchronized ArrayList<PoliticColor> showCouncilor() {
         ArrayList<PoliticColor> colorToShow = new ArrayList<>();
-        for(PoliticColor politicColor: PoliticColor.values()){
-            if(hashMapArrayList.get(politicColor).size()>0){
+        for (PoliticColor politicColor : PoliticColor.values()) {
+            if (this.hashMapArrayList.get(politicColor).size() > 0) {
                 colorToShow.add(politicColor);
             }
         }
@@ -62,7 +57,7 @@ public class Bank implements Serializable, Cloneable {
     @Override
     public String toString() {
         return "Bank{" +
-                "hashMapArrayList=" + hashMapArrayList +
+                "hashMapArrayList=" + this.hashMapArrayList +
                 '}';
     }
 }

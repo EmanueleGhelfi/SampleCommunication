@@ -12,6 +12,7 @@ import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXButton.ButtonType;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -20,7 +21,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,6 +36,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -42,72 +47,74 @@ public class ShopController implements BaseController {
 
     private ClientController clientController;
     private GUIView guiView;
-    private ImageView backgroundImage = new ImageView();
-    private ImageView politicCardDeck = new ImageView();
-    private ImageView permitCardDeck = new ImageView();
-    private ImageView helperDeck = new ImageView();
-    private TilePane buyPane = new TilePane();
-    private TilePane sellPane = new TilePane();
-    private ScrollPane buyScrollPane = new ScrollPane();
-    private ScrollPane sellScrollPane = new ScrollPane();
-    private VBox buyVBox = new VBox();
+    private final ImageView backgroundImage = new ImageView();
+    private final ImageView politicCardDeck = new ImageView();
+    private final ImageView permitCardDeck = new ImageView();
+    private final ImageView helperDeck = new ImageView();
+    private final TilePane buyPane = new TilePane();
+    private final TilePane sellPane = new TilePane();
+    private final ScrollPane buyScrollPane = new ScrollPane();
+    private final ScrollPane sellScrollPane = new ScrollPane();
+    private final VBox buyVBox = new VBox();
     private Button innerButton;
     private PopOver innerPopOver;
     private Pane paneWhereShowPopOver = new Pane();
     private ArrayList<BuyableWrapper> sellList = new ArrayList<>();
-    private ArrayList<BuyableWrapper> temporarySellList = new ArrayList<>();
+    private final ArrayList<BuyableWrapper> temporarySellList = new ArrayList<>();
     private ArrayList<BuyableWrapper> buyList = new ArrayList<>();
-    private ArrayList<BuyableWrapper> toBuy = new ArrayList<>();
-    private ArrayList<BuyableWrapper> trueList = new ArrayList<>();
-    private ShopController shopController = this;
+    private final ArrayList<BuyableWrapper> toBuy = new ArrayList<>();
+    private final ArrayList<BuyableWrapper> trueList = new ArrayList<>();
+    private final ShopController shopController = this;
     private ImageView buyIt = new ImageView();
     private ImageView finishShop = new ImageView();
-    private JFXButton finishShopButton = new JFXButton();
-    private JFXButton buyItButton = new JFXButton("");
-    private boolean marketPhase = false;
-    private boolean sellPhase = false;
-    private boolean buyPhase = false;
+    private final JFXButton finishShopButton = new JFXButton();
+    private final JFXButton buyItButton = new JFXButton("");
+    private boolean marketPhase;
+    private boolean sellPhase;
+    private boolean buyPhase;
     private MatchController matchController;
 
-    @FXML private GridPane shop;
-    @FXML private Pane paneBackground;
+    @FXML
+    private GridPane shop;
+    @FXML
+    private Pane paneBackground;
 
     @Override
     public void setClientController(ClientController clientController, GUIView guiView) {
         this.clientController = clientController;
         this.guiView = guiView;
         guiView.registerBaseController(this);
-        backgroundImage.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/ShopBackground.png",backgroundImage.getFitWidth(),backgroundImage.getFitWidth()));
-        setBackground();
-        updateView();
-        createDeck();
-        setArrow();
-        setMarketPane();
+        this.backgroundImage.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/ShopBackground.png", this.backgroundImage.getFitWidth(), this.backgroundImage.getFitWidth()));
+        this.setBackground();
+        this.updateView();
+        this.createDeck();
+        this.setArrow();
+        this.setMarketPane();
     }
 
     private void setArrow() {
         JFXButton backArrow = new JFXButton();
         backArrow.setTooltip(new Tooltip("Mappa"));
-        paneBackground.getChildren().add(backArrow);
-        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png", backgroundImage.getFitWidth() / 6, backgroundImage.getFitHeight() / 6));
+        this.paneBackground.getChildren().add(backArrow);
+        ImageView arrowImageView = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Arrow.png", this.backgroundImage.getFitWidth() / 6, this.backgroundImage.getFitHeight() / 6));
         arrowImageView.setCache(true);
         arrowImageView.setPreserveRatio(true);
         backArrow.setGraphic(arrowImageView);
-        arrowImageView.fitWidthProperty().bind(backgroundImage.fitWidthProperty().divide(6));
-        arrowImageView.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(6));
-        backArrow.prefWidthProperty().bind(backgroundImage.fitWidthProperty().divide(6));
-        backArrow.prefHeightProperty().bind(backgroundImage.fitHeightProperty().divide(6));
-        backArrow.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3964));
-        backArrow.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.7619));
+        arrowImageView.fitWidthProperty().bind(this.backgroundImage.fitWidthProperty().divide(6));
+        arrowImageView.fitHeightProperty().bind(this.backgroundImage.fitHeightProperty().divide(6));
+        backArrow.prefWidthProperty().bind(this.backgroundImage.fitWidthProperty().divide(6));
+        backArrow.prefHeightProperty().bind(this.backgroundImage.fitHeightProperty().divide(6));
+        backArrow.layoutXProperty().bind(this.paneBackground.widthProperty().multiply(0.3964));
+        backArrow.layoutYProperty().bind(this.paneBackground.heightProperty().multiply(0.7619));
         backArrow.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 // simulate finish market becuse it change background
                 Graphics.playSomeSound("Button");
-                matchController.onFinishMarket();
+                ShopController.this.matchController.onFinishMarket();
             }
         });
-        BooleanProperty stopPulse  = new SimpleBooleanProperty(false);
+        BooleanProperty stopPulse = new SimpleBooleanProperty(false);
         backArrow.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -124,81 +131,80 @@ public class ShopController implements BaseController {
     }
 
     private void setMarketPane() {
-        sellPane.setPrefColumns(2);
-        sellScrollPane.prefHeightProperty().bind(paneBackground.heightProperty().divide(2));
-        sellScrollPane.prefWidthProperty().bind(paneBackground.widthProperty().divide(3));
-        sellScrollPane.setContent(sellPane);
-        buyPane.setPrefColumns(2);
-        buyScrollPane.prefHeightProperty().bind(paneBackground.widthProperty().divide(3));
-        buyScrollPane.prefWidthProperty().bind(paneBackground.heightProperty().divide(3));
-        buyScrollPane.setContent(buyPane);
-        finishShop = new ImageView(new Image(Constants.IMAGE_PATH + "/Check.png"));
-        buyIt = new ImageView(new Image(Constants.IMAGE_PATH + "/Cart.png"));
-        finishShopButton.setGraphic(finishShop);
-        buyItButton.setGraphic(buyIt);
+        this.sellPane.setPrefColumns(2);
+        this.sellScrollPane.prefHeightProperty().bind(this.paneBackground.heightProperty().divide(2));
+        this.sellScrollPane.prefWidthProperty().bind(this.paneBackground.widthProperty().divide(3));
+        this.sellScrollPane.setContent(this.sellPane);
+        this.buyPane.setPrefColumns(2);
+        this.buyScrollPane.prefHeightProperty().bind(this.paneBackground.widthProperty().divide(3));
+        this.buyScrollPane.prefWidthProperty().bind(this.paneBackground.heightProperty().divide(3));
+        this.buyScrollPane.setContent(this.buyPane);
+        this.finishShop = new ImageView(new Image(Constants.IMAGE_PATH + "/Check.png"));
+        this.buyIt = new ImageView(new Image(Constants.IMAGE_PATH + "/Cart.png"));
+        this.finishShopButton.setGraphic(this.finishShop);
+        this.buyItButton.setGraphic(this.buyIt);
         HBox bottomHBox = new HBox();
         bottomHBox.setAlignment(Pos.CENTER);
-        bottomHBox.getChildren().addAll(finishShopButton, buyItButton);
-        buyVBox.getChildren().addAll(buyScrollPane, bottomHBox);
+        bottomHBox.getChildren().addAll(this.finishShopButton, this.buyItButton);
+        this.buyVBox.getChildren().addAll(this.buyScrollPane, bottomHBox);
     }
 
     private void setBackground() {
-        paneBackground.getChildren().add(backgroundImage);
-        backgroundImage.setPreserveRatio(true);
-        backgroundImage.fitHeightProperty().bind(shop.heightProperty());
-        backgroundImage.fitWidthProperty().bind(shop.widthProperty());
-        shop.prefWidthProperty().bind(paneBackground.prefWidthProperty());
-        shop.prefHeightProperty().bind(paneBackground.prefHeightProperty());
-        paneBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.paneBackground.getChildren().add(this.backgroundImage);
+        this.backgroundImage.setPreserveRatio(true);
+        this.backgroundImage.fitHeightProperty().bind(this.shop.heightProperty());
+        this.backgroundImage.fitWidthProperty().bind(this.shop.widthProperty());
+        this.shop.prefWidthProperty().bind(this.paneBackground.prefWidthProperty());
+        this.shop.prefHeightProperty().bind(this.paneBackground.prefHeightProperty());
+        this.paneBackground.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
             }
         });
-        backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
+        this.backgroundImage.fitWidthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
             }
         });
-        backgroundImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
+        this.backgroundImage.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
-                paneBackground.setPrefWidth(newValue.getWidth());
-                paneBackground.setPrefHeight(newValue.getHeight());
+                ShopController.this.paneBackground.setPrefWidth(newValue.getWidth());
+                ShopController.this.paneBackground.setPrefHeight(newValue.getHeight());
 
             }
         });
-        GridPane.setRowSpan(backgroundImage, 2);
-        GridPane.setColumnSpan(backgroundImage, 2);
-        paneWhereShowPopOver = new Pane();
-        paneWhereShowPopOver.layoutXProperty().bind(paneBackground.prefWidthProperty().multiply(0.4957));
-        paneWhereShowPopOver.layoutYProperty().bind(paneBackground.prefHeightProperty().multiply(0.3045));
-        paneWhereShowPopOver.prefWidthProperty().bind(paneBackground.prefWidthProperty().multiply(0.01));
-        paneWhereShowPopOver.prefHeightProperty().bind(paneBackground.prefHeightProperty().multiply(0.01));
-        paneBackground.getChildren().add(paneWhereShowPopOver);
-        innerButton = new Button();
-        innerButton.setStyle("-fx-background-color: transparent; -fx-cursor: crosshair;");
-        innerButton.layoutXProperty().bind(paneBackground.prefWidthProperty().multiply(0.3504));
-        innerButton.layoutYProperty().bind(paneBackground.prefHeightProperty().multiply(0.1455));
-        innerButton.prefWidthProperty().bind(paneBackground.prefWidthProperty().multiply(0.5208 - 0.3604));
-        innerButton.prefHeightProperty().bind(paneBackground.prefHeightProperty().multiply(0.5530 - 0.1455));
-        paneBackground.getChildren().addAll(innerButton);
+        GridPane.setRowSpan(this.backgroundImage, 2);
+        GridPane.setColumnSpan(this.backgroundImage, 2);
+        this.paneWhereShowPopOver = new Pane();
+        this.paneWhereShowPopOver.layoutXProperty().bind(this.paneBackground.prefWidthProperty().multiply(0.4957));
+        this.paneWhereShowPopOver.layoutYProperty().bind(this.paneBackground.prefHeightProperty().multiply(0.3045));
+        this.paneWhereShowPopOver.prefWidthProperty().bind(this.paneBackground.prefWidthProperty().multiply(0.01));
+        this.paneWhereShowPopOver.prefHeightProperty().bind(this.paneBackground.prefHeightProperty().multiply(0.01));
+        this.paneBackground.getChildren().add(this.paneWhereShowPopOver);
+        this.innerButton = new Button();
+        this.innerButton.setStyle("-fx-background-color: transparent; -fx-cursor: crosshair;");
+        this.innerButton.layoutXProperty().bind(this.paneBackground.prefWidthProperty().multiply(0.3504));
+        this.innerButton.layoutYProperty().bind(this.paneBackground.prefHeightProperty().multiply(0.1455));
+        this.innerButton.prefWidthProperty().bind(this.paneBackground.prefWidthProperty().multiply(0.5208 - 0.3604));
+        this.innerButton.prefHeightProperty().bind(this.paneBackground.prefHeightProperty().multiply(0.5530 - 0.1455));
+        this.paneBackground.getChildren().addAll(this.innerButton);
     }
 
 
-    private void onBuy()
-    {
+    private void onBuy() {
         Runnable runnable = () -> {
-            clientController.onBuy((ArrayList<BuyableWrapper>)toBuy.clone());
-            toBuy.clear();
+            this.clientController.onBuy((ArrayList<BuyableWrapper>) this.toBuy.clone());
+            this.toBuy.clear();
         };
         new Thread(runnable).start();
     }
 
     private void onSell() {
         Runnable runnable = () -> {
-            if (trueList.size() > 0) {
-                clientController.sendSaleItem((ArrayList<BuyableWrapper>) trueList.clone());
-                trueList.clear();
+            if (this.trueList.size() > 0) {
+                this.clientController.sendSaleItem((ArrayList<BuyableWrapper>) this.trueList.clone());
+                this.trueList.clear();
             }
         };
         new Thread(runnable).start();
@@ -206,260 +212,259 @@ public class ShopController implements BaseController {
 
     @Override
     public void updateView() {
-        updateList();
+        this.updateList();
     }
 
     private void updateList() {
-        sellList = new ArrayList<>();
-        SnapshotToSend snapshotTosend = clientController.getSnapshot();
-        buyList =  snapshotTosend.getMarketList();
-        for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
-            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
-            sellList.add(buyableWrapperTmp);
+        this.sellList = new ArrayList<>();
+        SnapshotToSend snapshotTosend = this.clientController.getSnapshot();
+        this.buyList = snapshotTosend.getMarketList();
+        for (PoliticCard politicCard : snapshotTosend.getCurrentUser().getPoliticCards()) {
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard, snapshotTosend.getCurrentUser().getUsername());
+            this.sellList.add(buyableWrapperTmp);
         }
-        for(PermitCard permitCard: snapshotTosend.getCurrentUser().getPermitCards()){
-            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername());
-            sellList.add(buyableWrapperTmp);
+        for (PermitCard permitCard : snapshotTosend.getCurrentUser().getPermitCards()) {
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard, snapshotTosend.getCurrentUser().getUsername());
+            this.sellList.add(buyableWrapperTmp);
         }
-        for(Helper helper: snapshotTosend.getCurrentUser().getHelpers()){
-            BuyableWrapper buyableWrapper = new BuyableWrapper(helper,snapshotTosend.getCurrentUser().getUsername());
-            sellList.add(buyableWrapper);
+        for (Helper helper : snapshotTosend.getCurrentUser().getHelpers()) {
+            BuyableWrapper buyableWrapper = new BuyableWrapper(helper, snapshotTosend.getCurrentUser().getUsername());
+            this.sellList.add(buyableWrapper);
         }
-        for(Iterator<BuyableWrapper> itr = buyList.iterator(); itr.hasNext();){
+        for (Iterator<BuyableWrapper> itr = this.buyList.iterator(); itr.hasNext(); ) {
             BuyableWrapper buyableWrapper = itr.next();
-            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
-                sellList.remove(buyableWrapper);
-                sellList.add(buyableWrapper);
+            if (buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())) {
+                this.sellList.remove(buyableWrapper);
+                this.sellList.add(buyableWrapper);
                 itr.remove();
             }
         }
-        populateSellAndBuyPane();
+        this.populateSellAndBuyPane();
     }
 
     private void populateSellAndBuyPane() {
-        sellPane.getChildren().clear();
-        buyPane.getChildren().clear();
-        for (BuyableWrapper buyableWrapper : temporarySellList) {
-            sellPane.getChildren().add(addSalableItems(buyableWrapper));
+        this.sellPane.getChildren().clear();
+        this.buyPane.getChildren().clear();
+        for (BuyableWrapper buyableWrapper : this.temporarySellList) {
+            this.sellPane.getChildren().add(this.addSalableItems(buyableWrapper));
         }
-        for (BuyableWrapper buyableWrapper : buyList) {
-            buyPane.getChildren().add(addBuyableItems(buyableWrapper));
+        for (BuyableWrapper buyableWrapper : this.buyList) {
+            this.buyPane.getChildren().add(this.addBuyableItems(buyableWrapper));
         }
     }
 
     private void createDeck() {
-        politicCardDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/PoliticCardDistorted.png"));
-        permitCardDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png"));
-        helperDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/HelperDistorted.png"));
-        paneBackground.getChildren().addAll(politicCardDeck, permitCardDeck, helperDeck);
-        politicCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.3645));
-        politicCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.58));
-        permitCardDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.4437));
-        permitCardDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.58));
-        helperDeck.layoutXProperty().bind(paneBackground.widthProperty().multiply(0.5218));
-        helperDeck.layoutYProperty().bind(paneBackground.heightProperty().multiply(0.6));
-        politicCardDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(10));
-        politicCardDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
-        permitCardDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(10));
-        permitCardDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(10));
-        helperDeck.fitWidthProperty().bind(paneBackground.widthProperty().divide(15));
-        helperDeck.fitHeightProperty().bind(paneBackground.heightProperty().divide(15));
-        Tooltip.install(politicCardDeck, new Tooltip("Carte politica in vendita"));
-        Tooltip.install(permitCardDeck, new Tooltip("Carte permesso in vendita"));
-        Tooltip.install(helperDeck, new Tooltip("Aiutanti in vendita"));
-        Graphics.addBorder(politicCardDeck);
-        Graphics.addBorder(helperDeck);
-        Graphics.addBorder(permitCardDeck);
+        this.politicCardDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/PoliticCardDistorted.png"));
+        this.permitCardDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/PermitCardsDistorted.png"));
+        this.helperDeck.setImage(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/HelperDistorted.png"));
+        this.paneBackground.getChildren().addAll(this.politicCardDeck, this.permitCardDeck, this.helperDeck);
+        this.politicCardDeck.layoutXProperty().bind(this.paneBackground.widthProperty().multiply(0.3645));
+        this.politicCardDeck.layoutYProperty().bind(this.paneBackground.heightProperty().multiply(0.58));
+        this.permitCardDeck.layoutXProperty().bind(this.paneBackground.widthProperty().multiply(0.4437));
+        this.permitCardDeck.layoutYProperty().bind(this.paneBackground.heightProperty().multiply(0.58));
+        this.helperDeck.layoutXProperty().bind(this.paneBackground.widthProperty().multiply(0.5218));
+        this.helperDeck.layoutYProperty().bind(this.paneBackground.heightProperty().multiply(0.6));
+        this.politicCardDeck.fitWidthProperty().bind(this.paneBackground.widthProperty().divide(10));
+        this.politicCardDeck.fitHeightProperty().bind(this.paneBackground.heightProperty().divide(10));
+        this.permitCardDeck.fitWidthProperty().bind(this.paneBackground.widthProperty().divide(10));
+        this.permitCardDeck.fitHeightProperty().bind(this.paneBackground.heightProperty().divide(10));
+        this.helperDeck.fitWidthProperty().bind(this.paneBackground.widthProperty().divide(15));
+        this.helperDeck.fitHeightProperty().bind(this.paneBackground.heightProperty().divide(15));
+        Tooltip.install(this.politicCardDeck, new Tooltip("Carte politica in vendita"));
+        Tooltip.install(this.permitCardDeck, new Tooltip("Carte permesso in vendita"));
+        Tooltip.install(this.helperDeck, new Tooltip("Aiutanti in vendita"));
+        Graphics.addBorder(this.politicCardDeck);
+        Graphics.addBorder(this.helperDeck);
+        Graphics.addBorder(this.permitCardDeck);
     }
 
     private void settingDeckActions() {
-        politicCardDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.politicCardDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(sellPhase) {
+                if (ShopController.this.sellPhase) {
                     Graphics.playSomeSound("Button");
                     ImageView imageClicked = (ImageView) event.getTarget();
-                    shopPopOver(imageClicked, PoliticCard.class);
+                    ShopController.this.shopPopOver(imageClicked, PoliticCard.class);
                 }
             }
         });
-        permitCardDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.permitCardDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(sellPhase) {
+                if (ShopController.this.sellPhase) {
                     Graphics.playSomeSound("Button");
                     ImageView imageClicked = (ImageView) event.getTarget();
-                    shopPopOver(imageClicked, PermitCard.class);
+                    ShopController.this.shopPopOver(imageClicked, PermitCard.class);
                 }
             }
         });
-        helperDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.helperDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 Graphics.playSomeSound("Button");
-                if(sellPhase) {
+                if (ShopController.this.sellPhase) {
                     ImageView imageClicked = (ImageView) event.getTarget();
-                    shopPopOver(imageClicked, Helper.class);
+                    ShopController.this.shopPopOver(imageClicked, Helper.class);
                 }
             }
         });
     }
 
     private void shopPopOver(ImageView imageClicked, Class objectClass) {
-        temporarySellList.clear();
-        sellList.forEach(buyableWrapper -> {
-            if (buyableWrapper.getBuyableObject().getClass().equals(objectClass)){
-                temporarySellList.add(buyableWrapper);
+        this.temporarySellList.clear();
+        this.sellList.forEach(buyableWrapper -> {
+            if (buyableWrapper.getBuyableObject().getClass().equals(objectClass)) {
+                this.temporarySellList.add(buyableWrapper);
             }
         });
-        populateSellAndBuyPane();
+        this.populateSellAndBuyPane();
         PopOver popOver = new PopOver();
-        popOver.setContentNode(sellScrollPane);
+        popOver.setContentNode(this.sellScrollPane);
         popOver.show(imageClicked);
     }
 
     private void sellToInnerKeeper() {
-        innerPopOver = new PopOver();
+        this.innerPopOver = new PopOver();
         VBox innerVBox = new VBox();
         Label innerLabel = new Label("Sei sicuro di voler vendere questi oggetti?");
         JFXButton innerPopOverButton = new JFXButton("Sì, mi assumo ogni responsabilità!");
-        innerPopOverButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#FF512D"),null,null)));
+        innerPopOverButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("#FF512D"), null, null)));
         innerPopOverButton.setTextFill(Paint.valueOf("WHITE"));
         innerVBox.getChildren().addAll(innerLabel, innerPopOverButton);
-        innerVBox.setPadding(new Insets(20,20,20,20));
-        innerPopOver.setContentNode(innerVBox);
-        innerPopOver.show(paneWhereShowPopOver);
+        innerVBox.setPadding(new Insets(20, 20, 20, 20));
+        this.innerPopOver.setContentNode(innerVBox);
+        this.innerPopOver.show(this.paneWhereShowPopOver);
         innerPopOverButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Graphics.playSomeSound("Button");
-                innerPopOver.hide();
-                onSell();
-                clientController.sendFinishSellPhase();
-                waitingForBuying();
+                ShopController.this.innerPopOver.hide();
+                ShopController.this.onSell();
+                ShopController.this.clientController.sendFinishSellPhase();
+                ShopController.this.waitingForBuying();
             }
         });
     }
 
     private void waitingForBuying() {
-        sellPhase=false;
-        innerPopOver = new PopOver();
+        this.sellPhase = false;
+        this.innerPopOver = new PopOver();
         StackPane stackPane = new StackPane(new Label("Aspetta il tuo turno, villano."));
-        stackPane.setPadding(new Insets(20,20,20,20));
-        innerPopOver.setContentNode(stackPane);
-        innerButton.setOnAction(new EventHandler<ActionEvent>() {
+        stackPane.setPadding(new Insets(20, 20, 20, 20));
+        this.innerPopOver.setContentNode(stackPane);
+        this.innerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Graphics.playSomeSound("Button");
-                innerPopOver.show(paneWhereShowPopOver);
+                ShopController.this.innerPopOver.show(ShopController.this.paneWhereShowPopOver);
             }
         });
 
     }
 
     private void createBuyingPopOver() {
-        innerPopOver = new PopOver();
-        if(buyPhase) {
-            finishShopButton.setGraphic(finishShop);
-            finishShopButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.innerPopOver = new PopOver();
+        if (this.buyPhase) {
+            this.finishShopButton.setGraphic(this.finishShop);
+            this.finishShopButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     Graphics.playSomeSound("Button");
-                    innerPopOver.hide();
-                    onBuy();
+                    ShopController.this.innerPopOver.hide();
+                    ShopController.this.onBuy();
                     //toBuy.clear();
-                    buyPhase = false;
-                    clientController.sendFinishedBuyPhase();
+                    ShopController.this.buyPhase = false;
+                    ShopController.this.clientController.sendFinishedBuyPhase();
                 }
             });
-            buyItButton.setGraphic(buyIt);
-            buyItButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            this.buyItButton.setGraphic(this.buyIt);
+            this.buyItButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     Graphics.playSomeSound("Button");
-                    onBuy();
+                    ShopController.this.onBuy();
                     //toBuy.clear();
                 }
             });
-            buyIt.setFitHeight(40);
-            buyIt.setFitWidth(40);
-            buyIt.setPreserveRatio(true);
-            finishShop.setFitWidth(40);
-            finishShop.setFitHeight(40);
-            innerPopOver.setContentNode(buyVBox);
-            innerPopOver.show(paneWhereShowPopOver);
-        }
-        else{
-            nothingToDoPopOver();
+            this.buyIt.setFitHeight(40);
+            this.buyIt.setFitWidth(40);
+            this.buyIt.setPreserveRatio(true);
+            this.finishShop.setFitWidth(40);
+            this.finishShop.setFitHeight(40);
+            this.innerPopOver.setContentNode(this.buyVBox);
+            this.innerPopOver.show(this.paneWhereShowPopOver);
+        } else {
+            this.nothingToDoPopOver();
         }
     }
 
     private void nothingToDoPopOver() {
-        if (paneWhereShowPopOver != null) {
+        if (this.paneWhereShowPopOver != null) {
             PopOver popOverToShow = new PopOver();
             Pane internalPopOverPane = new Pane();
             internalPopOverPane.getChildren().add(new Label("Bottega chiusa, viandante!"));
-            internalPopOverPane.setPadding(new Insets(20,20,20,20));
+            internalPopOverPane.setPadding(new Insets(20, 20, 20, 20));
             popOverToShow.setContentNode(internalPopOverPane);
-            popOverToShow.show(paneWhereShowPopOver);
+            popOverToShow.show(this.paneWhereShowPopOver);
         }
     }
 
     @Override
     public void onStartMarket() {
         Graphics.notification("Start Market");
-        marketPhase=true;
-        sellPhase=true;
-        buyList.clear();
-        sellList.clear();
-        toBuy.clear();
-        temporarySellList.clear();
-        trueList.clear();
-        settingDeckActions();
-        updateView();
-        innerButton.setOnAction(new EventHandler<ActionEvent>() {
+        this.marketPhase = true;
+        this.sellPhase = true;
+        this.buyList.clear();
+        this.sellList.clear();
+        this.toBuy.clear();
+        this.temporarySellList.clear();
+        this.trueList.clear();
+        this.settingDeckActions();
+        this.updateView();
+        this.innerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(sellPhase)
+                if (ShopController.this.sellPhase)
                     Graphics.playSomeSound("Button");
-                    sellToInnerKeeper();
+                ShopController.this.sellToInnerKeeper();
             }
         });
     }
 
     @Override
     public void onStartBuyPhase() {
-       buyPhase=true;
-        createBuyingPopOver();
-        settingDeckActions();
-        politicCardDeck.setOnMouseClicked(null);
-        permitCardDeck.setOnMouseClicked(null);
-        helperDeck.setOnMouseClicked(null);
-        innerButton.setOnAction(new EventHandler<ActionEvent>() {
+        this.buyPhase = true;
+        this.createBuyingPopOver();
+        this.settingDeckActions();
+        this.politicCardDeck.setOnMouseClicked(null);
+        this.permitCardDeck.setOnMouseClicked(null);
+        this.helperDeck.setOnMouseClicked(null);
+        this.innerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Graphics.playSomeSound("Button");
-                createBuyingPopOver();
+                ShopController.this.createBuyingPopOver();
             }
         });
         Graphics.notification("Start Buy Phase");
     }
 
     @Override
-    public void  onFinishMarket() {
+    public void onFinishMarket() {
         Graphics.notification("Finish Market");
-        buyList.clear();
-        sellList.clear();
-        temporarySellList.clear();
-        trueList.clear();
-        politicCardDeck.setOnMouseClicked(null);
-        permitCardDeck.setOnMouseClicked(null);
-        helperDeck.setOnMouseClicked(null);
-        innerButton.setOnAction(new EventHandler<ActionEvent>() {
+        this.buyList.clear();
+        this.sellList.clear();
+        this.temporarySellList.clear();
+        this.trueList.clear();
+        this.politicCardDeck.setOnMouseClicked(null);
+        this.permitCardDeck.setOnMouseClicked(null);
+        this.helperDeck.setOnMouseClicked(null);
+        this.innerButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Graphics.playSomeSound("Button");
-                nothingToDoPopOver();
+                ShopController.this.nothingToDoPopOver();
             }
         });
     }
@@ -493,14 +498,14 @@ public class ShopController implements BaseController {
     }
 
     public void addItemToBuy(BuyableWrapper item) {
-        if(!toBuy.contains(item)){
-            toBuy.add(item);
+        if (!this.toBuy.contains(item)) {
+            this.toBuy.add(item);
         }
     }
 
     public void removeItemToBuy(BuyableWrapper item) {
-        if(toBuy.contains(item)){
-            toBuy.remove(item);
+        if (this.toBuy.contains(item)) {
+            this.toBuy.remove(item);
         }
     }
 
@@ -522,28 +527,28 @@ public class ShopController implements BaseController {
         baseGridPane.getColumnConstraints().addAll(columnConstraints1, columnConstraints2, columnConstraints3);
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
         ImageView itemBackground = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + information.getBuyableObject().getUrl() + ".png"));
-        itemBackground.fitWidthProperty().bind(buyScrollPane.widthProperty().divide(2));
+        itemBackground.fitWidthProperty().bind(this.buyScrollPane.widthProperty().divide(2));
         itemBackground.setPreserveRatio(true);
         baseGridPane.getChildren().add(itemBackground);
         GridPane.setColumnSpan(itemBackground, 3);
         GridPane.setRowSpan(itemBackground, 3);
         JFXButton button = new JFXButton();
         button.setTextFill(Paint.valueOf("WHITE"));
-        button.setButtonType(JFXButton.ButtonType.FLAT);
+        button.setButtonType(ButtonType.FLAT);
         button.setText(Integer.toString(information.getCost()));
-        button.setBackground(new Background(new BackgroundFill(Paint.valueOf("4F6161"),new CornerRadii(20),null)));
+        button.setBackground(new Background(new BackgroundFill(Paint.valueOf("4F6161"), new CornerRadii(20), null)));
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Graphics.playSomeSound("Button");
-                toBuy.add(information);
+                ShopController.this.toBuy.add(information);
             }
         });
         Label label = new Label(information.getBuyableObject().getInfo());
-        if(information.getBuyableObject() instanceof PermitCard){
-            baseGridPane.add(label,1,0);
-            GridPane.setHalignment(label,HPos.CENTER);
-            GridPane.setValignment(label,VPos.CENTER);
+        if (information.getBuyableObject() instanceof PermitCard) {
+            baseGridPane.add(label, 1, 0);
+            GridPane.setHalignment(label, HPos.CENTER);
+            GridPane.setValignment(label, VPos.CENTER);
         }
         label.setVisible(true);
         label.setTextFill(Paint.valueOf("WHITE"));
@@ -565,14 +570,14 @@ public class ShopController implements BaseController {
             }
         });
         baseGridPane.add(button, 1, 1);
-        GridPane.setHalignment(button,HPos.CENTER);
-        GridPane.setValignment(button,VPos.CENTER);
+        GridPane.setHalignment(button, HPos.CENTER);
+        GridPane.setValignment(button, VPos.CENTER);
         baseGridPane.prefWidthProperty().bind(itemBackground.fitWidthProperty());
         baseGridPane.prefHeightProperty().bind(itemBackground.fitHeightProperty());
         return baseGridPane;
     }
 
-    private GridPane addSalableItems(BuyableWrapper information){
+    private GridPane addSalableItems(BuyableWrapper information) {
         GridPane baseGridPane = new GridPane();
         baseGridPane.setAlignment(Pos.CENTER);
         ColumnConstraints columnConstraints1 = new ColumnConstraints();
@@ -591,9 +596,9 @@ public class ShopController implements BaseController {
         baseGridPane.getRowConstraints().addAll(rowConstraints1, rowConstraints2, rowConstraints3);
         JFXButton buttonToSell = new JFXButton();
         buttonToSell.setTextFill(Paint.valueOf("WHITE"));
-        buttonToSell.setBackground(new Background(new BackgroundFill(Paint.valueOf("3D4248"),new CornerRadii(20),null)));
-        buttonToSell.setButtonType(JFXButton.ButtonType.FLAT);
-        if (information.isOnSale()){
+        buttonToSell.setBackground(new Background(new BackgroundFill(Paint.valueOf("3D4248"), new CornerRadii(20), null)));
+        buttonToSell.setButtonType(ButtonType.FLAT);
+        if (information.isOnSale()) {
             buttonToSell.setText("RIMUOVI");
         } else {
             buttonToSell.setText("0");
@@ -606,19 +611,19 @@ public class ShopController implements BaseController {
         Label label = new Label("");
         label.setTextFill(Paint.valueOf("WHITE"));
         itemOnSaleImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/" + information.getBuyableObject().getUrl() + ".png");
-        if (information.getBuyableObject() instanceof PermitCard){
-            sellPane.setVgap(20);
+        if (information.getBuyableObject() instanceof PermitCard) {
+            this.sellPane.setVgap(20);
             upperImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/plusWhite.png");
             downerImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/minusWhite.png");
             label.setText(information.getBuyableObject().getInfo());
         } else {
-            sellPane.setVgap(0);
+            this.sellPane.setVgap(0);
             if (information.getBuyableObject() instanceof Helper) {
                 upperImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/plusBlack.png");
                 downerImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/minusBlack.png");
             } else {
-                    upperImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/plusWhite.png");
-                    downerImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/minusWhite.png");
+                upperImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/plusWhite.png");
+                downerImage = ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/minusWhite.png");
             }
         }
         ImageView upper = new ImageView(upperImage);
@@ -629,8 +634,8 @@ public class ShopController implements BaseController {
         minusButton.setGraphic(downer);
         JFXButton sellButton = new JFXButton("VENDI");
         sellButton.setTextFill(Paint.valueOf("WHITE"));
-        sellButton.setButtonType(JFXButton.ButtonType.RAISED);
-        sellButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("4F6161"),null,null)));
+        sellButton.setButtonType(ButtonType.RAISED);
+        sellButton.setBackground(new Background(new BackgroundFill(Paint.valueOf("4F6161"), null, null)));
         sellButton.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().divide(3));
         sellButton.setVisible(false);
         EventHandler<ActionEvent> onSell = new EventHandler<ActionEvent>() {
@@ -640,30 +645,28 @@ public class ShopController implements BaseController {
                 if (!buttonToSell.getText().equals("RIMUOVI")) {
                     information.setOnSale(true);
                     information.setCost(Integer.parseInt(buttonToSell.getText()));
-                    trueList.add(information);
+                    ShopController.this.trueList.add(information);
                     buttonToSell.setText("RIMUOVI");
                     sellButton.setVisible(false);
-                }
-                else{
-                    if(trueList.contains(information)) {
-                        trueList.remove(information);
-                    }
-                    else{
-                        clientController.removeItemFromMarket(information);
+                } else {
+                    if (ShopController.this.trueList.contains(information)) {
+                        ShopController.this.trueList.remove(information);
+                    } else {
+                        ShopController.this.clientController.removeItemFromMarket(information);
                     }
                     information.setOnSale(false);
                     buttonToSell.setText("0");
                     sellButton.setVisible(true);
                 }
             }
-            };
+        };
         sellButton.setOnAction(onSell);
         buttonToSell.setOnAction(onSell);
         plusButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 Graphics.playSomeSound("Button");
-                if(buttonToSell.getText()!="RIMUOVI") {
+                if (buttonToSell.getText() != "RIMUOVI") {
                     if (Integer.parseInt(buttonToSell.getText()) - 1 < 19)
                         buttonToSell.setText(Integer.toString(Integer.parseInt(buttonToSell.getText()) + 1));
                 }
@@ -673,7 +676,7 @@ public class ShopController implements BaseController {
             @Override
             public void handle(MouseEvent event) {
                 Graphics.playSomeSound("Button");
-                if(buttonToSell.getText()!="RIMUOVI") {
+                if (buttonToSell.getText() != "RIMUOVI") {
                     if (Integer.parseInt(buttonToSell.getText()) - 1 > 0)
                         buttonToSell.setText(Integer.toString(Integer.parseInt(buttonToSell.getText()) - 1));
                     else
@@ -685,13 +688,13 @@ public class ShopController implements BaseController {
         baseGridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(!information.isOnSale()) {
+                if (!information.isOnSale()) {
                     sellButton.setVisible(true);
                     plusButton.setVisible(true);
                     minusButton.setVisible(true);
                 }
 
-                    buttonToSell.setVisible(true);
+                buttonToSell.setVisible(true);
                 ColorAdjust colorAdjust = new ColorAdjust();
                 colorAdjust.setBrightness(-0.5);
                 itemOnSaleImageView.setEffect(colorAdjust);
@@ -715,9 +718,9 @@ public class ShopController implements BaseController {
         baseGridPane.add(plusButton, 2, 1);
         baseGridPane.add(buttonToSell, 1, 1);
         baseGridPane.add(minusButton, 0, 1);
-        baseGridPane.add(sellButton,1,2);
-        GridPane.setHalignment(sellButton,HPos.CENTER);
-        GridPane.setValignment(sellButton,VPos.CENTER);
+        baseGridPane.add(sellButton, 1, 2);
+        GridPane.setHalignment(sellButton, HPos.CENTER);
+        GridPane.setValignment(sellButton, VPos.CENTER);
         upper.setPreserveRatio(false);
         upper.setFitWidth(30);
         upper.setFitHeight(30);
@@ -730,9 +733,9 @@ public class ShopController implements BaseController {
         GridPane.setValignment(upper, VPos.CENTER);
         GridPane.setValignment(downer, VPos.CENTER);
         GridPane.setValignment(buttonToSell, VPos.CENTER);
-        baseGridPane.add(label,1, 0);
-        GridPane.setValignment(label,VPos.CENTER);
-        GridPane.setHalignment(label,HPos.CENTER);
+        baseGridPane.add(label, 1, 0);
+        GridPane.setValignment(label, VPos.CENTER);
+        GridPane.setHalignment(label, HPos.CENTER);
         itemOnSaleImageView.setEffect(null);
         plusButton.setVisible(false);
         minusButton.setVisible(false);
@@ -740,8 +743,8 @@ public class ShopController implements BaseController {
         plusButton.setVisible(false);
         minusButton.setVisible(false);
         label.setVisible(true);
-        itemOnSaleImageView.fitWidthProperty().bind(sellScrollPane.widthProperty().divide(2));
-        itemOnSaleImageView.fitHeightProperty().bind(sellScrollPane.heightProperty().divide(2));
+        itemOnSaleImageView.fitWidthProperty().bind(this.sellScrollPane.widthProperty().divide(2));
+        itemOnSaleImageView.fitHeightProperty().bind(this.sellScrollPane.heightProperty().divide(2));
         itemOnSaleImageView.setPreserveRatio(false);
         baseGridPane.prefWidthProperty().bind(itemOnSaleImageView.fitWidthProperty().multiply(0.6));
         baseGridPane.prefHeightProperty().bind(itemOnSaleImageView.fitHeightProperty().multiply(0.6));
@@ -768,10 +771,10 @@ public class ShopController implements BaseController {
         StackPane.setAlignment(textForHelp, Pos.CENTER);
         stackPaneForHelp.setPadding(new Insets(20));
         helpPopOver.setContentNode(stackPaneForHelp);
-        helpPopOver.show(paneWhereShowPopOver);
+        helpPopOver.show(this.paneWhereShowPopOver);
     }
 
     public void setMatchController(MatchController matchController) {
-        this.matchController=matchController;
+        this.matchController = matchController;
     }
 }

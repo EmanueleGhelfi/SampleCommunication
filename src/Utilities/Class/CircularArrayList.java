@@ -12,9 +12,9 @@ public class CircularArrayList<E> extends ArrayList<E> {
     @Override
     public E get(int index) {
         if (index < 0)
-            index = index + ( abs(index/size()) + 1)*size();
+            index = index + (abs(index / this.size()) + 1) * this.size();
         if (index > 0)
-            index = index%size();
+            index = index % this.size();
         return super.get(index);
     }
 

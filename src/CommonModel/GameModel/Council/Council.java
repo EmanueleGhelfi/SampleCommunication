@@ -3,7 +3,6 @@ package CommonModel.GameModel.Council;
 import Utilities.Class.Constants;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -12,34 +11,33 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class Council implements Serializable {
 
-    private Queue<Councilor> councilorQueue;
-    private Bank bank;
+    private final Queue<Councilor> councilorQueue;
+    private final Bank bank;
 
     public Council(Bank bank) {
         this.bank = bank;
-        this.councilorQueue = new ArrayBlockingQueue<>(Constants.COUNCILOR_DIMENSION);
+        councilorQueue = new ArrayBlockingQueue<>(Constants.COUNCILOR_DIMENSION);
     }
 
     public void add(Councilor councilorToAdd) {
         try {
-            councilorQueue.add(councilorToAdd);
-        }
-        catch (IllegalStateException e){
-            bank.addCouncilor(councilorQueue.remove());
-            councilorQueue.add(councilorToAdd);
+            this.councilorQueue.add(councilorToAdd);
+        } catch (IllegalStateException e) {
+            this.bank.addCouncilor(this.councilorQueue.remove());
+            this.councilorQueue.add(councilorToAdd);
         }
     }
 
     @Override
     public String toString() {
         return "Council{" +
-                "councilorQueue=" + councilorQueue +
+                "councilorQueue=" + this.councilorQueue +
                 '}';
     }
 
-    public Queue<Councilor> getCouncil(){
+    public Queue<Councilor> getCouncil() {
         Queue q2 = new ArrayBlockingQueue<Councilor>(4);
-        for (Councilor councilor: councilorQueue) {
+        for (Councilor councilor : this.councilorQueue) {
             q2.add(councilor);
         }
         return q2;

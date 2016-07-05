@@ -1,8 +1,9 @@
 package CommonModel.GameModel.Path;
 
+import Server.Model.User;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
-import Server.Model.User;
+
 import java.io.Serializable;
 
 /**
@@ -17,15 +18,13 @@ public class MoneyPath implements Path, Serializable {
 
     @Override
     public void goAhead(User user, int value) throws ActionNotPossibleException {
-        if(user.getCoinPathPosition()+value>length){
-            user.setCoinPathPosition(length);
-        }
-        else{
-            if(user.getCoinPathPosition()+value<0){
+        if (user.getCoinPathPosition() + value > this.length) {
+            user.setCoinPathPosition(this.length);
+        } else {
+            if (user.getCoinPathPosition() + value < 0) {
                 throw new ActionNotPossibleException(Constants.MONEY_PATH_EXCEPTION);
-            }
-            else {
-                user.setCoinPathPosition(user.getCoinPathPosition()+value);
+            } else {
+                user.setCoinPathPosition(user.getCoinPathPosition() + value);
             }
         }
     }

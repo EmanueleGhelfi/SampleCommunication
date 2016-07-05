@@ -1,14 +1,13 @@
 package CommonModel.Snapshot;
 
 import java.io.Serializable;
-import java.util.*;
 
 /**
  * Created by Giulio on 21/06/2016.
  */
-public enum UserColor implements Serializable{
+public enum UserColor {
 
-    PINK("PINK"),BLACK("BLACK"),BROWN("BROWN"),LILAC("LILAC"),BLUE("BLUE"),PEAGREEN("PEAGREEN"),YELLOW("YELLOW"),ORANGE("ORANGE"),LIGHTBLUE("LIGHTBLUE"),GREEN("GREEN");
+    PINK("PINK"), BLACK("BLACK"), BROWN("BROWN"), LILAC("LILAC"), BLUE("BLUE"), PEAGREEN("PEAGREEN"), YELLOW("YELLOW"), ORANGE("ORANGE"), LIGHTBLUE("LIGHTBLUE"), GREEN("GREEN");
 
     private String color;
 
@@ -20,7 +19,7 @@ public enum UserColor implements Serializable{
     }
 
     public String getColor() {
-        return color;
+        return this.color;
     }
 
 }

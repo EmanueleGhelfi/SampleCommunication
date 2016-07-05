@@ -1,8 +1,9 @@
 package CommonModel.GameModel.Path;
 
+import Server.Model.User;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
-import Server.Model.User;
+
 import java.io.Serializable;
 
 /**
@@ -17,15 +18,13 @@ public class VictoryPath implements Path, Serializable {
 
     @Override
     public void goAhead(User user, int value) throws ActionNotPossibleException {
-        if(user.getVictoryPathPosition()+value>length){
-            user.setVictoryPathPosition(length);
-        }
-        else{
-            if(user.getVictoryPathPosition()+value<0){
+        if (user.getVictoryPathPosition() + value > this.length) {
+            user.setVictoryPathPosition(this.length);
+        } else {
+            if (user.getVictoryPathPosition() + value < 0) {
                 throw new ActionNotPossibleException(Constants.VICTORY_PATH_EXCEPTION);
-            }
-            else {
-                user.setVictoryPathPosition(user.getVictoryPathPosition()+value);
+            } else {
+                user.setVictoryPathPosition(user.getVictoryPathPosition() + value);
             }
         }
     }

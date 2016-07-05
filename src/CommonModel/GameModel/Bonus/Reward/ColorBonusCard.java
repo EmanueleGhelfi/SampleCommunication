@@ -2,11 +2,12 @@ package CommonModel.GameModel.Bonus.Reward;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.Bonus.SingleBonus.VictoryPointBonus;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.City.Color;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Carte nella plancia del re che dicono bonus per ogni colore della città
  */
-public class ColorBonusCard implements RewardBonusCard,Serializable {
+public class ColorBonusCard implements RewardBonusCard, Serializable {
 
     private Color color;
     private VictoryPointBonus victoryPointBonus;
@@ -27,26 +28,26 @@ public class ColorBonusCard implements RewardBonusCard,Serializable {
 
     public ColorBonusCard(Color color) {
         this.color = color;
-        switch(color.getColor()){
+        switch (color.getColor()) {
             case Constants.BLUE:
-                victoryPointBonus = new VictoryPointBonus(Constants.BLUE_BONUS);
+                this.victoryPointBonus = new VictoryPointBonus(Constants.BLUE_BONUS);
                 break;
             case Constants.GREY:
-                victoryPointBonus = new VictoryPointBonus(Constants.GREY_BONUS);
+                this.victoryPointBonus = new VictoryPointBonus(Constants.GREY_BONUS);
                 break;
             case Constants.ORANGE:
-                victoryPointBonus = new VictoryPointBonus(Constants.ORANGE_BONUS);
+                this.victoryPointBonus = new VictoryPointBonus(Constants.ORANGE_BONUS);
                 break;
             case Constants.YELLOW:
-                victoryPointBonus = new VictoryPointBonus(Constants.YELLOW_BONUS);
+                this.victoryPointBonus = new VictoryPointBonus(Constants.YELLOW_BONUS);
                 break;
         }
     }
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-        if(victoryPointBonus!=null) {
-            victoryPointBonus.getBonus(user, game);
+        if (this.victoryPointBonus != null) {
+            this.victoryPointBonus.getBonus(user, game);
         }
     }
 
@@ -67,8 +68,8 @@ public class ColorBonusCard implements RewardBonusCard,Serializable {
 
     @Override
     public ArrayList<String> getBonusInfo() {
-        ArrayList<String> toReturn =  new ArrayList<>();
-        toReturn.addAll(victoryPointBonus.getBonusInfo());
+        ArrayList<String> toReturn = new ArrayList<>();
+        toReturn.addAll(this.victoryPointBonus.getBonusInfo());
         return toReturn;
     }
 

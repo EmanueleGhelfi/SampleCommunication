@@ -7,12 +7,12 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
-import Server.Model.Map;
-import Utilities.Class.CommunicationInfo;
-import Utilities.Class.Constants;
 import Server.Controller.GameController;
 import Server.Controller.GamesManager;
+import Server.Model.Map;
 import Server.Model.User;
+import Utilities.Class.CommunicationInfo;
+import Utilities.Class.Constants;
 import Utilities.Class.InterfaceAdapter;
 import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.Gson;
@@ -31,85 +31,86 @@ import java.util.ArrayList;
  */
 public class SocketCommunication extends BaseCommunication implements Runnable {
 
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
+    private final Socket socket;
+    private final BufferedReader in;
+    private final PrintWriter out;
     private User user;
-    private GamesManager gamesManager;
+    private final GamesManager gamesManager;
     private GameController gameController;
 
     public SocketCommunication(Socket socket) throws IOException {
         this.socket = socket;
         //Open the buffers
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
-        gamesManager = GamesManager.getInstance();
+        this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.out = new PrintWriter(socket.getOutputStream(), true);
+        this.gamesManager = GamesManager.getInstance();
     }
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_SNAPSHOT,snapshotToSend);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_SNAPSHOT, snapshotToSend);
     }
 
     @Override
     public void changeRound() {
-        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_YOUR_TURN, null);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_YOUR_TURN, null);
     }
 
     @Override
     public void sendAvailableMap(ArrayList<Map> availableMaps) {
-        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_JSON_TEST,availableMaps);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_JSON_TEST, availableMaps);
     }
 
     /**
      * when user select a map
+     *
      * @param snapshotToSend
      */
     @Override
     public void sendSelectedMap(SnapshotToSend snapshotToSend) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_INITIALIZE_GAME,snapshotToSend);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_INITIALIZE_GAME, snapshotToSend);
     }
 
     @Override
     public void finishTurn() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_TURN_FINISHED,null);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_TURN_FINISHED, null);
     }
 
     @Override
     public void sendStartMarket() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_START_MARKET,null);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_START_MARKET, null);
 
     }
 
     @Override
     public void sendStartBuyPhase() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_START_BUY_PHASE,null);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_START_BUY_PHASE, null);
     }
 
     @Override
     public void disableMarketPhase() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_MARKET_PHASE,null);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_FINISH_MARKET_PHASE, null);
     }
 
     @Override
     public void selectPermitCard() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_SELECT_PERMIT_CARD,null);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_SELECT_PERMIT_CARD, null);
 
     }
 
     @Override
     public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.SELECT_CITY_REWARD_BONUS,snapshotToSend);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.SELECT_CITY_REWARD_BONUS, snapshotToSend);
     }
 
     @Override
     public void moveKing(ArrayList<City> kingPath) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.MOVE_KING,kingPath);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.MOVE_KING, kingPath);
     }
 
     @Override
     public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH, finalSnapshot);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_FINISH, finalSnapshot);
     }
 
     @Override
@@ -119,12 +120,12 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
 
     @Override
     public void selectOldPermitCard() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_OLD_PERMIT_CARD_BONUS,null);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_OLD_PERMIT_CARD_BONUS, null);
     }
 
     @Override
     public void sendUserDisconnect(String username) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_USER_DISCONNECT,username);
+        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_USER_DISCONNECT, username);
     }
 
 
@@ -132,107 +133,95 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
-                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .registerTypeAdapter(Bonus.class, new InterfaceAdapter<Bonus>())
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                 .create();
         System.out.println("Socket communication started");
         try {
-            while ((line = in.readLine()) != null) {
+            while ((line = this.in.readLine()) != null) {
                 CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
 
                 switch (communicationInfo.getCode()) {
-                    case Constants.CODE_NAME: {
-                        String username = gson.fromJson(communicationInfo.getInfo(),String.class);
-                        if(!gamesManager.userAlreadyPresent(username)) {
-                            this.user.setUsername(username);
-                            gamesManager.addToGame(user);
-                            CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME, true);
-                        }
-                        else{
-                            CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME, false);
+                    case Constants.CODE_NAME:
+                        String username = gson.fromJson(communicationInfo.getInfo(), String.class);
+                        if (!this.gamesManager.userAlreadyPresent(username)) {
+                            user.setUsername(username);
+                            this.gamesManager.addToGame(this.user);
+                            CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_NAME, true);
+                        } else {
+                            CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_NAME, false);
                         }
                         break;
-                    }
-                    case Constants.CODE_CHAT: {
+                    case Constants.CODE_CHAT:
                         String message = gson.fromJson(communicationInfo.getInfo(), String.class);
                         System.out.println(message);
-                       // user.OnMessage(message);
+                        // user.OnMessage(message);
                         break;
-                    }
-                    case Constants.CODE_ACTION:{
+                    case Constants.CODE_ACTION:
                         Action action = CommunicationInfo.getAction(communicationInfo.getInfo());
                         try {
-                            user.getGame().getGameController().doAction(action,user);
+                            this.user.getGame().getGameController().doAction(action, this.user);
                         } catch (ActionNotPossibleException e) {
                             // send exception to client
-                            CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e.getMessage());
+                            CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_EXCEPTION, e.getMessage());
                         }
                         break;
-                    }
-                    case Constants.CODE_MAP:{
-                        Map map = gson.fromJson(communicationInfo.getInfo(),Map.class);
-                        user.getGame().getGameController().setMap(map);
+                    case Constants.CODE_MAP:
+                        Map map = gson.fromJson(communicationInfo.getInfo(), Map.class);
+                        this.user.getGame().getGameController().setMap(map);
                         System.out.println("Map arrived in socket communication");
                         break;
-                    }
-                    case Constants.CODE_MARKET_SELL:{
+                    case Constants.CODE_MARKET_SELL: {
                         ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
-                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_SELL,user.getGame().getGameController().onReceiveBuyableObject(buyableWrappers));
+                        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_MARKET_SELL, this.user.getGame().getGameController().onReceiveBuyableObject(buyableWrappers));
                         break;
                     }
 
-                    case Constants.CODE_MARKET_BUY:{
+                    case Constants.CODE_MARKET_BUY:
                         ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
-                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_BUY,user.getGame().getGameController().onBuyObject(user,buyableWrappers));
+                        CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_MARKET_BUY, this.user.getGame().getGameController().onBuyObject(this.user, buyableWrappers));
                         break;
-                    }
 
-                    case Constants.CODE_MARKET_REMOVE:{
+                    case Constants.CODE_MARKET_REMOVE:
                         BuyableWrapper buyableWrapper = CommunicationInfo.getBuyableWrapper(communicationInfo.getInfo());
-                        user.getGame().getGameController().onRemoveItem(buyableWrapper);
+                        this.user.getGame().getGameController().onRemoveItem(buyableWrapper);
                         break;
-                    }
 
-                    case Constants.CODE_FINISH_SELL_PHASE:{
-                        user.getGameController().onFinishSellPhase(user);
+                    case Constants.CODE_FINISH_SELL_PHASE:
+                        this.user.getGameController().onFinishSellPhase(this.user);
                         break;
-                    }
 
-                    case Constants.CODE_FINISH_BUY_PHASE:{
-                        user.getGameController().onFinishBuyPhase(user);
+                    case Constants.CODE_FINISH_BUY_PHASE:
+                        this.user.getGameController().onFinishBuyPhase(this.user);
                         break;
-                    }
-                    case Constants.CODE_CITY_REWARD_BONUS:{
-                        City city = gson.fromJson(communicationInfo.getInfo(),City.class);
+                    case Constants.CODE_CITY_REWARD_BONUS:
+                        City city = gson.fromJson(communicationInfo.getInfo(), City.class);
                         try {
-                            user.getGameController().getCityRewardBonus(city,user);
+                            this.user.getGameController().getCityRewardBonus(city, this.user);
                         } catch (ActionNotPossibleException e) {
-                            CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e.getMessage());
+                            CommunicationInfo.SendCommunicationInfo(this.out, Constants.CODE_EXCEPTION, e.getMessage());
                         }
                         break;
-                    }
-                    case Constants.SELECT_PERMITCARD_BONUS:{
-                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(),PermitCard.class);
-                        user.getGameController().onSelectPermitCard(permitCard,user);
+                    case Constants.SELECT_PERMITCARD_BONUS: {
+                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(), PermitCard.class);
+                        this.user.getGameController().onSelectPermitCard(permitCard, this.user);
                         break;
                     }
-                    case Constants.CODE_FINISH_TURN:{
-                        user.getGameController().onUserPass(user);
+                    case Constants.CODE_FINISH_TURN:
+                        this.user.getGameController().onUserPass(this.user);
                         break;
-                    }
-                    case Constants.CODE_OLD_PERMIT_CARD_BONUS:{
-                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(),PermitCard.class);
-                        user.getGameController().onSelectOldPermitCard(user,permitCard);
+                    case Constants.CODE_OLD_PERMIT_CARD_BONUS:
+                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(), PermitCard.class);
+                        this.user.getGameController().onSelectOldPermitCard(this.user, permitCard);
                         break;
-                    }
                 }
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             //e.printStackTrace();
-            System.out.println("User Disconnected: "+user.getUsername());
-            user.setConnected(false);
-            user.getGameController().onUserDisconnected(user);
-            user.getGameController().cleanGame();
+            System.out.println("User Disconnected: " + this.user.getUsername());
+            this.user.setConnected(false);
+            this.user.getGameController().onUserDisconnected(this.user);
+            this.user.getGameController().cleanGame();
         }
     }
 

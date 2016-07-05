@@ -1,7 +1,5 @@
 package CommonModel.GameModel.Market;
 
-import CommonModel.Snapshot.BaseUser;
-
 import java.io.Serializable;
 
 /**
@@ -31,25 +29,25 @@ public class BuyableWrapper implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
 
         BuyableWrapper that = (BuyableWrapper) o;
 
-        if (buyableObject != null ? !buyableObject.equals(that.buyableObject) : that.buyableObject != null)
+        if (this.buyableObject != null ? !this.buyableObject.equals(that.buyableObject) : that.buyableObject != null)
             return false;
-        return username != null ? username.equals(that.username) : that.username == null;
+        return this.username != null ? this.username.equals(that.username) : that.username == null;
     }
 
     public BuyableObject getBuyableObject() {
-        return buyableObject.getCopy();
+        return this.buyableObject.getCopy();
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public int getCost() {
-        return cost;
+        return this.cost;
     }
 
     public void setCost(Integer cost) {
@@ -57,7 +55,7 @@ public class BuyableWrapper implements Serializable {
     }
 
     public boolean isOnSale() {
-        return onSale;
+        return this.onSale;
     }
 
     public void setOnSale(boolean onSale) {
@@ -67,10 +65,10 @@ public class BuyableWrapper implements Serializable {
     @Override
     public String toString() {
         return "BuyableWrapper{" +
-                "buyableObject=" + buyableObject +
-                ", cost=" + cost +
-                ", username='" + username + '\'' +
-                ", onSale=" + onSale +
+                "buyableObject=" + this.buyableObject +
+                ", cost=" + this.cost +
+                ", username='" + this.username + '\'' +
+                ", onSale=" + this.onSale +
                 '}';
     }
 }

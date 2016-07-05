@@ -7,25 +7,25 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Created by Emanuele on 03/06/2016.
  */
-public class Helper implements BuyableObject{
+public class Helper implements BuyableObject {
 
-    private String type = "Helper";
     // for equals, id of the object
     static final AtomicLong NEXT_ID = new AtomicLong(0);
-    final long id = NEXT_ID.getAndIncrement();
+    final long id = Helper.NEXT_ID.getAndIncrement();
+    private final String type = "Helper";
 
     public Helper() {
     }
 
     @Override
     public String getInfo() {
-        return toString();
+        return this.toString();
     }
 
     @Override
     public BuyableObject getCopy() {
         try {
-            return (Helper)this.clone();
+            return (Helper) clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -40,19 +40,19 @@ public class Helper implements BuyableObject{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
 
         Helper helper = (Helper) o;
 
-        if (id != helper.id) return false;
-        return type != null ? type.equals(helper.type) : helper.type == null;
+        if (this.id != helper.id) return false;
+        return this.type != null ? this.type.equals(helper.type) : helper.type == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = type != null ? type.hashCode() : 0;
-        result = 31 * result + (int) (id ^ (id >>> 32));
+        int result = this.type != null ? this.type.hashCode() : 0;
+        result = 31 * result + (int) (this.id ^ this.id >>> 32);
         return result;
     }
 

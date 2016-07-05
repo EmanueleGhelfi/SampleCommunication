@@ -1,65 +1,66 @@
-.matchBackground{
+.matchBackground {
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/MatchPattern.png");
     -fx-background-repeat: stretch;
     -fx-background-position: center;
     -fx-background-size: cover;
 }
 
-.pathBackground{
+.pathBackground {
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/BackgroundPath.png");
     -fx-background-repeat: stretch;
     -fx-background-position: center;
     -fx-background-size: 95%;
 }
 
-.permitCard{
+.permitCard {
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/PermitCard.png");
     -fx-background-repeat: stretch;
     -fx-background-position: center;
     -fx-background-size: 70%;
 }
 
-.button-raised{
+.button-raised {
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 10px;
     -fx-button-type: RAISED;
-    -fx-background-color: rgb(255,81,0);
+    -fx-background-color: rgb(255, 81, 0);
     -fx-text-fill: WHITE;
 }
 
-.button-raised-second{
+.button-raised-second {
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 14px;
     -fx-button-type: RAISED;
-    -fx-background-color: rgb(77,102,204);
+    -fx-background-color: rgb(77, 102, 204);
     -fx-text-fill: WHITE;
 }
 
 .mylistview .scroll-bar:horizontal .track,
-.mylistview .scroll-bar:vertical .track{
-    -fx-background-color:transparent;
-    -fx-border-color:transparent;
+.mylistview .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-background-radius: 0em;
-    -fx-border-radius:2em;
+    -fx-border-radius: 2em;
 }
 
-.mylistview .scroll-bar:horizontal .increment-button ,
+.mylistview .scroll-bar:horizontal .increment-button,
 .mylistview .scroll-bar:horizontal .decrement-button {
-    -fx-background-color:transparent;
+    -fx-background-color: transparent;
     -fx-background-radius: 0em;
-    -fx-padding:0 0 10 0;
+    -fx-padding: 0 0 10 0;
 }
 
-.mylistview .scroll-bar:vertical .increment-button ,
+.mylistview .scroll-bar:vertical .increment-button,
 .mylistview .scroll-bar:vertical .decrement-button {
-    -fx-background-color:transparent;
+    -fx-background-color: transparent;
     -fx-background-radius: 0em;
-    -fx-padding:0 10 0 0;
+    -fx-padding: 0 10 0 0;
 }
-.mylistview  .scroll-bar .increment-arrow,
-.mylistview  .scroll-bar .decrement-arrow{
-    -fx-shape:" ";
-    -fx-padding:0;
+
+.mylistview .scroll-bar .increment-arrow,
+.mylistview .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
 }
 
 .mylistview .scroll-bar:horizontal .thumb,
@@ -68,11 +69,11 @@
     -fx-background-radius: 2em;
 }
 
-.whiteBackground{
+.whiteBackground {
     -fx-background-color: white;
 }
 
-.bonusLabel{
+.bonusLabel {
     -fx-text-fill: white;
     -fx-font-size: 10;
     -fx-font-family: Verdana;
@@ -85,20 +86,20 @@
     -fx-background-size: cover;
     -fx-tab-max-height: 0;
 }
+
 .tab-pane .tab-header-area, .tab-pane .tab-header-back {
-    visibility: hidden ;
+    visibility: hidden;
 }
 
 .tab-pane .tab-header-area .tab-header-background {
-    visibility: hidden ;
+    visibility: hidden;
     -fx-opacity: 0;
 }
 
-
-.matchPattern{
+.matchPattern {
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/TabPaneMatchPattern.png");
 }
 
-.shopPattern{
+.shopPattern {
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/TabPaneShopPattern.png");
 }

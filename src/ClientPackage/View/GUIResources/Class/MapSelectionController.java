@@ -15,6 +15,7 @@ import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -25,46 +26,51 @@ import java.util.ResourceBundle;
 public class MapSelectionController implements Initializable {
 
     private ClientController clientController;
-    private CircularArrayList<Map> mapArrayList = new CircularArrayList<>();
-    private CircularArrayList<Image> mapArrayListImage = new CircularArrayList<>();
+    private final CircularArrayList<Map> mapArrayList = new CircularArrayList<>();
+    private final CircularArrayList<Image> mapArrayListImage = new CircularArrayList<>();
     private int mapCounter;
 
-    @FXML private ImageView prevImageView;
-    @FXML private ImageView thisImageView;
-    @FXML private ImageView nextImageView;
-    @FXML private GridPane gridPaneBackground;
-    @FXML private GridPane gridPaneSelection;
+    @FXML
+    private ImageView prevImageView;
+    @FXML
+    private ImageView thisImageView;
+    @FXML
+    private ImageView nextImageView;
+    @FXML
+    private GridPane gridPaneBackground;
+    @FXML
+    private GridPane gridPaneSelection;
     private Image prevImage;
     private Image thisImage;
     private Image nextImage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        prevImageView.setImage(prevImage);
-        thisImageView.setImage(thisImage);
-        nextImageView.setImage(nextImage);
-        initButton();
+        this.prevImageView.setImage(this.prevImage);
+        this.thisImageView.setImage(this.thisImage);
+        this.nextImageView.setImage(this.nextImage);
+        this.initButton();
     }
 
     private void initButton() {
         JFXButton leftButton = new JFXButton();
-        ImageView leftImage = new ImageView(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/Left.png",gridPaneBackground.getWidth()/3,gridPaneBackground.getHeight()/3));
+        ImageView leftImage = new ImageView(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/Left.png", this.gridPaneBackground.getWidth() / 3, this.gridPaneBackground.getHeight() / 3));
         leftButton.setGraphic(leftImage);
         JFXButton rightButton = new JFXButton();
-        ImageView rightImage = new ImageView(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/Right.png",gridPaneBackground.getWidth()/3,gridPaneBackground.getHeight()/3));
+        ImageView rightImage = new ImageView(ImageLoader.getInstance().getImage("/ClientPackage/View/GUIResources/Image/Right.png", this.gridPaneBackground.getWidth() / 3, this.gridPaneBackground.getHeight() / 3));
         rightButton.setGraphic(rightImage);
-        gridPaneBackground.add(leftButton, 0, 1);
-        gridPaneBackground.add(rightButton, 2, 1);
+        this.gridPaneBackground.add(leftButton, 0, 1);
+        this.gridPaneBackground.add(rightButton, 2, 1);
         leftButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                prevVisibleMap();
+                MapSelectionController.this.prevVisibleMap();
             }
         });
         rightButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                nextVisibleMap();
+                MapSelectionController.this.nextVisibleMap();
             }
         });
         GridPane.setHalignment(leftButton, HPos.CENTER);
@@ -77,51 +83,51 @@ public class MapSelectionController implements Initializable {
     public void showMap(ArrayList<Map> mapArrayList) {
         for (Map map : mapArrayList) {
             this.mapArrayList.add(map);
-            this.mapArrayListImage.add(ImageLoader.getInstance().getImage(map.getMapPreview(),gridPaneBackground.getWidth(),gridPaneBackground.getHeight()));
+            mapArrayListImage.add(ImageLoader.getInstance().getImage(map.getMapPreview(), this.gridPaneBackground.getWidth(), this.gridPaneBackground.getHeight()));
         }
 
-        prevImageView.fitHeightProperty().bind(gridPaneBackground.heightProperty().divide(5));
-        prevImageView.setPreserveRatio(true);
-        thisImageView.fitHeightProperty().bind(gridPaneBackground.heightProperty().divide(3.5));
-        thisImageView.setPreserveRatio(true);
-        nextImageView.fitHeightProperty().bind(gridPaneBackground.heightProperty().divide(5));
-        nextImageView.setPreserveRatio(true);
-        prevImage = this.mapArrayListImage.get(mapCounter - 1);
-        thisImage = this.mapArrayListImage.get(mapCounter);
-        nextImage = this.mapArrayListImage.get(mapCounter + 1);
-        prevImageView.toBack();
-        thisImageView.toFront();
-        nextImageView.toBack();
-        prevImageView.setImage(prevImage);
-        thisImageView.setImage(thisImage);
-        nextImageView.setImage(nextImage);
+        this.prevImageView.fitHeightProperty().bind(this.gridPaneBackground.heightProperty().divide(5));
+        this.prevImageView.setPreserveRatio(true);
+        this.thisImageView.fitHeightProperty().bind(this.gridPaneBackground.heightProperty().divide(3.5));
+        this.thisImageView.setPreserveRatio(true);
+        this.nextImageView.fitHeightProperty().bind(this.gridPaneBackground.heightProperty().divide(5));
+        this.nextImageView.setPreserveRatio(true);
+        this.prevImage = mapArrayListImage.get(this.mapCounter - 1);
+        this.thisImage = mapArrayListImage.get(this.mapCounter);
+        this.nextImage = mapArrayListImage.get(this.mapCounter + 1);
+        this.prevImageView.toBack();
+        this.thisImageView.toFront();
+        this.nextImageView.toBack();
+        this.prevImageView.setImage(this.prevImage);
+        this.thisImageView.setImage(this.thisImage);
+        this.nextImageView.setImage(this.nextImage);
     }
 
-    public void nextVisibleMap(){
-        mapCounter++;
-        showThreeMaps();
+    public void nextVisibleMap() {
+        this.mapCounter++;
+        this.showThreeMaps();
     }
 
-    public void prevVisibleMap(){
-        mapCounter--;
-        showThreeMaps();
+    public void prevVisibleMap() {
+        this.mapCounter--;
+        this.showThreeMaps();
     }
 
     private void showThreeMaps() {
-        prevImage = this.mapArrayListImage.get(mapCounter - 1);
-        thisImage = this.mapArrayListImage.get(mapCounter);
-        nextImage = this.mapArrayListImage.get(mapCounter + 1);
-        prevImageView.setImage(prevImage);
-        thisImageView.setImage(thisImage);
-        nextImageView.setImage(nextImage);
+        this.prevImage = mapArrayListImage.get(this.mapCounter - 1);
+        this.thisImage = mapArrayListImage.get(this.mapCounter);
+        this.nextImage = mapArrayListImage.get(this.mapCounter + 1);
+        this.prevImageView.setImage(this.prevImage);
+        this.thisImageView.setImage(this.thisImage);
+        this.nextImageView.setImage(this.nextImage);
     }
 
-    public void setClientController(ClientController clientController){
+    public void setClientController(ClientController clientController) {
         this.clientController = clientController;
     }
 
     public void chooseMap(ActionEvent actionEvent) {
         Graphics.playSomeSound("Button");
-        clientController.sendMap(mapArrayList.get(mapCounter));
+        this.clientController.sendMap(this.mapArrayList.get(this.mapCounter));
     }
 }

@@ -5,8 +5,10 @@ import CommonModel.GameModel.Bonus.Reward.KingBonusCard;
 import CommonModel.GameModel.Bonus.Reward.RegionBonusCard;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.Deck.PoliticDeck;
-import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
-import CommonModel.GameModel.City.*;
+import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.Color;
+import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.RegionName;
 import CommonModel.GameModel.Council.Bank;
 import CommonModel.GameModel.Council.King;
 import CommonModel.GameModel.Market.BuyableWrapper;
@@ -25,7 +27,7 @@ import java.util.*;
 /**
  * Created by Emanuele on 11/05/2016.
  */
-public class Game implements Serializable{
+public class Game implements Serializable {
 
     /**
      * True if game is full (There game is started and the players are playing)
@@ -35,13 +37,13 @@ public class Game implements Serializable{
     /**
      * All users in the game with their name
      */
-    private HashMap<String,User> usersInGame = new HashMap<>();
+    private final HashMap<String, User> usersInGame = new HashMap<>();
 
     /**
      * All cities in undirectedgraph
      */
     private Map map;
-    private HashMap<RegionName,Region> regions = new HashMap<>();
+    private final HashMap<RegionName, Region> regions = new HashMap<>();
 
     /**
      * King with his cities
@@ -52,66 +54,66 @@ public class Game implements Serializable{
     private VictoryPath victoryPath;
     private NobilityPath nobilityPath;
     private MoneyPath moneyPath;
-    private GameController gameController;
-    private Bank bank;
+    private final GameController gameController;
+    private final Bank bank;
 
     // PERMIT DECK
-    private HashMap<RegionName,PermitDeck> permitDecks;
+    private HashMap<RegionName, PermitDeck> permitDecks;
 
     // POLITIC CARD
     private PoliticDeck politicCards;
-    private HashMap<RegionName,RegionBonusCard> regionBonusCard = new HashMap<>();
-    private HashMap<String,ColorBonusCard> colorBonusCard = new HashMap<>();
-    private Stack<KingBonusCard> kingBonusCards = new Stack<>();
+    private final HashMap<RegionName, RegionBonusCard> regionBonusCard = new HashMap<>();
+    private final HashMap<String, ColorBonusCard> colorBonusCard = new HashMap<>();
+    private final Stack<KingBonusCard> kingBonusCards = new Stack<>();
 
     //list of buyable wrapper, all object that user can buy
-    private ArrayList<BuyableWrapper> marketList = new ArrayList<>();
+    private final ArrayList<BuyableWrapper> marketList = new ArrayList<>();
 
     public Game() {
-        this.started = false;
-        gameController = new GameController(this);
-        gameController.startTimer();
+        started = false;
+        this.gameController = new GameController(this);
+        this.gameController.startTimer();
         //create Region
-        bank = new Bank();
-        createRegion();
+        this.bank = new Bank();
+        this.createRegion();
         // create permit card decks
-        createDecks();
+        this.createDecks();
         // create nobility, victory and moneyPath
-        createPaths();
+        this.createPaths();
         // create city Graph
-        createCityGraph();
+        this.createCityGraph();
         //create regionBonusCard, kingBonusCards, colorBonusCard
-        createBonusDeck();
+        this.createBonusDeck();
         //create Politic Card Deck
-        createPoliticCards();
+        this.createPoliticCards();
 
     }
 
     private void createRegion() {
-        for (RegionName regionName:RegionName.values()) {
-            Region region = new Region(regionName,5,bank);
-            regions.put(region.getRegion(),region);
+        for (RegionName regionName : RegionName.values()) {
+            Region region = new Region(regionName, 5, this.bank);
+            this.regions.put(region.getRegion(), region);
         }
     }
 
     private void createPoliticCards() {
         // foreach color create thirteen cards
-        politicCards = new PoliticDeck();
-        politicCards.createRandomDeck();
+        this.politicCards = new PoliticDeck();
+        this.politicCards.createRandomDeck();
     }
 
     private void createBonusDeck() {
         //region bonus
-        for (RegionName region:RegionName.values()) {
-            regionBonusCard.put(region,new RegionBonusCard(regions.get(region)));
+        for (RegionName region : RegionName.values()) {
+            this.regionBonusCard.put(region, new RegionBonusCard(this.regions.get(region)));
         }
         // color bonus
-        for (Color color:Color.values()) {
-            colorBonusCard.put(color.getColor(),new ColorBonusCard(color));
+        for (Color color : Color.values()) {
+            this.colorBonusCard.put(color.getColor(), new ColorBonusCard(color));
         }
         //king bonus
-        for (int i = 1; i< Constants.KING_CARDS; i++){
-            kingBonusCards.add(new KingBonusCard(Constants.KING_CARDS-i));
+        for (int i = 1; i < Constants.KING_CARDS; i++) {
+            this.kingBonusCards.add(new KingBonusCard(Constants.KING_CARDS - i));
         }
     }
 
@@ -143,21 +145,20 @@ public class Game implements Serializable{
     }
 
     private void createPaths() {
-        nobilityPath = new NobilityPath();
-        moneyPath = new MoneyPath();
-        victoryPath = new VictoryPath();
+        this.nobilityPath = new NobilityPath();
+        this.moneyPath = new MoneyPath();
+        this.victoryPath = new VictoryPath();
     }
 
     public boolean addUserToGame(User userToAdd) {
-        System.out.println("ADDING A USER TO A GAME "+userToAdd.getUsername());
-        if(!usersInGame.containsKey(userToAdd.getUsername())){
-            usersInGame.put(userToAdd.getUsername(),userToAdd);
-            if(usersInGame.size()>=2 && usersInGame.size()<Constants.MAX_CLIENT_NUMBER){
-                gameController.setTimeout();
-            }
-            else if(usersInGame.size()==Constants.MAX_CLIENT_NUMBER){
-                gameController.cancelTimeout();
-                gameController.notifyStarted();
+        System.out.println("ADDING A USER TO A GAME " + userToAdd.getUsername());
+        if (!this.usersInGame.containsKey(userToAdd.getUsername())) {
+            this.usersInGame.put(userToAdd.getUsername(), userToAdd);
+            if (this.usersInGame.size() >= 2 && this.usersInGame.size() < Constants.MAX_CLIENT_NUMBER) {
+                this.gameController.setTimeout();
+            } else if (this.usersInGame.size() == Constants.MAX_CLIENT_NUMBER) {
+                this.gameController.cancelTimeout();
+                this.gameController.notifyStarted();
             }
             return true;
         }
@@ -166,52 +167,49 @@ public class Game implements Serializable{
 
     private void createDecks() {
         //create mountainDeck
-        permitDecks = new HashMap<>();
+        this.permitDecks = new HashMap<>();
         for (RegionName region : RegionName.values()) {
-            PermitDeck permitDeck = new PermitDeck(regions.get(region).getRegion());
+            PermitDeck permitDeck = new PermitDeck(this.regions.get(region).getRegion());
             permitDeck.createRandomDeck();
-            permitDecks.put(region, permitDeck);
+            this.permitDecks.put(region, permitDeck);
         }
     }
 
-    public void popKingBonusCard(){
+    public void popKingBonusCard() {
         try {
-            kingBonusCards.pop();
-        } catch (EmptyStackException e){
+            this.kingBonusCards.pop();
+        } catch (EmptyStackException e) {
         }
     }
 
     @Override
     public String toString() {
         return "Game{" +
-                ", started=" + started +
-                ", regions=" + regions +
-                ", king=" + king +
-                ", victoryPath=" + victoryPath +
-                ", nobilityPath=" + nobilityPath +
-                ", moneyPath=" + moneyPath +
-                ", gameController=" + gameController +
-                ", permitDecks=" + permitDecks +
-                ", politicCards=" + politicCards +
-                ", regionBonusCard=" + regionBonusCard +
-                ", colorBonusCard=" + colorBonusCard +
-                ", kingBonusCards=" + kingBonusCards +
+                ", started=" + this.started +
+                ", regions=" + this.regions +
+                ", king=" + this.king +
+                ", victoryPath=" + this.victoryPath +
+                ", nobilityPath=" + this.nobilityPath +
+                ", moneyPath=" + this.moneyPath +
+                ", gameController=" + this.gameController +
+                ", permitDecks=" + this.permitDecks +
+                ", politicCards=" + this.politicCards +
+                ", regionBonusCard=" + this.regionBonusCard +
+                ", colorBonusCard=" + this.colorBonusCard +
+                ", kingBonusCards=" + this.kingBonusCards +
                 '}';
     }
-    // inizializzazione partita
-    public void setStarted(boolean started) {
-        this.started = started;
-    }
-    public Region getRegion(RegionName region){
-        if(regions.containsKey(region))
-            return regions.get(region);
+
+    public Region getRegion(RegionName region) {
+        if (this.regions.containsKey(region))
+            return this.regions.get(region);
         return null;
     }
 
     public City getCity(City city) {
-        if(map.getMapGraph().containsVertex(city)){
-            for (City cityToSearch: map.getMapGraph().vertexSet()) {
-                if (cityToSearch.equals(city)){
+        if (this.map.getMapGraph().containsVertex(city)) {
+            for (City cityToSearch : this.map.getMapGraph().vertexSet()) {
+                if (cityToSearch.equals(city)) {
                     return cityToSearch;
                 }
             }
@@ -219,112 +217,136 @@ public class Game implements Serializable{
         return null;
     }
 
-    /** get king bonus card if there are
+    /**
+     * get king bonus card if there are
+     *
      * @return null if there are not, king bonus cardelse
      */
     public KingBonusCard getKingBonusCard() {
-        try{
-            return kingBonusCards.peek();
-        } catch (EmptyStackException e){
+        try {
+            return this.kingBonusCards.peek();
+        } catch (EmptyStackException e) {
             return null;
         }
     }
+
     public Collection<User> getUsers() {
-        return usersInGame.values();
+        return this.usersInGame.values();
     }
+
     public MoneyPath getMoneyPath() {
-        return moneyPath;
+        return this.moneyPath;
     }
+
     public VictoryPath getVictoryPath() {
-        return victoryPath;
+        return this.victoryPath;
     }
+
     public UndirectedGraph<City, DefaultEdge> getGraph() {
-        return map.getMapGraph();
+        return this.map.getMapGraph();
     }
+
     public RegionBonusCard getRegionBonusCard(RegionName region) {
-        return regionBonusCard.get(region);
+        return this.regionBonusCard.get(region);
     }
+
     public ColorBonusCard getColorBonusCard(String color) {
-        return colorBonusCard.get(color);
+        return this.colorBonusCard.get(color);
     }
+
     public King getKing() {
-        return king;
-    }
-    public NobilityPath getNobilityPath() {
-        return nobilityPath;
-    }
-    public PermitDeck getPermitDeck(RegionName region){
-        return permitDecks.get(region);
-    }
-    public HashMap<RegionName, Region> getRegions() {
-        return regions;
-    }
-    public HashMap<String, ColorBonusCard> getColorBonusCard() {
-        return colorBonusCard;
-    }
-    public HashMap<RegionName, RegionBonusCard> getRegionBonusCard() {
-        return regionBonusCard;
-    }
-    public boolean isStarted() {
-        return started;
-    }
-    public HashMap<String, User> getUsersInGame() {
-        return usersInGame;
-    }
-    public Stack<KingBonusCard> getKingBonusCards() {
-        return kingBonusCards;
-    }
-    public GameController getGameController() {
-        return gameController;
-    }
-    public PoliticDeck getPoliticCards() {
-        return politicCards;
-    }
-    public void setPoliticCards(PoliticDeck politicCards) {
-        this.politicCards = politicCards;
-    }
-
-
-    public void setMap(Map map) {
-        this.map = map;
-    }
-
-    public Map getMap() {
-        return map;
+        return this.king;
     }
 
     public void setKing(King king) {
         this.king = king;
     }
 
+    public NobilityPath getNobilityPath() {
+        return this.nobilityPath;
+    }
+
+    public PermitDeck getPermitDeck(RegionName region) {
+        return this.permitDecks.get(region);
+    }
+
+    public HashMap<RegionName, Region> getRegions() {
+        return this.regions;
+    }
+
+    public HashMap<String, ColorBonusCard> getColorBonusCard() {
+        return this.colorBonusCard;
+    }
+
+    public HashMap<RegionName, RegionBonusCard> getRegionBonusCard() {
+        return this.regionBonusCard;
+    }
+
+    public boolean isStarted() {
+        return this.started;
+    }
+
+    // inizializzazione partita
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    public HashMap<String, User> getUsersInGame() {
+        return this.usersInGame;
+    }
+
+    public Stack<KingBonusCard> getKingBonusCards() {
+        return this.kingBonusCards;
+    }
+
+    public GameController getGameController() {
+        return this.gameController;
+    }
+
+    public PoliticDeck getPoliticCards() {
+        return this.politicCards;
+    }
+
+    public void setPoliticCards(PoliticDeck politicCards) {
+        this.politicCards = politicCards;
+    }
+
+    public Map getMap() {
+        return this.map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
     public void addBuyableWrapper(BuyableWrapper buyableWrapper) throws AlreadyPresentException {
-        if(marketList.contains(buyableWrapper))
+        if (this.marketList.contains(buyableWrapper))
             throw new AlreadyPresentException();
-        else{
-            marketList.add(buyableWrapper);
+        else {
+            this.marketList.add(buyableWrapper);
         }
     }
 
 
-    public User getUser(String username){
-        return usersInGame.get(username);
+    public User getUser(String username) {
+        return this.usersInGame.get(username);
     }
 
     public ArrayList<BuyableWrapper> getMarketList() {
-        return (ArrayList<BuyableWrapper>) marketList.clone();
+        return (ArrayList<BuyableWrapper>) this.marketList.clone();
     }
 
     public synchronized void removeFromMarketList(BuyableWrapper buyableWrapper) {
-        System.out.println("Before remove : " + marketList.size());
-        marketList.remove(buyableWrapper);
-        System.out.println("After remove :" +marketList.size());
+        System.out.println("Before remove : " + this.marketList.size());
+        this.marketList.remove(buyableWrapper);
+        System.out.println("After remove :" + this.marketList.size());
     }
 
     public Bank getBank() {
-        return bank;
+        return this.bank;
     }
 
     public HashMap<RegionName, PermitDeck> getPermitDecks() {
-        return permitDecks;
+        return this.permitDecks;
     }
 }

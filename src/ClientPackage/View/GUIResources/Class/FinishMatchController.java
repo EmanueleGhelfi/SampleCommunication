@@ -35,14 +35,15 @@ public class FinishMatchController implements Initializable {
     private ImageView winnerOrLoser = new ImageView();
     private ImageView kingOrJester = new ImageView();
     private ImageView innerImage;
-    private JFXListView<String> ranking = new JFXListView<>();
-    private ArrayList<String> usernameRanking = new ArrayList<>();
+    private final JFXListView<String> ranking = new JFXListView<>();
+    private final ArrayList<String> usernameRanking = new ArrayList<>();
     private PopOver innerPopOver;
     private PopOver popOverOfTheImage;
-    private Pane innerPaneWhereShow = new Pane();
+    private final Pane innerPaneWhereShow = new Pane();
     private ImageView backgroundImage;
 
-    @FXML private StackPane rootPane;
+    @FXML
+    private StackPane rootPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,100 +53,100 @@ public class FinishMatchController implements Initializable {
     public void setClientController(ClientController clientController, GUIView baseView) {
         this.clientController = clientController;
         this.baseView = baseView;
-        displayFinalScreen();
+        this.displayFinalScreen();
     }
 
     private void displayFinalScreen() {
-        backgroundImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/FinalBackground.png"));
-        backgroundImage.fitWidthProperty().bind(rootPane.widthProperty());
-        backgroundImage.fitHeightProperty().bind(rootPane.heightProperty());
-        rootPane.getChildren().add(backgroundImage);
-        innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.png"));
-        innerImage.fitHeightProperty().bind(backgroundImage.fitHeightProperty().divide(2));
-        innerImage.setPreserveRatio(true);
-        rootPane.getChildren().add(innerImage);
-        StackPane.setAlignment(innerImage, Pos.BOTTOM_LEFT);
-        for (BaseUser baseUser : clientController.getFinalSnapshot()) {
-            usernameRanking.add(baseUser.getUsername());
+        this.backgroundImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/FinalBackground.png"));
+        this.backgroundImage.fitWidthProperty().bind(this.rootPane.widthProperty());
+        this.backgroundImage.fitHeightProperty().bind(this.rootPane.heightProperty());
+        this.rootPane.getChildren().add(this.backgroundImage);
+        this.innerImage = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/InnKeeper.png"));
+        this.innerImage.fitHeightProperty().bind(this.backgroundImage.fitHeightProperty().divide(2));
+        this.innerImage.setPreserveRatio(true);
+        this.rootPane.getChildren().add(this.innerImage);
+        StackPane.setAlignment(this.innerImage, Pos.BOTTOM_LEFT);
+        for (BaseUser baseUser : this.clientController.getFinalSnapshot()) {
+            this.usernameRanking.add(baseUser.getUsername());
         }
-        ranking.setItems(FXCollections.observableArrayList(usernameRanking));
-        ranking.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.ranking.setItems(FXCollections.observableArrayList(this.usernameRanking));
+        this.ranking.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                displayInfo(ranking.getSelectionModel().getSelectedItem());
+                FinishMatchController.this.displayInfo(FinishMatchController.this.ranking.getSelectionModel().getSelectedItem());
             }
         });
-        ranking.setStyle("-fx-background-color: transparent");
-        ranking.prefWidthProperty().bind(rootPane.prefWidthProperty().divide(12));
-        rootPane.getChildren().add(ranking);
-        StackPane.setAlignment(ranking, Pos.BOTTOM_RIGHT);
-        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
-        winnerOrLoser.setPreserveRatio(true);
-        rootPane.getChildren().add(winnerOrLoser);
-        StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
-        kingOrJester.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.1149));
-        kingOrJester.setPreserveRatio(true);
-        rootPane.getChildren().add(kingOrJester);
-        StackPane.setAlignment(kingOrJester, Pos.CENTER);
-        if(clientController.amIAWinner()) {
-            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
-            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
-            popOverOfTheImage = new PopOver();
+        this.ranking.setStyle("-fx-background-color: transparent");
+        this.ranking.prefWidthProperty().bind(this.rootPane.prefWidthProperty().divide(12));
+        this.rootPane.getChildren().add(this.ranking);
+        StackPane.setAlignment(this.ranking, Pos.BOTTOM_RIGHT);
+        this.winnerOrLoser.fitWidthProperty().bind(this.backgroundImage.fitWidthProperty().multiply(0.3542));
+        this.winnerOrLoser.setPreserveRatio(true);
+        this.rootPane.getChildren().add(this.winnerOrLoser);
+        StackPane.setAlignment(this.winnerOrLoser, Pos.BOTTOM_CENTER);
+        this.kingOrJester.fitWidthProperty().bind(this.backgroundImage.fitWidthProperty().multiply(0.1149));
+        this.kingOrJester.setPreserveRatio(true);
+        this.rootPane.getChildren().add(this.kingOrJester);
+        StackPane.setAlignment(this.kingOrJester, Pos.CENTER);
+        if (this.clientController.amIAWinner()) {
+            this.winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
+            this.kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
+            this.popOverOfTheImage = new PopOver();
             StackPane stackPaneOfTheImage = new StackPane();
             Text textOfImage = new Text();
-            textOfImage.setText("Felice della tua vittoria " + clientController.getSnapshot().getCurrentUser() + ".\n" +
-                        "Il mio cor si sollazza al saper che ho un erede di cotanta bravura.");
+            textOfImage.setText("Felice della tua vittoria " + this.clientController.getSnapshot().getCurrentUser() + ".\n" +
+                    "Il mio cor si sollazza al saper che ho un erede di cotanta bravura.");
             textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
             stackPaneOfTheImage.getChildren().add(textOfImage);
             StackPane.setAlignment(textOfImage, Pos.CENTER);
-            popOverOfTheImage.setContentNode(stackPaneOfTheImage);
-            popOverOfTheImage.show(kingOrJester);
+            this.popOverOfTheImage.setContentNode(stackPaneOfTheImage);
+            this.popOverOfTheImage.show(this.kingOrJester);
         }
-        if (!clientController.amIAWinner()){
-            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
-            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
-            popOverOfTheImage = new PopOver();
+        if (!this.clientController.amIAWinner()) {
+            this.winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
+            this.kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
+            this.popOverOfTheImage = new PopOver();
             StackPane stackPaneOfTheImage = new StackPane();
             Text textOfImage = new Text();
             textOfImage.setText("Se vincer non saprai\nPrima o poi tu perirai\nForse meglio cambiar gioco\nPerchè bravo lo sei poco\n");
             textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
             stackPaneOfTheImage.getChildren().add(textOfImage);
             StackPane.setAlignment(textOfImage, Pos.CENTER);
-            popOverOfTheImage.setContentNode(textOfImage);
-            popOverOfTheImage.show(kingOrJester);
+            this.popOverOfTheImage.setContentNode(textOfImage);
+            this.popOverOfTheImage.show(this.kingOrJester);
         }
     }
 
     private void displayPopOverOfImage(boolean win) {
-        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
-        winnerOrLoser.setPreserveRatio(true);
-        rootPane.getChildren().add(winnerOrLoser);
-        StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
-        kingOrJester.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.1149));
-        kingOrJester.setPreserveRatio(true);
-        rootPane.getChildren().add(kingOrJester);
-        StackPane.setAlignment(kingOrJester, Pos.CENTER);
-        popOverOfTheImage = new PopOver();
+        this.winnerOrLoser.fitWidthProperty().bind(this.backgroundImage.fitWidthProperty().multiply(0.3542));
+        this.winnerOrLoser.setPreserveRatio(true);
+        this.rootPane.getChildren().add(this.winnerOrLoser);
+        StackPane.setAlignment(this.winnerOrLoser, Pos.BOTTOM_CENTER);
+        this.kingOrJester.fitWidthProperty().bind(this.backgroundImage.fitWidthProperty().multiply(0.1149));
+        this.kingOrJester.setPreserveRatio(true);
+        this.rootPane.getChildren().add(this.kingOrJester);
+        StackPane.setAlignment(this.kingOrJester, Pos.CENTER);
+        this.popOverOfTheImage = new PopOver();
         StackPane stackPaneOfTheImage = new StackPane();
         Text textOfImage = new Text();
         if (win)
-            textOfImage.setText("Felice della tua vittoria " + clientController.getSnapshot().getCurrentUser() + ".\n" +
+            textOfImage.setText("Felice della tua vittoria " + this.clientController.getSnapshot().getCurrentUser() + ".\n" +
                     "Il mio cor si sollazza al saper che ho un erede di cotanta bravura.");
         else
             textOfImage.setText("Se vincer non saprai\nPrima o poi tu perirai\nForse meglio cambiar gioco\nPerchè bravo lo sei poco\n");
         textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
         stackPaneOfTheImage.getChildren().add(textOfImage);
         StackPane.setAlignment(textOfImage, Pos.CENTER);
-        popOverOfTheImage.setContentNode(stackPaneOfTheImage);
-        popOverOfTheImage.show(kingOrJester);
+        this.popOverOfTheImage.setContentNode(stackPaneOfTheImage);
+        this.popOverOfTheImage.show(this.kingOrJester);
     }
 
     private void displayInfo(String selectedItem) {
-        BaseUser baseUser = clientController.getUserWithString(selectedItem);
+        BaseUser baseUser = this.clientController.getUserWithString(selectedItem);
         StackPane popOverStackPane = new StackPane();
         popOverStackPane.setAlignment(Pos.CENTER);
         Text innerText = new Text();
-        innerText.setText("Vò narrando delle gesta di " + baseUser.getUsername() + ".\nSi posizionò " + clientController.getUserPosition(selectedItem) + "° nella maggior gara del nuovo anno.\n"
+        innerText.setText("Vò narrando delle gesta di " + baseUser.getUsername() + ".\nSi posizionò " + this.clientController.getUserPosition(selectedItem) + "° nella maggior gara del nuovo anno.\n"
                 + "Riuscì ad ottenere molti scudi prestigiosi dalle sue " + baseUser.getVictoryPathPosition() + " vittorie.\n"
                 + "Conobbe vari nobili città dove gli vennero donati prestigiosi premi. In particolare, rimasto molto affascinato, si fermò nel " + baseUser.getNobilityPathPosition().getPosition() + "° posto.\n"
                 + "Riuscì ad ottenere grandi ricompense, fino ad arrivare a " + baseUser.getCoinPathPosition() + " monete d'oro.\n"
@@ -153,12 +154,12 @@ public class FinishMatchController implements Initializable {
                 + "Grande personaggio fu questo " + baseUser.getUsername() + ". Mi ricorderò sempre di quel giorno che mi fece vedere le sue " + baseUser.getPoliticCardNumber()
                 + " prestigiose carte politiche con cui poteva soddisfare qualsiasi consiglio.\n"
                 + "In tutto il mondo è noto il suo nome. Ovunque si sa che il magnifico " + baseUser.getUsername() + " riuscì a costruire empori in molte città, come\n"
-                + clientController.getUserBuilding(selectedItem) +"\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
+                + this.clientController.getUserBuilding(selectedItem) + "\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
         innerText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15));
         popOverStackPane.getChildren().add(innerText);
-        innerPopOver = new PopOver();
-        innerPopOver.setContentNode(popOverStackPane);
-        innerPopOver.show(innerImage);
+        this.innerPopOver = new PopOver();
+        this.innerPopOver.setContentNode(popOverStackPane);
+        this.innerPopOver.show(this.innerImage);
     }
 
 }

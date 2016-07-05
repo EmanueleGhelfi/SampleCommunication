@@ -5,7 +5,6 @@ import CommonModel.GameModel.Bonus.Generic.MainBonus;
 import Server.Model.Game;
 import Server.Model.User;
 import Utilities.Exception.ActionNotPossibleException;
-import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 
@@ -32,56 +31,58 @@ public class City implements Serializable {
         this.cityColor = cityColor;
         this.cityName = cityName;
         this.cityRegion = cityRegion;
-        bonus=null;
+        this.bonus = null;
     }
 
-    public void createRandomBonus(){
-        bonus = new MainBonus(1,2,5,false);
+    public void createRandomBonus() {
+        this.bonus = new MainBonus(1, 2, 5, false);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         City city = (City) o;
-        if (cityName != city.cityName) return false;
-        if (cityColor != city.cityColor) return false;
-        return cityRegion == city.cityRegion;
+        if (this.cityName != city.cityName) return false;
+        if (this.cityColor != city.cityColor) return false;
+        return this.cityRegion == city.cityRegion;
     }
 
     @Override
     public int hashCode() {
-        int result = cityName != null ? cityName.hashCode() : 0;
-        result = 31 * result + (cityColor != null ? cityColor.hashCode() : 0);
-        result = 31 * result + (cityRegion != null ? cityRegion.hashCode() : 0);
+        int result = this.cityName != null ? this.cityName.hashCode() : 0;
+        result = 31 * result + (this.cityColor != null ? this.cityColor.hashCode() : 0);
+        result = 31 * result + (this.cityRegion != null ? this.cityRegion.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "City{" +
-                "cityRegion=" + cityRegion +
-                ", cityName=" + cityName +
-                ", cityColor=" + cityColor +
-                ", bonus=" + bonus +
+                "cityRegion=" + this.cityRegion +
+                ", cityName=" + this.cityName +
+                ", cityColor=" + this.cityColor +
+                ", bonus=" + this.bonus +
                 '}';
     }
 
     public Bonus getBonus() {
-        return bonus;
+        return this.bonus;
     }
+
     public RegionName getRegion() {
-        return cityRegion;
+        return this.cityRegion;
     }
+
     public Color getColor() {
-        return cityColor;
+        return this.cityColor;
     }
 
     public CityName getCityName() {
-        return cityName;
+        return this.cityName;
     }
 
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-        bonus.getBonus(user,game);
+        this.bonus.getBonus(user, game);
     }
 }

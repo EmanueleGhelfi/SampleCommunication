@@ -1,11 +1,12 @@
 package Server.Controller;
 
 import RMIInterface.RMIListenerInterface;
-import Server.NetworkInterface.Listeners.RMIListener;
-import Server.NetworkInterface.Listeners.SocketListener;
 import Server.Model.Game;
 import Server.Model.User;
+import Server.NetworkInterface.Listeners.RMIListener;
+import Server.NetworkInterface.Listeners.SocketListener;
 import Utilities.Class.Constants;
+
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -13,41 +14,41 @@ import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Created by Emanuele on 09/05/2016.
  */
 public class GamesManager {
 
-    private ArrayList<User> users = new ArrayList<>();
     private static GamesManager gamesManager;
-
+    private final ArrayList<User> users = new ArrayList<>();
     /**
      * Created games (and maybe started)
      */
-    private ArrayList<Game> games = new ArrayList<>();
-    private GamesManager(){
-        start();
+    private final ArrayList<Game> games = new ArrayList<>();
+
+    private GamesManager() {
+        this.start();
     }
 
-    public static GamesManager getInstance(){
-        if(gamesManager ==null){
-            gamesManager = new GamesManager();
+    public static GamesManager getInstance() {
+        if (GamesManager.gamesManager == null) {
+            GamesManager.gamesManager = new GamesManager();
         }
-        return gamesManager;
+        return GamesManager.gamesManager;
     }
 
-    public void start(){
+    public void start() {
         try {
             RMIListenerInterface rmiListener = new RMIListener(this);
-            Registry registry=null;
-        try{
-             registry = LocateRegistry.createRegistry(Constants.RMI_PORT);
-        }
-        catch (ExportException e){
-            registry = LocateRegistry.getRegistry();
-        }
-        registry.rebind(Constants.SERVER,rmiListener);
+            Registry registry = null;
+            try {
+                registry = LocateRegistry.createRegistry(Constants.RMI_PORT);
+            } catch (ExportException e) {
+                registry = LocateRegistry.getRegistry();
+            }
+            registry.rebind(Constants.SERVER, rmiListener);
 
             SocketListener socketListener = SocketListener.getInstance(this);
             Thread thread = new Thread(socketListener);
@@ -59,9 +60,9 @@ public class GamesManager {
         }
     }
 
-    public void addToGame(User userToAdd){
-        for (Game game: games) {
-            if(!game.isStarted()){
+    public void addToGame(User userToAdd) {
+        for (Game game : this.games) {
+            if (!game.isStarted()) {
                 System.out.println("adding user to a game");
                 game.addUserToGame(userToAdd);
                 userToAdd.setGame(game);
@@ -71,7 +72,7 @@ public class GamesManager {
         }
         System.out.println("creating a new game");
         Game game = new Game();
-        games.add(game);
+        this.games.add(game);
         System.out.println(game);
         game.addUserToGame(userToAdd);
         userToAdd.setGame(game);
@@ -80,10 +81,10 @@ public class GamesManager {
     }
 
 
-    public boolean userAlreadyPresent(String username){
+    public boolean userAlreadyPresent(String username) {
         System.out.println("User already present called");
-        for (User user: users) {
-            if(user.getUsername().equals(username)){
+        for (User user : this.users) {
+            if (user.getUsername().equals(username)) {
                 return true;
             }
         }
@@ -91,16 +92,16 @@ public class GamesManager {
     }
 
     public void AddToUsers(User user) {
-        users.add(user);
+        this.users.add(user);
     }
 
     public void cancelThisGame(Game game, GameController gameController) {
-        for (Map.Entry<String, User> userInGame : game.getUsersInGame().entrySet()) {
-            users.remove(userInGame.getValue());
+        for (Entry<String, User> userInGame : game.getUsersInGame().entrySet()) {
+            this.users.remove(userInGame.getValue());
         }
-        for (int i = 0; i < games.size(); i++) {
-            if(games.get(i).equals(game))
-                games.remove(i);
+        for (int i = 0; i < this.games.size(); i++) {
+            if (this.games.get(i).equals(game))
+                this.games.remove(i);
         }
     }
 }

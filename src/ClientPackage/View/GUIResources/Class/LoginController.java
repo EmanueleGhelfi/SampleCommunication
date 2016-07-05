@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Paint;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,26 +22,29 @@ import java.util.TimerTask;
 public class LoginController {
 
     private ClientController clientController;
-    @FXML private JFXTextField usernameText;
-    @FXML private Label errorText;
-    @FXML private JFXButton button;
+    @FXML
+    private JFXTextField usernameText;
+    @FXML
+    private Label errorText;
+    @FXML
+    private JFXButton button;
 
     public void onButtonLoginPressed(ActionEvent actionEvent) {
         Graphics.playSomeSound("Button");
-        if (!usernameText.getText().isEmpty()) {
-            clientController.onSendLogin(usernameText.getText());
+        if (!this.usernameText.getText().isEmpty()) {
+            this.clientController.onSendLogin(this.usernameText.getText());
         } else {
-            showLoginError("Username non valido");
+            this.showLoginError("Username non valido");
         }
     }
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
-        errorText.setVisible(false);
-        usernameText.setVisible(false);
-        button.setVisible(false);
-        startTimeout();
-        button.getStyleClass().add("button-raised");
+        this.errorText.setVisible(false);
+        this.usernameText.setVisible(false);
+        this.button.setVisible(false);
+        this.startTimeout();
+        this.button.getStyleClass().add("button-raised");
     }
 
     private void startTimeout() {
@@ -48,11 +52,11 @@ public class LoginController {
                 new TimerTask() {
                     @Override
                     public void run() {
-                        Graphics.fadeTransitionEffect(errorText, 0, 1, 3000);
-                        Graphics.fadeTransitionEffect(usernameText, 0, 1, 1000);
-                        Graphics.fadeTransitionEffect(button, 0, 1, 1000);
-                        usernameText.setVisible(true);
-                        button.setVisible(true);
+                        Graphics.fadeTransitionEffect(LoginController.this.errorText, 0, 1, 3000);
+                        Graphics.fadeTransitionEffect(LoginController.this.usernameText, 0, 1, 1000);
+                        Graphics.fadeTransitionEffect(LoginController.this.button, 0, 1, 1000);
+                        LoginController.this.usernameText.setVisible(true);
+                        LoginController.this.button.setVisible(true);
                     }
                 },
                 1000
@@ -61,8 +65,8 @@ public class LoginController {
                 new TimerTask() {
                     @Override
                     public void run() {
-                        Graphics.fadeTransitionEffect(errorText, 0, 1, 3000);
-                        errorText.setVisible(true);
+                        Graphics.fadeTransitionEffect(LoginController.this.errorText, 0, 1, 3000);
+                        LoginController.this.errorText.setVisible(true);
                     }
                 },
                 3000
@@ -70,8 +74,8 @@ public class LoginController {
     }
 
     public void showLoginError(String error) {
-        errorText.setText(error);
-        errorText.setTextFill(Paint.valueOf("red"));
+        this.errorText.setText(error);
+        this.errorText.setTextFill(Paint.valueOf("red"));
     }
 
 }

@@ -31,27 +31,27 @@ public class MainActionBuildWithKingHelpTest {
     @Before
     public void setUp() throws Exception {
 
-        game = new Game();
-        user= new User(new FakeCommunication(), GamesManager.getInstance());
-        user.setUsername("User");
+        this.game = new Game();
+        this.user = new User(new FakeCommunication(), GamesManager.getInstance());
+        this.user.setUsername("User");
 
-        userEnemy = new User(new FakeCommunication(),GamesManager.getInstance());
-        userEnemy.setGame(game);
-        userEnemy.setUsername("UserEnemy");
-        user.setGame(game);
-        user.setFastActionCounter(4);
-        user.setMainActionCounter(4);
+        this.userEnemy = new User(new FakeCommunication(), GamesManager.getInstance());
+        this.userEnemy.setGame(this.game);
+        this.userEnemy.setUsername("UserEnemy");
+        this.user.setGame(this.game);
+        this.user.setFastActionCounter(4);
+        this.user.setMainActionCounter(4);
 
-        user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
+        this.user.setNobilityPathPosition(this.game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
 
         Map map = Map.readAllMap().get(0);
-        game.setMap(map);
+        this.game.setMap(map);
 
-        King king = new King(game.getMap().getLinks().get(0).getCity1(),game.getBank());
-        game.setKing(king);
+        King king = new King(this.game.getMap().getLinks().get(0).getCity1(), this.game.getBank());
+        this.game.setKing(king);
 
-        game.addUserToGame(user);
-        game.addUserToGame(userEnemy);
+        this.game.addUserToGame(this.user);
+        this.game.addUserToGame(this.userEnemy);
     }
 
 
@@ -61,67 +61,67 @@ public class MainActionBuildWithKingHelpTest {
         int coin;
 
         ArrayList<City> kingPath = new ArrayList<>();
-        kingPath.add(game.getKing().getCurrentCity());
-        kingPath.add(game.getMap().getLinks().get(0).getCity2());
-        user.setCoinPathPosition(kingPath.size()* Constants.KING_PRICE);
+        kingPath.add(this.game.getKing().getCurrentCity());
+        kingPath.add(this.game.getMap().getLinks().get(0).getCity2());
+        this.user.setCoinPathPosition(kingPath.size() * Constants.KING_PRICE);
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-        ArrayList<Councilor> councilors = new ArrayList<>(game.getKing().getCouncil().getCouncil());
+        ArrayList<Councilor> councilors = new ArrayList<>(this.game.getKing().getCouncil().getCouncil());
 
         for (Councilor councilor : councilors) {
-            PoliticCard politicCard = new PoliticCard(councilor.getColor(),false);
+            PoliticCard politicCard = new PoliticCard(councilor.getColor(), false);
             politicCardArrayList.add(politicCard);
-            user.addPoliticCard(politicCard);
+            this.user.addPoliticCard(politicCard);
         }
-        Action action = new MainActionBuildWithKingHelp(kingPath,politicCardArrayList);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithKingHelp(kingPath, politicCardArrayList);
+        action.doAction(this.game, this.user);
 
-        assertEquals(kingPath.get(kingPath.size()-1),game.getKing().getCurrentCity());
+        assertEquals(kingPath.get(kingPath.size() - 1), this.game.getKing().getCurrentCity());
 
-        assertEquals(0,user.getPoliticCards().size());
+        assertEquals(0, this.user.getPoliticCards().size());
 
-        assertEquals(kingPath.get(kingPath.size()-1),user.getUsersEmporium().get(0));
+        assertEquals(kingPath.get(kingPath.size() - 1), this.user.getUsersEmporium().get(0));
     }
 
     //action not possible because of coin
     @Test(expected = ActionNotPossibleException.class)
     public void testActionNotPossible() throws ActionNotPossibleException {
-        user.setCoinPathPosition(0);
+        this.user.setCoinPathPosition(0);
 
         ArrayList<City> kingPath = new ArrayList<>();
-        kingPath.add(game.getKing().getCurrentCity());
-        kingPath.add(game.getMap().getLinks().get(7).getCity2());
-        user.setCoinPathPosition(kingPath.size()* Constants.KING_PRICE);
+        kingPath.add(this.game.getKing().getCurrentCity());
+        kingPath.add(this.game.getMap().getLinks().get(7).getCity2());
+        this.user.setCoinPathPosition(kingPath.size() * Constants.KING_PRICE);
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-        ArrayList<Councilor> councilors = new ArrayList<>(game.getKing().getCouncil().getCouncil());
+        ArrayList<Councilor> councilors = new ArrayList<>(this.game.getKing().getCouncil().getCouncil());
 
         for (Councilor councilor : councilors) {
-            PoliticCard politicCard = new PoliticCard(councilor.getColor(),false);
+            PoliticCard politicCard = new PoliticCard(councilor.getColor(), false);
             politicCardArrayList.add(politicCard);
-            user.addPoliticCard(politicCard);
+            this.user.addPoliticCard(politicCard);
         }
-        Action action = new MainActionBuildWithKingHelp(kingPath,politicCardArrayList);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithKingHelp(kingPath, politicCardArrayList);
+        action.doAction(this.game, this.user);
     }
 
 
     // exception because of path
     @Test(expected = ActionNotPossibleException.class)
-    public void testPathIncorrect() throws ActionNotPossibleException{
+    public void testPathIncorrect() throws ActionNotPossibleException {
 
         ArrayList<City> kingPath = new ArrayList<>();
-        kingPath.add(game.getKing().getCurrentCity());
-        kingPath.add(game.getMap().getLinks().get(0).getCity2());
+        kingPath.add(this.game.getKing().getCurrentCity());
+        kingPath.add(this.game.getMap().getLinks().get(0).getCity2());
 
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-        ArrayList<Councilor> councilors = new ArrayList<>(game.getKing().getCouncil().getCouncil());
+        ArrayList<Councilor> councilors = new ArrayList<>(this.game.getKing().getCouncil().getCouncil());
 
         for (Councilor councilor : councilors) {
-            PoliticCard politicCard = new PoliticCard(councilor.getColor(),false);
+            PoliticCard politicCard = new PoliticCard(councilor.getColor(), false);
             politicCardArrayList.add(politicCard);
-            user.addPoliticCard(politicCard);
+            this.user.addPoliticCard(politicCard);
         }
-        Action action = new MainActionBuildWithKingHelp(kingPath,politicCardArrayList);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithKingHelp(kingPath, politicCardArrayList);
+        action.doAction(this.game, this.user);
     }
 
     //test decrementing emporiums when present an emporium of another user
@@ -131,56 +131,56 @@ public class MainActionBuildWithKingHelpTest {
 
         int helper;
         ArrayList<City> kingPath = new ArrayList<>();
-        kingPath.add(game.getKing().getCurrentCity());
-        kingPath.add(game.getMap().getLinks().get(0).getCity2());
+        kingPath.add(this.game.getKing().getCurrentCity());
+        kingPath.add(this.game.getMap().getLinks().get(0).getCity2());
 
-        userEnemy.addEmporium(game.getMap().getLinks().get(0).getCity2());
+        this.userEnemy.addEmporium(this.game.getMap().getLinks().get(0).getCity2());
 
-        user.setCoinPathPosition(kingPath.size()* Constants.KING_PRICE);
-        user.setHelpers(10);
-        helper=user.getHelpers().size();
+        this.user.setCoinPathPosition(kingPath.size() * Constants.KING_PRICE);
+        this.user.setHelpers(10);
+        helper = this.user.getHelpers().size();
 
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-        ArrayList<Councilor> councilors = new ArrayList<>(game.getKing().getCouncil().getCouncil());
+        ArrayList<Councilor> councilors = new ArrayList<>(this.game.getKing().getCouncil().getCouncil());
 
         for (Councilor councilor : councilors) {
-            PoliticCard politicCard = new PoliticCard(councilor.getColor(),false);
+            PoliticCard politicCard = new PoliticCard(councilor.getColor(), false);
             politicCardArrayList.add(politicCard);
-            user.addPoliticCard(politicCard);
+            this.user.addPoliticCard(politicCard);
         }
-        Action action = new MainActionBuildWithKingHelp(kingPath,politicCardArrayList);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithKingHelp(kingPath, politicCardArrayList);
+        action.doAction(this.game, this.user);
 
-        assertEquals(kingPath.get(kingPath.size()-1),game.getKing().getCurrentCity());
+        assertEquals(kingPath.get(kingPath.size() - 1), this.game.getKing().getCurrentCity());
 
-        assertEquals(0,user.getPoliticCards().size());
+        assertEquals(0, this.user.getPoliticCards().size());
 
-        assertEquals(kingPath.get(kingPath.size()-1),user.getUsersEmporium().get(0));
+        assertEquals(kingPath.get(kingPath.size() - 1), this.user.getUsersEmporium().get(0));
 
-        assertEquals(helper-1,user.getHelpers().size());
+        assertEquals(helper - 1, this.user.getHelpers().size());
 
     }
 
-    @Test (expected = ActionNotPossibleException.class)
+    @Test(expected = ActionNotPossibleException.class)
     public void testNull() throws ActionNotPossibleException {
         int coin;
 
         int helper;
         ArrayList<City> kingPath = null;
 
-        user.setHelpers(10);
-        helper=user.getHelpers().size();
+        this.user.setHelpers(10);
+        helper = this.user.getHelpers().size();
 
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
-        ArrayList<Councilor> councilors = new ArrayList<>(game.getKing().getCouncil().getCouncil());
+        ArrayList<Councilor> councilors = new ArrayList<>(this.game.getKing().getCouncil().getCouncil());
 
         for (Councilor councilor : councilors) {
-            PoliticCard politicCard = new PoliticCard(councilor.getColor(),false);
+            PoliticCard politicCard = new PoliticCard(councilor.getColor(), false);
             politicCardArrayList.add(politicCard);
-            user.addPoliticCard(politicCard);
+            this.user.addPoliticCard(politicCard);
         }
-        Action action = new MainActionBuildWithKingHelp(kingPath,politicCardArrayList);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithKingHelp(kingPath, politicCardArrayList);
+        action.doAction(this.game, this.user);
 
     }
 

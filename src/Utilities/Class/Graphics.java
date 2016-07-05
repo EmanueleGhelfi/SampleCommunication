@@ -26,18 +26,18 @@ import tray.notification.TrayNotification;
  */
 public class Graphics {
 
-    public static void playSomeSound(String path){
-        try{
+    public static void playSomeSound(String path) {
+        try {
             Media buttonSound = new Media(Graphics.class.getClassLoader().getResource("ClientPackage/View/GUIResources/Sound/" + path + ".wav").toString());
             MediaPlayer mediaPlayer = new MediaPlayer(buttonSound);
             mediaPlayer.play();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void bringUpImages(Node... nodes) {
-        for (Node node: nodes) {
+        for (Node node : nodes) {
             BringUpHandler bringUpHandler = new BringUpHandler(node);
             node.setOnMouseEntered(bringUpHandler);
             node.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -49,7 +49,7 @@ public class Graphics {
         }
     }
 
-    public static void fadeTransitionEffect(Node nodeToEffect, float fromValue, float toValue, int duration){
+    public static void fadeTransitionEffect(Node nodeToEffect, float fromValue, float toValue, int duration) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(duration), nodeToEffect);
         fadeTransition.setFromValue(fromValue);
         fadeTransition.setToValue(toValue);
@@ -57,9 +57,9 @@ public class Graphics {
         fadeTransition.play();
     }
 
-    public static void addShadow(Node node){
+    public static void addShadow(Node node) {
         int depth = 70; //Setting the uniform variable for the glow width and height
-        DropShadow borderGlow= new DropShadow();
+        DropShadow borderGlow = new DropShadow();
         borderGlow.setOffsetY(0f);
         borderGlow.setOffsetX(0f);
         borderGlow.setColor(Color.BLACK);
@@ -68,7 +68,7 @@ public class Graphics {
         node.setEffect(borderGlow);
     }
 
-    public static Animation scaleTransitionEffectCycle (Node node, float toValueX, float toValueY, BooleanProperty stopTransition){
+    public static Animation scaleTransitionEffectCycle(Node node, float toValueX, float toValueY, BooleanProperty stopTransition) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500), node);
         scaleTransition.setCycleCount(Animation.INDEFINITE);
         scaleTransition.setInterpolator(Interpolator.EASE_BOTH);
@@ -80,7 +80,7 @@ public class Graphics {
         stopTransition.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(newValue){
+                if (newValue) {
                     scaleTransition.stop();
                     node.setScaleX(1);
                     node.setScaleY(1);
@@ -91,14 +91,16 @@ public class Graphics {
         return scaleTransition;
     }
 
-    /** Metodo di notifica, ossia quando viene chiamato in basso a destra spunta una notifica che dopo 3 secondi sparisce.
+    /**
+     * Metodo di notifica, ossia quando viene chiamato in basso a destra spunta una notifica che dopo 3 secondi sparisce.
+     *
      * @param messageOfTheMoment è il testo che sarà stampato a video nella notifica.
      */
-    public static void notification(String messageOfTheMoment){
+    public static void notification(String messageOfTheMoment) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                Image icona = new Image(Constants.IMAGE_PATH+Constants.NOTIFICATION_ICON);
+                Image icona = new Image(Constants.IMAGE_PATH + Constants.NOTIFICATION_ICON);
                 TrayNotification tray = new TrayNotification(Constants.NOTIFICATION_TEXT, messageOfTheMoment, NotificationType.SUCCESS);
                 tray.setImage(icona);
                 tray.showAndWait();
@@ -109,7 +111,7 @@ public class Graphics {
 
     public static void addBorder(Node node) {
         node.getStyleClass().add("bordered");
-        DropShadow ds = new DropShadow( 10, Color.AQUA );
+        DropShadow ds = new DropShadow(10, Color.AQUA);
         node.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

@@ -26,11 +26,11 @@ public class CLIPrinter implements CLIPrinterInterface {
 
     public static CLIPrinter cliPrinter;
 
-    private static CLIPrinter getInstance(){
-        if(cliPrinter==null){
-            cliPrinter= new CLIPrinter();
+    private static CLIPrinter getInstance() {
+        if (CLIPrinter.cliPrinter == null) {
+            CLIPrinter.cliPrinter = new CLIPrinter();
         }
-        return cliPrinter;
+        return CLIPrinter.cliPrinter;
     }
 
 
@@ -38,16 +38,15 @@ public class CLIPrinter implements CLIPrinterInterface {
      * Print usage information to provided OutputStream.
      *
      * @param applicationName Name of application to list in usage.
-     * @param options Command-line options to be part of usage.
-     * @param out OutputStream to which to write the usage information.
+     * @param options         Command-line options to be part of usage.
+     * @param out             OutputStream to which to write the usage information.
      */
     public static void printUsage(
-            final String applicationName,
-            final Options options,
-            final OutputStream out)
-    {
-        final PrintWriter writer = new PrintWriter(out,true);
-        final HelpFormatter usageFormatter = new HelpFormatter();
+            String applicationName,
+            Options options,
+            OutputStream out) {
+        PrintWriter writer = new PrintWriter(out, true);
+        HelpFormatter usageFormatter = new HelpFormatter();
         usageFormatter.printUsage(writer, 80, applicationName, options);
     }
 
@@ -55,18 +54,17 @@ public class CLIPrinter implements CLIPrinterInterface {
      * Write "help" to the provided OutputStream.
      */
     public static void printHelp(
-            final Options options,
-            final int printedRowWidth,
-            final String header,
-            final String footer,
-            final int spacesBeforeOption,
-            final int spacesBeforeOptionDescription,
-            final boolean displayUsage,
-            final OutputStream out)
-    {
-        final String commandLineSyntax = "Welcome to Council of four!";
-        final PrintWriter writer = new PrintWriter(out,true);
-        final HelpFormatter helpFormatter = new HelpFormatter();
+            Options options,
+            int printedRowWidth,
+            String header,
+            String footer,
+            int spacesBeforeOption,
+            int spacesBeforeOptionDescription,
+            boolean displayUsage,
+            OutputStream out) {
+        String commandLineSyntax = "Welcome to Council of four!";
+        PrintWriter writer = new PrintWriter(out, true);
+        HelpFormatter helpFormatter = new HelpFormatter();
         helpFormatter.printHelp(
                 writer,
                 printedRowWidth,
@@ -82,7 +80,7 @@ public class CLIPrinter implements CLIPrinterInterface {
 
     @Override
     public void printHelp(Options options) {
-        printHelp(options,80,"COFfee", "Select your Option" , 0, 0, true, System.out);
+        CLIPrinter.printHelp(options, 80, "COFfee", "Select your Option", 0, 0, true, System.out);
     }
 
     @Override
@@ -92,35 +90,34 @@ public class CLIPrinter implements CLIPrinterInterface {
 
     @Override
     public String toStringFormatted(Map map) {
-        String toReturn ="Map "+map.getMapName();
-        toReturn+=CLIColor.ANSI_BLUE+"Cities: \n"+CLIColor.ANSI_RESET;
-        for(City city: map.getCity()){
-            toReturn+="City: "+CLIColor.ANSI_RED+city.getCityName()+ CLIColor.ANSI_RESET+"  Color: "+city.getColor().getColor()+"\n";
+        String toReturn = "Map " + map.getMapName();
+        toReturn += ANSI_BLUE + "Cities: \n" + ANSI_RESET;
+        for (City city : map.getCity()) {
+            toReturn += "City: " + ANSI_RED + city.getCityName() + ANSI_RESET + "  Color: " + city.getColor().getColor() + "\n";
         }
-        toReturn+= ANSI_BLUE+"Links: \n"+ANSI_RESET;
-        for (Link link: map.getLinks()){
-            toReturn+=""+link.toString()+"\n";
+        toReturn += ANSI_BLUE + "Links: \n" + ANSI_RESET;
+        for (Link link : map.getLinks()) {
+            toReturn += "" + link + "\n";
         }
-        toReturn+="END MAP";
+        toReturn += "END MAP";
         return toReturn;
     }
 
     @Override
     public String toStringFormatted(SnapshotToSend snapshotToSend) {
-        String toReturn="";
-        toReturn+= "Users: \n";
-        for(BaseUser baseUser: snapshotToSend.getUsersInGame().values()){
-            toReturn+=baseUser.toString();
+        String toReturn = "";
+        toReturn += "Users: \n";
+        for (BaseUser baseUser : snapshotToSend.getUsersInGame().values()) {
+            toReturn += baseUser.toString();
         }
         return toReturn;
     }
 
     @Override
     public String toStringFormatted(PoliticCard politicCard) {
-        if(politicCard.isMultiColor()){
+        if (politicCard.isMultiColor()) {
             return "Multicolor";
-        }
-        else{
+        } else {
             return politicCard.getPoliticColor().getColor();
         }
 
@@ -135,41 +132,41 @@ public class CLIPrinter implements CLIPrinterInterface {
     @Override
     public String toStringFormatted(City city) {
 
-        return String.format("%-10s %-10s %-40s",city.getCityName(),city.getRegion(),city.getColor());
+        return String.format("%-10s %-10s %-40s", city.getCityName(), city.getRegion(), city.getColor());
     }
 
     @Override
     public void printBlue(String toPrint) {
-        System.out.println(ANSI_BLUE+toPrint+ANSI_RESET);
+        System.out.println(ANSI_BLUE + toPrint + ANSI_RESET);
     }
 
     @Override
     public void printError(String toPrint) {
         System.out.println("------------------------------------------------------------------");
-        System.out.println(ANSI_RED+toPrint+ANSI_RESET);
+        System.out.println(ANSI_RED + toPrint + ANSI_RESET);
         System.out.println("------------------------------------------------------------------");
     }
 
     @Override
     public void printCouncil(ArrayList<Councilor> council) {
-        for(Councilor councilor: council){
-            System.out.println(" Councilor: "+councilor.getColor());
+        for (Councilor councilor : council) {
+            System.out.println(" Councilor: " + councilor.getColor());
         }
     }
 
     @Override
     public String toStringFormatted(BuyableWrapper buyableWrapper) {
-        if(buyableWrapper.getBuyableObject() instanceof PermitCard){
-            return " Permit Card "+((PermitCard) buyableWrapper.getBuyableObject()).getCityAcronimous()+" "
-                    + " from user: "+buyableWrapper.getUsername() +" cost: "+ buyableWrapper.getCost() + " onSale: "+buyableWrapper.isOnSale();
+        if (buyableWrapper.getBuyableObject() instanceof PermitCard) {
+            return " Permit Card " + ((PermitCard) buyableWrapper.getBuyableObject()).getCityAcronimous() + " "
+                    + " from user: " + buyableWrapper.getUsername() + " cost: " + buyableWrapper.getCost() + " onSale: " + buyableWrapper.isOnSale();
         }
-        if(buyableWrapper.getBuyableObject() instanceof Helper){
-            return " Helper "+ "from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost() + " onSale: "+buyableWrapper.isOnSale();
+        if (buyableWrapper.getBuyableObject() instanceof Helper) {
+            return " Helper " + "from user: " + buyableWrapper.getUsername() + " cost: " + buyableWrapper.getCost() + " onSale: " + buyableWrapper.isOnSale();
         }
 
-        if(buyableWrapper.getBuyableObject() instanceof PoliticCard){
-            return " Politic Card " + toStringFormatted((PoliticCard) buyableWrapper.getBuyableObject())+
-                    " from user: "+buyableWrapper.getUsername()+" cost: "+buyableWrapper.getCost() + " onSale: "+buyableWrapper.isOnSale();
+        if (buyableWrapper.getBuyableObject() instanceof PoliticCard) {
+            return " Politic Card " + this.toStringFormatted((PoliticCard) buyableWrapper.getBuyableObject()) +
+                    " from user: " + buyableWrapper.getUsername() + " cost: " + buyableWrapper.getCost() + " onSale: " + buyableWrapper.isOnSale();
         }
         return "";
     }
@@ -177,7 +174,7 @@ public class CLIPrinter implements CLIPrinterInterface {
     @Override
     public void printGreen(String s) {
         System.out.println("------------------------------------------------------------------");
-        System.out.println(ANSI_YELLOW+s+ANSI_RESET);
+        System.out.println(ANSI_YELLOW + s + ANSI_RESET);
         System.out.println("------------------------------------------------------------------");
     }
 

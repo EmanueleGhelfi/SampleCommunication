@@ -1,19 +1,16 @@
 package ClientPackage.View.CLIResources;
 
-import ClientPackage.View.GeneralView.CLIView;
-import Utilities.Class.AnnotationUtilities;
-import Utilities.Class.CircularArrayList;
 import Utilities.Class.MapUtil;
-import Utilities.Exception.MethodNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
-import asg.cliche.util.MultiMap;
 import org.apache.commons.cli.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Created by Emanuele on 19/06/2016.
@@ -21,37 +18,38 @@ import java.util.*;
 public class CLIParser {
 
     private static CLIParser cliParserInstance;
-    private Options currentOption = OptionsClass.getGameOption();
-    private Class mClass;
-    private HashMap<String,Method> methodHashMap = new HashMap<>();
-    private HashMap<String,String> methodDescription = new HashMap<>();
-    private HashMap<String,String> shortMethodDescription = new HashMap<>();
-    public CLIParser(Class mClass){
+    private final Options currentOption = OptionsClass.getGameOption();
+    private final Class mClass;
+    private final HashMap<String, Method> methodHashMap = new HashMap<>();
+    private final HashMap<String, String> methodDescription = new HashMap<>();
+    private final HashMap<String, String> shortMethodDescription = new HashMap<>();
+
+    public CLIParser(Class mClass) {
         this.mClass = mClass;
-        initMethods();
+        this.initMethods();
     }
 
     private void initMethods() {
-        for(Method method: mClass.getMethods()){
-            for(Annotation annotation: method.getAnnotations()){
-                if(annotation instanceof Command){
-                    methodHashMap.put(((Command) annotation).abbrev(),method);
-                    methodHashMap.put(((Command) annotation).name(),method);
-                    String description =CLIColor.ANSI_RED+" short: "
-                            +((Command) annotation).abbrev()+CLIColor.ANSI_RESET+"\n" +
-                            "\t Description: "+((Command) annotation).description();
+        for (Method method : this.mClass.getMethods()) {
+            for (Annotation annotation : method.getAnnotations()) {
+                if (annotation instanceof Command) {
+                    this.methodHashMap.put(((Command) annotation).abbrev(), method);
+                    this.methodHashMap.put(((Command) annotation).name(), method);
+                    String description = CLIColor.ANSI_RED + " short: "
+                            + ((Command) annotation).abbrev() + CLIColor.ANSI_RESET + "\n" +
+                            "\t Description: " + ((Command) annotation).description();
                     Annotation[][] annotations = method.getParameterAnnotations();
-                    if(method.getParameterCount()>0)
-                        description+=CLIColor.ANSI_GREEN+"\n \t Parameter\n"+CLIColor.ANSI_RESET;
+                    if (method.getParameterCount() > 0)
+                        description += CLIColor.ANSI_GREEN + "\n \t Parameter\n" + CLIColor.ANSI_RESET;
                     for (Annotation[] ann : annotations) {
-                        for(Annotation paramAnn: ann) {
-                            if(paramAnn instanceof Param){
-                                description+= " \t" +CLIColor.ANSI_CYAN+((Param) paramAnn).name()+" - "+ ((Param) paramAnn).description()+ CLIColor.ANSI_RESET+"\n";
+                        for (Annotation paramAnn : ann) {
+                            if (paramAnn instanceof Param) {
+                                description += " \t" + CLIColor.ANSI_CYAN + ((Param) paramAnn).name() + " - " + ((Param) paramAnn).description() + CLIColor.ANSI_RESET + "\n";
                             }
                         }
                     }
-                    methodDescription.put(((Command) annotation).name(),description);
-                    shortMethodDescription.put(((Command) annotation).abbrev(),description);
+                    this.methodDescription.put(((Command) annotation).name(), description);
+                    this.shortMethodDescription.put(((Command) annotation).abbrev(), description);
                 }
             }
         }
@@ -62,20 +60,19 @@ public class CLIParser {
         String[] strings = line.split(" ");
         System.out.println("parsed" + strings.length);
         CommandLineParser commandLineParser = new DefaultParser();
-            CommandLine commandLine = commandLineParser.parse(currentOption, strings);
-            return commandLine;
+        CommandLine commandLine = commandLineParser.parse(this.currentOption, strings);
+        return commandLine;
     }
 
     void parseInput(String line, Object object, CLIPrinter cliPrinter) {
 
         String[] lines = line.split(" ");
 
-        if(lines[0].equalsIgnoreCase("help") ){
-            printHelp(lines);
-        }
-        else {
-            Method method = methodHashMap.get(lines[0]);
-            if(method!=null) {
+        if (lines[0].equalsIgnoreCase("help")) {
+            this.printHelp(lines);
+        } else {
+            Method method = this.methodHashMap.get(lines[0]);
+            if (method != null) {
                 try {
                     if (method.getParameterCount() != lines.length - 1)
                         System.out.println("Check parameter number!");
@@ -90,8 +87,7 @@ public class CLIParser {
                 } catch (IllegalAccessException e) {
                     System.out.println(e.getMessage());
                 }
-            }
-            else{
+            } else {
                 cliPrinter.printError("Sorry, method not found");
             }
         }
@@ -149,24 +145,21 @@ public class CLIParser {
 
     private void printHelp(String[] lines) {
 
-        if(lines.length<=1) {
+        if (lines.length <= 1) {
 
-            Map<String,String> tmpMap = MapUtil.sortByValue(methodDescription);
-            for (Map.Entry<String, String> entry : tmpMap.entrySet()) {
+            Map<String, String> tmpMap = MapUtil.sortByValue(this.methodDescription);
+            for (Entry<String, String> entry : tmpMap.entrySet()) {
                 System.out.println(CLIColor.ANSI_BLUE + entry.getKey() + CLIColor.ANSI_RESET + " \n \t " + entry.getValue());
             }
-        }
-        else {
-            if(methodDescription.containsKey(lines[1])) {
-                String desc = methodDescription.get(lines[1]);
+        } else {
+            if (this.methodDescription.containsKey(lines[1])) {
+                String desc = this.methodDescription.get(lines[1]);
                 System.out.println(desc);
-            }
-            else{
-                if(shortMethodDescription.containsKey(lines[1])){
-                    String desc = shortMethodDescription.get(lines[1]);
+            } else {
+                if (this.shortMethodDescription.containsKey(lines[1])) {
+                    String desc = this.shortMethodDescription.get(lines[1]);
                     System.out.println(desc);
-                }
-                else {
+                } else {
                     System.out.println("Sorry, command not found");
                 }
             }
@@ -174,8 +167,8 @@ public class CLIParser {
         }
     }
 
-    public void printHelp(){
-        String[] tmp = new String []{};
-        printHelp(tmp);
+    public void printHelp() {
+        String[] tmp = {};
+        this.printHelp(tmp);
     }
 }

@@ -27,83 +27,83 @@ public class MainActionBuildWithPermitCardTest {
 
     @Before
     public void setUp() throws Exception {
-        game = new Game();
-        user= new User(new FakeCommunication(), GamesManager.getInstance());
-        user.setGame(game);
-        user.setUsername("MANU");
-        user.setVictoryPathPosition(0);
-        user.setFastActionCounter(2);
+        this.game = new Game();
+        this.user = new User(new FakeCommunication(), GamesManager.getInstance());
+        this.user.setGame(this.game);
+        this.user.setUsername("MANU");
+        this.user.setVictoryPathPosition(0);
+        this.user.setFastActionCounter(2);
 
-        user.setFastActionCounter(4);
-        user.setMainActionCounter(4);
+        this.user.setFastActionCounter(4);
+        this.user.setMainActionCounter(4);
 
-        user.setNobilityPathPosition(game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
+        this.user.setNobilityPathPosition(this.game.getNobilityPath().getPosition()[Constants.INITIAL_POSITION_ON_NOBILITY_PATH]);
 
         Map map = Map.readAllMap().get(0);
-        game.setMap(map);
+        this.game.setMap(map);
 
-        King king = new King(game.getMap().getLinks().get(0).getCity1(),game.getBank());
-        game.setKing(king);
+        King king = new King(this.game.getMap().getLinks().get(0).getCity1(), this.game.getBank());
+        this.game.setKing(king);
 
-        game.addUserToGame(user);
+        this.game.addUserToGame(this.user);
 
     }
 
     @Test
     public void testBuyPermit() throws Exception {
-        
-        City cityToBuild=null;
 
-        PermitCard permitCard = game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0);
+        City cityToBuild = null;
 
-        user.addPermitCard(permitCard);
+        PermitCard permitCard = this.game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0);
 
-        for(City city: game.getMap().getCity()){
-            if(city.getCityName().getCityName().charAt(0) == permitCard.getCityAcronimous().get(0)){
-                cityToBuild=city;
+        this.user.addPermitCard(permitCard);
+
+        for (City city : this.game.getMap().getCity()) {
+            if (city.getCityName().getCityName().charAt(0) == permitCard.getCityAcronimous().get(0)) {
+                cityToBuild = city;
                 break;
             }
         }
 
-        Action action = new MainActionBuildWithPermitCard(cityToBuild,permitCard);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithPermitCard(cityToBuild, permitCard);
+        action.doAction(this.game, this.user);
 
-        assertTrue(user.getUsersEmporium().contains(cityToBuild));
+        assertTrue(this.user.getUsersEmporium().contains(cityToBuild));
 
-        assertTrue(user.getOldPermitCards().contains(permitCard));
+        assertTrue(this.user.getOldPermitCards().contains(permitCard));
 
-        assertFalse(user.getPermitCards().contains(permitCard));
+        assertFalse(this.user.getPermitCards().contains(permitCard));
 
     }
 
     @Test(expected = ActionNotPossibleException.class)
     public void testNull() throws ActionNotPossibleException {
-        City cityToBuild=null;
+        City cityToBuild = null;
 
         PermitCard permitCard = null;
 
 
-        Action action = new MainActionBuildWithPermitCard(cityToBuild,permitCard);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithPermitCard(cityToBuild, permitCard);
+        action.doAction(this.game, this.user);
 
     }
 
     @Test(expected = ActionNotPossibleException.class)
     public void testPermitNotPresent() throws ActionNotPossibleException {
-        City cityToBuild=null;
+        City cityToBuild = null;
 
-        PermitCard permitCard = game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0);
+        PermitCard permitCard = this.game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0);
 
 
-        for(City city: game.getMap().getCity()){
-            if(city.getCityName().getCityName().charAt(0) == permitCard.getCityAcronimous().get(0)){
-                cityToBuild=city;
+        for (City city : this.game.getMap().getCity()) {
+            if (city.getCityName().getCityName().charAt(0) == permitCard.getCityAcronimous().get(0)) {
+                cityToBuild = city;
                 break;
             }
         }
 
-        Action action = new MainActionBuildWithPermitCard(cityToBuild,permitCard);
-        action.doAction(game,user);
+        Action action = new MainActionBuildWithPermitCard(cityToBuild, permitCard);
+        action.doAction(this.game, this.user);
 
     }
 }

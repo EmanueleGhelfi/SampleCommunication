@@ -1,10 +1,11 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class TwoOldCityRewardBonus implements Bonus, Serializable {
     @Override
     public ArrayList<String> getBonusURL() {
         ArrayList<String> toReturn = new ArrayList<String>();
-        toReturn.add(Constants.IMAGE_PATH+"TwoOldCityRewardBonus.png");
+        toReturn.add(Constants.IMAGE_PATH + "TwoOldCityRewardBonus.png");
         return toReturn;
 
     }

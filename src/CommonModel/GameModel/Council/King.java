@@ -1,7 +1,10 @@
 package CommonModel.GameModel.Council;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
-import CommonModel.GameModel.City.*;
+import CommonModel.GameModel.City.City;
+import CommonModel.GameModel.City.CityName;
+import CommonModel.GameModel.City.Color;
+import CommonModel.GameModel.City.RegionName;
 import Utilities.Class.Constants;
 
 import java.io.Serializable;
@@ -14,33 +17,32 @@ import java.util.Random;
 public class King implements Serializable, GotCouncil {
 
     private City currentCity;
-    private Council council;
+    private final Council council;
     private Bank bank;
 
     public King() {
-        this.council = new Council(bank);
+        council = new Council(this.bank);
         Random random = new Random();
-        for(int i = 0; i< Constants.COUNCILOR_DIMENSION; i++){
+        for (int i = 0; i < Constants.COUNCILOR_DIMENSION; i++) {
             PoliticColor[] politicColors = PoliticColor.values();
             int value = random.nextInt(5);
 
-            council.add(new Councilor(politicColors[value]));
+            this.council.add(new Councilor(politicColors[value]));
         }
-        this.currentCity = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
+        currentCity = new City(Color.BLUE, CityName.ARKON, RegionName.COAST);
     }
 
     public King(City currentCity, Bank bank) {
         this.bank = bank;
-        this.council = new Council(bank);
+        council = new Council(bank);
         Random random = new Random();
-        for(int i = 0; i< Constants.COUNCILOR_DIMENSION; i++){
+        for (int i = 0; i < Constants.COUNCILOR_DIMENSION; i++) {
             ArrayList<PoliticColor> politicColors = bank.showCouncilor();
             int value = random.nextInt(politicColors.size());
             Councilor toAdd = bank.getCouncilor(politicColors.get(value));
-            if(toAdd!=null) {
-                council.add(toAdd);
-            }
-            else {
+            if (toAdd != null) {
+                this.council.add(toAdd);
+            } else {
                 // retry random
                 i--;
             }
@@ -50,11 +52,11 @@ public class King implements Serializable, GotCouncil {
 
     @Override
     public Council getCouncil() {
-        return council;
+        return this.council;
     }
 
     public City getCurrentCity() {
-        return currentCity;
+        return this.currentCity;
     }
 
     public void setCurrentCity(City currentCity) {

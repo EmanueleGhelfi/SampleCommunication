@@ -12,14 +12,12 @@ import CommonModel.Snapshot.SnapshotToSend;
 import Utilities.Class.ArrayUtils;
 import Utilities.Exception.CancelException;
 import asg.cliche.Command;
-import org.apache.commons.cli.Options;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import static ClientPackage.View.CLIResources.CLIColor.ANSI_RED;
 import static ClientPackage.View.CLIResources.CLIColor.ANSI_RESET;
@@ -27,12 +25,12 @@ import static ClientPackage.View.CLIResources.CLIColor.ANSI_RESET;
 /**
  * Created by Emanuele on 19/06/2016.
  */
-public class ShopCliController implements CliController{
+public class ShopCliController implements CliController {
 
     CLIView cliView;
     ClientController clientController;
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    CLIParser parser = new CLIParser(this.getClass());
+    CLIParser parser = new CLIParser(getClass());
     CLIPrinter cliPrinter = new CLIPrinter();
     private boolean onMarketPhase;
     private boolean onBuyPhase;
@@ -46,15 +44,15 @@ public class ShopCliController implements CliController{
 
     public void onStartMarket() {
         System.out.println("---------------------------------------------------------------------------");
-        cliPrinter.printBlue("START MARKET!");
+        this.cliPrinter.printBlue("START MARKET!");
         System.out.println("----------------------------------------------------------------------------");
-        onMarketPhase = true;
-        onSellPhase=true;
+        this.onMarketPhase = true;
+        this.onSellPhase = true;
     }
 
     @Override
     public void parseLine(String line) {
-        parser.parseInput(line,this,cliPrinter);
+        this.parser.parseInput(line, this, this.cliPrinter);
     }
 
     @Override
@@ -64,65 +62,63 @@ public class ShopCliController implements CliController{
 
     @Override
     public void printHelp() {
-        parser.printHelp();
+        this.parser.printHelp();
     }
 
     public void onStartBuyPhase() {
-        cliPrinter.printBlue("Start buy phase!");
-        onBuyPhase = true;
-        onSellPhase=false;
+        this.cliPrinter.printBlue("Start buy phase!");
+        this.onBuyPhase = true;
+        this.onSellPhase = false;
     }
 
     public void onFinishBuyPhase() {
-        cliPrinter.printBlue("----------------------------------------------------------");
-        cliPrinter.printBlue("Finish Buy Phase");
-        cliPrinter.printBlue("----------------------------------------------------------");
-        onBuyPhase=false;
-        onMarketPhase=false;
+        this.cliPrinter.printBlue("----------------------------------------------------------");
+        this.cliPrinter.printBlue("Finish Buy Phase");
+        this.cliPrinter.printBlue("----------------------------------------------------------");
+        this.onBuyPhase = false;
+        this.onMarketPhase = false;
     }
 
     @Command(name = "buy", abbrev = "b", description = "buy Something in the market")
-    public void buy(){
+    public void buy() {
 
-        if(onBuyPhase) {
-            cliPrinter.printBlue("MARKET LIST: ");
+        if (this.onBuyPhase) {
+            this.cliPrinter.printBlue("MARKET LIST: ");
             ArrayList<BuyableWrapper> buyableWrappers = new ArrayList<>();
             //// TODO: 28/06/2016 check error
-            clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
-                    !buyableWrapper.getUsername().equalsIgnoreCase(clientController.getSnapshot().getCurrentUser().getUsername()))
+            this.clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
+                    !buyableWrapper.getUsername().equalsIgnoreCase(this.clientController.getSnapshot().getCurrentUser().getUsername()))
                     .forEach(buyableWrappers::add);
-            printMarketList(buyableWrappers);
+            this.printMarketList(buyableWrappers);
             try {
-                ArrayList<BuyableWrapper> selected = selectBuyableWrapper(buyableWrappers);
+                ArrayList<BuyableWrapper> selected = this.selectBuyableWrapper(buyableWrappers);
                 if (selected != null) {
-                    clientController.onBuy(selected);
-                    clientController.sendFinishedBuyPhase();
-                    onBuyPhase = false;
-                    cliPrinter.printBlue("SENDING OBJECT TO SERVER....");
-                }
-                else{
-                    if(onBuyPhase){
-                        cliPrinter.printError("ERROR IN SELECTION!");
-                        buy();
+                    this.clientController.onBuy(selected);
+                    this.clientController.sendFinishedBuyPhase();
+                    this.onBuyPhase = false;
+                    this.cliPrinter.printBlue("SENDING OBJECT TO SERVER....");
+                } else {
+                    if (this.onBuyPhase) {
+                        this.cliPrinter.printError("ERROR IN SELECTION!");
+                        this.buy();
                     }
                 }
             } catch (CancelException e) {
                 System.out.println("Cancelled correctly");
             }
-        }
-        else{
-            cliPrinter.printError("Sorry, you aren't in buy phase!");
+        } else {
+            this.cliPrinter.printError("Sorry, you aren't in buy phase!");
         }
 
     }
 
     private ArrayList<BuyableWrapper> selectBuyableWrapper(ArrayList<BuyableWrapper> buyableWrappers) throws CancelException {
-        cliPrinter.printBlue("Select objects that you want to buy separated by blank spaces");
+        this.cliPrinter.printBlue("Select objects that you want to buy separated by blank spaces");
         System.out.println("-1 for cancel");
         ArrayList<BuyableWrapper> toReturn = new ArrayList<>();
 
         try {
-            while (!reader.ready() && onMarketPhase){
+            while (!this.reader.ready() && this.onMarketPhase) {
                 Thread.sleep(200);
             }
         } catch (IOException e) {
@@ -131,10 +127,10 @@ public class ShopCliController implements CliController{
             e.printStackTrace();
         }
 
-        if(onMarketPhase) {
+        if (this.onMarketPhase) {
             String selected = null;
             try {
-                selected = reader.readLine();
+                selected = this.reader.readLine();
                 String[] selectedParsed = selected.split(" ");
 
 
@@ -149,9 +145,8 @@ public class ShopCliController implements CliController{
             } catch (IOException e) {
 
             }
-        }
-        else{
-            cliPrinter.printError("Not on market phase");
+        } else {
+            this.cliPrinter.printError("Not on market phase");
         }
         return null;
 
@@ -160,46 +155,45 @@ public class ShopCliController implements CliController{
     @Command(name = "sell", abbrev = "s", description = "Sell something in the market")
     public void sell() {
 
-        if(onSellPhase) {
-            cliPrinter.printBlue("YOUR OBJECTS: ");
-            ArrayList<BuyableWrapper> buyableWrappers = updateList();
+        if (this.onSellPhase) {
+            this.cliPrinter.printBlue("YOUR OBJECTS: ");
+            ArrayList<BuyableWrapper> buyableWrappers = this.updateList();
 
             for (BuyableWrapper buyableWrapper : buyableWrappers) {
                 System.out.println("" + buyableWrappers.indexOf(buyableWrapper) + ". "
-                        + cliPrinter.toStringFormatted(buyableWrapper));
+                        + this.cliPrinter.toStringFormatted(buyableWrapper));
             }
 
             try {
-                ArrayList<BuyableWrapper> toSell = selectBuyableWrapper(buyableWrappers);
+                ArrayList<BuyableWrapper> toSell = this.selectBuyableWrapper(buyableWrappers);
                 if (toSell != null) {
-                    ArrayList<BuyableWrapper> itemCost = getCost(toSell);
-                    clientController.sendSaleItem(itemCost);
-                    clientController.sendFinishSellPhase();
-                    onSellPhase = false;
+                    ArrayList<BuyableWrapper> itemCost = this.getCost(toSell);
+                    this.clientController.sendSaleItem(itemCost);
+                    this.clientController.sendFinishSellPhase();
+                    this.onSellPhase = false;
                     System.out.println("SENDING ITEMS TO SERVER...");
                 } else {
-                    if(onSellPhase) {
-                        cliPrinter.printError("Sorry, items not found, check it!");
-                        sell();
+                    if (this.onSellPhase) {
+                        this.cliPrinter.printError("Sorry, items not found, check it!");
+                        this.sell();
                     }
                 }
 
             } catch (CancelException e) {
                 System.out.println("Cancelled!");
             }
-        }
-        else{
-            cliPrinter.printError("Sorry, you aren't in sell phase, sorry!");
+        } else {
+            this.cliPrinter.printError("Sorry, you aren't in sell phase, sorry!");
         }
     }
 
     private ArrayList<BuyableWrapper> getCost(ArrayList<BuyableWrapper> toSell) throws CancelException {
-        cliPrinter.printBlue("Insert cost (-1 for cancel)");
-        for(int i = 0; i<toSell.size();i++){
-            System.out.println("Insert price for: "+cliPrinter.toStringFormatted(toSell.get(i)));
+        this.cliPrinter.printBlue("Insert cost (-1 for cancel)");
+        for (int i = 0; i < toSell.size(); i++) {
+            System.out.println("Insert price for: " + this.cliPrinter.toStringFormatted(toSell.get(i)));
 
             try {
-                while (!reader.ready() && onMarketPhase){
+                while (!this.reader.ready() && this.onMarketPhase) {
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
@@ -207,25 +201,23 @@ public class ShopCliController implements CliController{
                     }
                 }
 
-                if(!onMarketPhase)
+                if (!this.onMarketPhase)
                     break;
 
                 try {
-                    String line = reader.readLine();
-                    if(line.equals("-1"))
+                    String line = this.reader.readLine();
+                    if (line.equals("-1"))
                         throw new CancelException();
 
                     int cost = Integer.parseInt(line);
-                    if(cost>=0 && cost<20) {
+                    if (cost >= 0 && cost < 20) {
                         toSell.get(i).setCost(cost);
-                    }
-                    else{
+                    } else {
                         System.out.println("Error in cost!");
                         i--;
                     }
-                }
-                catch (NumberFormatException e ){
-                    cliPrinter.printError("ERROR IN COST!");
+                } catch (NumberFormatException e) {
+                    this.cliPrinter.printError("ERROR IN COST!");
                     i--;
                 }
             } catch (IOException e) {
@@ -237,26 +229,26 @@ public class ShopCliController implements CliController{
 
     private ArrayList<BuyableWrapper> updateList() {
         ArrayList<BuyableWrapper> sellList = new ArrayList<>();
-        ArrayList<BuyableWrapper> mBuyList = clientController.getSnapshot().getMarketList();
-        SnapshotToSend snapshotTosend = clientController.getSnapshot();
-        for (PoliticCard politicCard: snapshotTosend.getCurrentUser().getPoliticCards()) {
-            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard,snapshotTosend.getCurrentUser().getUsername());
+        ArrayList<BuyableWrapper> mBuyList = this.clientController.getSnapshot().getMarketList();
+        SnapshotToSend snapshotTosend = this.clientController.getSnapshot();
+        for (PoliticCard politicCard : snapshotTosend.getCurrentUser().getPoliticCards()) {
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(politicCard, snapshotTosend.getCurrentUser().getUsername());
             sellList.add(buyableWrapperTmp);
         }
 
-        for(PermitCard permitCard: snapshotTosend.getCurrentUser().getPermitCards()){
-            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard,snapshotTosend.getCurrentUser().getUsername());
+        for (PermitCard permitCard : snapshotTosend.getCurrentUser().getPermitCards()) {
+            BuyableWrapper buyableWrapperTmp = new BuyableWrapper(permitCard, snapshotTosend.getCurrentUser().getUsername());
             sellList.add(buyableWrapperTmp);
         }
 
-        for(Helper helper: snapshotTosend.getCurrentUser().getHelpers()){
-            BuyableWrapper buyableWrapper = new BuyableWrapper(helper,snapshotTosend.getCurrentUser().getUsername());
+        for (Helper helper : snapshotTosend.getCurrentUser().getHelpers()) {
+            BuyableWrapper buyableWrapper = new BuyableWrapper(helper, snapshotTosend.getCurrentUser().getUsername());
             sellList.add(buyableWrapper);
         }
 
-        for(Iterator<BuyableWrapper> itr = mBuyList.iterator(); itr.hasNext();){
+        for (Iterator<BuyableWrapper> itr = mBuyList.iterator(); itr.hasNext(); ) {
             BuyableWrapper buyableWrapper = itr.next();
-            if(buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())){
+            if (buyableWrapper.getUsername().equals(snapshotTosend.getCurrentUser().getUsername())) {
                 sellList.remove(buyableWrapper);
                 sellList.add(buyableWrapper);
                 itr.remove();
@@ -267,86 +259,84 @@ public class ShopCliController implements CliController{
 
 
     @Command(name = "showMarket", abbrev = "sm", description = "Show elements in market")
-    public void showMarket(){
+    public void showMarket() {
 
-        if(onBuyPhase){
+        if (this.onBuyPhase) {
             ArrayList<BuyableWrapper> buyableWrappers = new ArrayList<>();
-            clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
-                    !buyableWrapper.getUsername().equalsIgnoreCase(clientController.getSnapshot().getCurrentUser().getUsername()))
+            this.clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
+                    !buyableWrapper.getUsername().equalsIgnoreCase(this.clientController.getSnapshot().getCurrentUser().getUsername()))
                     .forEach(buyableWrappers::add);
-            printMarketList(buyableWrappers);
-        }
-        else{
-            cliPrinter.printError("Sorry, you aren't in Buy Phase");
+            this.printMarketList(buyableWrappers);
+        } else {
+            this.cliPrinter.printError("Sorry, you aren't in Buy Phase");
         }
     }
 
 
-    private void printMarketList(ArrayList<BuyableWrapper> buyableWrappers){
+    private void printMarketList(ArrayList<BuyableWrapper> buyableWrappers) {
         for (BuyableWrapper buyableWrapper : buyableWrappers) {
             System.out.println("" + buyableWrappers.indexOf(buyableWrapper) + ". "
-                    + cliPrinter.toStringFormatted(buyableWrapper));
+                    + this.cliPrinter.toStringFormatted(buyableWrapper));
         }
     }
 
 
     @Command(name = "showSell", abbrev = "ss", description = "Show your items on market list")
-    public void showSellList(){
+    public void showSellList() {
         ArrayList<BuyableWrapper> buyableWrappers = new ArrayList<>();
-        clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
-                buyableWrapper.getUsername().equalsIgnoreCase(clientController.getSnapshot().getCurrentUser().getUsername()))
+        this.clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
+                buyableWrapper.getUsername().equalsIgnoreCase(this.clientController.getSnapshot().getCurrentUser().getUsername()))
                 .forEach(buyableWrappers::add);
-        printMarketList(buyableWrappers);
+        this.printMarketList(buyableWrappers);
     }
 
 
-    @Command (description = "Show your status", name = "status", abbrev = "st")
+    @Command(description = "Show your status", name = "status", abbrev = "st")
     public void showStatus() {
         System.out.println("-----------------------------------------------------------------");
-        CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
-        System.out.println(ANSI_RED+"STATUS: \n"+ANSI_RESET);
-        cliPrinter.printBlue("Politic Card: ");
-        for (PoliticCard politicCard: currentUser.getPoliticCards()){
-            System.out.println("\t"+cliPrinter.toStringFormatted(politicCard)+"");
+        CurrentUser currentUser = this.clientController.getSnapshot().getCurrentUser();
+        System.out.println(ANSI_RED + "STATUS: \n" + ANSI_RESET);
+        this.cliPrinter.printBlue("Politic Card: ");
+        for (PoliticCard politicCard : currentUser.getPoliticCards()) {
+            System.out.println("\t" + this.cliPrinter.toStringFormatted(politicCard) + "");
         }
 
-        cliPrinter.printBlue("Permit Card:\n");
-        for (PermitCard permitCard: currentUser.getPermitCards()){
-            System.out.println("\t"+cliPrinter.toStringFormatted(permitCard));
+        this.cliPrinter.printBlue("Permit Card:\n");
+        for (PermitCard permitCard : currentUser.getPermitCards()) {
+            System.out.println("\t" + this.cliPrinter.toStringFormatted(permitCard));
         }
 
-        cliPrinter.printBlue("Posizioni:");
-        System.out.println("\t Nobility Path: "+currentUser.getNobilityPathPosition().getPosition());
-        System.out.println("\t Money Path: "+currentUser.getCoinPathPosition());
-        System.out.println("\t Nobility Path: "+currentUser.getNobilityPathPosition().getPosition());
-        System.out.println("Aiutanti : "+currentUser.getHelpers().size());
+        this.cliPrinter.printBlue("Posizioni:");
+        System.out.println("\t Nobility Path: " + currentUser.getNobilityPathPosition().getPosition());
+        System.out.println("\t Money Path: " + currentUser.getCoinPathPosition());
+        System.out.println("\t Nobility Path: " + currentUser.getNobilityPathPosition().getPosition());
+        System.out.println("Aiutanti : " + currentUser.getHelpers().size());
 
         System.out.println("Le tue Città:");
 
-        for (City city: currentUser.getUsersEmporium()){
-            System.out.println("\t " + cliPrinter.toStringFormatted(city));
+        for (City city : currentUser.getUsersEmporium()) {
+            System.out.println("\t " + this.cliPrinter.toStringFormatted(city));
         }
 
-        cliPrinter.printBlue("Le tue azioni: ");
-        System.out.println("Azioni Principali:  "+currentUser.getMainActionCounter());
-        System.out.println("Azioni veloci :"+currentUser.getFastActionCounter());
+        this.cliPrinter.printBlue("Le tue azioni: ");
+        System.out.println("Azioni Principali:  " + currentUser.getMainActionCounter());
+        System.out.println("Azioni veloci :" + currentUser.getFastActionCounter());
 
         System.out.println("Fine status\n ");
         System.out.println("-----------------------------------------------------------------");
     }
 
-    @Command(description = "Finish current phase", name = "finish",abbrev = "f")
-    public void finish(){
-        if(onMarketPhase) {
-            if (onSellPhase) {
-                clientController.sendFinishSellPhase();
+    @Command(description = "Finish current phase", name = "finish", abbrev = "f")
+    public void finish() {
+        if (this.onMarketPhase) {
+            if (this.onSellPhase) {
+                this.clientController.sendFinishSellPhase();
             } else {
-                if (onBuyPhase)
-                    clientController.sendFinishedBuyPhase();
+                if (this.onBuyPhase)
+                    this.clientController.sendFinishedBuyPhase();
             }
-        }
-        else{
-            cliPrinter.printError("Sorry, you aren't in market phase!");
+        } else {
+            this.cliPrinter.printError("Sorry, you aren't in market phase!");
         }
 
     }

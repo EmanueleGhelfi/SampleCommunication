@@ -21,41 +21,40 @@ public class FastActionMoneyForHelperTest {
 
     @Before
     public void setUp() throws Exception {
-        game = new Game();
+        this.game = new Game();
         try {
-            user= new User(new FakeCommunication(), GamesManager.getInstance());
-        }
-        catch (Exception e){
+            this.user = new User(new FakeCommunication(), GamesManager.getInstance());
+        } catch (Exception e) {
 
         }
-        user.setGame(game);
-        user.setFastActionCounter(4);
+        this.user.setGame(this.game);
+        this.user.setFastActionCounter(4);
     }
 
     @Test
     public void testAction() throws ActionNotPossibleException {
-        user.setCoinPathPosition(10);
-        user.setHelpers(10);
-        int coin = user.getCoinPathPosition();
-        int helper = user.getHelpers().size();
-        int fastAction = user.getFastActionCounter();
+        this.user.setCoinPathPosition(10);
+        this.user.setHelpers(10);
+        int coin = this.user.getCoinPathPosition();
+        int helper = this.user.getHelpers().size();
+        int fastAction = this.user.getFastActionCounter();
         Action action = new FastActionMoneyForHelper();
-        action.doAction(game,user);
-        assertEquals(coin-Constants.MONEY_LIMITATION_MONEY_FOR_HELPER,user.getCoinPathPosition());
-        assertEquals(helper+1,user.getHelpers().size());
-        assertEquals(fastAction-1,user.getFastActionCounter());
+        action.doAction(this.game, this.user);
+        assertEquals(coin - Constants.MONEY_LIMITATION_MONEY_FOR_HELPER, this.user.getCoinPathPosition());
+        assertEquals(helper + 1, this.user.getHelpers().size());
+        assertEquals(fastAction - 1, this.user.getFastActionCounter());
     }
 
     @Test(expected = ActionNotPossibleException.class)
     public void testMoneyNotEnough() throws ActionNotPossibleException {
-        user.setCoinPathPosition(0);
-        int coin = user.getCoinPathPosition();
-        int helper = user.getHelpers().size();
-        int fastAction = user.getFastActionCounter();
+        this.user.setCoinPathPosition(0);
+        int coin = this.user.getCoinPathPosition();
+        int helper = this.user.getHelpers().size();
+        int fastAction = this.user.getFastActionCounter();
         Action action = new FastActionMoneyForHelper();
-        action.doAction(game,user);
-        assertEquals(coin,user.getCoinPathPosition());
-        assertEquals(helper,user.getHelpers().size());
-        assertEquals(fastAction,user.getFastActionCounter());
+        action.doAction(this.game, this.user);
+        assertEquals(coin, this.user.getCoinPathPosition());
+        assertEquals(helper, this.user.getHelpers().size());
+        assertEquals(fastAction, this.user.getFastActionCounter());
     }
 }

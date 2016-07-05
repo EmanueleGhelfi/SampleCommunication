@@ -6,13 +6,14 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import Server.Model.Map;
 import Utilities.Exception.ActionNotPossibleException;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
  * Created by Emanuele on 09/05/2016.
  */
- public abstract class ClientService {
+public abstract class ClientService {
 
     public abstract boolean Connect();
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
     public abstract void sendSaleItem(ArrayList<BuyableWrapper> realSaleList);
 
-   public abstract void onBuy(ArrayList<BuyableWrapper> buyList);
+    public abstract void onBuy(ArrayList<BuyableWrapper> buyList);
 
     public abstract void onRemoveItemFromMarket(BuyableWrapper item);
 

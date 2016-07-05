@@ -1,12 +1,13 @@
 package CommonModel.GameModel.Card.SingleCard.PoliticCard;
 
 import Utilities.Class.Constants;
+
 import java.io.Serializable;
 
 /**
  * Created by Giulio on 14/05/2016.
  */
-public enum PoliticColor implements Serializable, Cloneable {
+public enum PoliticColor implements Cloneable {
 
     VIOLET(Constants.VIOLET), BLACK(Constants.BLACK), ORANGE(Constants.ORANGE), PURPLE(Constants.PURPLE), BLUE(Constants.BLUE), WHITE(Constants.WHITE);
 
@@ -16,17 +17,17 @@ public enum PoliticColor implements Serializable, Cloneable {
     PoliticColor() {
     }
 
-    PoliticColor (String color){
+    PoliticColor(String color) {
         this.color = color;
-        this.imageUrl="/ClientPackage/View/GUIResources/Image/councilor/"+color+".png";
+        imageUrl = "/ClientPackage/View/GUIResources/Image/councilor/" + color + ".png";
     }
 
     public String getColor() {
-        return color;
+        return this.color;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return this.imageUrl;
     }
 
 

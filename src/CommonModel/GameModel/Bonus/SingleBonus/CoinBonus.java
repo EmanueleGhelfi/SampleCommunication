@@ -1,10 +1,11 @@
 package CommonModel.GameModel.Bonus.SingleBonus;
 
 import CommonModel.GameModel.Bonus.Generic.Bonus;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,18 +13,18 @@ import java.util.Random;
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class CoinBonus implements Bonus,Serializable {
+public class CoinBonus implements Bonus, Serializable {
 
-    private int coinNumber;
+    private final int coinNumber;
 
     public CoinBonus() {
         Random random = new Random();
-        coinNumber = random.nextInt(Constants.RANDOM_COIN_FIRST_PARAMETER)+Constants.RANDOM_COIN_SECOND_PARAMETER;
+        this.coinNumber = random.nextInt(Constants.RANDOM_COIN_FIRST_PARAMETER) + Constants.RANDOM_COIN_SECOND_PARAMETER;
     }
 
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-        game.getMoneyPath().goAhead(user,coinNumber);
+        game.getMoneyPath().goAhead(user, this.coinNumber);
     }
 
     @Override
@@ -40,19 +41,19 @@ public class CoinBonus implements Bonus,Serializable {
     public ArrayList<String> getBonusURL() {
 
         ArrayList<String> toReturn = new ArrayList<String>();
-        toReturn.add(Constants.IMAGE_PATH+"Money.png");
+        toReturn.add(Constants.IMAGE_PATH + "Money.png");
         return toReturn;
     }
 
     @Override
     public ArrayList<String> getBonusInfo() {
         ArrayList<String> toReturn = new ArrayList<String>();
-        toReturn.add(coinNumber+"");
+        toReturn.add(this.coinNumber + "");
         return toReturn;
     }
 
     @Override
     public String toString() {
-        return "Coin Bonus: +"+coinNumber;
+        return "Coin Bonus: +" + this.coinNumber;
     }
 }

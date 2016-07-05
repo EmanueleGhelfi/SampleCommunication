@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public interface CLIPrinterInterface {
 
     void printHelp(Options options);
+
     void printUsage();
 
     String toStringFormatted(Map map);

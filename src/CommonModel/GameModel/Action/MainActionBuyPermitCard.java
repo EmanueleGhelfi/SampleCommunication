@@ -1,14 +1,15 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.City.RegionName;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.Region;
+import CommonModel.GameModel.City.RegionName;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -17,53 +18,52 @@ import java.util.HashSet;
  */
 public class MainActionBuyPermitCard extends Action {
 
-    private RegionName userRegion;
-    private ArrayList<PoliticCard> politicCards;
-    private PermitCard permitCard;
-    private int bonusCounter = 0;
+    private final RegionName userRegion;
+    private final ArrayList<PoliticCard> politicCards;
+    private final PermitCard permitCard;
+    private int bonusCounter;
 
     public MainActionBuyPermitCard(ArrayList<PoliticCard> politicCard, RegionName userRegion, PermitCard permitCard) {
-        this.politicCards = politicCard;
+        politicCards = politicCard;
         this.userRegion = userRegion;
-        this.actionType = Constants.MAIN_ACTION;
+        actionType = Constants.MAIN_ACTION;
         this.permitCard = permitCard;
     }
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        if(super.checkActionCounter(user) && politicCards.size()>0) {
+        if (checkActionCounter(user) && this.politicCards.size() > 0) {
             // count number of correct politic card
             int correctPoliticCard = 0;
             // region of permit card
-            Region region = game.getRegion(userRegion);
+            Region region = game.getRegion(this.userRegion);
             //this is the new position of the user in money path
             int newPositionInMoneyPath = 0;
             // calculate correct politic card
-            correctPoliticCard = countCorrectPoliticCard(region, politicCards, bonusCounter);
+            correctPoliticCard = this.countCorrectPoliticCard(region, this.politicCards, this.bonusCounter);
             // calculate money to spend
-            newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
+            newPositionInMoneyPath = this.calculateMoney(correctPoliticCard, this.politicCards, this.bonusCounter);
             // go ahead in money path
-            game.getMoneyPath().goAhead(user, - newPositionInMoneyPath);
+            game.getMoneyPath().goAhead(user, -newPositionInMoneyPath);
             // re-add to game deck
-            game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(politicCards));
+            game.getPoliticCards().addToQueue(new HashSet<PoliticCard>(this.politicCards));
             // remove cards from user
             int cont2 = 0;
-            removePoliticCard(politicCards, user, game);
+            this.removePoliticCard(this.politicCards, user, game);
             // buy permit card, here you can buy permit
             PermitDeck permitDeck = game.getPermitDeck(region.getRegion());
-            PermitCard permitCardToBuy = permitDeck.getAndRemovePermitCardVisible(permitCard);
+            PermitCard permitCardToBuy = permitDeck.getAndRemovePermitCardVisible(this.permitCard);
             permitCardToBuy.getBonus().getBonus(user, game);
             user.addPermitCard(permitCardToBuy);
-            removeAction(game, user);
-        }
-        else{
+            this.removeAction(game, user);
+        } else {
             throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
         }
     }
 
     @Override
     public String toString() {
-        return "[MAIN ACTION] Buy permit card "+permitCard.getCityAcronimous()+" of region: "+userRegion.getRegion()+"";
+        return "[MAIN ACTION] Buy permit card " + this.permitCard.getCityAcronimous() + " of region: " + this.userRegion.getRegion() + "";
     }
 
 }

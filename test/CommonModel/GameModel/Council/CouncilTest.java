@@ -24,9 +24,9 @@ public class CouncilTest {
     @Before
     public void setUp() throws Exception {
 
-        game = new Game();
-        user= new User(new FakeCommunication(), GamesManager.getInstance());
-        user.setVictoryPathPosition(0);
+        this.game = new Game();
+        this.user = new User(new FakeCommunication(), GamesManager.getInstance());
+        this.user.setVictoryPathPosition(0);
     }
 
 
@@ -34,10 +34,10 @@ public class CouncilTest {
      * test removes the head of the queue
      */
     @Test
-    public void testAddLast(){
-        Council council = game.getRegion(RegionName.HILL).getCouncil();
+    public void testAddLast() {
+        Council council = this.game.getRegion(RegionName.HILL).getCouncil();
 
-        Councilor councilor= new Councilor(PoliticColor.BLACK);
+        Councilor councilor = new Councilor(PoliticColor.BLACK);
 
         Councilor first = council.getCouncil().peek();
 
@@ -51,10 +51,10 @@ public class CouncilTest {
      * test adding in the queue
      */
     @Test
-    public void testAddFirst(){
-        Council council = game.getRegion(RegionName.HILL).getCouncil();
+    public void testAddFirst() {
+        Council council = this.game.getRegion(RegionName.HILL).getCouncil();
 
-        Councilor councilor= new Councilor(PoliticColor.BLACK);
+        Councilor councilor = new Councilor(PoliticColor.BLACK);
 
         Councilor first = council.getCouncil().peek();
 
@@ -64,7 +64,7 @@ public class CouncilTest {
 
         assertTrue(council.getCouncil().contains(councilor));
 
-        assertEquals(councilor,councilorArray.get(councilorArray.size()-1));
+        assertEquals(councilor, councilorArray.get(councilorArray.size() - 1));
 
     }
 }

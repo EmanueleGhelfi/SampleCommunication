@@ -1,17 +1,11 @@
 package CommonModel.GameModel.City;
 
-import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.Council.Bank;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
 import Utilities.Class.Constants;
-import Utilities.Class.EnumAdapterFactory;
-import Utilities.Class.InterfaceAdapter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,39 +17,37 @@ import java.util.Random;
 public class Region implements Serializable, GotCouncil {
 
 
-
-    private RegionName region;
-    private int cityNumber;
+    private final RegionName region;
+    private final int cityNumber;
     private Council council;
     private Bank bank;
 
     //default
     public Region(RegionName regionName, int cityNumber, Bank bank) {
-        this.region = regionName;
+        region = regionName;
         this.cityNumber = cityNumber;
         this.bank = bank;
-        createRandomCouncil();
+        this.createRandomCouncil();
 
     }
 
-    public Region (RegionName region, int cityNumber){
+    public Region(RegionName region, int cityNumber) {
         this.region = region;
         this.cityNumber = cityNumber;
-        createRandomCouncil();
+        this.createRandomCouncil();
     }
 
-    private void createRandomCouncil(){
-        if(council==null) {
-            council = new Council(bank);
+    private void createRandomCouncil() {
+        if (this.council == null) {
+            this.council = new Council(this.bank);
             Random random = new Random();
             for (int i = 0; i < Constants.COUNCILOR_DIMENSION; i++) {
-                ArrayList<PoliticColor> availablePoliticColors = bank.showCouncilor();
+                ArrayList<PoliticColor> availablePoliticColors = this.bank.showCouncilor();
                 int value = random.nextInt(availablePoliticColors.size());
-                Councilor toAdd = bank.getCouncilor(availablePoliticColors.get(value));
-                if(toAdd!=null) {
-                    council.add(toAdd);
-                }
-                else {
+                Councilor toAdd = this.bank.getCouncilor(availablePoliticColors.get(value));
+                if (toAdd != null) {
+                    this.council.add(toAdd);
+                } else {
                     // retry random
                     i--;
                 }
@@ -63,34 +55,33 @@ public class Region implements Serializable, GotCouncil {
         }
     }
 
-    public boolean checkRegion(ArrayList<City> userEmporiums){
+    public boolean checkRegion(ArrayList<City> userEmporiums) {
         int cityCounter = 0;
-        for (City city: userEmporiums) {
-            if (city.getRegion() == this.region) {
+        for (City city : userEmporiums) {
+            if (city.getRegion() == region) {
                 cityCounter++;
             }
         }
-        return cityCounter == cityNumber;
+        return cityCounter == this.cityNumber;
     }
 
     public RegionName getRegion() {
-        return region;
+        return this.region;
     }
 
     @Override
-    public Council getCouncil(){
-        return council;
+    public Council getCouncil() {
+        return this.council;
     }
 
     @Override
     public String toString() {
         return "Region{" +
-                "cityNumber=" + cityNumber +
-                ", region='" + region + '\'' +
-                ", council=" + council +
+                "cityNumber=" + this.cityNumber +
+                ", region='" + this.region + '\'' +
+                ", council=" + this.council +
                 '}';
     }
-
 
 
 }

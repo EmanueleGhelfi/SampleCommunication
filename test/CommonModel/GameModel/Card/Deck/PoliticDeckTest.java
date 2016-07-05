@@ -10,9 +10,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Emanuele on 02/07/2016.
@@ -26,8 +25,8 @@ public class PoliticDeckTest {
     @Before
     public void setUp() throws Exception {
 
-        game = new Game();
-        user = new User(new FakeCommunication(), GamesManager.getInstance());
+        this.game = new Game();
+        this.user = new User(new FakeCommunication(), GamesManager.getInstance());
     }
 
     @Test
@@ -35,7 +34,7 @@ public class PoliticDeckTest {
 
         int initSize;
 
-        PoliticDeck politicDeck = game.getPoliticCards();
+        PoliticDeck politicDeck = this.game.getPoliticCards();
 
         initSize = politicDeck.size();
 
@@ -44,11 +43,11 @@ public class PoliticDeckTest {
         politicCards.add(politicDeck.drawACard());
         politicCards.add(politicDeck.drawACard());
 
-        assertEquals(initSize-politicCards.size(),politicDeck.size());
+        assertEquals(initSize - politicCards.size(), politicDeck.size());
 
         politicDeck.addToQueue(new HashSet<>(politicCards));
 
-        assertEquals(initSize,politicDeck.size());
+        assertEquals(initSize, politicDeck.size());
 
     }
 }

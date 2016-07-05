@@ -1,9 +1,10 @@
 package CommonModel.GameModel.Bonus.Generic;
 
 import CommonModel.GameModel.Bonus.SingleBonus.*;
-import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,12 +12,12 @@ import java.util.Random;
 /**
  * Created by Giulio on 13/05/2016.
  */
-public class MainBonus implements Bonus,Serializable {
+public class MainBonus implements Bonus, Serializable {
 
-    private ArrayList<Bonus> bonusArrayList = new ArrayList<>();
+    private final ArrayList<Bonus> bonusArrayList = new ArrayList<>();
 
-    public MainBonus(int minBonus,int maxBonus, int possibleBonus, boolean ponderation){
-         createRandomBonus(minBonus,maxBonus,possibleBonus,ponderation);
+    public MainBonus(int minBonus, int maxBonus, int possibleBonus, boolean ponderation) {
+        this.createRandomBonus(minBonus, maxBonus, possibleBonus, ponderation);
     }
 
     public MainBonus() {
@@ -24,32 +25,32 @@ public class MainBonus implements Bonus,Serializable {
 
     /**
      * create an array of bonus
-     * @param minBonus is the minimum number of bonus
-     * @param maxBonus is the maximum number of bonus
+     *
+     * @param minBonus      is the minimum number of bonus
+     * @param maxBonus      is the maximum number of bonus
      * @param possibleBonus is the number of possible bonus
-     * @param ponderation set a different distribution of probability of zero bonus
+     * @param ponderation   set a different distribution of probability of zero bonus
      */
-    private void createRandomBonus(int minBonus, int maxBonus, int possibleBonus, boolean ponderation){
+    private void createRandomBonus(int minBonus, int maxBonus, int possibleBonus, boolean ponderation) {
         // generate random between 1 and 3
         Random randomGenerator = new Random();
         Bonus bonus;
         int sequenceLength;
-        if(ponderation) {
-            sequenceLength = randomGenerator.nextInt(maxBonus+minBonus) - minBonus;
-            if(sequenceLength<0){
-                sequenceLength=0;
+        if (ponderation) {
+            sequenceLength = randomGenerator.nextInt(maxBonus + minBonus) - minBonus;
+            if (sequenceLength < 0) {
+                sequenceLength = 0;
             }
-        }
-        else {
+        } else {
             sequenceLength = randomGenerator.nextInt(maxBonus) + minBonus;
         }
         ArrayList<Integer> randomIntArray = new ArrayList<>();
         for (int cont = 0; cont < sequenceLength; ++cont) {
-            int randomInt = randomGenerator.nextInt(possibleBonus-1);
+            int randomInt = randomGenerator.nextInt(possibleBonus - 1);
             if (!randomIntArray.contains(randomInt)) {
                 randomIntArray.add(randomInt);
                 //se è già dentro e l'intero è uno di quelli allora -1 altrimenti ok
-            } else if ((checkBadIntIsIn(randomIntArray) && intIsBadInt(randomInt)) || checkIsAlreadyIn(randomIntArray, randomInt)){
+            } else if (this.checkBadIntIsIn(randomIntArray) && this.intIsBadInt(randomInt) || this.checkIsAlreadyIn(randomIntArray, randomInt)) {
                 randomInt = -1;
             }
             switch (randomInt) {
@@ -58,43 +59,43 @@ public class MainBonus implements Bonus,Serializable {
                     break;
                 case 0:
                     bonus = new CoinBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 1:
                     bonus = new HelperBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 2:
                     bonus = new NobilityBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 3:
                     bonus = new VictoryPointBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 4:
                     bonus = new PoliticCardBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 5:
                     bonus = new NewMainAction();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 6:
                     bonus = new PermitCardBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 7:
                     bonus = new OldPermitCardBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 8:
                     bonus = new OneOldCityRewardBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
                 case 9:
                     bonus = new TwoOldCityRewardBonus();
-                    bonusArrayList.add(bonus);
+                    this.bonusArrayList.add(bonus);
                     break;
             }
         }
@@ -114,14 +115,15 @@ public class MainBonus implements Bonus,Serializable {
 
     /**
      * Calls get bonus in every bonus
+     *
      * @param user
      * @param game
      * @throws ActionNotPossibleException
      */
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
-        for (Bonus bonus: bonusArrayList) {
-            bonus.getBonus(user,game);
+        for (Bonus bonus : this.bonusArrayList) {
+            bonus.getBonus(user, game);
         }
     }
 
@@ -130,15 +132,16 @@ public class MainBonus implements Bonus,Serializable {
         return "MainBonus";
     }
 
+    @Override
     public ArrayList<Bonus> getBonusArrayList() {
-        return bonusArrayList;
+        return this.bonusArrayList;
     }
 
     @Override
     public ArrayList<String> getBonusURL() {
         ArrayList<String> toReturn = new ArrayList<>();
-        bonusArrayList.forEach(bonus ->
-            toReturn.addAll(bonus.getBonusURL())
+        this.bonusArrayList.forEach(bonus ->
+                toReturn.addAll(bonus.getBonusURL())
         );
         return toReturn;
     }
@@ -146,7 +149,7 @@ public class MainBonus implements Bonus,Serializable {
     @Override
     public ArrayList<String> getBonusInfo() {
         ArrayList<String> toReturn = new ArrayList<>();
-        bonusArrayList.forEach(bonus ->
+        this.bonusArrayList.forEach(bonus ->
                 toReturn.addAll(bonus.getBonusInfo())
         );
         return toReturn;
@@ -154,9 +157,9 @@ public class MainBonus implements Bonus,Serializable {
 
     @Override
     public String toString() {
-        String toReturn="";
-        for(Bonus bonus: bonusArrayList){
-            toReturn+= String.format("%-40s",bonus.toString());
+        String toReturn = "";
+        for (Bonus bonus : this.bonusArrayList) {
+            toReturn += String.format("%-40s", bonus.toString());
         }
         return toReturn;
     }

@@ -17,9 +17,9 @@ public class LoginCliController implements CliController {
     ClientController clientController;
     Options options = OptionsClass.getMarketOptions();
     Scanner scanner = new Scanner(System.in);
-    CLIParser parser = new CLIParser(this.getClass());
+    CLIParser parser = new CLIParser(getClass());
     CLIPrinter cliPrinter = new CLIPrinter();
-    private boolean loginDone = false;
+    private boolean loginDone;
 
     public LoginCliController(CLIView cliView, ClientController clientController) {
         this.cliView = cliView;
@@ -28,7 +28,7 @@ public class LoginCliController implements CliController {
 
     @Override
     public void parseLine(String line) {
-        parser.parseInput(line,this,cliPrinter);
+        this.parser.parseInput(line, this, this.cliPrinter);
     }
 
     @Override
@@ -38,18 +38,17 @@ public class LoginCliController implements CliController {
 
     @Override
     public void printHelp() {
-        parser.printHelp();
+        this.parser.printHelp();
     }
 
-    @Command (description = "Do login",name = "login", abbrev = "l")
+    @Command(description = "Do login", name = "login", abbrev = "l")
     public void onLogin(@Param(name = "name", description = "your name in game") String name) {
-        if(!loginDone) {
+        if (!this.loginDone) {
             System.out.println("sending login");
-            clientController.onSendLogin(name);
-            loginDone = true;
-        }
-        else{
-            cliPrinter.printError("Login already done, sorry!");
+            this.clientController.onSendLogin(name);
+            this.loginDone = true;
+        } else {
+            this.cliPrinter.printError("Login already done, sorry!");
         }
     }
 

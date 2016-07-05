@@ -24,28 +24,27 @@ public class FastActionChangePermitCardWithHelperTest {
 
     @Before
     public void setUp() throws Exception {
-        game = new Game();
+        this.game = new Game();
         try {
-            user= new User(new FakeCommunication(), GamesManager.getInstance());
-        }
-        catch (Exception e){
+            this.user = new User(new FakeCommunication(), GamesManager.getInstance());
+        } catch (Exception e) {
 
         }
-        user.setGame(game);
-        user.setUsername("MANU");
-        user.setVictoryPathPosition(0);
-        user.setFastActionCounter(2);
+        this.user.setGame(this.game);
+        this.user.setUsername("MANU");
+        this.user.setVictoryPathPosition(0);
+        this.user.setFastActionCounter(2);
 
     }
 
     @Test
-    public void testChangePermitCards(){
-        user.setHelpers(20);
-        ArrayList<PermitCard> permitCards = game.getPermitDeck(RegionName.HILL).getVisibleArray();
+    public void testChangePermitCards() {
+        this.user.setHelpers(20);
+        ArrayList<PermitCard> permitCards = this.game.getPermitDeck(RegionName.HILL).getVisibleArray();
         Action action = new FastActionChangePermitCardWithHelper(RegionName.HILL);
         try {
-            action.doAction(game,user);
-            assertNotSame(permitCards.get(0),game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0));
+            action.doAction(this.game, this.user);
+            assertNotSame(permitCards.get(0), this.game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0));
         } catch (ActionNotPossibleException e) {
             e.printStackTrace();
         }
@@ -53,15 +52,15 @@ public class FastActionChangePermitCardWithHelperTest {
 
     @Test(expected = ActionNotPossibleException.class)
     public void testNull() throws ActionNotPossibleException {
-        user.setHelpers(20);
+        this.user.setHelpers(20);
         Action action = new FastActionChangePermitCardWithHelper(null);
-        action.doAction(game,user);
+        action.doAction(this.game, this.user);
     }
 
     @Test(expected = ActionNotPossibleException.class)
-    public void helperExc() throws ActionNotPossibleException{
-        user.setHelpers(0);
+    public void helperExc() throws ActionNotPossibleException {
+        this.user.setHelpers(0);
         Action action = new FastActionChangePermitCardWithHelper(RegionName.HILL);
-        action.doAction(game,user);
+        action.doAction(this.game, this.user);
     }
 }

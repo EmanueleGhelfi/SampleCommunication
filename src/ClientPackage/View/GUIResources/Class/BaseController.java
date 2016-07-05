@@ -4,6 +4,7 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.GameModel.City.City;
 import CommonModel.Snapshot.SnapshotToSend;
+
 import java.util.ArrayList;
 
 /**
@@ -11,9 +12,9 @@ import java.util.ArrayList;
  */
 public interface BaseController {
 
-     void updateView();
+    void updateView();
 
-     void setClientController(ClientController clientController, GUIView guiView);
+    void setClientController(ClientController clientController, GUIView guiView);
 
     void setMyTurn(boolean myTurn, SnapshotToSend snapshot);
 

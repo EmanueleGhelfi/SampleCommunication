@@ -19,29 +19,29 @@ public class GameTest {
 
     @Before
     public void setUp() throws Exception {
-        game = new Game();
+        this.game = new Game();
         try {
-            user= new User(new FakeCommunication(),GamesManager.getInstance());
-        }
-        catch (Exception e){
+            this.user = new User(new FakeCommunication(), GamesManager.getInstance());
+        } catch (Exception e) {
 
         }
-        user.setVictoryPathPosition(0);
+        this.user.setVictoryPathPosition(0);
     }
 
     /**
      * Test king bonus card
+     *
      * @throws Exception
      */
     @Test
     public void getKingBonusCard() throws Exception {
-        KingBonusCard kingBonusCard = game.getKingBonusCard();
+        KingBonusCard kingBonusCard = this.game.getKingBonusCard();
 
         System.out.println(kingBonusCard);
 
-        kingBonusCard.getBonus(user,game);
+        kingBonusCard.getBonus(this.user, this.game);
 
-        assertEquals(user.getVictoryPathPosition(), Constants.FIRST_ARRIVED_KING_BONUS);
+        assertEquals(this.user.getVictoryPathPosition(), Constants.FIRST_ARRIVED_KING_BONUS);
     }
 
 }

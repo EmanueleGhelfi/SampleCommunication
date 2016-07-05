@@ -22,7 +22,7 @@ public class Link implements Serializable {
     }
 
     public City getCity1() {
-        return city1;
+        return this.city1;
     }
 
     public void setCity1(City city1) {
@@ -30,7 +30,7 @@ public class Link implements Serializable {
     }
 
     public City getCity2() {
-        return city2;
+        return this.city2;
     }
 
     public void setCity2(City city2) {
@@ -39,7 +39,7 @@ public class Link implements Serializable {
 
     @Override
     public String toString() {
-        return CLIColor.ANSI_BLUE+"Linked City \t "+CLIColor.ANSI_BLUE+ city1.getCityName().getCityName()+
-                " "+city2.getCityName().getCityName()+"";
+        return CLIColor.ANSI_BLUE + "Linked City \t " + CLIColor.ANSI_BLUE + this.city1.getCityName().getCityName() +
+                " " + this.city2.getCityName().getCityName() + "";
     }
 }
