@@ -25,8 +25,8 @@ public class MainActionElectCouncilor extends Action implements Serializable {
      * Create MainActionElectCouncilor action
      *
      * @param councilorToAdd
-     * @param king           null if you want to add councilor to region's council
-     * @param region         null if you want to add councilor to king's council
+     * @param king           @nullable if you want to add councilor to region's council
+     * @param region         @nullable if you want to add councilor to king's council
      */
     public MainActionElectCouncilor(Councilor councilorToAdd, King king, RegionName region) {
         this.councilorToAdd = councilorToAdd;

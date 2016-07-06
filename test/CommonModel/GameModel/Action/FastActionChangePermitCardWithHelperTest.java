@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertNotSame;
 
 /**
- * Created by Emanuele on 29/06/2016.
+ * Created by Emanuele
  */
 public class FastActionChangePermitCardWithHelperTest {
 

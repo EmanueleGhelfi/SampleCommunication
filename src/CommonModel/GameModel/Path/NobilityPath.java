@@ -29,9 +29,11 @@ public class NobilityPath implements Path, Serializable {
     @Override
     public void goAhead(User user, int value) throws ActionNotPossibleException {
         if (user.getNobilityPathPosition().getPosition() + value > length) {
-            user.setNobilityPathPosition(position[length]);
-            if (position[length].getBonus() != null) {
-                position[length].getBonus().getBonus(user, user.getGame());
+            if(user.getNobilityPathPosition().getPosition()!=length) {
+                user.setNobilityPathPosition(position[length]);
+                if (position[length].getBonus() != null) {
+                    position[length].getBonus().getBonus(user, user.getGame());
+                }
             }
         } else {
             if (user.getNobilityPathPosition().getPosition() + value < 0) {

@@ -91,4 +91,24 @@ public class PermitDeck implements Deck, Serializable {
         return (ArrayList<PermitCard>) permitCardsVisible.clone();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PermitDeck that = (PermitDeck) o;
+
+        if (permitDeck != null ? !permitDeck.equals(that.permitDeck) : that.permitDeck != null) return false;
+        if (region != that.region) return false;
+        return permitCardsVisible != null ? permitCardsVisible.equals(that.permitCardsVisible) : that.permitCardsVisible == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = permitDeck != null ? permitDeck.hashCode() : 0;
+        result = 31 * result + (region != null ? region.hashCode() : 0);
+        result = 31 * result + (permitCardsVisible != null ? permitCardsVisible.hashCode() : 0);
+        return result;
+    }
 }

@@ -193,6 +193,13 @@ public class CLIView implements BaseView {
     @Override
     public void sendMatchFinishedWithWin() {
 
+        if(clientController.amIAWinner()){
+            cliPrinterInterface.printGreen("GREAT! YOU WIN!!!!!!!!!");
+        }
+        else{
+            cliPrinterInterface.printError("Sorry, you lose!");
+        }
+
     }
 
     @Override
