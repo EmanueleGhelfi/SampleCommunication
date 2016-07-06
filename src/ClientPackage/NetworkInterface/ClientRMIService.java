@@ -44,6 +44,10 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         UnicastRemoteObject.exportObject(this, 0);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean Connect() {
         try {
