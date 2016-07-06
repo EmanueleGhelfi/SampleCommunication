@@ -164,20 +164,24 @@ public class CLIView implements BaseView {
     @Override
     public void selectPermitCard() {
         futureTask.cancel(true);
+        needToRead.set(false);
         matchCliController.selectPermitCard();
+        needToRead.set(true);
         getInput();
     }
 
     @Override
     public void selectCityRewardBonus() {
+        needToRead.set(false);
         futureTask.cancel(true);
         matchCliController.selectCityRewardBonus();
+        needToRead.set(true);
         getInput();
     }
 
     @Override
     public void onMoveKing(ArrayList<City> kingPath) {
-        cliPrinterInterface.printBlue(" King moved to " + kingPath.get(kingPath.size() - 1).getCityName() + " Bonus: " + kingPath.get(kingPath.size() - 1).getBonus());
+        cliPrinterInterface.printBlue("King moved to " + kingPath.get(kingPath.size() - 1).getCityName() + " Bonus: " + kingPath.get(kingPath.size() - 1).getBonus());
     }
 
     @Override
@@ -194,7 +198,9 @@ public class CLIView implements BaseView {
     @Override
     public void selectOldPermitCardBonus() {
         futureTask.cancel(true);
+        needToRead.set(false);
         matchCliController.selectOldPermitCardBonus();
+        needToRead.set(true);
         getInput();
     }
 
@@ -209,10 +215,6 @@ public class CLIView implements BaseView {
         cliPrinterInterface.printError("User: " + username + " is offline!");
     }
 
-
-    public void printHelp() {
-        cliPrinterInterface.printHelp(OptionsClass.constructOptions());
-    }
 
     public SnapshotToSend getSnapshot() {
         return currentSnapshot;

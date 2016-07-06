@@ -23,6 +23,7 @@ import Server.Model.Link;
 import Utilities.Class.ArrayUtils;
 import Utilities.Class.Constants;
 import Utilities.Class.TableBuilder;
+import Utilities.Exception.CancelException;
 import Utilities.Exception.CouncilNotFoundException;
 import asg.cliche.Command;
 import asg.cliche.Param;
@@ -138,13 +139,13 @@ public class MatchCliController implements CliController {
     }
 
 
-    private ArrayList<PoliticCard> selectPoliticCard(ArrayList<PoliticCard> politicCards) throws IOException {
+    private ArrayList<PoliticCard> selectPoliticCard(ArrayList<PoliticCard> politicCards) throws IOException, CancelException {
         boolean done = false;
         boolean correct = false;
         ArrayList<PoliticCard> politicCardArrayList = new ArrayList<>();
         String[] selectedArray = {};
         while (!done && !correct && isMyTurn) {
-            cliPrinter.printBlue("Inserisci i numeri delle carte separati da uno spazio: ");
+            cliPrinter.printBlue("Inserisci i numeri delle carte separati da uno spazio: (-1 per cancellare) ");
             for (int i = 0; i < politicCards.size(); i++) {
                 System.out.println(" " + i + ". " + cliPrinter.toStringFormatted(politicCards.get(i)));
             }
@@ -161,6 +162,9 @@ public class MatchCliController implements CliController {
                 selectedArray = selected.split(" ");
                 done = ArrayUtils.checkDuplicate(selectedArray);
                 correct = ArrayUtils.checkInteger(selectedArray, politicCards);
+
+                if(selected.equals("-1"))
+                    throw new CancelException();
             }
         }
 
@@ -187,8 +191,9 @@ public class MatchCliController implements CliController {
     }
 
 
-    private PermitCard selectPermitCard(ArrayList<PermitCard> permitCards) {
+    private PermitCard selectPermitCard(ArrayList<PermitCard> permitCards) throws CancelException {
         int scelta = -2;
+        System.out.println("-1 for cancel");
         while ((scelta < 0 || scelta > permitCards.size()) && (scelta != -1) && isMyTurn) {
             try {
                 while (!scanner.ready() && isMyTurn) {
@@ -201,11 +206,18 @@ public class MatchCliController implements CliController {
 
                         return permitCards.get(scelta);
                     }
+
+                    if(scelta == -1)
+                        throw new CancelException();
                 } else {
                     System.out.println("turno finito");
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input!");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
         }
@@ -317,6 +329,8 @@ public class MatchCliController implements CliController {
             politicCardArrayList = selectPoliticCard(clientController.getSnapshot().getCurrentUser().getPoliticCards());
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (CancelException e) {
+            return;
         }
 
         if (isMyTurn) {
@@ -346,7 +360,12 @@ public class MatchCliController implements CliController {
                 for (int i = 0; i < currentUser.getPermitCards().size(); i++) {
                     System.out.println("" + i + ". " + cliPrinter.toStringFormatted(currentUser.getPermitCards().get(i)));
                 }
-                PermitCard permitCard = selectPermitCard(currentUser.getPermitCards());
+                PermitCard permitCard = null;
+                try {
+                    permitCard = selectPermitCard(currentUser.getPermitCards());
+                } catch (CancelException e) {
+                    return;
+                }
                 if (isMyTurn && permitCard != null) {
                     City selectedCity = Validator.getCity(city, clientController.getSnapshot().getMap().getCity());
                     Action action = new MainActionBuildWithPermitCard(selectedCity, permitCard);
@@ -372,7 +391,12 @@ public class MatchCliController implements CliController {
             }
 
             CurrentUser currentUser = clientController.getSnapshot().getCurrentUser();
-            PermitCard permitCardSelected = selectPermitCard(clientController.getSnapshot().getVisibleRegionPermitCard(regionName));
+            PermitCard permitCardSelected = null;
+            try {
+                permitCardSelected = selectPermitCard(clientController.getSnapshot().getVisibleRegionPermitCard(regionName));
+            } catch (CancelException e) {
+                return;
+            }
 
             if (permitCardSelected != null) {
                 cliPrinter.printBlue("Select politic card for: " + regionName);
@@ -383,6 +407,8 @@ public class MatchCliController implements CliController {
                     try {
                         politicCardArrayList = selectPoliticCard(currentUser.getPoliticCards());
                     } catch (IOException e) {
+                    } catch (CancelException e) {
+                        return;
                     }
                     Action action = new MainActionBuyPermitCard(politicCardArrayList, regionName, permitCardSelected);
                     clientController.doAction(action);
@@ -394,7 +420,6 @@ public class MatchCliController implements CliController {
                     cliPrinter.printError("Sorry, invalid selection!");
                     buyPermit(region);
                 } else {
-
                     System.out.println("finished turn");
                 }
 
@@ -524,7 +549,7 @@ public class MatchCliController implements CliController {
     public void selectPermitCard() {
 
         for (RegionName regionName : RegionName.values()) {
-            cliPrinter.printBlue("REGIONE" + regionName);
+            cliPrinter.printBlue("REGIONE: " + regionName);
             for (PermitCard permitCard : clientController.getSnapshot().getVisibleRegionPermitCard(regionName)) {
                 System.out.println(clientController.getSnapshot().getVisibleRegionPermitCard(regionName).indexOf(permitCard) +
                         ". " + cliPrinter.toStringFormatted(permitCard));

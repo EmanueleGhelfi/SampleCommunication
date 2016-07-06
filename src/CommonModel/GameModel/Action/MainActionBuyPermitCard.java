@@ -1,5 +1,7 @@
 package CommonModel.GameModel.Action;
 
+import CommonModel.GameModel.Bonus.Generic.Bonus;
+import CommonModel.GameModel.Bonus.SingleBonus.PermitCardBonus;
 import CommonModel.GameModel.Card.Deck.PermitDeck;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
@@ -32,6 +34,9 @@ public class MainActionBuyPermitCard extends Action {
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
+        // todo: remove
+        Bonus bonus = new PermitCardBonus();
+        bonus.getBonus(user,game);
         if (super.checkActionCounter(user) && politicCards.size() > 0) {
             // count number of correct politic card
             int correctPoliticCard = 0;
