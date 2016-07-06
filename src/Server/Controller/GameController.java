@@ -267,7 +267,6 @@ public class GameController implements Serializable {
                     try {
                         iterator.next().getBaseCommunication().ping();
                     } catch (Exception e) {
-                        // todo: check
                         break;
                     }
                 }

@@ -34,9 +34,6 @@ public class MainActionBuyPermitCard extends Action {
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
-        // todo: remove
-        Bonus bonus = new PermitCardBonus();
-        bonus.getBonus(user,game);
         if (super.checkActionCounter(user) && politicCards.size() > 0) {
             // count number of correct politic card
             int correctPoliticCard = 0;

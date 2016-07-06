@@ -480,7 +480,7 @@ public class MatchCliController implements CliController {
 
 
         } else {
-            System.out.println("Councilor not present in back, sorry!");
+            System.out.println("Councilor not present, sorry!");
         }
     }
 
