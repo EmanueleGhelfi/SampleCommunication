@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
+ * This class has several purposes : the first is to connect the GUI interface to the client controller.
+ * Many of his methods , in fact , will simply be used as a bridge between View and Controller.
+ * The second purpose of this class is to preload the skeleton of the game screen, or assign stylesheets, load the fxml, set the scene and the stage.
  * Created by Emanuele on 13/05/2016.
  */
 public class GUIView extends Application implements BaseView {
@@ -42,20 +45,32 @@ public class GUIView extends Application implements BaseView {
     private Stage stage;
     private Scene scene;
 
+    /** Constructor
+     * @param clientController is the Controller of the Client.
+     */
     public GUIView(ClientController clientController) {
         this.clientController = clientController;
     }
 
+    /** Constructor with no parameters
+     */
     public GUIView() {
         clientController = ClientController.getInstance();
     }
 
+    /** Initialize the game, method that belongs to Application class.
+     * @throws Exception is the exception raised
+     */
     @Override
     public void init() throws Exception {
         super.init();
         this.clientController.setBaseView(this);
     }
 
+    /** Start the first stage and it shows the login screen.
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.stage = primaryStage;
@@ -78,10 +93,13 @@ public class GUIView extends Application implements BaseView {
         stage.setMinWidth(600);
     }
 
+    /** Method that initialize the Application
+     */
     @Override
     public void initView() {
         Application.launch();
     }
+
 
     @Override
     public void showLoginError() {

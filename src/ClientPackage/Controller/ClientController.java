@@ -31,9 +31,9 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-/**
+/** This class manage event and transaction with server.
+ * Is the controller in MVC pattern. This is the class that performs the logical part in the client.
  * Created by Emanuele on 09/05/2016.
- * This class manage event and transaction with server
  */
 public class ClientController {
 
@@ -44,15 +44,22 @@ public class ClientController {
     private SnapshotToSend snapshot;
     private ArrayList<BaseUser> finalSnapshot = new ArrayList<>();
 
+    /** Constructor (private) to make it a Singleton
+     */
     private ClientController() {
     }
 
+    /** Method that allows the creation of a ClientController (using the Singleton pattern)
+     * @return
+     */
     public static ClientController getInstance() {
         if (clientController == null)
             clientController = new ClientController();
         return clientController;
     }
 
+    /** Initialize the game asking user for a choice in Newtork, IP and UI.
+     */
     public void init() {
         try {
             String networkMethod;
@@ -77,6 +84,11 @@ public class ClientController {
         }
     }
 
+    /** You can choose the UI method
+     * @param inKeyboard is the standardIn
+     * @return the method choosen
+     * @throws IOException raised by using wrongly the inKeyboard
+     */
     private String getUIMethod(BufferedReader inKeyboard) throws IOException {
         String method = "";
         System.out.println("Quale UI vuoi utilizzare? \n 1. GUI \n 2. CLI");
@@ -103,10 +115,18 @@ public class ClientController {
         return method;
     }
 
+    /** Shows login error
+     * @throws IOException from the server
+     */
     private void ReadName() throws IOException {
         baseView.showLoginError();
     }
 
+    /** You can choose the Network method of the connection
+     * @param inKeyboard is the standardIn
+     * @return the method choosen
+     * @throws IOException raised by using wrongly the inKeyboard
+     */
     public String getChoiceConnection(BufferedReader inKeyboard) throws IOException {
         String method;
         System.out.println("Inserisci metodo comunicazione\n 1. RMI \n 2. Socket \n (So che non sai cosa sono ma metti una cosa a caso)");
@@ -129,16 +149,19 @@ public class ClientController {
         return method;
     }
 
+    /** Gets the IP that you want to connect to.
+     * @param inKeyboard is the standardIn
+     * @return the method choosen
+     * @throws IOException raised by using wrongly the inKeyboard
+     */
     public String getServerIP(BufferedReader inKeyboard) throws IOException {
         System.out.println("Inserisci IP GamesManager");
         String scelta = inKeyboard.readLine();
         return scelta;
     }
 
-    /**
-     * Called when the name is accepted
-     *
-     * @param result
+    /** Called when the name is accepted
+     * @param result is the result from server if the name choosen is good
      */
     public void onNameReceived(boolean result) {
         try {
@@ -152,18 +175,31 @@ public class ClientController {
         }
     }
 
+    /** Bridge to send server the name choosen
+     * @param userName is the name choosen in login screen
+     */
     public void onSendLogin(String userName) {
         clientService.sendName(userName);
     }
 
+    /** Bridge between server and view, used to show the map to choose
+     * @param mapArrayList contains every Map
+     */
     public void showMap(ArrayList<Map> mapArrayList) {
         baseView.showMap(mapArrayList);
     }
 
+    /** Send the map choosen to server
+     * @param map is the map choosen in the client
+     */
     public void sendMap(Map map) {
         clientService.sendMap(map);
     }
 
+    /**
+     *
+     * @param snapshotToSend
+     */
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         snapshot = snapshotToSend;
         baseView.gameInitialization(snapshotToSend);
