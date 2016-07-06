@@ -53,10 +53,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             rmiHandlerName = rmiListenerInterface.Connect();
             rmiClientHandler = (RMIClientHandler) registry.lookup(rmiHandlerName);
             System.out.println("Connected to server");
-            // get ip address and sends it to server with the name of remote object
-            //String ip = getIP();
-            //String name = generateName();
-            //registry.rebind(name,this);
             rmiClientHandler.sendRemoteClientObject(this);
             return true;
         } catch (RemoteException e) {
