@@ -1,12 +1,12 @@
 package CommonModel.GameModel.Card.Deck;
 
+import CommonModel.GameModel.Bonus.Generic.MainBonus;
+import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+import CommonModel.GameModel.City.CityFactory;
 import CommonModel.GameModel.City.RegionName;
 import Utilities.Class.Constants;
 import Utilities.Exception.ActionNotPossibleException;
-import CommonModel.GameModel.Bonus.Generic.MainBonus;
-import CommonModel.GameModel.City.CityFactory;
-import CommonModel.GameModel.City.Region;
-import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 /**
  * Created by Emanuele on 14/05/2016.
  */
-public class PermitDeck implements Deck,Serializable {
+public class PermitDeck implements Deck, Serializable {
 
     private Queue<PermitCard> permitDeck;
     private RegionName region;
@@ -25,7 +25,7 @@ public class PermitDeck implements Deck,Serializable {
     public PermitDeck() {
     }
 
-    public PermitDeck(RegionName region){
+    public PermitDeck(RegionName region) {
         permitDeck = new ArrayBlockingQueue<>(Constants.REGION_DECK_SIZE);
         this.region = region;
     }
@@ -33,10 +33,9 @@ public class PermitDeck implements Deck,Serializable {
     @Override
     public void createRandomDeck() {
         //create a deck for this region
-        System.out.println("creating deck of: "+region);
         ArrayList<ArrayList<Character>> citiesPermitCard = CityFactory.getCity(region);
         Collections.shuffle(citiesPermitCard);
-        if(citiesPermitCard!=null) {
+        if (citiesPermitCard != null) {
             for (int i = 0; i < citiesPermitCard.size(); i++) {
                 PermitCard permitCard = new PermitCard();
                 permitCard.setRetroType(region);
@@ -45,17 +44,14 @@ public class PermitDeck implements Deck,Serializable {
                 permitDeck.add(permitCard);
             }
             permitCardsVisible = new ArrayList<>();
-
             permitCardsVisible.add(permitDeck.remove());
             permitCardsVisible.add(permitDeck.remove());
-        }
-        else{
-            System.out.println("Cities permit card null");
+        } else {
         }
     }
 
-    public void changePermitCardVisibile (){
-        for (PermitCard permitCard: permitCardsVisible){
+    public void changePermitCardVisibile() {
+        for (PermitCard permitCard : permitCardsVisible) {
             permitDeck.add(permitCard);
         }
         permitCardsVisible.clear();
@@ -63,14 +59,14 @@ public class PermitDeck implements Deck,Serializable {
         permitCardsVisible.add(permitDeck.remove());
     }
 
-    public PermitCard getAndRemoveRandomPermitCard () {
+    public PermitCard getAndRemoveRandomPermitCard() {
         return permitDeck.remove();
     }
 
-    public PermitCard getAndRemovePermitCardVisible(PermitCard permitCard) throws ActionNotPossibleException{
-        if(permitCardsVisible.contains(permitCard)) {
+    public PermitCard getAndRemovePermitCardVisible(PermitCard permitCard) throws ActionNotPossibleException {
+        if (permitCardsVisible.contains(permitCard)) {
             for (int i = 0; i < permitCardsVisible.size(); i++) {
-                if(permitCardsVisible.get(i).equals(permitCard)){
+                if (permitCardsVisible.get(i).equals(permitCard)) {
                     PermitCard permitCardToReturn = permitCardsVisible.remove(i);
                     permitCardsVisible.add(permitDeck.remove());
                     return permitCardToReturn;
@@ -80,21 +76,19 @@ public class PermitDeck implements Deck,Serializable {
         throw new ActionNotPossibleException(Constants.PERMIT_CARD_NOT_PRESENT_EXCEPTION);
     }
 
-    public PermitCard getPermitCardVisible(int num){
-        if(num>=2 || num<0){
+    public PermitCard getPermitCardVisible(int num) {
+        if (num >= 2 || num < 0) {
             return null;
-        }
-        else{
+        } else {
             return permitCardsVisible.get(num);
         }
     }
 
     /**
-     *
      * @return the visible permit card of this.region
      */
-    public ArrayList<PermitCard> getVisibleArray(){
-        return (ArrayList<PermitCard>)permitCardsVisible.clone();
+    public ArrayList<PermitCard> getVisibleArray() {
+        return (ArrayList<PermitCard>) permitCardsVisible.clone();
     }
 
 }

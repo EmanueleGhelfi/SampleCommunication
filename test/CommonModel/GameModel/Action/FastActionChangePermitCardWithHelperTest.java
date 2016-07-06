@@ -26,9 +26,8 @@ public class FastActionChangePermitCardWithHelperTest {
     public void setUp() throws Exception {
         game = new Game();
         try {
-            user= new User(new FakeCommunication(), GamesManager.getInstance());
-        }
-        catch (Exception e){
+            user = new User(new FakeCommunication(), GamesManager.getInstance());
+        } catch (Exception e) {
 
         }
         user.setGame(game);
@@ -39,13 +38,13 @@ public class FastActionChangePermitCardWithHelperTest {
     }
 
     @Test
-    public void testChangePermitCards(){
+    public void testChangePermitCards() {
         user.setHelpers(20);
         ArrayList<PermitCard> permitCards = game.getPermitDeck(RegionName.HILL).getVisibleArray();
         Action action = new FastActionChangePermitCardWithHelper(RegionName.HILL);
         try {
-            action.doAction(game,user);
-            assertNotSame(permitCards.get(0),game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0));
+            action.doAction(game, user);
+            assertNotSame(permitCards.get(0), game.getPermitDeck(RegionName.HILL).getVisibleArray().get(0));
         } catch (ActionNotPossibleException e) {
             e.printStackTrace();
         }
@@ -55,13 +54,13 @@ public class FastActionChangePermitCardWithHelperTest {
     public void testNull() throws ActionNotPossibleException {
         user.setHelpers(20);
         Action action = new FastActionChangePermitCardWithHelper(null);
-        action.doAction(game,user);
+        action.doAction(game, user);
     }
 
     @Test(expected = ActionNotPossibleException.class)
-    public void helperExc() throws ActionNotPossibleException{
+    public void helperExc() throws ActionNotPossibleException {
         user.setHelpers(0);
         Action action = new FastActionChangePermitCardWithHelper(RegionName.HILL);
-        action.doAction(game,user);
+        action.doAction(game, user);
     }
 }

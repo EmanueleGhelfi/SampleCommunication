@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-
-<GridPane fx:id="shop" styleClass="shopBackground" stylesheets="@../CSS/ShopCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.ShopController">
-   <columnConstraints>
-      <ColumnConstraints fillWidth="false" hgrow="ALWAYS" minWidth="10.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints fillHeight="false" minHeight="10.0" vgrow="ALWAYS" />
-   </rowConstraints>
-   <children>
-      <Pane fx:id="paneBackground" />
-   </children>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="shop" styleClass="shopBackground" stylesheets="@../CSS/ShopCSS.css"
+          xmlns="http://javafx.com/javafx/8" fx:controller="ClientPackage.View.GUIResources.Class.ShopController">
+    <columnConstraints>
+        <ColumnConstraints fillWidth="false" hgrow="ALWAYS" minWidth="10.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints fillHeight="false" minHeight="10.0" vgrow="ALWAYS"/>
+    </rowConstraints>
+    <children>
+        <Pane fx:id="paneBackground"/>
+    </children>
 </GridPane>

@@ -4,7 +4,6 @@ import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.*;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.City.City;
-import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
 import Server.Model.Map;
 import Utilities.Class.Constants;
@@ -12,8 +11,6 @@ import Utilities.Class.Graphics;
 import Utilities.Exception.ActionNotPossibleException;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,8 +24,6 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by Emanuele on 13/05/2016.
@@ -51,7 +46,7 @@ public class GUIView extends Application implements BaseView {
         this.clientController = clientController;
     }
 
-    public GUIView(){
+    public GUIView() {
         clientController = ClientController.getInstance();
     }
 
@@ -85,13 +80,12 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void initView() {
-        // This initializes JavaFx application
         Application.launch();
     }
 
     @Override
     public void showLoginError() {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             loginController.showLoginError("Username già scelto");
         });
 
@@ -118,7 +112,6 @@ public class GUIView extends Application implements BaseView {
         waitingController = loader.getController();
         waitingController.setClientController(clientController);
         scene = new Scene(screen);
-        //stage.setResizable(false);
         this.stage.setScene(scene);
         this.stage.show();
         stage.setMinHeight(600);
@@ -138,7 +131,7 @@ public class GUIView extends Application implements BaseView {
                     screen = loader.load();
                     mapSelectionController = loader.getController();
                     mapSelectionController.setClientController(clientController);
-                    if(maps!=null)
+                    if (maps != null)
                         mapSelectionController.showMap(maps);
                     scene = new Scene(screen);
                     stage.setScene(scene);
@@ -146,7 +139,7 @@ public class GUIView extends Application implements BaseView {
                     stage.setMinHeight(600);
                     stage.setMinWidth(800);
                     maps = mapArrayList;
-                    if(waitingController!=null){
+                    if (waitingController != null) {
                         mapSelectionController.showMap(maps);
                     }
                 } catch (IOException e) {
@@ -174,7 +167,6 @@ public class GUIView extends Application implements BaseView {
                 matchController.setClientController(clientController, baseView);
                 matchController.setMyTurn(myTurn, snapshotToSend);
                 Scene scene = new Scene(screen);
-                //stage= new Stage();
                 stage.setScene(scene);
                 stage.setMinHeight(600);
                 stage.setMinWidth(1200);
@@ -186,7 +178,6 @@ public class GUIView extends Application implements BaseView {
                         System.exit(0);
                     }
                 });
-                //resizingWindow();
             }
         });
     }
@@ -194,23 +185,22 @@ public class GUIView extends Application implements BaseView {
     @Override
     public void turnFinished() {
 
-        if(matchController!=null) {
-            Platform.runLater(()->{
+        if (matchController != null) {
+            Platform.runLater(() -> {
                 matchController.setMyTurn(false, clientController.getSnapshot());
             });
-
         }
-        myTurn=false;
+        myTurn = false;
     }
 
     @Override
     public void isMyTurn(SnapshotToSend snapshot) {
-        if(matchController!=null) {
-            Platform.runLater(()-> {
+        if (matchController != null) {
+            Platform.runLater(() -> {
                 matchController.setMyTurn(true, clientController.getSnapshot());
             });
         }
-        myTurn=true;
+        myTurn = true;
     }
 
     @Override
@@ -222,13 +212,12 @@ public class GUIView extends Application implements BaseView {
                     baseController.updateView();
                 }
             });
-
         }
     }
 
     @Override
     public void onStartMarket() {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             baseControllerList.forEach(baseController -> {
                 baseController.onStartMarket();
             });
@@ -237,7 +226,7 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void onStartBuyPhase() {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             baseControllerList.forEach(baseController -> baseController.onStartBuyPhase());
         });
     }
@@ -249,7 +238,7 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void selectPermitCard() {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             baseControllerList.forEach(BaseController::selectPermitCard);
         });
 
@@ -257,7 +246,7 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void selectCityRewardBonus() {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             baseControllerList.forEach(BaseController::selectCityRewardBonus);
         });
 
@@ -265,14 +254,14 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void onMoveKing(ArrayList<City> kingPath) {
-        Platform.runLater(()->{
-            baseControllerList.forEach(baseController-> baseController.moveKing(kingPath));
+        Platform.runLater(() -> {
+            baseControllerList.forEach(baseController -> baseController.moveKing(kingPath));
         });
     }
 
     @Override
     public void onActionNotPossibleException(ActionNotPossibleException e) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             Graphics.playSomeSound("Error");
             Alert dlg = createAlert(Alert.AlertType.ERROR);
             dlg.setTitle("ERRORE NELLA MOSSA!");
@@ -302,8 +291,6 @@ public class GUIView extends Application implements BaseView {
                 stage.setScene(scene);
                 stage.setMinHeight(600);
                 stage.setMinWidth(1200);
-                //stage.setWidth(1280);
-                //stage.setHeight(720);
                 stage.show();
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
@@ -323,83 +310,21 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void onActionDone(Action action) {
-
     }
 
     @Override
     public void onUserDisconnect(String username) {
-        Graphics.notification("User: "+username+" is offline");
+        Graphics.notification("User: " + username + " is offline", false);
     }
 
-    public synchronized void registerBaseController(BaseController baseController){
+    public synchronized void registerBaseController(BaseController baseController) {
         if (!baseControllerList.contains(baseController)) {
             baseControllerList.add(baseController);
         }
     }
 
-    public void resizingWindow(){
-
-        final ChangeListener<Number> listener = new ChangeListener<Number>() {
-            final Timer timer = new Timer();
-            TimerTask timerTask = null;
-            final long delayTime = 200;
-
-            double width= stage.getWidth();
-            double height = stage.getHeight();
-
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if(timerTask!=null){
-                    timerTask.cancel();
-                }
-
-                timerTask=new TimerTask() {
-                    @Override
-                    public void run() {
-
-
-                        if(stage.getHeight()==newValue.doubleValue()) {
-                            if (!(stage.getWidth() < stage.getHeight() / 0.6 + 5 && stage.getWidth() > stage.getHeight() / 0.6 + 5)) {
-                                System.out.println("cambiata width");
-                                stage.setWidth(stage.getHeight() / 0.6);
-                                for (BaseController baseController : baseControllerList) {
-                                    baseController.onResizeHeight(stage.getHeight(),scene.getWidth());
-                                    //baseController.onResizeWidth(newSceneHeight.doubleValue()*1.7784);
-                                }
-                            }
-                        }
-
-                        if(stage.getWidth()==newValue.doubleValue()) {
-                            if (!(stage.getHeight() < stage.getWidth() * 0.6 + 5 && stage.getHeight() > stage.getWidth() * 0.6 - 5)) {
-                                System.out.println("cambiata height");
-                                stage.setHeight(stage.getWidth() * 0.6);
-                                for (BaseController baseController : baseControllerList) {
-                                    baseController.onResizeWidth(stage.getWidth(),stage.getHeight());
-                                    //baseController.onResizeHeight(newSceneWidth.doubleValue()*0.5623);
-                                }
-                            }
-                        }
-
-                    }
-                };
-                timer.schedule(timerTask,delayTime);
-            }
-        };
-
-        stage.widthProperty().addListener(listener);
-        stage.heightProperty().addListener(listener);
-
-
-
-
-    }
-
     public Scene getScene() {
         return scene;
-    }
-
-    public Stage getStage() {
-        return stage;
     }
 
     private Alert createAlert(Alert.AlertType type) {
@@ -413,8 +338,7 @@ public class GUIView extends Application implements BaseView {
     }
 
     private void showDialog(Dialog<?> dlg) {
-            dlg.show();
-            dlg.resultProperty().addListener(o -> System.out.println("Result is: " + dlg.getResult()));
-        }
+        dlg.show();
+    }
 
 }

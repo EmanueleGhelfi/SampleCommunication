@@ -1,15 +1,17 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.customComponent.ImageLoader;
+import ClientPackage.View.GUIResources.CustomComponent.ImageLoader;
 import ClientPackage.View.GeneralView.GUIView;
 import CommonModel.Snapshot.BaseUser;
 import Utilities.Class.Constants;
+import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXListView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,14 +23,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 /**
  * Created by Giulio on 25/06/2016.
  */
-public class FinishMatchController implements Initializable {
+public class FinishMatchController {
 
     private ClientController clientController;
     private GUIView baseView;
@@ -42,12 +42,8 @@ public class FinishMatchController implements Initializable {
     private Pane innerPaneWhereShow = new Pane();
     private ImageView backgroundImage;
 
-    @FXML private StackPane rootPane;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    @FXML
+    private StackPane rootPane;
 
     public void setClientController(ClientController clientController, GUIView baseView) {
         this.clientController = clientController;
@@ -69,10 +65,12 @@ public class FinishMatchController implements Initializable {
             usernameRanking.add(baseUser.getUsername());
         }
         ranking.setItems(FXCollections.observableArrayList(usernameRanking));
-        ranking.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        ranking.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void handle(MouseEvent event) {
-                displayInfo(ranking.getSelectionModel().getSelectedItem());
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Graphics.playSomeSound(Constants.BUTTON);
+                if (newValue != null)
+                    displayInfo(newValue);
             }
         });
         ranking.setStyle("-fx-background-color: transparent");
@@ -85,59 +83,17 @@ public class FinishMatchController implements Initializable {
         StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
         kingOrJester.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.1149));
         kingOrJester.setPreserveRatio(true);
-        rootPane.getChildren().add(kingOrJester);
         StackPane.setAlignment(kingOrJester, Pos.CENTER);
-        if(clientController.amIAWinner()) {
-            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
-            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
-            popOverOfTheImage = new PopOver();
-            StackPane stackPaneOfTheImage = new StackPane();
-            Text textOfImage = new Text();
-            textOfImage.setText("Felice della tua vittoria " + clientController.getSnapshot().getCurrentUser() + ".\n" +
-                        "Il mio cor si sollazza al saper che ho un erede di cotanta bravura.");
-            textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
-            stackPaneOfTheImage.getChildren().add(textOfImage);
-            StackPane.setAlignment(textOfImage, Pos.CENTER);
-            popOverOfTheImage.setContentNode(stackPaneOfTheImage);
-            popOverOfTheImage.show(kingOrJester);
+        if (clientController.amIAWinner()) {
+            winnerOrLoser.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YouWin2.png"));
+            kingOrJester.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingThrone.png"));
+            rootPane.getChildren().add(kingOrJester);
         }
-        if (!clientController.amIAWinner()){
-            winnerOrLoser = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
-            kingOrJester = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
-            popOverOfTheImage = new PopOver();
-            StackPane stackPaneOfTheImage = new StackPane();
-            Text textOfImage = new Text();
-            textOfImage.setText("Se vincer non saprai\nPrima o poi tu perirai\nForse meglio cambiar gioco\nPerchè bravo lo sei poco\n");
-            textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
-            stackPaneOfTheImage.getChildren().add(textOfImage);
-            StackPane.setAlignment(textOfImage, Pos.CENTER);
-            popOverOfTheImage.setContentNode(textOfImage);
-            popOverOfTheImage.show(kingOrJester);
+        if (!clientController.amIAWinner()) {
+            winnerOrLoser.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GameOver2.png"));
+            kingOrJester.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/Jester.png"));
+            rootPane.getChildren().add(kingOrJester);
         }
-    }
-
-    private void displayPopOverOfImage(boolean win) {
-        winnerOrLoser.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.3542));
-        winnerOrLoser.setPreserveRatio(true);
-        rootPane.getChildren().add(winnerOrLoser);
-        StackPane.setAlignment(winnerOrLoser, Pos.BOTTOM_CENTER);
-        kingOrJester.fitWidthProperty().bind(backgroundImage.fitWidthProperty().multiply(0.1149));
-        kingOrJester.setPreserveRatio(true);
-        rootPane.getChildren().add(kingOrJester);
-        StackPane.setAlignment(kingOrJester, Pos.CENTER);
-        popOverOfTheImage = new PopOver();
-        StackPane stackPaneOfTheImage = new StackPane();
-        Text textOfImage = new Text();
-        if (win)
-            textOfImage.setText("Felice della tua vittoria " + clientController.getSnapshot().getCurrentUser() + ".\n" +
-                    "Il mio cor si sollazza al saper che ho un erede di cotanta bravura.");
-        else
-            textOfImage.setText("Se vincer non saprai\nPrima o poi tu perirai\nForse meglio cambiar gioco\nPerchè bravo lo sei poco\n");
-        textOfImage.setFont(Font.font("Papyrus", FontWeight.BOLD, FontPosture.ITALIC, 15));
-        stackPaneOfTheImage.getChildren().add(textOfImage);
-        StackPane.setAlignment(textOfImage, Pos.CENTER);
-        popOverOfTheImage.setContentNode(stackPaneOfTheImage);
-        popOverOfTheImage.show(kingOrJester);
     }
 
     private void displayInfo(String selectedItem) {
@@ -153,7 +109,7 @@ public class FinishMatchController implements Initializable {
                 + "Grande personaggio fu questo " + baseUser.getUsername() + ". Mi ricorderò sempre di quel giorno che mi fece vedere le sue " + baseUser.getPoliticCardNumber()
                 + " prestigiose carte politiche con cui poteva soddisfare qualsiasi consiglio.\n"
                 + "In tutto il mondo è noto il suo nome. Ovunque si sa che il magnifico " + baseUser.getUsername() + " riuscì a costruire empori in molte città, come\n"
-                + clientController.getUserBuilding(selectedItem) +"\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
+                + clientController.getUserBuilding(selectedItem) + "\n" + "Grande uomo fu " + baseUser.getUsername() + ", scaltro nel gioco quanto intelligente nelle azioni.");
         innerText.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15));
         popOverStackPane.getChildren().add(innerText);
         innerPopOver = new PopOver();

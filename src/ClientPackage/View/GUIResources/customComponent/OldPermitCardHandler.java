@@ -1,4 +1,4 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.MatchController;
@@ -13,10 +13,10 @@ import javafx.scene.input.MouseEvent;
  */
 public class OldPermitCardHandler implements EventHandler<MouseEvent> {
 
-    private PermitCard permitCard;
-    private  BooleanProperty needToSelectOldPermitCard;
-    private ClientController clientController;
-    private MatchController matchController;
+    private final PermitCard permitCard;
+    private final BooleanProperty needToSelectOldPermitCard;
+    private final ClientController clientController;
+    private final MatchController matchController;
 
     public OldPermitCardHandler(PermitCard permitCard, BooleanProperty needToSelectOldPermitCard, ClientController clientController, MatchController matchController) {
         this.permitCard = permitCard;
@@ -29,9 +29,9 @@ public class OldPermitCardHandler implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event) {
         Graphics.playSomeSound("Button");
-        if(needToSelectOldPermitCard.getValue()){
-            clientController.onSelectOldPermitCard(permitCard);
-            matchController.onSelectOldPermitCard();
+        if (this.needToSelectOldPermitCard.getValue()) {
+            this.clientController.onSelectOldPermitCard(this.permitCard);
+            this.matchController.onSelectOldPermitCard();
         }
     }
 }

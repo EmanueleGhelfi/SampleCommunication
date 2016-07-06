@@ -1,4 +1,4 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import ClientPackage.View.GUIResources.Class.MatchController;
 import CommonModel.GameModel.City.City;
@@ -9,12 +9,12 @@ import javafx.scene.input.MouseEvent;
 /**
  * Created by Emanuele on 25/05/2016.
  */
-public class CityButton extends Button implements EventHandler<MouseEvent>{
+public class CityButton extends Button implements EventHandler<MouseEvent> {
 
-    private MatchController matchController;
+    private final MatchController matchController;
 
     public CityButton(City city, MatchController matchController) {
-        this.setOnMouseClicked(this);
+        setOnMouseClicked(this);
         this.matchController = matchController;
     }
 

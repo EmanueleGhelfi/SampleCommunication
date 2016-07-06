@@ -10,14 +10,13 @@ import java.util.Set;
 public class ArrayUtils {
 
     public static boolean checkInteger(String[] selectedArray, ArrayList arrayList) {
-        for(String string: selectedArray){
+        for (String string : selectedArray) {
             try {
                 int integer = Integer.parseInt(string);
-                if(integer<0 || integer>=arrayList.size()){
+                if (integer < 0 || integer >= arrayList.size()) {
                     return false;
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 return false;
             }
         }
@@ -28,9 +27,9 @@ public class ArrayUtils {
     public static boolean checkDuplicate(String[] selectedArray) {
         //set does not allow duplicate
         Set<String> set = new HashSet<>();
-        for (String s: selectedArray){
+        for (String s : selectedArray) {
 
-            if(!set.add(s)){
+            if (!set.add(s)) {
                 return false;
             }
         }

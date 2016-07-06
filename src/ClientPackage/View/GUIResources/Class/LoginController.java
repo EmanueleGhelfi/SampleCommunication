@@ -5,18 +5,15 @@ package ClientPackage.View.GUIResources.Class;
  */
 
 import ClientPackage.Controller.ClientController;
-import Server.Model.Map;
+import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.paint.Paint;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,13 +23,16 @@ import java.util.TimerTask;
 public class LoginController {
 
     private ClientController clientController;
-    @FXML private JFXTextField usernameText;
-    @FXML private Label errorText;
-    @FXML private JFXButton button;
+
+    @FXML
+    private JFXTextField usernameText;
+    @FXML
+    private Label errorText;
+    @FXML
+    private JFXButton button;
 
     public void onButtonLoginPressed(ActionEvent actionEvent) {
-        Graphics.playSomeSound("Button");
-        System.out.println("On button login pressed");
+        Graphics.playSomeSound(Constants.BUTTON);
         if (!usernameText.getText().isEmpty()) {
             clientController.onSendLogin(usernameText.getText());
         } else {
@@ -46,7 +46,7 @@ public class LoginController {
         usernameText.setVisible(false);
         button.setVisible(false);
         startTimeout();
-        button.getStyleClass().add("button-raised");
+        button.getStyleClass().add(Constants.STYLE_BUTTON);
     }
 
     private void startTimeout() {

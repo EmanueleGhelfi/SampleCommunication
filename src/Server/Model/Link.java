@@ -39,7 +39,7 @@ public class Link implements Serializable {
 
     @Override
     public String toString() {
-        return CLIColor.ANSI_BLUE+"Linked City \t "+CLIColor.ANSI_BLUE+ city1.getCityName().getCityName()+
-                " "+city2.getCityName().getCityName()+"";
+        return CLIColor.ANSI_BLUE + "Linked City \t " + CLIColor.ANSI_BLUE + city1.getCityName().getCityName() +
+                " " + city2.getCityName().getCityName() + "";
     }
 }

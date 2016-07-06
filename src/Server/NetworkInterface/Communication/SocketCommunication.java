@@ -7,13 +7,14 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
-import Server.Model.Map;
-import Utilities.Class.CommunicationInfo;
-import Utilities.Class.Constants;
 import Server.Controller.GameController;
 import Server.Controller.GamesManager;
+import Server.Model.Map;
 import Server.Model.User;
+import Utilities.Class.CommunicationInfo;
+import Utilities.Class.Constants;
 import Utilities.Class.InterfaceAdapter;
+import Utilities.Class.InternalLog;
 import Utilities.Exception.ActionNotPossibleException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,68 +49,81 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_SNAPSHOT,snapshotToSend);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_SNAPSHOT, snapshotToSend);
     }
 
     @Override
     public void changeRound() {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_YOUR_TURN, null);
     }
 
     @Override
     public void sendAvailableMap(ArrayList<Map> availableMaps) {
-        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_JSON_TEST,availableMaps);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_JSON_TEST, availableMaps);
     }
 
     /**
      * when user select a map
+     *
      * @param snapshotToSend
      */
     @Override
     public void sendSelectedMap(SnapshotToSend snapshotToSend) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_INITIALIZE_GAME,snapshotToSend);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_INITIALIZE_GAME, snapshotToSend);
     }
 
     @Override
     public void finishTurn() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_TURN_FINISHED,null);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_TURN_FINISHED, null);
     }
 
     @Override
     public void sendStartMarket() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_START_MARKET,null);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_START_MARKET, null);
 
     }
 
     @Override
     public void sendStartBuyPhase() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_START_BUY_PHASE,null);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_START_BUY_PHASE, null);
     }
 
     @Override
     public void disableMarketPhase() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH_MARKET_PHASE,null);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_FINISH_MARKET_PHASE, null);
     }
 
     @Override
     public void selectPermitCard() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_SELECT_PERMIT_CARD,null);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_SELECT_PERMIT_CARD, null);
 
     }
 
     @Override
     public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.SELECT_CITY_REWARD_BONUS,snapshotToSend);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_SELECT_CITY_REWARD_BONUS, snapshotToSend);
     }
 
     @Override
     public void moveKing(ArrayList<City> kingPath) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.MOVE_KING,kingPath);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_MOVE_KING, kingPath);
     }
 
     @Override
     public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_FINISH, finalSnapshot);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_FINISH, finalSnapshot);
     }
 
     @Override
@@ -119,12 +133,14 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
 
     @Override
     public void selectOldPermitCard() {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_OLD_PERMIT_CARD_BONUS,null);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_OLD_PERMIT_CARD_BONUS, null);
     }
 
     @Override
     public void sendUserDisconnect(String username) {
-        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_USER_DISCONNECT,username);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_USER_DISCONNECT, username);
     }
 
 
@@ -132,104 +148,97 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
     public void run() {
         String line;
         Gson gson = new GsonBuilder().registerTypeAdapter(Action.class, new InterfaceAdapter<Action>())
-                .registerTypeAdapter(Bonus.class,new InterfaceAdapter<Bonus>())
+                .registerTypeAdapter(Bonus.class, new InterfaceAdapter<Bonus>())
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                 .create();
-        System.out.println("Socket communication started");
         try {
             while ((line = in.readLine()) != null) {
                 CommunicationInfo communicationInfo = CommunicationInfo.decodeCommunicationInfo(line);
-
+                System.out.println("CODE " + communicationInfo.getCode());
                 switch (communicationInfo.getCode()) {
                     case Constants.CODE_NAME: {
-                        String username = gson.fromJson(communicationInfo.getInfo(),String.class);
-                        if(!gamesManager.userAlreadyPresent(username)) {
+                        String username = gson.fromJson(communicationInfo.getInfo(), String.class);
+                        if (!gamesManager.userAlreadyPresent(username)) {
                             this.user.setUsername(username);
                             gamesManager.addToGame(user);
                             CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME, true);
-                        }
-                        else{
+                        } else {
                             CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_NAME, false);
                         }
                         break;
                     }
                     case Constants.CODE_CHAT: {
                         String message = gson.fromJson(communicationInfo.getInfo(), String.class);
-                        System.out.println(message);
-                       // user.OnMessage(message);
                         break;
                     }
-                    case Constants.CODE_ACTION:{
+                    case Constants.CODE_ACTION: {
                         Action action = CommunicationInfo.getAction(communicationInfo.getInfo());
                         try {
-                            user.getGame().getGameController().doAction(action,user);
+                            user.getGame().getGameController().doAction(action, user);
                         } catch (ActionNotPossibleException e) {
                             // send exception to client
-                            CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e.getMessage());
+                            CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_EXCEPTION, e.getMessage());
                         }
                         break;
                     }
-                    case Constants.CODE_MAP:{
-                        Map map = gson.fromJson(communicationInfo.getInfo(),Map.class);
+                    case Constants.CODE_MAP: {
+                        Map map = gson.fromJson(communicationInfo.getInfo(), Map.class);
                         user.getGame().getGameController().setMap(map);
-                        System.out.println("Map arrived in socket communication");
                         break;
                     }
-                    case Constants.CODE_MARKET_SELL:{
+                    case Constants.CODE_MARKET_SELL: {
                         ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
-                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_SELL,user.getGame().getGameController().onReceiveBuyableObject(buyableWrappers));
+                        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_MARKET_SELL, user.getGame().getGameController().onReceiveBuyableObject(buyableWrappers));
                         break;
                     }
 
-                    case Constants.CODE_MARKET_BUY:{
+                    case Constants.CODE_MARKET_BUY: {
                         ArrayList<BuyableWrapper> buyableWrappers = CommunicationInfo.getBuyableArray(communicationInfo.getInfo());
-                        CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_MARKET_BUY,user.getGame().getGameController().onBuyObject(user,buyableWrappers));
+                        CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_MARKET_BUY, user.getGame().getGameController().onBuyObject(user, buyableWrappers));
                         break;
                     }
 
-                    case Constants.CODE_MARKET_REMOVE:{
+                    case Constants.CODE_MARKET_REMOVE: {
                         BuyableWrapper buyableWrapper = CommunicationInfo.getBuyableWrapper(communicationInfo.getInfo());
                         user.getGame().getGameController().onRemoveItem(buyableWrapper);
                         break;
                     }
 
-                    case Constants.CODE_FINISH_SELL_PHASE:{
+                    case Constants.CODE_FINISH_SELL_PHASE: {
                         user.getGameController().onFinishSellPhase(user);
                         break;
                     }
 
-                    case Constants.CODE_FINISH_BUY_PHASE:{
+                    case Constants.CODE_FINISH_BUY_PHASE: {
                         user.getGameController().onFinishBuyPhase(user);
                         break;
                     }
-                    case Constants.CODE_CITY_REWARD_BONUS:{
-                        City city = gson.fromJson(communicationInfo.getInfo(),City.class);
+                    case Constants.CODE_CITY_REWARD_BONUS: {
+                        City city = gson.fromJson(communicationInfo.getInfo(), City.class);
                         try {
-                            user.getGameController().getCityRewardBonus(city,user);
+                            user.getGameController().getCityRewardBonus(city, user);
                         } catch (ActionNotPossibleException e) {
-                            CommunicationInfo.SendCommunicationInfo(out,Constants.CODE_EXCEPTION,e.getMessage());
+                            CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_EXCEPTION, e.getMessage());
                         }
                         break;
                     }
-                    case Constants.SELECT_PERMITCARD_BONUS:{
-                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(),PermitCard.class);
-                        user.getGameController().onSelectPermitCard(permitCard,user);
+                    case Constants.CODE_SELECT_PERMITCARD_BONUS: {
+                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(), PermitCard.class);
+                        user.getGameController().onSelectPermitCard(permitCard, user);
                         break;
                     }
-                    case Constants.CODE_FINISH_TURN:{
+                    case Constants.CODE_FINISH_TURN: {
                         user.getGameController().onUserPass(user);
                         break;
                     }
-                    case Constants.CODE_OLD_PERMIT_CARD_BONUS:{
-                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(),PermitCard.class);
-                        user.getGameController().onSelectOldPermitCard(user,permitCard);
+                    case Constants.CODE_OLD_PERMIT_CARD_BONUS: {
+                        PermitCard permitCard = gson.fromJson(communicationInfo.getInfo(), PermitCard.class);
+                        user.getGameController().onSelectOldPermitCard(user, permitCard);
                         break;
                     }
                 }
             }
-        }catch (IOException e) {
-            //e.printStackTrace();
-            System.out.println("User Disconnected: "+user.getUsername());
+        } catch (IOException e) {
             user.setConnected(false);
             user.getGameController().onUserDisconnected(user);
             user.getGameController().cleanGame();

@@ -4,25 +4,22 @@ import ClientPackage.Controller.ClientController;
 import CommonModel.GameModel.Action.Action;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCard;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
-import Server.Model.Map;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
 import RMIInterface.RMIClientInterface;
 import RMIInterface.RMIListenerInterface;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import Server.Model.Map;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,7 +41,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         this.clientController = clientController;
         registry = LocateRegistry.getRegistry(serverIP, Constants.RMI_PORT);
         rmiListenerInterface = (RMIListenerInterface) registry.lookup(serverName);
-        UnicastRemoteObject.exportObject(this,0);
+        UnicastRemoteObject.exportObject(this, 0);
     }
 
     @Override
@@ -52,7 +49,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         try {
             rmiHandlerName = rmiListenerInterface.Connect();
             rmiClientHandler = (RMIClientHandler) registry.lookup(rmiHandlerName);
-            System.out.println("Connected to server");
             rmiClientHandler.sendRemoteClientObject(this);
             return true;
         } catch (RemoteException e) {
@@ -65,8 +61,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendName(String name) {
-
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             try {
                 boolean result = rmiClientHandler.tryToSetName(name);
                 clientController.onNameReceived(result);
@@ -92,12 +87,11 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             }
         };
         executorService.execute(runnable);
-
     }
 
     @Override
     public void sendMap(Map map) {
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             try {
                 rmiClientHandler.sendMap(map);
             } catch (RemoteException e) {
@@ -109,8 +103,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
-
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             try {
                 if (rmiClientHandler.sendBuyableObject(realSaleList)) {
                 }
@@ -123,7 +116,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onBuy(ArrayList<BuyableWrapper> buyList) {
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             try {
                 rmiClientHandler.buyObject(buyList);
             } catch (RemoteException e) {
@@ -135,7 +128,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onRemoveItemFromMarket(BuyableWrapper item) {
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             try {
                 rmiClientHandler.onRemoveItem(item);
             } catch (RemoteException e) {
@@ -147,7 +140,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onFinishSellPhase() {
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             try {
                 rmiClientHandler.onFinishSellPhase();
             } catch (RemoteException e) {
@@ -159,7 +152,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendFinishedBuyPhase() {
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             try {
                 rmiClientHandler.onFinishBuyPhase();
             } catch (RemoteException e) {
@@ -171,22 +164,21 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void getCityRewardBonus(City city1) {
-        Runnable runnable = () ->{
-        try {
-            rmiClientHandler.getCityRewardBonus(city1);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (ActionNotPossibleException e) {
-            clientController.onActionNotPossible(e);
-        }
+        Runnable runnable = () -> {
+            try {
+                rmiClientHandler.getCityRewardBonus(city1);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (ActionNotPossibleException e) {
+                clientController.onActionNotPossible(e);
+            }
         };
         executorService.execute(runnable);
-
     }
 
     @Override
     public void onSelectPermitCard(PermitCard permitCard) {
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             try {
                 rmiClientHandler.onSelectPermitCard(permitCard);
             } catch (RemoteException e) {
@@ -198,7 +190,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onFinishTurn() {
-        Runnable runnable = ()->{
+        Runnable runnable = () -> {
             try {
                 rmiClientHandler.finishRound();
             } catch (RemoteException e) {
@@ -210,7 +202,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onSelectOldPermitCard(PermitCard permitCard) {
-        Runnable runnable = ()->{
+        Runnable runnable = () -> {
             try {
                 rmiClientHandler.onSelectOldPermitCard(permitCard);
             } catch (RemoteException e) {
@@ -220,32 +212,13 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         executorService.execute(runnable);
     }
 
-    //OLD VERSION
-    private String generateName() {
-        String randomSequence="";
-        Random randomGenerator = new Random();
-        int sequenceLength = 5;
-        for (int idx = 1; idx <= sequenceLength; ++idx) {
-            int randomInt = randomGenerator.nextInt(10);
-
-            randomSequence = randomSequence + randomInt;
-        }
-        return randomSequence;
-    }
-
-    //OLD VERSION
-    public String getIP() throws UnknownHostException {
-        InetAddress IP=InetAddress.getLocalHost();
-
-        return IP.getHostAddress();
-    }
-
-
-    /*** REGION OF METHODS CALLED BY SERVER **/
+    /***
+     * REGION OF METHODS CALLED BY SERVER
+     **/
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException {
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             clientController.setSnapshot(snapshotToSend);
         };
         executorService.execute(runnable);
@@ -253,7 +226,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void sendMap(ArrayList<Map> mapArrayList) {
-        Runnable runnable = ()-> {
+        Runnable runnable = () -> {
             clientController.showMap(mapArrayList);
         };
         executorService.execute(runnable);
@@ -261,7 +234,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void gameInitialization(SnapshotToSend snapshotToSend) throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.gameInitialization(snapshotToSend);
         });
 
@@ -269,7 +242,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void isYourTurn() throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.isMyTurn();
         });
 
@@ -277,7 +250,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void finishTurn() throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.turnFinished();
         });
 
@@ -285,7 +258,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onStartMarket() throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.onStartMarket();
         });
 
@@ -293,7 +266,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onStartBuyPhase() throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.onStartBuyPhase();
         });
 
@@ -301,16 +274,14 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void disableMarketPhase() throws RemoteException {
-
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.onFinishBuyPhase();
         });
-
     }
 
     @Override
     public void selectPermitCard() throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.selectPermitCard();
         });
 
@@ -318,36 +289,32 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void selectCityRewardBonus(SnapshotToSend snapshotToSend) throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.selectCityRewardBonus(snapshotToSend);
         });
-
     }
 
     @Override
     public void moveKing(ArrayList<City> kingPath) throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.onMoveKing(kingPath);
         });
-
     }
 
     @Override
     public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.sendMatchFinishedWithWin(finalSnapshot);
         });
-
     }
 
     @Override
     public void ping() throws RemoteException {
-
     }
 
     @Override
     public void selectOldPermiCard() throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.selectOldPermitCardBonus();
         });
 
@@ -355,7 +322,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     @Override
     public void onUserDisconnect(String username) throws RemoteException {
-        executorService.execute(()->{
+        executorService.execute(() -> {
             clientController.onUserDisconnect(username);
         });
     }

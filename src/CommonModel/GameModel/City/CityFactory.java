@@ -3,6 +3,7 @@ package CommonModel.GameModel.City;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCardCoastCity;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCardHillCity;
 import CommonModel.GameModel.Card.SingleCard.PermitCard.PermitCardMountainCity;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class CityFactory {
 
-    public static ArrayList<ArrayList<Character>> getCity(RegionName region){
+    public static ArrayList<ArrayList<Character>> getCity(RegionName region) {
         if (region.equals(RegionName.MOUNTAIN))
             return PermitCardMountainCity.getCities();
         if (region.equals(RegionName.COAST))

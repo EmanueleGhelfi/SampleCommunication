@@ -1,4 +1,4 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.MatchController;
@@ -11,10 +11,10 @@ import javafx.event.EventHandler;
  */
 public class ChangeTurnHandler implements EventHandler<ActionEvent> {
 
-    private MatchController matchController;
+    private final MatchController matchController;
 
     public ChangeTurnHandler(MatchController matchController) {
-        this.matchController=matchController;
+        this.matchController = matchController;
     }
 
     @Override
@@ -23,4 +23,5 @@ public class ChangeTurnHandler implements EventHandler<ActionEvent> {
         ClientController clientController = ClientController.getInstance();
         clientController.onFinishTurn();
     }
+
 }

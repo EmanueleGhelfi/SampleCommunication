@@ -25,9 +25,8 @@ public class FastActionNewMainActionTest {
     public void setUp() throws Exception {
         game = new Game();
         try {
-            user= new User(new FakeCommunication(), GamesManager.getInstance());
-        }
-        catch (Exception e){
+            user = new User(new FakeCommunication(), GamesManager.getInstance());
+        } catch (Exception e) {
 
         }
         user.setGame(game);
@@ -48,15 +47,15 @@ public class FastActionNewMainActionTest {
 
 
         Action action = new FastActionNewMainAction();
-        action.doAction(game,user);
-        assertEquals(actionCounter+1,user.getMainActionCounter());
-        assertEquals(fastActionCounter-1,user.getFastActionCounter());
-        assertEquals(helpers- Constants.HELPER_LIMITATION_NEW_MAIN_ACTION,user.getHelpers().size());
+        action.doAction(game, user);
+        assertEquals(actionCounter + 1, user.getMainActionCounter());
+        assertEquals(fastActionCounter - 1, user.getFastActionCounter());
+        assertEquals(helpers - Constants.HELPER_LIMITATION_NEW_MAIN_ACTION, user.getHelpers().size());
     }
 
 
     @Test(expected = ActionNotPossibleException.class)
-    public void testActionNotPossible() throws ActionNotPossibleException{
+    public void testActionNotPossible() throws ActionNotPossibleException {
         user.setFastActionCounter(0);
         user.setMainActionCounter(2);
         user.setHelpers(10);
@@ -68,14 +67,14 @@ public class FastActionNewMainActionTest {
 
 
         Action action = new FastActionNewMainAction();
-        action.doAction(game,user);
-        assertEquals(actionCounter+1,user.getMainActionCounter());
-        assertEquals(fastActionCounter-1,user.getFastActionCounter());
-        assertEquals(helpers- Constants.HELPER_LIMITATION_NEW_MAIN_ACTION,user.getHelpers().size());
+        action.doAction(game, user);
+        assertEquals(actionCounter + 1, user.getMainActionCounter());
+        assertEquals(fastActionCounter - 1, user.getFastActionCounter());
+        assertEquals(helpers - Constants.HELPER_LIMITATION_NEW_MAIN_ACTION, user.getHelpers().size());
     }
 
     @Test(expected = ActionNotPossibleException.class)
-    public void testHelperNotEnough() throws ActionNotPossibleException{
+    public void testHelperNotEnough() throws ActionNotPossibleException {
         user.setFastActionCounter(1);
         user.setMainActionCounter(2);
         user.setHelpers(0);
@@ -87,9 +86,9 @@ public class FastActionNewMainActionTest {
 
 
         Action action = new FastActionNewMainAction();
-        action.doAction(game,user);
-        assertEquals(actionCounter+1,user.getMainActionCounter());
-        assertEquals(fastActionCounter-1,user.getFastActionCounter());
-        assertEquals(helpers- Constants.HELPER_LIMITATION_NEW_MAIN_ACTION,user.getHelpers().size());
+        action.doAction(game, user);
+        assertEquals(actionCounter + 1, user.getMainActionCounter());
+        assertEquals(fastActionCounter - 1, user.getFastActionCounter());
+        assertEquals(helpers - Constants.HELPER_LIMITATION_NEW_MAIN_ACTION, user.getHelpers().size());
     }
 }

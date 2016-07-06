@@ -1,4 +1,4 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
 import ClientPackage.Controller.ClientController;
 import ClientPackage.View.GUIResources.Class.MatchController;
@@ -13,34 +13,31 @@ import java.util.TimerTask;
  */
 public class TimerProgress extends TimerTask {
 
-    private Gauge gauge;
-    private double time= Constants.ROUND_DURATION-5000;
-    private MatchController matchController;
-    private ClientController clientController;
+    private final Gauge gauge;
+    private final MatchController matchController;
+    private final ClientController clientController;
+    private double time = Constants.ROUND_DURATION - 5000;
 
     public TimerProgress(Gauge gauge, MatchController matchController, ClientController clientController) {
-        this.gauge=gauge;
-        gauge.setMaxValue(time/1000);
-        this.matchController=matchController;
-        this.clientController=clientController;
+        this.gauge = gauge;
+        gauge.setMaxValue(this.time / 1000);
+        this.matchController = matchController;
+        this.clientController = clientController;
     }
 
     @Override
     public void run() {
-
-        time-=1000;
-
-        if(time>=0) {
+        this.time -= 1000;
+        if (this.time >= 0) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    gauge.setValue(time / 1000);
+                    TimerProgress.this.gauge.setValue(TimerProgress.this.time / 1000);
                 }
             });
         }
-
-        if(time==0){
-            clientController.onFinishTurn();
+        if (this.time == 0) {
+            this.clientController.onFinishTurn();
         }
     }
 }

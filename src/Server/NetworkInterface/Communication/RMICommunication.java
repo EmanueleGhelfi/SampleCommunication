@@ -6,12 +6,14 @@ import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Market.BuyableWrapper;
 import CommonModel.Snapshot.BaseUser;
 import CommonModel.Snapshot.SnapshotToSend;
-import Server.Model.Map;
-import Utilities.Exception.ActionNotPossibleException;
 import RMIInterface.RMIClientHandler;
 import RMIInterface.RMIClientInterface;
 import Server.Controller.GamesManager;
+import Server.Model.Map;
 import Server.Model.User;
+import Utilities.Class.InternalLog;
+import Utilities.Exception.ActionNotPossibleException;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -31,11 +33,12 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     public RMICommunication(String name) throws RemoteException {
         gamesManager = GamesManager.getInstance();
-        UnicastRemoteObject.exportObject(this,0);
+        UnicastRemoteObject.exportObject(this, 0);
     }
 
 
-    /** Overriding RMIClientHandler
+    /**
+     * Overriding RMIClientHandler
      *
      * @param username
      * @return
@@ -43,7 +46,8 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
      */
     @Override
     public boolean tryToSetName(String username) throws RemoteException {
-        if(!gamesManager.userAlreadyPresent(username)){
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        if (!gamesManager.userAlreadyPresent(username)) {
             this.user.setUsername(username);
             gamesManager.addToGame(user);
             return true;
@@ -51,126 +55,144 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         return false;
     }
 
-    /** Overriding RMIClientHandler
+    /**
+     * Overriding RMIClientHandler
      *
      * @param electCouncilor
      * @throws ActionNotPossibleException
      */
     @Override
     public void test(Action electCouncilor) throws ActionNotPossibleException {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         electCouncilor.doAction(user.getGame(), user);
     }
 
-    /** Overriding RMIClientHandler
+    /**
+     * Overriding RMIClientHandler
      * Called by client when the remote object is exported
+     *
      * @param clientRMIService
      * @throws RemoteException
      */
     @Override
     public void sendRemoteClientObject(RMIClientInterface clientRMIService) throws RemoteException {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         rmiClientInterface = clientRMIService;
     }
 
-    /** Overriding RMIClientHandler
+    /**
+     * Overriding RMIClientHandler
      * Called when a user selects the Map
+     *
      * @param map map selected
      * @throws RemoteException
      */
     @Override
     public void sendMap(Map map) throws RemoteException {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         user.getGame().getGameController().setMap(map);
     }
 
     @Override
     public boolean sendBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         return user.getGame().getGameController().onReceiveBuyableObject(buyableWrappers);
     }
 
     @Override
     public boolean buyObject(ArrayList<BuyableWrapper> buyableWrappers) throws RemoteException {
-        return user.getGame().getGameController().onBuyObject(user,buyableWrappers);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        return user.getGame().getGameController().onBuyObject(user, buyableWrappers);
     }
 
     @Override
     public void onRemoveItem(BuyableWrapper item) throws RemoteException {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         user.getGame().getGameController().onRemoveItem(item);
     }
 
     @Override
     public void onFinishSellPhase() throws RemoteException {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         user.getGameController().onFinishSellPhase(user);
     }
 
     @Override
     public void onFinishBuyPhase() throws RemoteException {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         user.getGameController().onFinishBuyPhase(user);
 
     }
 
     @Override
     public void getCityRewardBonus(City city1) throws RemoteException, ActionNotPossibleException {
-        System.out.println("get city reward bonus");
-        user.getGameController().getCityRewardBonus(city1,user);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        user.getGameController().getCityRewardBonus(city1, user);
     }
 
     @Override
     public void onSelectPermitCard(PermitCard permitCard) throws RemoteException {
-        user.getGameController().onSelectPermitCard(permitCard,user);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        user.getGameController().onSelectPermitCard(permitCard, user);
     }
 
     @Override
     public void finishRound() throws RemoteException {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         user.getGameController().onUserPass(user);
 
     }
 
     @Override
     public void onSelectOldPermitCard(PermitCard permitCard) {
-        user.getGameController().onSelectOldPermitCard(user,permitCard);
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        user.getGameController().onSelectOldPermitCard(user, permitCard);
     }
 
-
-
-
-    /** Overriding BaseCommunication
+    /**
+     * Overriding BaseCommunication
      *
      * @param snapshotToSend
      */
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.sendSnapshot(snapshotToSend);
         } catch (RemoteException e) {
             user.setConnected(false);
-        }
-        catch (NullPointerException e){
-            System.out.println("null pointer in rmi communication");
+        } catch (NullPointerException e) {
         }
     }
 
-    /** Overriding BaseCommunication
-     *  called when is the turn of the user
+    /**
+     * Overriding BaseCommunication
+     * called when is the turn of the user
      */
     @Override
     public void changeRound() {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         //call is your round (with a notification)
         try {
             rmiClientInterface.isYourTurn();
         } catch (RemoteException e) {
-           // e.printStackTrace();
+            // e.printStackTrace();
             user.setConnected(false);
             user.getGameController().onFinishRound(user);
         }
     }
 
-    /** Overriding BaseCommunication
+    /**
+     * Overriding BaseCommunication
      * Called when sending all maps to user
+     *
      * @param availableMaps all maps available
      */
     @Override
     public void sendAvailableMap(ArrayList<Map> availableMaps) {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
-            if(rmiClientInterface!=null) {
+            if (rmiClientInterface != null) {
                 rmiClientInterface.sendMap(availableMaps);
             }
         } catch (RemoteException e) {
@@ -182,9 +204,9 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void sendSelectedMap(SnapshotToSend snapshotToSend) {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.gameInitialization(snapshotToSend);
-            System.out.println("Sending map to: "+user.getUsername());
         } catch (RemoteException e) {
             e.printStackTrace();
             user.setConnected(false);
@@ -193,17 +215,17 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void finishTurn() {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
-            System.out.println("user "+user.getUsername()+" has finished turn");
             rmiClientInterface.finishTurn();
         } catch (RemoteException e) {
-            //e.printStackTrace();
             user.setConnected(false);
         }
     }
 
     @Override
     public void sendStartMarket() {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.onStartMarket();
         } catch (RemoteException e) {
@@ -213,6 +235,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void sendStartBuyPhase() {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.onStartBuyPhase();
         } catch (RemoteException e) {
@@ -221,6 +244,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void disableMarketPhase() {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.disableMarketPhase();
         } catch (RemoteException e) {
@@ -229,6 +253,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void selectPermitCard() {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.selectPermitCard();
         } catch (RemoteException e) {
@@ -238,6 +263,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.selectCityRewardBonus(snapshotToSend);
         } catch (RemoteException e) {
@@ -247,6 +273,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void moveKing(ArrayList<City> kingPath) {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.moveKing(kingPath);
         } catch (RemoteException e) {
@@ -256,20 +283,22 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.sendMatchFinishedWithWin(finalSnapshot);
-        } catch (RemoteException e){
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void ping() {
-        if(user.isConnected()) {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
+        if (user.isConnected()) {
             try {
                 rmiClientInterface.ping();
             } catch (RemoteException e) {
-                if(user.isConnected()) {
+                if (user.isConnected()) {
                     user.setConnected(false);
                     user.getGameController().onUserDisconnected(user);
                     user.getGameController().cleanGame();
@@ -280,6 +309,7 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void selectOldPermitCard() {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.selectOldPermiCard();
         } catch (RemoteException e) {
@@ -289,13 +319,13 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
 
     @Override
     public void sendUserDisconnect(String username) {
+        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
             rmiClientInterface.onUserDisconnect(username);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void setUser(User user) {

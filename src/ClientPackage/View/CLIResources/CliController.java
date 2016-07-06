@@ -6,6 +6,7 @@ package ClientPackage.View.CLIResources;
 public interface CliController {
 
     void parseLine(String line);
+
     void changeController();
 
     void printHelp();

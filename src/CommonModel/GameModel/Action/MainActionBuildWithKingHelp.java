@@ -2,7 +2,6 @@ package CommonModel.GameModel.Action;
 
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.City.City;
-import CommonModel.GameModel.City.CityVisitor;
 import CommonModel.GameModel.Council.King;
 import Server.Model.Game;
 import Server.Model.User;
@@ -29,9 +28,8 @@ public class MainActionBuildWithKingHelp extends Action {
     public MainActionBuildWithKingHelp(ArrayList<City> kingPath, ArrayList<PoliticCard> politicCards) {
         this.kingPath = kingPath;
         this.politicCards = politicCards;
-        this.actionType=Constants.MAIN_ACTION;
+        this.actionType = Constants.MAIN_ACTION;
     }
-
 
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
@@ -42,9 +40,9 @@ public class MainActionBuildWithKingHelp extends Action {
         //this is the new position of the user in money path
         int newPositionInMoneyPath = 0;
 
-        int helperToSpend=0;
+        int helperToSpend = 0;
         //true if the emporiums are not ten and i haven't build in that city
-        if(super.checkActionCounter(user) && kingPath!=null && politicCards!=null && pathIsCorrect(game) && politicCards.size()>0) {
+        if (super.checkActionCounter(user) && kingPath != null && politicCards != null && pathIsCorrect(game) && politicCards.size() > 0) {
             if (checkEmporiumsAreNotTen(user) && kingPath.size() > 0 &&
                     checkEmporiumsIsAlreadyPresent(user, kingPath.get(kingPath.size() - 1))) {
                 // city where king goes
@@ -56,15 +54,12 @@ public class MainActionBuildWithKingHelp extends Action {
                 }
                 // if user can build
                 if (user.getHelpers().size() >= helperToSpend) {
-
                     //decrement helper
                     user.setHelpers(user.getHelpers().size() - helperToSpend);
-
                     // calculate correct politic card
                     correctPoliticCard = countCorrectPoliticCard(king, politicCards, bonusCounter);
                     // calculate money to spend
                     newPositionInMoneyPath = calculateMoney(correctPoliticCard, politicCards, bonusCounter);
-
                     if ((kingPath.size() - 1) * Constants.KING_PRICE + newPositionInMoneyPath <= user.getCoinPathPosition()) {
                         for (City city : kingPath) {
                             //user.setCoinPathPosition(user.getCoinPathPosition() - Constants.KING_PRICE);
@@ -72,7 +67,6 @@ public class MainActionBuildWithKingHelp extends Action {
                             //king.setCurrentCity(city);
                         }
                         king.setCurrentCity(kingCity);
-
                         // because of first element
                         game.getMoneyPath().goAhead(user, Constants.KING_PRICE);
                         user.addEmporium(kingCity);
@@ -90,11 +84,9 @@ public class MainActionBuildWithKingHelp extends Action {
                     game.getPoliticCards().addToQueue(new HashSet<>(politicCards));
                     // remove cards from user
                     removePoliticCard(politicCards, user, game);
-
                     //check region and color bonus
                     checkRegionBonus(kingCity, user, game);
                     checkColorBonus(kingCity, user, game);
-
                     moveKing(game, user);
                     removeAction(game, user);
                     if (user.getUsersEmporium().size() == 10) {
@@ -106,28 +98,23 @@ public class MainActionBuildWithKingHelp extends Action {
             } else {
                 throw new ActionNotPossibleException(Constants.EMPORIUM_PRESENT_EXCEPTION);
             }
-        }
-            else {
-                if (politicCards == null || politicCards.size() == 0) {
-                    throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
-                }
-                throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);
+        } else {
+            if (politicCards == null || politicCards.size() == 0) {
+                throw new ActionNotPossibleException(Constants.POLITIC_CARD_EXCEPTION);
             }
+            throw new ActionNotPossibleException(Constants.INCORRECT_PATH_EXCEPTION);
+        }
 
     }
 
-
-
     private boolean pathIsCorrect(Game game) {
-        UndirectedGraph<City,DefaultEdge> mapGraph = game.getMap().getMapGraph();
-        if(kingPath.size()>0 && !kingPath.get(0).equals(game.getKing().getCurrentCity())){
-            System.out.println("First city isn't king city");
+        UndirectedGraph<City, DefaultEdge> mapGraph = game.getMap().getMapGraph();
+        if (kingPath.size() > 0 && !kingPath.get(0).equals(game.getKing().getCurrentCity())) {
             return false;
         }
-        for(int i = 0; i<kingPath.size()-1;i++){
-            NeighborIndex<City,DefaultEdge> neighborIndex = new NeighborIndex(mapGraph);
-            if(!(neighborIndex.neighborListOf(kingPath.get(i)).contains(kingPath.get(i+1)))){
-                System.out.println("PATH NOT CORRECT because of "+kingPath.get(i).getCityName() +" and "+kingPath.get(i+1).getCityName());
+        for (int i = 0; i < kingPath.size() - 1; i++) {
+            NeighborIndex<City, DefaultEdge> neighborIndex = new NeighborIndex(mapGraph);
+            if (!(neighborIndex.neighborListOf(kingPath.get(i)).contains(kingPath.get(i + 1)))) {
                 return false;
             }
         }
@@ -138,7 +125,7 @@ public class MainActionBuildWithKingHelp extends Action {
         ExecutorService executorService = Executors.newCachedThreadPool();
         game.getUsers().forEach(user1 -> {
 
-            Runnable runnable =()-> {
+            Runnable runnable = () -> {
                 user1.getBaseCommunication().moveKing(kingPath);
             };
 
@@ -148,9 +135,9 @@ public class MainActionBuildWithKingHelp extends Action {
 
     @Override
     public String toString() {
-        if(kingPath.size()==0){
+        if (kingPath.size() == 0) {
             return "";
         }
-        return "[MAIN ACTION] Build an empory in city " + kingPath.get(kingPath.size()-1).getCityName()+" with king help.\n";
+        return "[MAIN ACTION] Build an empory in city " + kingPath.get(kingPath.size() - 1).getCityName() + " with king help.\n";
     }
 }

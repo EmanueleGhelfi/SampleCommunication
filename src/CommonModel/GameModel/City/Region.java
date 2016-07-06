@@ -1,17 +1,11 @@
 package CommonModel.GameModel.City;
 
-import CommonModel.GameModel.Action.Action;
-import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticCard;
 import CommonModel.GameModel.Card.SingleCard.PoliticCard.PoliticColor;
 import CommonModel.GameModel.Council.Bank;
 import CommonModel.GameModel.Council.Council;
 import CommonModel.GameModel.Council.Councilor;
 import CommonModel.GameModel.Council.GotCouncil;
 import Utilities.Class.Constants;
-import Utilities.Class.EnumAdapterFactory;
-import Utilities.Class.InterfaceAdapter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,8 +15,6 @@ import java.util.Random;
  * Created by Giulio on 13/05/2016.
  */
 public class Region implements Serializable, GotCouncil {
-
-
 
     private RegionName region;
     private int cityNumber;
@@ -38,24 +30,23 @@ public class Region implements Serializable, GotCouncil {
 
     }
 
-    public Region (RegionName region, int cityNumber){
+    public Region(RegionName region, int cityNumber) {
         this.region = region;
         this.cityNumber = cityNumber;
         createRandomCouncil();
     }
 
-    private void createRandomCouncil(){
-        if(council==null) {
+    private void createRandomCouncil() {
+        if (council == null) {
             council = new Council(bank);
             Random random = new Random();
             for (int i = 0; i < Constants.COUNCILOR_DIMENSION; i++) {
                 ArrayList<PoliticColor> availablePoliticColors = bank.showCouncilor();
                 int value = random.nextInt(availablePoliticColors.size());
                 Councilor toAdd = bank.getCouncilor(availablePoliticColors.get(value));
-                if(toAdd!=null) {
+                if (toAdd != null) {
                     council.add(toAdd);
-                }
-                else {
+                } else {
                     // retry random
                     i--;
                 }
@@ -63,9 +54,9 @@ public class Region implements Serializable, GotCouncil {
         }
     }
 
-    public boolean checkRegion(ArrayList<City> userEmporiums){
+    public boolean checkRegion(ArrayList<City> userEmporiums) {
         int cityCounter = 0;
-        for (City city: userEmporiums) {
+        for (City city : userEmporiums) {
             if (city.getRegion() == this.region) {
                 cityCounter++;
             }
@@ -78,7 +69,7 @@ public class Region implements Serializable, GotCouncil {
     }
 
     @Override
-    public Council getCouncil(){
+    public Council getCouncil() {
         return council;
     }
 
@@ -90,7 +81,6 @@ public class Region implements Serializable, GotCouncil {
                 ", council=" + council +
                 '}';
     }
-
 
 
 }

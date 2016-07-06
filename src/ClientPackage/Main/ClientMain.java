@@ -7,8 +7,9 @@ import ClientPackage.Controller.ClientController;
  */
 public class ClientMain {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ClientController clientController = ClientController.getInstance();
         clientController.init();
     }
+
 }

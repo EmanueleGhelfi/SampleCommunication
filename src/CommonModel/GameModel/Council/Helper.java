@@ -7,12 +7,12 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Created by Emanuele on 03/06/2016.
  */
-public class Helper implements BuyableObject{
+public class Helper implements BuyableObject {
 
-    private String type = "Helper";
     // for equals, id of the object
     static final AtomicLong NEXT_ID = new AtomicLong(0);
     final long id = NEXT_ID.getAndIncrement();
+    private String type = "Helper";
 
     public Helper() {
     }
@@ -25,7 +25,7 @@ public class Helper implements BuyableObject{
     @Override
     public BuyableObject getCopy() {
         try {
-            return (Helper)this.clone();
+            return (Helper) this.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }

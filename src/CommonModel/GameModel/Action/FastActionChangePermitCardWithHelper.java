@@ -1,11 +1,10 @@
 package CommonModel.GameModel.Action;
 
-import CommonModel.GameModel.City.Region;
 import CommonModel.GameModel.City.RegionName;
-import Utilities.Class.Constants;
-import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.Game;
 import Server.Model.User;
+import Utilities.Class.Constants;
+import Utilities.Exception.ActionNotPossibleException;
 
 /**
  * Created by Giulio on 17/05/2016.
@@ -19,7 +18,9 @@ public class FastActionChangePermitCardWithHelper extends Action {
         this.region = region;
     }
 
-    /** change the visible permit card spending a helper
+    /**
+     * change the visible permit card spending a helper
+     *
      * @param game
      * @param user
      * @throws ActionNotPossibleException
@@ -27,7 +28,7 @@ public class FastActionChangePermitCardWithHelper extends Action {
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // check
-        if(super.checkActionCounter(user) && region!=null) {
+        if (super.checkActionCounter(user) && region != null) {
             if (user.getHelpers().size() >= Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD) {
                 user.setHelpers(user.getHelpers().size() - Constants.HELPER_LIMITATION_CHANGE_PERMIT_CARD);
                 game.getPermitDeck(region).changePermitCardVisibile();
@@ -35,14 +36,13 @@ public class FastActionChangePermitCardWithHelper extends Action {
             } else {
                 throw new ActionNotPossibleException(Constants.HELPER_EXCEPTION);
             }
-        }
-        else{
+        } else {
             throw new ActionNotPossibleException("Region is null");
         }
     }
 
     @Override
     public String toString() {
-        return "[FAST ACTION] Change permit card of region " +region+" with helper";
+        return "[FAST ACTION] Change permit card of region " + region + " with helper";
     }
 }

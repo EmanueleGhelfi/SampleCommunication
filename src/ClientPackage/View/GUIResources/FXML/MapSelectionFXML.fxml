@@ -1,65 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
-<GridPane fx:id="gridPaneBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@../CSS/LoginWaitingMapSelectionCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.MapSelectionController">
-  <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
-    <ColumnConstraints hgrow="SOMETIMES" percentWidth="60.0" />
-    <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <VBox alignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-         <children>
-            <Text layoutX="169.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCEGLI LA MAPPA CON CUI GIOCARE" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold Italic" size="15.0" />
-               </font>
-            </Text>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets top="25.0" />
-         </padding>
-      </VBox>
-      <GridPane fx:id="gridPaneSelection" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <ImageView fx:id="prevImageView" layoutX="64.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <ImageView fx:id="thisImageView" layoutX="134.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <ImageView fx:id="nextImageView" layoutX="264.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-         </children>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" percentHeight="25.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-      <VBox alignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-         <children>
-            <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" onAction="#chooseMap" styleClass="button-raised" text="OKAY" />
-         </children>
-         <padding>
-            <Insets bottom="25.0" />
-         </padding>
-      </VBox>
-   </children>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="gridPaneBackground" maxHeight="-Infinity" maxWidth="-Infinity"
+          minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0"
+          styleClass="background" stylesheets="@../CSS/LoginWaitingMapSelectionCSS.css"
+          xmlns="http://javafx.com/javafx/8"
+          fx:controller="ClientPackage.View.GUIResources.Class.MapSelectionController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="60.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <VBox alignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <children>
+                <Text layoutX="169.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="SCEGLI LA MAPPA CON CUI GIOCARE" textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold Italic" size="15.0"/>
+                    </font>
+                </Text>
+            </children>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <padding>
+                <Insets top="25.0"/>
+            </padding>
+        </VBox>
+        <GridPane fx:id="gridPaneSelection" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <children>
+                <ImageView fx:id="prevImageView" layoutX="64.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true"
+                           GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
+                <ImageView fx:id="thisImageView" layoutX="134.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true"
+                           GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER"/>
+                <ImageView fx:id="nextImageView" layoutX="264.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true"
+                           GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER"/>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" percentHeight="25.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+        </GridPane>
+        <VBox alignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+              GridPane.valignment="BOTTOM">
+            <children>
+                <JFXButton fx:id="takeImage" alignment="CENTER" layoutX="290.0" layoutY="17.0" onAction="#chooseMap"
+                           styleClass="button-raised" text="OKAY"/>
+            </children>
+            <padding>
+                <Insets bottom="25.0"/>
+            </padding>
+        </VBox>
+    </children>
 </GridPane>

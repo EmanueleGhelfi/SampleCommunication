@@ -1,9 +1,8 @@
 package ClientPackage.View.GUIResources.Class;
 
 import ClientPackage.Controller.ClientController;
-import ClientPackage.View.GUIResources.customComponent.ImageLoader;
+import ClientPackage.View.GUIResources.CustomComponent.ImageLoader;
 import ClientPackage.View.GeneralView.GUIView;
-import CommonModel.GameModel.Bonus.Generic.Bonus;
 import CommonModel.GameModel.City.City;
 import CommonModel.GameModel.Path.Position;
 import CommonModel.Snapshot.SnapshotToSend;
@@ -11,16 +10,15 @@ import Utilities.Class.Constants;
 import Utilities.Class.Graphics;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.transform.Rotate;
 
@@ -31,21 +29,17 @@ import java.util.ArrayList;
  */
 public class NobilityPathController implements BaseController {
 
-    @FXML private ImageView backgroundNobility;
-    @FXML private Pane nobilityPath;
-    @FXML private GridPane nobilityGridPane;
-
     private ImageView kingBonus;
     private ClientController clientController;
     private ImageView backgroundImage = new ImageView();
     private NobilityPathController nobilityPathController = this;
     private MatchController matchController;
-    private GUIView guiView = new GUIView();
+
+    @FXML
+    private Pane nobilityPath;
 
 
     private void createGridPane() {
-
-
         backgroundImage.fitWidthProperty().bind(nobilityPath.prefWidthProperty());
         backgroundImage.fitHeightProperty().bind(nobilityPath.prefHeightProperty());
         nobilityPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -56,86 +50,55 @@ public class NobilityPathController implements BaseController {
         nobilityPath.setOpacity(0.8);
         nobilityPath.prefHeightProperty().bind(matchController.getBackground().prefHeightProperty().divide(4));
         nobilityPath.prefWidthProperty().bind(matchController.getBackground().prefWidthProperty());
-        backgroundImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png",nobilityPath.getPrefWidth(),nobilityPath.getPrefHeight()));
+        backgroundImage.setImage(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/NobilityAndBonusCard.png", nobilityPath.getPrefWidth(), nobilityPath.getPrefHeight()));
         backgroundImage.setCache(true);
-
         nobilityPath.getChildren().add(backgroundImage);
         createPath();
         placeBonusCard();
     }
 
     private void placeBonusCard() {
-        ImageView greyBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/GreyBonusCard.png"));
+        ImageView greyBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/GreyBonusCard.png"));
         greyBonus.setCache(true);
-        ImageView orangeBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/PinkBonusCard.png"));
+        ImageView orangeBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/PinkBonusCard.png"));
         orangeBonus.setCache(true);
-        ImageView blueBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/BlueBonusCard.png"));
+        ImageView blueBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/BlueBonusCard.png"));
         blueBonus.setCache(true);
-        ImageView yellowBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/YellowBonusCard.png"));
+        ImageView yellowBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/YellowBonusCard.png"));
         yellowBonus.setCache(true);
-        kingBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH+"/KingBonus1.png"));
-        /*
-        ImageView greyBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/GreyBonusCard.png",true));
-        greyBonus.setCache(true);
-        ImageView orangeBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/PinkBonusCard.png",true));
-        orangeBonus.setCache(true);
-        ImageView blueBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/BlueBonusCard.png",true));
-        blueBonus.setCache(true);
-        ImageView yellowBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/YellowBonusCard.png",true));
-        yellowBonus.setCache(true);
-        kingBonus = new ImageView(new Image(Constants.IMAGE_PATH+"/KingBonus1.png",true));
-        */
+        kingBonus = new ImageView(ImageLoader.getInstance().getImage(Constants.IMAGE_PATH + "/KingBonus1.png"));
         kingBonus.setCache(true);
-
         greyBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
         orangeBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
         blueBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
         yellowBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
         kingBonus.getTransforms().add(new Rotate(35, 0.0, 0.0, 0.0, Rotate.Z_AXIS));
-
-        /*
-        greyBonus.setRotate(45);
-        orangeBonus.setRotate(45);
-        blueBonus.setRotate(45);
-        yellowBonus.setRotate(45);
-        kingBonus.setRotate(45);
-        */
-
-
         blueBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.7908));
         orangeBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.8458));
         greyBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.8983));
         yellowBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.9491));
         kingBonus.layoutXProperty().bind(nobilityPath.prefWidthProperty().multiply(0.9391));
-
         blueBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.552));
         orangeBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.5167));
         greyBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.4769));
         yellowBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.4284));
         kingBonus.layoutYProperty().bind(nobilityPath.prefHeightProperty().multiply(0.0));
-
         greyBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
         orangeBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
         blueBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
         yellowBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
         kingBonus.fitHeightProperty().bind(nobilityPath.prefHeightProperty().multiply(0.25));
-
         greyBonus.setPreserveRatio(true);
         orangeBonus.setPreserveRatio(true);
         blueBonus.setPreserveRatio(true);
         yellowBonus.setPreserveRatio(true);
         kingBonus.setPreserveRatio(true);
-
         Tooltip.install(greyBonus, new Tooltip("Bonus colore grigio"));
         Tooltip.install(orangeBonus, new Tooltip("Bonus colore arancione"));
         Tooltip.install(blueBonus, new Tooltip("Bonus colore blu"));
         Tooltip.install(yellowBonus, new Tooltip("Bonus colore giallo"));
         Tooltip.install(kingBonus, new Tooltip("Bonus del Re"));
-
-
         Graphics.bringUpImages(greyBonus, orangeBonus, yellowBonus, blueBonus, kingBonus);
-
-
         nobilityPath.getChildren().addAll(greyBonus, orangeBonus, blueBonus, yellowBonus, kingBonus);
     }
 
@@ -192,51 +155,33 @@ public class NobilityPathController implements BaseController {
 
     @Override
     public void setMyTurn(boolean myTurn, SnapshotToSend snapshot) {
-
     }
 
     @Override
     public void onStartMarket() {
-
     }
 
     @Override
     public void onStartBuyPhase() {
-
     }
 
     @Override
     public void onFinishMarket() {
-
-    }
-
-    @Override
-    public void onResizeHeight(double height, double width) {
-
-    }
-
-    @Override
-    public void onResizeWidth(double width, double height) {
-
     }
 
     @Override
     public void selectPermitCard() {
-
     }
 
     @Override
     public void selectCityRewardBonus() {
-
     }
 
     @Override
     public void moveKing(ArrayList<City> kingPath) {
-
     }
 
     @Override
     public void selectOldPermitCardBonus() {
-
     }
 }

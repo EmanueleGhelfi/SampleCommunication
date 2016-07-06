@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="550.0" prefWidth="600.0" styleClass="background"
+            stylesheets="@../CSS/LoginWaitingMapSelectionCSS.css" xmlns="http://javafx.com/javafx/8"
+            fx:controller="ClientPackage.View.GUIResources.Class.LoginController">
+    <center>
+        <VBox alignment="CENTER" spacing="50.0">
+            <children>
+                <ImageView fitHeight="68.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Image/title.png"/>
+                    </image>
+                </ImageView>
+                <Label fx:id="errorText" text="A beautiful mind product.." textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold Italic" size="15.0"/>
+                    </font>
+                </Label>
+                <JFXTextField fx:id="usernameText" alignment="CENTER" maxWidth="308.0" onAction="#onButtonLoginPressed"
+                              promptText="Inserisci qui il tuo nome" BorderPane.alignment="CENTER">
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" styleClass="background" stylesheets="@../CSS/LoginWaitingMapSelectionCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientPackage.View.GUIResources.Class.LoginController">
-   <center>
-      <VBox alignment="CENTER" spacing="50.0">
-         <children>
-            <ImageView fitHeight="68.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Image/title.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="errorText" text="A beautiful mind product.." textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold Italic" size="15.0" />
-               </font></Label>
-            <JFXTextField fx:id="usernameText" alignment="CENTER" maxWidth="308.0" onAction="#onButtonLoginPressed" promptText="Inserisci qui il tuo nome" BorderPane.alignment="CENTER">
-
-            </JFXTextField>
-            <JFXButton fx:id="button" onAction="#onButtonLoginPressed" text="HERE WE GO">
-               <font>
-                  <Font name="System Bold Italic" size="17.0" />
-               </font></JFXButton>
-         </children>
-      </VBox>
-   </center>
+                </JFXTextField>
+                <JFXButton fx:id="button" onAction="#onButtonLoginPressed" text="HERE WE GO">
+                    <font>
+                        <Font name="System Bold Italic" size="17.0"/>
+                    </font>
+                </JFXButton>
+            </children>
+        </VBox>
+    </center>
 </BorderPane>

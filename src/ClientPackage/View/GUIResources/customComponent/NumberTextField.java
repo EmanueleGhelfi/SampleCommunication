@@ -1,9 +1,5 @@
-package ClientPackage.View.GUIResources.customComponent;
+package ClientPackage.View.GUIResources.CustomComponent;
 
-
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -12,68 +8,49 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 /**
  * Created by Emanuele on 30/05/2016.
  */
 public class NumberTextField extends TextField {
+
     private final NumberFormat nf;
-    private ObjectProperty<Integer> number = new SimpleObjectProperty<>();
-
-    public final Integer getNumber() {
-        return number.get();
-    }
-
-    public final void setNumber(int value) {
-        number.set(value);
-    }
-
-    public ObjectProperty<Integer> numberProperty() {
-        return number;
-    }
-
-    public NumberTextField() {
-        this(0);
-    }
+    private final ObjectProperty<Integer> number = new SimpleObjectProperty<>();
 
     public NumberTextField(int value) {
         this(value, NumberFormat.getInstance());
-        initHandlers();
+        this.initHandlers();
     }
 
     public NumberTextField(int value, NumberFormat nf) {
-        super();
         this.nf = nf;
-        initHandlers();
-        setNumber(value);
+        this.initHandlers();
+        this.setNumber(value);
     }
 
     private void initHandlers() {
-
         // try to parse when focus is lost or RETURN is hit
-        setOnAction(new EventHandler<ActionEvent>() {
-
+        this.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
-                parseAndFormatInput();
+                NumberTextField.this.parseAndFormatInput();
             }
         });
-
-        focusedProperty().addListener(new ChangeListener<Boolean>() {
-
+        this.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue.booleanValue()) {
-                    parseAndFormatInput();
+                    NumberTextField.this.parseAndFormatInput();
                 }
             }
         });
-
         // Set text in field if BigDecimal property is changed from outside.
-        numberProperty().addListener(new ChangeListener<Integer>() {
-
+        this.numberProperty().addListener(new ChangeListener<Integer>() {
             @Override
             public void changed(ObservableValue<? extends Integer> obserable, Integer oldValue, Integer newValue) {
-                setText(nf.format(newValue));
+                NumberTextField.this.setText(NumberTextField.this.nf.format(newValue));
             }
         });
     }
@@ -84,18 +61,30 @@ public class NumberTextField extends TextField {
      */
     private void parseAndFormatInput() {
         try {
-            String input = getText();
+            String input = this.getText();
             if (input == null || input.length() == 0) {
                 return;
             }
-            Number parsedNumber = nf.parse(input);
+            Number parsedNumber = this.nf.parse(input);
             int newValue = Integer.parseInt(input);
-            setNumber(newValue);
-            selectAll();
+            this.setNumber(newValue);
+            this.selectAll();
         } catch (ParseException ex) {
             // If parsing fails keep old number
-            setText(nf.format(number.get()));
+            this.setText(this.nf.format(this.number.get()));
         }
+    }
+
+    public final Integer getNumber() {
+        return this.number.get();
+    }
+
+    public final void setNumber(int value) {
+        this.number.set(value);
+    }
+
+    public ObjectProperty<Integer> numberProperty() {
+        return this.number;
     }
 
 }

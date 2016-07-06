@@ -1,12 +1,12 @@
 package CommonModel.GameModel.Path;
 
-import Utilities.Exception.ActionNotPossibleException;
 import Server.Model.User;
+import Utilities.Exception.ActionNotPossibleException;
 
 /**
  * Created by Giulio on 14/05/2016.
  */
-public interface Path{
+public interface Path {
 
     /**
      * @param user

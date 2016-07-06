@@ -1,38 +1,36 @@
-.root{
+.root {
     -fx-font-size: 24pt;
-    /*    -fx-base: rgb(255,0,0);*/
-    /*    -fx-background: rgb(50,50,50);*/
 }
+
 #NumberField {
     -fx-border-width: 1;
     -fx-border-color: lightgray;
-    -fx-background-insets:1;
-    -fx-border-radius:3 0 0 3;
-    /*    -fx-border-radius:0 0 0 0;*/
+    -fx-background-insets: 1;
+    -fx-border-radius: 3 0 0 3;
 }
+
 #NumberSpinnerArrow {
     -fx-fill: gray;
     -fx-stroke: gray;
-    /*        -fx-effect: innershadow( gaussian , black , 2 , 0.6 , 1 , 1 )*/
-}
-#ButtonsBox {
-    -fx-border-color:lightgray;
-    -fx-border-width: 1 1 1 0;
-    -fx-border-radius: 0 3 3 0;
-    /*    -fx-border-radius: 0 0 0 0;*/
-}
-#SpinnerButtonUp {
-    -fx-background-insets: 0;
-    -fx-background-radius:0 3 0 0;
-    /*    -fx-background-radius:0;*/
-}
-#SpinnerButtonDown {
-    -fx-background-insets: 0;
-    -fx-background-radius:0 0 3 0;
-    /*    -fx-background-radius:0;*/
 }
 
-.removeButton{
+#ButtonsBox {
+    -fx-border-color: lightgray;
+    -fx-border-width: 1 1 1 0;
+    -fx-border-radius: 0 3 3 0;
+}
+
+#SpinnerButtonUp {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0 3 0 0;
+}
+
+#SpinnerButtonDown {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0 0 3 0;
+}
+
+.removeButton {
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 14px;
     -fx-button-type: RAISED;
@@ -40,19 +38,18 @@
     -fx-text-fill: WHITE;
 }
 
-.circularButton{
+.circularButton {
     -fx-background-radius: 50%;
 }
 
-.shopBackground{
+.shopBackground {
     -fx-background-image: url("/ClientPackage/View/GUIResources/Image/ShopPattern.png");
     -fx-background-size: 100%;
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
 
-
-.bordered:hover{
+.bordered:hover {
     -fx-border-color: WHITE;
     -fx-border-width: 5;
     -fx-border-insets: 5;

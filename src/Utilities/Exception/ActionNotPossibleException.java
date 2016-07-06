@@ -10,8 +10,6 @@ public class ActionNotPossibleException extends Exception implements Serializabl
     public ActionNotPossibleException() {
     }
 
-
-
     public ActionNotPossibleException(String message) {
         super(message);
     }
