@@ -49,9 +49,14 @@ public class GameController implements Serializable {
     private UserColor[] userColorSet;
     private FakeUser fakeUser;
 
+    /** Constructor used for serialization
+     */
     public GameController() {
     }
 
+    /** Constructor
+     * @param game is the game that is controlled
+     */
     public GameController(Game game) {
         this.game = game;
         this.timer = new Timer();
@@ -62,6 +67,8 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Starts first timer of the login users
+     */
     public void startTimer() {
         timerTask = new TimerTask() {
             @Override
@@ -71,8 +78,7 @@ public class GameController implements Serializable {
         };
     }
 
-    /**
-     * Called when init game
+    /** Notify that the game is started
      */
     public void notifyStarted() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
@@ -92,6 +98,8 @@ public class GameController implements Serializable {
         startConnectedTimer();
     }
 
+    /** Creates the strange rule in case of a game composed by two players
+     */
     private void creatingFakeUser() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         fakeUser = new FakeUser();
@@ -99,6 +107,8 @@ public class GameController implements Serializable {
         fakeUser.setUsername("FakeUser");
     }
 
+    /** Set the configuration for two players
+     */
     private void configurationForTwoPlayers() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         ArrayList<PermitCard> permitCardArray = new ArrayList<>();
@@ -116,6 +126,8 @@ public class GameController implements Serializable {
 
     }
 
+    /** Set the first configuration of the game, it is the init
+     */
     private void setDefaultStuff() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         int userCounter = 0;
@@ -137,6 +149,9 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Are the available color that can be choosen for the user
+     * @return
+     */
     private UserColor colorAvailable() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         ArrayList<UserColor> shuffledUserColor = new ArrayList<>(Arrays.asList(UserColor.values()));
@@ -155,11 +170,15 @@ public class GameController implements Serializable {
         return null;
     }
 
+    /** Cancel the timeout and start game
+     */
     public void cancelTimeout() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         timer.cancel();
     }
 
+    /** Set the timeout
+     */
     public void setTimeout() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         if (timer == null) {
@@ -177,10 +196,7 @@ public class GameController implements Serializable {
         timer.schedule(timerTask, duration);
     }
 
-
-    /**
-     * create snapshot and change round
-     *
+    /** Create snapshot and change round
      * @param user user that has finished round
      */
     public void onFinishRound(User user) {
@@ -213,6 +229,8 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Cancel the timer and changes round
+     */
     private void cancelTimer() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         if (roundTimer != null) {
@@ -220,6 +238,9 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Initialize the changing round
+     * @param nextUser is the next user that plays
+     */
     private void changeRound(int nextUser) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         ArrayList<User> userArrayList = new ArrayList<>(game.getUsers());
@@ -231,6 +252,9 @@ public class GameController implements Serializable {
         startRoundTimer(userArrayList.get((nextUser) % game.getUsers().size()));
     }
 
+    /** Starts the round timer
+     * @param user is the user where is set the timer
+     */
     private void startRoundTimer(User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         roundTimer = new Timer();
@@ -244,6 +268,8 @@ public class GameController implements Serializable {
         roundTimer.schedule(timerTask, Constants.ROUND_DURATION);
     }
 
+    /** Starts the market phase
+     */
     private void startMarket() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         sellPhase = true;
@@ -257,6 +283,8 @@ public class GameController implements Serializable {
         });
     }
 
+    /** Starts the timer for check communication in RMI
+     */
     private void startConnectedTimer() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         Timer checkUserTimer = new Timer();
@@ -275,33 +303,35 @@ public class GameController implements Serializable {
         checkUserTimer.scheduleAtFixedRate(checkUserTimerTask, 0, 30000);
     }
 
+    /** Send that market is started
+     * @param user is the last user where starts market
+     */
     private void sendStartMarket(User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         user.getBaseCommunication().sendStartMarket();
     }
 
-    private synchronized void onAllUserDisconnected() {
-        InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
-        roundTimer.cancel();
-        GamesManager.getInstance().cancelThisGame(game, this);
-    }
-
+    /** Do the action in the server
+     * @param action is the action to do
+     * @param user is the user that has done the action
+     * @throws ActionNotPossibleException is the exception
+     */
     public void doAction(Action action, User user) throws ActionNotPossibleException {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         action.doAction(game, user);
     }
 
-    /**
-     * send available map to client
-     *
-     * @param user
+    /** Send available map to client
+     * @param user is the user that can choose the map
      */
     private void sendAvailableMap(User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         user.getBaseCommunication().sendAvailableMap(availableMaps);
     }
 
-    /* set map and init game called by client*/
+    /** Set map and init game called by client
+     * @param map is the map choosen and that must be set into the game
+     */
     public void setMap(Map map) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         if (availableMaps.contains(map)) {
@@ -330,6 +360,8 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Method that test the finish game and add 9 emporia
+     */
     private void addTenEmporiums() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (User user : users) {
@@ -345,6 +377,10 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Set the initial king position
+     * @param game is the game where put king
+     * @param mapToFind is the map received
+     */
     private void setKingPosition(Game game, Map mapToFind) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (City city : mapToFind.getCity()) {
@@ -355,6 +391,10 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Check if the map exist
+     * @param map is the map send
+     * @return te mapSelected
+     */
     private Map findMap(Map map) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (Map mapToSelect : availableMaps) {
@@ -365,8 +405,7 @@ public class GameController implements Serializable {
         return null;
     }
 
-    /**
-     * disable market phase in all user
+    /** Disable market phase in all user
      */
     private synchronized void sendFinishMarketToAll() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
@@ -377,6 +416,8 @@ public class GameController implements Serializable {
         }).start();
     }
 
+    /** Select the first player in game, round start from that user
+     */
     private void selectFirstPlayer() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         ArrayList<User> users = new ArrayList<>(game.getUsers());
@@ -396,6 +437,8 @@ public class GameController implements Serializable {
         sendSnapshotToAll();
     }
 
+    /** Send the snapshot to all the users in game
+     */
     public synchronized void sendSnapshotToAll() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         new Thread(() -> {
@@ -408,7 +451,10 @@ public class GameController implements Serializable {
         }).start();
     }
 
-    // called by client when receive an object to sell
+    /** Called by client when receive an object to sell
+     * @param buyableWrappers are the object that are buyable
+     * @return that has insert into the buyable list the objects
+     */
     public boolean onReceiveBuyableObject(ArrayList<BuyableWrapper> buyableWrappers) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (BuyableWrapper buyableWrapper : buyableWrappers) {
@@ -420,7 +466,11 @@ public class GameController implements Serializable {
         return true;
     }
 
-    // called by client when receive object to buy
+    /** Called by client when receive object to buy
+     * @param user is the user that buy
+     * @param buyableWrappers are the object buyable
+     * @return if is possible to buy
+     */
     public boolean onBuyObject(User user, ArrayList<BuyableWrapper> buyableWrappers) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         int counter = 0;
@@ -447,12 +497,18 @@ public class GameController implements Serializable {
         return counter == buyableWrappers.size();
     }
 
+    /** Remove from market the item
+     * @param item item that must be removed
+     */
     public synchronized void onRemoveItem(BuyableWrapper item) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         game.removeFromMarketList(item);
         sendSnapshotToAll();
     }
 
+    /** Finish the sell phase
+     * @param user is the user to send that is finished
+     */
     public void onFinishSellPhase(User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         long finishedUser = 0;
@@ -474,6 +530,8 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Send that buy phase is started
+     */
     private void startBuyPhase() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         sendSnapshotToAll();
@@ -481,6 +539,8 @@ public class GameController implements Serializable {
         selectRandomUser();
     }
 
+    /** Select random user for buy phase in market
+     */
     private void selectRandomUser() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         Random random = new Random();
@@ -497,6 +557,9 @@ public class GameController implements Serializable {
         users.get(userNumber).getBaseCommunication().sendStartBuyPhase();
     }
 
+    /** Send that buy phase is finished
+     * @param user is the user where i have received that he has completed this phase
+     */
     public void onFinishBuyPhase(User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         if (buyPhase) {
@@ -523,6 +586,11 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Gets the bonus of the city where i have build
+     * @param city1 is the city
+     * @param user is the user that must win the bonus
+     * @throws ActionNotPossibleException is the exception if action is not possible
+     */
     public void getCityRewardBonus(City city1, User user) throws ActionNotPossibleException {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         City city = game.getCity(city1);
@@ -540,6 +608,11 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Check if bonus is not a nobility bonus
+     * @param city is the city with bonus chosen
+     * @param user is the user that wants the bonus
+     * @return true if it goes all well
+     */
     private boolean checkBonusCorrect(City city, User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         ArrayList<Bonus> bonusArrayList = city.getBonus().getBonusArrayList();
@@ -556,6 +629,10 @@ public class GameController implements Serializable {
         return false;
     }
 
+    /** Get PermitCard action where i buy it
+     * @param permitCard is the permit bought
+     * @param user is the user who has bought it
+     */
     public void onSelectPermitCard(PermitCard permitCard, User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         PermitDeck permitDeck = game.getPermitDeck(permitCard.getRetroType());
@@ -570,6 +647,8 @@ public class GameController implements Serializable {
         sendSnapshotToAll();
     }
 
+    /** Change the Master User if is disconnected
+     */
     public void changeMasterUser() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         // send map to first user
@@ -580,11 +659,15 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Start the last round because of the build of 10 emporia
+     */
     public void startingLastRound() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         lastUser = nextUser % game.getUsers().size();
     }
 
+    /** Check the user who has win
+     */
     public void checkUserWhoWin() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         ArrayList<User> firstNobilityPathUserToReward = new ArrayList<>(users);
@@ -650,6 +733,9 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Sort the win array
+     * @param arrayList sorted
+     */
     private void sortingOnWin(ArrayList<User> arrayList) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         Collections.sort(arrayList, new Comparator<User>() {
@@ -665,6 +751,9 @@ public class GameController implements Serializable {
         });
     }
 
+    /** Sort the helper array
+     * @param arrayList sorted
+     */
     private void sortingOnHelper(ArrayList<User> arrayList) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         Collections.sort(arrayList, new Comparator<User>() {
@@ -680,6 +769,9 @@ public class GameController implements Serializable {
         });
     }
 
+    /** Sort the permit array
+     * @param arrayList sorted
+     */
     private void sortingOnPermit(ArrayList<User> arrayList) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         Collections.sort(arrayList, new Comparator<User>() {
@@ -695,6 +787,9 @@ public class GameController implements Serializable {
         });
     }
 
+    /** Sort the nobility array
+     * @param arrayList sorted
+     */
     private void sortingOnNobiliy(ArrayList<User> arrayList) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         Collections.sort(arrayList, new Comparator<User>() {
@@ -710,6 +805,10 @@ public class GameController implements Serializable {
         });
     }
 
+    /** Check the first user
+     * @param arrayList is the array with ranking
+     * @return the array of user sorted
+     */
     private ArrayList<User> checkFirst(ArrayList<User> arrayList) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         Collections.sort(arrayList, new Comparator<User>() {
@@ -734,7 +833,9 @@ public class GameController implements Serializable {
         return arrayList;
     }
 
-
+    /** Set the default things where user passes
+     * @param user is the user who passes
+     */
     public void onUserPass(User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         if (users.indexOf(user) == (nextUser % users.size()) && !buyPhase && !sellPhase) {
@@ -744,6 +845,9 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Called when a user is disconnected
+     * @param user is the user offline
+     */
     public void onUserDisconnected(User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         users.forEach(user1 -> {
@@ -759,6 +863,10 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Select the old permit card
+     * @param user is the user who have choice the old permit card
+     * @param permitCard is the permit card choosen
+     */
     public void onSelectOldPermitCard(User user, PermitCard permitCard) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
@@ -772,6 +880,9 @@ public class GameController implements Serializable {
 
     }
 
+    /** Is the routine of the user initialization (set true is connected)
+     * @return true if it goes well
+     */
     public boolean userConnectedRoutine() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (User user : users) {
@@ -782,6 +893,8 @@ public class GameController implements Serializable {
         return false;
     }
 
+    /** Clean the game because of the finish
+     */
     public synchronized void cleanGame() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         if (!userConnectedRoutine()) {
@@ -791,6 +904,10 @@ public class GameController implements Serializable {
         }
     }
 
+    /** Equals
+     * @param o is the object
+     * @return true if it goes well
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -800,6 +917,9 @@ public class GameController implements Serializable {
 
     }
 
+    /** HashCode
+     * @return position
+     */
     @Override
     public int hashCode() {
         return fakeUser != null ? fakeUser.hashCode() : 0;

@@ -50,7 +50,7 @@ public class ClientController {
     }
 
     /** Method that allows the creation of a ClientController (using the Singleton pattern)
-     * @return
+     * @return the singleton, instance of clientController
      */
     public static ClientController getInstance() {
         if (clientController == null)
@@ -73,7 +73,7 @@ public class ClientController {
                 baseView = FactoryView.getBaseView(uiMethod, this);
                 baseView.initView();
             } else {
-                System.out.println("Not connected, sorry");
+                System.out.println("Non connesso");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -196,19 +196,25 @@ public class ClientController {
         clientService.sendMap(map);
     }
 
-    /**
-     *
-     * @param snapshotToSend
+    /** Set the snapshot received and send it to the view to set first things.
+     * @param snapshotToSend is the first snapshot received
      */
     public void gameInitialization(SnapshotToSend snapshotToSend) {
         snapshot = snapshotToSend;
         baseView.gameInitialization(snapshotToSend);
     }
 
+    /** Notify to the view that is my turn
+     */
     public void isMyTurn() {
         baseView.isMyTurn(snapshot);
     }
 
+    /** Send to server that a main action is done with its parameters.
+     * @param councilor is the councilor that i want to elect
+     * @param king if the council is the king one
+     * @param regionName if the council is one of the regions
+     */
     public void mainActionElectCouncilor(Councilor councilor, King king, RegionName regionName) {
         Action action = new MainActionElectCouncilor(councilor, king, regionName);
         try {
@@ -220,10 +226,18 @@ public class ClientController {
         }
     }
 
+    /** Send that the turn is finished
+     */
     public void turnFinished() {
         baseView.turnFinished();
     }
 
+    /** Send to server that a fast action is done with its parameters.
+     * @param councilor is the councilor that i want to elect
+     * @param king if the council is the king one
+     * @param region if the council is one of the regions
+     * @param councilType is the type of the council, if region or king one
+     */
     public void fastActionElectCouncilorWithHelper(Councilor councilor, King king, RegionName region, String councilType) {
         Action action = new FastActionElectCouncilorWithHelper(region, king, councilor, councilType);
         try {
@@ -235,19 +249,32 @@ public class ClientController {
         }
     }
 
+    /** Sets the baseView
+     * @param baseView is the baseView to set
+     */
     public void setBaseView(BaseView baseView) {
         this.baseView = baseView;
     }
 
+    /** Getter
+     * @return the snapshot
+     */
     public SnapshotToSend getSnapshot() {
         return snapshot;
     }
 
+    /** Setter && update the snapshot;
+     * @param snapshot is the snapshot to set;
+     */
     public void setSnapshot(SnapshotToSend snapshot) {
         this.snapshot = snapshot;
         baseView.updateSnapshot();
     }
 
+    /** Send to server that a main action is done with its parameters.
+     * @param permitCard is the permit card to buy
+     * @param politicCards are the politic card that satisfy the council
+     */
     public void mainActionBuyPermitCard(PermitCard permitCard, ArrayList<PoliticCard> politicCards) {
         Action action = new MainActionBuyPermitCard(politicCards, permitCard.getRetroType(), permitCard);
         try {
@@ -259,10 +286,8 @@ public class ClientController {
         }
     }
 
-    /**
-     * called when doing a generic action
-     *
-     * @param action
+    /** Called when doing a generic action
+     * @param action is the generic action
      */
     public void doAction(Action action) {
         try {
@@ -273,88 +298,141 @@ public class ClientController {
         }
     }
 
+    /** Bridge used to send the item on sale in the market phase
+     */
     public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
         clientService.sendSaleItem(realSaleList);
     }
 
+    /** Bridge used to send the item that can be bought on market phase
+     */
     public void onBuy(ArrayList<BuyableWrapper> buyList) {
         clientService.onBuy(buyList);
     }
 
+    /** Bridge used to communicate items that are to be remove.
+     */
     public void removeItemFromMarket(BuyableWrapper item) {
         clientService.onRemoveItemFromMarket(item);
     }
 
+    /** Bridge used to communicate that market has started
+     */
     public void onStartMarket() {
         baseView.onStartMarket();
     }
 
+    /** Bridge used to communicates that is finished the sell phase
+     */
     public void sendFinishSellPhase() {
         clientService.onFinishSellPhase();
     }
 
+    /** Bridge used to communicates that is started the buy phase
+     */
     public void onStartBuyPhase() {
         baseView.onStartBuyPhase();
     }
 
+    /** Bridge that communicates that is finished the buy phase to the server
+     */
     public void sendFinishedBuyPhase() {
         clientService.sendFinishedBuyPhase();
     }
 
+    /** Bridge that communicates that is finished the buy phase to the view
+     */
     public void onFinishBuyPhase() {
         baseView.onFinishMarket();
     }
 
+    /** Bridge that communicates user to select the permit card
+     */
     public void selectPermitCard() {
         baseView.selectPermitCard();
     }
 
+    /** Bridge used to set the snapshot and select the city reward bonus
+     * @param snapshotToSend is the snapshot to set
+     */
     public void selectCityRewardBonus(SnapshotToSend snapshotToSend) {
         this.snapshot = snapshotToSend;
         baseView.selectCityRewardBonus();
     }
 
+    /** Bridge used to send to server the city where i want take the bonus
+     * @param city1 is the city choosen
+     */
     public void getCityRewardBonus(City city1) {
         clientService.getCityRewardBonus(city1);
     }
 
+    /** Bridge used to communicate server the permit card selected
+     * @param permitCard is the permit card choosen
+     */
     public void onSelectPermitCard(PermitCard permitCard) {
         clientService.onSelectPermitCard(permitCard);
     }
 
+    /** Bridge used to communicates client that king can be moved
+     * @param kingPath is the path where move king
+     */
     public void onMoveKing(ArrayList<City> kingPath) {
         baseView.onMoveKing(kingPath);
     }
 
+    /** Bridge that communicates client that action is not possible
+     * @param e is the exception
+     */
     public void onActionNotPossible(ActionNotPossibleException e) {
         baseView.onActionNotPossibleException(e);
     }
 
+    /** Bridge that communicates server the finish of the turn
+     */
     public void onFinishTurn() {
         clientService.onFinishTurn();
     }
 
+    /** Bridge used to communicate the match is finished
+     * @param finalSnapshot the arraylist sorted with the ranking
+     */
     public void sendMatchFinishedWithWin(ArrayList<BaseUser> finalSnapshot) {
         this.finalSnapshot = finalSnapshot;
         baseView.sendMatchFinishedWithWin();
     }
 
+    /** Bridge used to communicate view the old permit card selected
+     */
     public void selectOldPermitCardBonus() {
         baseView.selectOldPermitCardBonus();
     }
 
+    /** Bridge used to communicate server the old permit card choosen
+     * @param permitCard is the permit card choosen
+     */
     public void onSelectOldPermitCard(PermitCard permitCard) {
         clientService.onSelectOldPermitCard(permitCard);
     }
 
+    /** Getter
+     * @return the last snapshot
+     */
     public ArrayList<BaseUser> getFinalSnapshot() {
         return finalSnapshot;
     }
 
+    /** Returns if i have won the match
+     * @return the value if i am a winner
+     */
     public boolean amIAWinner() {
         return snapshot.getCurrentUser().getUsername().equals(finalSnapshot.get(0).getUsername());
     }
 
+    /** Gets the user information
+     * @param selectedItem is the username
+     * @return the user with that username
+     */
     public BaseUser getUserWithString(String selectedItem) {
         for (BaseUser baseUser : finalSnapshot) {
             if (baseUser.getUsername().equals(selectedItem))
@@ -363,6 +441,10 @@ public class ClientController {
         return null;
     }
 
+    /** Gets the user position in the rank
+     * @param selectedItem is the username
+     * @return the position in ranking
+     */
     public String getUserPosition(String selectedItem) {
         for (int i = 0; i < finalSnapshot.size(); i++) {
             if (finalSnapshot.get(i).getUsername().equals(selectedItem)) {
@@ -372,6 +454,10 @@ public class ClientController {
         return Integer.toString(-1);
     }
 
+    /** Gets the user building where an user has build
+     * @param selectedItem is the username
+     * @return the string with all the emporia
+     */
     public String getUserBuilding(String selectedItem) {
         String toReturn = "";
         for (BaseUser baseUser : finalSnapshot) {
@@ -388,6 +474,10 @@ public class ClientController {
         return toReturn;
     }
 
+    /** Returns the city where an user can build
+     * @param username is the username chosen
+     * @return the list of the city where an user can build
+     */
     public ArrayList<String> populateListView(String username) {
         ArrayList<String> toReturn = new ArrayList<>();
         if (snapshot.getUsersInGame().get(username).getPermitCards().size() == 0)
@@ -405,6 +495,9 @@ public class ClientController {
         return toReturn;
     }
 
+    /** Bridge used to communicate view that an user has disconnected
+     * @param username is the username of the user
+     */
     public void onUserDisconnect(String username) {
         baseView.onUserDisconnect(username);
     }

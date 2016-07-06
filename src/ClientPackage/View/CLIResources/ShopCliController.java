@@ -85,7 +85,6 @@ public class ShopCliController implements CliController {
         if (onBuyPhase) {
             cliPrinter.printBlue("MARKET LIST: ");
             ArrayList<BuyableWrapper> buyableWrappers = new ArrayList<>();
-            //// TODO: 28/06/2016 check error
             clientController.getSnapshot().getMarketList().stream().filter(buyableWrapper ->
                     !buyableWrapper.getUsername().equalsIgnoreCase(clientController.getSnapshot().getCurrentUser().getUsername()))
                     .forEach(buyableWrappers::add);
