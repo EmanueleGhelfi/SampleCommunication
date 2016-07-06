@@ -111,10 +111,20 @@ public class ClientController {
         String method;
         System.out.println("Inserisci metodo comunicazione\n 1. RMI \n 2. Socket \n (So che non sai cosa sono ma metti una cosa a caso)");
         String scelta = inKeyboard.readLine();
-        if (scelta.equals("1")) {
-            method = Constants.RMI;
-        } else {
-            method = Constants.SOCKET;
+        switch (scelta){
+            case ("1"): {
+                method = Constants.RMI;
+                break;
+            }
+            case ("2"): {
+                method = Constants.SOCKET;
+                break;
+            }
+            default:{
+                System.out.println(CLIColor.ANSI_RED + "Syntax error, starting default choice: SOCKET" + CLIColor.ANSI_RESET);
+                method = Constants.SOCKET;
+                break;
+            }
         }
         return method;
     }

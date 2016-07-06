@@ -1408,12 +1408,12 @@ public class MatchController implements BaseController {
             public void run() {
                 if (thisTurn) {
                     startTimer();
-                    Graphics.notification("E' il tuo turno!");
+                    Graphics.notification("E' il tuo turno!", true);
                     turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnYes1.png"));
                     Tooltip.install(turnImage, new Tooltip("E' il tuo turno"));
                 } else {
                     cancelTimer();
-                    Graphics.notification("Turno finito!");
+                    Graphics.notification("Turno finito!", true);
                     turnImage.setImage(new Image(Constants.IMAGE_PATH + "/turnNo1.png"));
                     Tooltip.install(turnImage, new Tooltip("Non è il tuo turno"));
                 }

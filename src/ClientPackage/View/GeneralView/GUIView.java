@@ -314,7 +314,7 @@ public class GUIView extends Application implements BaseView {
 
     @Override
     public void onUserDisconnect(String username) {
-        Graphics.notification("User: " + username + " is offline");
+        Graphics.notification("User: " + username + " is offline", false);
     }
 
     public synchronized void registerBaseController(BaseController baseController) {

@@ -411,7 +411,7 @@ public class ShopController implements BaseController {
 
     @Override
     public void onStartMarket() {
-        Graphics.notification("Start Market");
+        Graphics.notification("Bottega aperta, vendi pure", false);
         marketPhase = true;
         sellPhase = true;
         buyList.clear();
@@ -446,12 +446,12 @@ public class ShopController implements BaseController {
                 createBuyingPopOver();
             }
         });
-        Graphics.notification("Start Buy Phase");
+        Graphics.notification("Ora puoi comprare", false);
     }
 
     @Override
     public void onFinishMarket() {
-        Graphics.notification("Finish Market");
+        Graphics.notification("Bottega chiusa", false);
         buyList.clear();
         sellList.clear();
         temporarySellList.clear();

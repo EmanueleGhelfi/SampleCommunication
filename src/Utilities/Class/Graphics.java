@@ -96,7 +96,7 @@ public class Graphics {
      *
      * @param messageOfTheMoment è il testo che sarà stampato a video nella notifica.
      */
-    public static void notification(String messageOfTheMoment) {
+    public static void notification(String messageOfTheMoment, boolean hasADuration) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -104,7 +104,9 @@ public class Graphics {
                 TrayNotification tray = new TrayNotification(Constants.NOTIFICATION_TEXT, messageOfTheMoment, NotificationType.SUCCESS);
                 tray.setImage(icona);
                 tray.showAndWait();
-                tray.showAndDismiss(Duration.seconds(3));
+                if (hasADuration) {
+                    tray.showAndDismiss(Duration.seconds(3));
+                }
             }
         });
     }
