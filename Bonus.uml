@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>CommonModel.GameModel.Bonus</OriginalElement>
+  <nodes>
+    <node x="219.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.CoinBonus</node>
+    <node x="1211.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.OldPermitCardBonus</node>
+    <node x="0.0" y="198.0">CommonModel.GameModel.Bonus.Reward.RegionBonusCard</node>
+    <node x="1800.5" y="119.0">CommonModel.GameModel.Bonus.Reward.KingBonusCard</node>
+    <node x="1688.5" y="119.0">CommonModel.GameModel.Bonus.Generic.MainBonus</node>
+    <node x="329.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.NewMainAction</node>
+    <node x="1375.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.TwoOldCityRewardBonus</node>
+    <node x="147.0" y="198.0">CommonModel.GameModel.Bonus.Reward.ColorBonusCard</node>
+    <node x="1061.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.VictoryPointBonus</node>
+    <node x="732.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.PoliticCardBonus</node>
+    <node x="587.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.PermitCardBonus</node>
+    <node x="926.0" y="0.0">CommonModel.GameModel.Bonus.Generic.Bonus</node>
+    <node x="70.5" y="119.0">CommonModel.GameModel.Bonus.Reward.RewardBonusCard</node>
+    <node x="875.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.OneOldCityRewardBonus</node>
+    <node x="467.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.HelperBonus</node>
+    <node x="1561.5" y="119.0">CommonModel.GameModel.Bonus.SingleBonus.NobilityBonus</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="CommonModel.GameModel.Bonus.Generic.MainBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="1734.5" y="59.0" />
+      <point x="983.5" y="59.0" />
+      <point x="25.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.Reward.RegionBonusCard" target="CommonModel.GameModel.Bonus.Reward.RewardBonusCard">
+      <point x="0.0" y="-14.5" />
+      <point x="63.5" y="173.0" />
+      <point x="102.75" y="173.0" />
+      <point x="-32.25" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.PermitCardBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="650.0" y="89.0" />
+      <point x="948.5" y="89.0" />
+      <point x="-10.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.NobilityBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="1615.0" y="69.0" />
+      <point x="978.5" y="69.0" />
+      <point x="20.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.CoinBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="264.5" y="59.0" />
+      <point x="933.5" y="59.0" />
+      <point x="-25.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.OldPermitCardBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="1283.5" y="89.0" />
+      <point x="968.5" y="89.0" />
+      <point x="10.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.VictoryPointBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="1126.5" y="99.0" />
+      <point x="963.5" y="99.0" />
+      <point x="5.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.PoliticCardBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="794.0" y="99.0" />
+      <point x="953.5" y="99.0" />
+      <point x="-5.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.Reward.RewardBonusCard" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="135.0" y="49.0" />
+      <point x="928.5" y="49.0" />
+      <point x="-30.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.NewMainAction" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="388.5" y="69.0" />
+      <point x="938.5" y="69.0" />
+      <point x="-20.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.HelperBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="517.5" y="79.0" />
+      <point x="943.5" y="79.0" />
+      <point x="-15.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.TwoOldCityRewardBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="1458.5" y="79.0" />
+      <point x="973.5" y="79.0" />
+      <point x="15.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.SingleBonus.OneOldCityRewardBonus" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.Reward.ColorBonusCard" target="CommonModel.GameModel.Bonus.Reward.RewardBonusCard">
+      <point x="0.0" y="-14.5" />
+      <point x="206.5" y="173.0" />
+      <point x="167.25" y="173.0" />
+      <point x="32.25" y="14.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Bonus.Reward.KingBonusCard" target="CommonModel.GameModel.Bonus.Generic.Bonus">
+      <point x="0.0" y="-14.5" />
+      <point x="1857.5" y="49.0" />
+      <point x="988.5" y="49.0" />
+      <point x="30.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5503875968992248" x="957.5" y="113.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

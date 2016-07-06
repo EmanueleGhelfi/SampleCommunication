@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ClientPackage</OriginalElement>
+  <nodes>
+    <node x="55.1762820512821" y="0.0">ClientPackage.View.GeneralView.BaseView</node>
+    <node x="34.30769230769235" y="237.0">ClientPackage.View.GeneralView.FactoryView</node>
+    <node x="252.80769230769232" y="237.0">ClientPackage.NetworkInterface.ClientFactoryService</node>
+    <node x="227.5" y="0.0">ClientPackage.NetworkInterface.ClientService</node>
+    <node x="127.62500000000001" y="79.0">ClientPackage.Controller.ClientController</node>
+    <node x="0.0" y="158.0">ClientPackage.View.GeneralView.CLIView</node>
+    <node x="190.0" y="158.0">ClientPackage.NetworkInterface.ClientRMIService</node>
+    <node x="94.00000000000001" y="158.0">ClientPackage.View.GeneralView.GUIView</node>
+    <node x="331.0" y="158.0">ClientPackage.NetworkInterface.ClientSocketService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ClientPackage.NetworkInterface.ClientFactoryService" target="ClientPackage.NetworkInterface.ClientRMIService">
+      <point x="-34.75" y="-14.5" />
+      <point x="287.5576923076923" y="212.0" />
+      <point x="250.5" y="212.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.NetworkInterface.ClientRMIService" target="ClientPackage.NetworkInterface.ClientService">
+      <point x="30.25" y="-14.5" />
+      <point x="280.75" y="138.0" />
+      <point x="277.5" y="138.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.FactoryView" target="ClientPackage.View.GeneralView.CLIView">
+      <point x="-24.0" y="-14.5" />
+      <point x="58.30769230769235" y="212.0" />
+      <point x="37.0" y="212.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.Controller.ClientController" target="ClientPackage.View.GeneralView.BaseView">
+      <point x="-29.0" y="-14.5" />
+      <point x="156.625" y="54.0" />
+      <point x="122.6762820512821" y="54.0" />
+      <point x="27.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.CLIView" target="ClientPackage.Controller.ClientController">
+      <point x="18.5" y="-14.5" />
+      <point x="55.5" y="138.0" />
+      <point x="142.125" y="138.0" />
+      <point x="-43.5" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.NetworkInterface.ClientRMIService" target="ClientPackage.Controller.ClientController">
+      <point x="-30.25" y="-14.5" />
+      <point x="220.25" y="138.0" />
+      <point x="200.125" y="138.0" />
+      <point x="14.5" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.NetworkInterface.ClientSocketService" target="ClientPackage.Controller.ClientController">
+      <point x="-33.75" y="-14.5" />
+      <point x="364.75" y="128.0" />
+      <point x="229.125" y="128.0" />
+      <point x="43.5" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.NetworkInterface.ClientSocketService" target="ClientPackage.NetworkInterface.ClientService">
+      <point x="33.75" y="-14.5" />
+      <point x="432.25" y="54.0" />
+      <point x="310.83333333333337" y="54.0" />
+      <point x="33.33333333333334" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.Controller.ClientController" target="ClientPackage.NetworkInterface.ClientService">
+      <point x="29.0" y="-14.5" />
+      <point x="214.625" y="54.0" />
+      <point x="244.16666666666669" y="54.0" />
+      <point x="-33.33333333333334" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.GUIView" target="ClientPackage.View.GeneralView.BaseView">
+      <point x="-19.0" y="-14.5" />
+      <point x="113.00000000000001" y="128.0" />
+      <point x="105.00000000000001" y="128.0" />
+      <point x="105.00000000000001" y="54.0" />
+      <point x="95.6762820512821" y="54.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.GUIView" target="ClientPackage.Controller.ClientController">
+      <point x="19.0" y="-14.5" />
+      <point x="151.0" y="138.0" />
+      <point x="171.125" y="138.0" />
+      <point x="-14.5" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.NetworkInterface.ClientFactoryService" target="ClientPackage.NetworkInterface.ClientSocketService">
+      <point x="34.75" y="-14.5" />
+      <point x="357.0576923076923" y="212.0" />
+      <point x="398.5" y="212.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.CLIView" target="ClientPackage.View.GeneralView.BaseView">
+      <point x="-18.5" y="-14.5" />
+      <point x="18.5" y="54.0" />
+      <point x="68.6762820512821" y="54.0" />
+      <point x="-27.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.FactoryView" target="ClientPackage.View.GeneralView.GUIView">
+      <point x="24.0" y="-14.5" />
+      <point x="106.30769230769235" y="212.0" />
+      <point x="132.0" y="212.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="233.0" y="133.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

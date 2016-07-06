@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>CommonModel</OriginalElement>
+  <nodes>
+    <node x="1734.0" y="363.0">CommonModel.GameModel.Action.MainActionElectCouncilor</node>
+    <node x="717.0" y="341.0">CommonModel.GameModel.Action.MainActionBuildWithKingHelp</node>
+    <node x="1229.0" y="363.0">CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper</node>
+    <node x="236.0" y="363.0">CommonModel.GameModel.Action.MainActionBuyPermitCard</node>
+    <node x="1498.0" y="363.0">CommonModel.GameModel.Action.FastActionMoneyForHelper</node>
+    <node x="775.0" y="0.0">CommonModel.GameModel.Action.Action</node>
+    <node x="993.0" y="363.0">CommonModel.GameModel.Action.FastActionNewMainAction</node>
+    <node x="472.0" y="363.0">CommonModel.GameModel.Action.FastActionElectCouncilorWithHelper</node>
+    <node x="0.0" y="363.0">CommonModel.GameModel.Action.MainActionBuildWithPermitCard</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="CommonModel.GameModel.Action.MainActionBuildWithKingHelp" target="CommonModel.GameModel.Action.Action">
+      <point x="0.0" y="-58.5" />
+      <point x="845.0" y="321.0" />
+      <point x="948.25" y="321.0" />
+      <point x="-24.75" y="135.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Action.FastActionChangePermitCardWithHelper" target="CommonModel.GameModel.Action.Action">
+      <point x="0.0" y="-36.5" />
+      <point x="1353.5" y="311.0" />
+      <point x="1047.25" y="311.0" />
+      <point x="74.25" y="135.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Action.FastActionElectCouncilorWithHelper" target="CommonModel.GameModel.Action.Action">
+      <point x="0.0" y="-36.5" />
+      <point x="584.5" y="311.0" />
+      <point x="898.75" y="311.0" />
+      <point x="-74.25" y="135.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Action.MainActionBuildWithPermitCard" target="CommonModel.GameModel.Action.Action">
+      <point x="0.0" y="-36.5" />
+      <point x="108.0" y="291.0" />
+      <point x="799.75" y="291.0" />
+      <point x="-173.25" y="135.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Action.MainActionElectCouncilor" target="CommonModel.GameModel.Action.Action">
+      <point x="0.0" y="-36.5" />
+      <point x="1842.0" y="291.0" />
+      <point x="1146.25" y="291.0" />
+      <point x="173.25" y="135.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Action.MainActionBuyPermitCard" target="CommonModel.GameModel.Action.Action">
+      <point x="0.0" y="-36.5" />
+      <point x="344.0" y="301.0" />
+      <point x="849.25" y="301.0" />
+      <point x="-123.75" y="135.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Action.FastActionMoneyForHelper" target="CommonModel.GameModel.Action.Action">
+      <point x="0.0" y="-36.5" />
+      <point x="1606.0" y="301.0" />
+      <point x="1096.75" y="301.0" />
+      <point x="123.75" y="135.5" />
+    </edge>
+    <edge source="CommonModel.GameModel.Action.FastActionNewMainAction" target="CommonModel.GameModel.Action.Action">
+      <point x="0.0" y="-36.5" />
+      <point x="1101.0" y="321.0" />
+      <point x="997.75" y="321.0" />
+      <point x="24.75" y="135.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="959.5" y="232.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

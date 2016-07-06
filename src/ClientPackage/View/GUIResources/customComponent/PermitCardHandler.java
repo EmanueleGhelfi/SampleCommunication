@@ -85,7 +85,6 @@ public class PermitCardHandler implements EventHandler<MouseEvent> {
             jfxButton.setText("OKAY");
             jfxButton.getStyleClass().add("button-raised");
             jfxButton.setAlignment(Pos.CENTER);
-            //TODO
             jfxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {

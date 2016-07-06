@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="20.0" y="158.0">Server.Model.User</node>
+    <node x="8.0" y="0.0">CommonModel.Snapshot.BaseUser</node>
+    <node x="8.0" y="237.0">Server.Model.FakeUser</node>
+    <node x="0.0" y="79.0">CommonModel.Snapshot.CurrentUser</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Server.Model.User" target="CommonModel.Snapshot.CurrentUser">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="CommonModel.Snapshot.CurrentUser" target="CommonModel.Snapshot.BaseUser">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="Server.Model.FakeUser" target="Server.Model.User">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="249.5" y="214.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

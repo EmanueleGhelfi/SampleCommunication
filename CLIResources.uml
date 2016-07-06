@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ClientPackage.View.CLIResources</OriginalElement>
+  <nodes>
+    <node x="299.0" y="79.0">ClientPackage.View.CLIResources.LoginCliController</node>
+    <node x="153.0" y="79.0">ClientPackage.View.CLIResources.ShopCliController</node>
+    <node x="0.0" y="79.0">ClientPackage.View.CLIResources.MatchCliController</node>
+    <node x="166.5" y="0.0">ClientPackage.View.CLIResources.CliController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ClientPackage.View.CLIResources.ShopCliController" target="ClientPackage.View.CLIResources.CliController">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.LoginCliController" target="ClientPackage.View.CLIResources.CliController">
+      <point x="0.0" y="-14.5" />
+      <point x="363.5" y="54.0" />
+      <point x="249.0" y="54.0" />
+      <point x="33.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.MatchCliController" target="ClientPackage.View.CLIResources.CliController">
+      <point x="0.0" y="-14.5" />
+      <point x="66.5" y="54.0" />
+      <point x="183.0" y="54.0" />
+      <point x="-33.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="214.0" y="204.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
