@@ -64,21 +64,19 @@ public class GamesManager {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (Game game : games) {
             if (!game.isStarted()) {
-                System.out.println("adding user to a game");
+                System.out.println("Adding user to a game");
                 game.addUserToGame(userToAdd);
                 userToAdd.setGame(game);
                 userToAdd.setGameController(game.getGameController());
                 return;
             }
         }
-        System.out.println("creating a new game");
+        System.out.println("Creating a new game");
         Game game = new Game();
         games.add(game);
-        System.out.println(game);
         game.addUserToGame(userToAdd);
         userToAdd.setGame(game);
         userToAdd.setGameController(game.getGameController());
-        System.out.println(userToAdd);
     }
 
 

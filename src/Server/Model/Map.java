@@ -39,7 +39,6 @@ public class Map implements Serializable {
 
     private String realMap;
 
-
     private transient SimpleGraph<City, DefaultEdge> mapGraph = new SimpleGraph<>(DefaultEdge.class);
 
 
