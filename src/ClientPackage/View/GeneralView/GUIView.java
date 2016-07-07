@@ -99,7 +99,6 @@ public class GUIView extends Application implements BaseView {
         Platform.runLater(() -> {
             loginController.showLoginError("Username già scelto");
         });
-
     }
 
     @Override
