@@ -58,13 +58,13 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     /**
      * Overriding RMIClientHandler
      *
-     * @param electCouncilor
+     * @param action
      * @throws ActionNotPossibleException
      */
     @Override
-    public void test(Action electCouncilor) throws ActionNotPossibleException {
+    public void action(Action action) throws ActionNotPossibleException {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
-        electCouncilor.doAction(user.getGame(), user);
+        action.doAction(user.getGame(), user);
     }
 
     /**

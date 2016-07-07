@@ -31,7 +31,7 @@ public class CouncilTest {
 
 
     /**
-     * test removes the head of the queue
+     * action removes the head of the queue
      */
     @Test
     public void testAddLast() {
@@ -48,7 +48,7 @@ public class CouncilTest {
 
 
     /**
-     * test adding in the queue
+     * action adding in the queue
      */
     @Test
     public void testAddFirst() {

@@ -360,7 +360,7 @@ public class GameController implements Serializable {
         }
     }
 
-    /** Method that test the finish game and add 9 emporia
+    /** Method that action the finish game and add 9 emporia
      */
     private void addTenEmporiums() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());

@@ -18,7 +18,7 @@ public interface RMIClientHandler extends Remote {
 
     boolean tryToSetName(String username) throws RemoteException;
 
-    void test(Action action) throws ActionNotPossibleException, RemoteException;
+    void action(Action action) throws ActionNotPossibleException, RemoteException;
 
     void sendRemoteClientObject(RMIClientInterface clientRMIService) throws RemoteException;
 

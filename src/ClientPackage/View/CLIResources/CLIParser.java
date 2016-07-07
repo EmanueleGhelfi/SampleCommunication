@@ -16,8 +16,6 @@ import java.util.Map;
  */
 public class CLIParser {
 
-    private static CLIParser cliParserInstance;
-    private Options currentOption = OptionsClass.getGameOption();
     private Class mClass;
     private HashMap<String, Method> methodHashMap = new HashMap<>();
     private HashMap<String, String> methodDescription = new HashMap<>();
@@ -54,15 +52,6 @@ public class CLIParser {
         }
     }
 
-
-    public CommandLine retrieveCommandLine(String line) throws ParseException {
-        String[] strings = line.split(" ");
-        System.out.println("parsed" + strings.length);
-        CommandLineParser commandLineParser = new DefaultParser();
-        CommandLine commandLine = commandLineParser.parse(currentOption, strings);
-        return commandLine;
-    }
-
     void parseInput(String line, Object object, CLIPrinter cliPrinter) {
 
         String[] lines = line.split(" ");
@@ -90,56 +79,6 @@ public class CLIParser {
                 cliPrinter.printError("Sorry, method not found");
             }
         }
-
-
-
-
-        /*
-        switch (lines[0]){
-            case "status":
-            case"st":
-                matchCliController.showStatus();
-                break;
-            case "be":
-            case"buildEmporium":
-                if(lines.length>=2)
-                    matchCliController.buildEmporium(lines[1]);
-                else
-                    cliPrinter.printError("INVALID INPUT");
-                break;
-            case "buildWithKing":
-            case "bk":
-                matchCliController.buildWithKing();
-                break;
-            case "buyPermit":
-            case "bp":
-                if(lines.length>=2)
-                    matchCliController.buyPermit(lines[1]);
-                else
-                    cliPrinter.printError("INVALID INPUT");
-                break;
-            case "changePermit":
-            case "cp":
-                if(lines.length>1){
-                    matchCliController.changePermitAction(lines[1]);
-                }
-                else
-                    cliPrinter.printError("INVALID INPUT");
-                break;
-            case "sp":
-            case "showPermit":
-                matchCliController.showPermitCard();
-                break;
-            case "electCouncilor":
-            case "ec":
-                if(lines.length>3){
-                    matchCliController.getElectCouncilorArgs(lines[1],lines[2],lines[3]);
-                }
-                else
-                    cliPrinter.printError("INVALID INPUT");
-                break;
-        }
-        */
     }
 
     private void printHelp(String[] lines) {

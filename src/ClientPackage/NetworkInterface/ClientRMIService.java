@@ -46,7 +46,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
 
     /**
      *
-     * @return
+     * @return true if connected
      */
     @Override
     public boolean Connect() {
@@ -82,7 +82,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             @Override
             public void run() {
                 try {
-                    rmiClientHandler.test(action);
+                    rmiClientHandler.action(action);
                 } catch (ActionNotPossibleException e) {
                     clientController.onActionNotPossible(e);
                 } catch (RemoteException e) {
