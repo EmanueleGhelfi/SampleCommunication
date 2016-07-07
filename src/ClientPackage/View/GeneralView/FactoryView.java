@@ -18,4 +18,5 @@ public class FactoryView {
         }
         throw new ViewException("ViewType Not Supported");
     }
+
 }
