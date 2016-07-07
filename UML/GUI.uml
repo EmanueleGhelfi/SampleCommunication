@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ClientPackage.View.GUIResources</OriginalElement>
+  <nodes>
+    <node x="389.0" y="156.0">ClientPackage.View.GUIResources.Class.WaitingController</node>
+    <node x="20.64285714285714" y="158.0">ClientPackage.View.GUIResources.Class.MatchController</node>
+    <node x="196.0" y="159.0">ClientPackage.View.GUIResources.Class.FinishMatchController</node>
+    <node x="0.0" y="79.0">ClientPackage.View.GUIResources.Class.ShopController</node>
+    <node x="62.309523809523796" y="0.0">ClientPackage.View.GUIResources.Class.BaseController</node>
+    <node x="225.35119047619048" y="0.0">ClientPackage.View.GUIResources.Class.MapSelectionController</node>
+    <node x="29.351190476190467" y="237.0">ClientPackage.View.GUIResources.Class.NobilityPathController</node>
+    <node x="-163.0" y="159.0">ClientPackage.View.GUIResources.Class.LoginController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ClientPackage.View.GUIResources.Class.NobilityPathController" target="ClientPackage.View.GUIResources.Class.BaseController">
+      <point x="50.33333333333334" y="-14.5" />
+      <point x="155.1845238095238" y="212.0" />
+      <point x="150.14285714285714" y="212.0" />
+      <point x="150.14285714285714" y="54.0" />
+      <point x="153.14285714285714" y="54.0" />
+      <point x="36.33333333333334" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GUIResources.Class.MatchController" target="ClientPackage.View.GUIResources.Class.ShopController">
+      <point x="-39.66666666666664" y="-14.5" />
+      <point x="40.476190476190496" y="133.0" />
+      <point x="28.0" y="133.0" />
+      <point x="-28.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GUIResources.Class.ShopController" target="ClientPackage.View.GUIResources.Class.BaseController">
+      <point x="0.0" y="-14.5" />
+      <point x="56.0" y="54.0" />
+      <point x="80.47619047619045" y="54.0" />
+      <point x="-36.33333333333334" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GUIResources.Class.ShopController" target="ClientPackage.View.GUIResources.Class.MatchController">
+      <point x="28.0" y="14.5" />
+      <point x="84.0" y="133.0" />
+      <point x="80.14285714285715" y="133.0" />
+      <point x="1.4210854715202004E-14" y="-14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GUIResources.Class.MatchController" target="ClientPackage.View.GUIResources.Class.BaseController">
+      <point x="39.66666666666667" y="-14.5" />
+      <point x="119.80952380952381" y="133.0" />
+      <point x="126.76785714285714" y="133.0" />
+      <point x="126.76785714285714" y="54.0" />
+      <point x="116.8095238095238" y="54.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GUIResources.Class.MatchController" target="ClientPackage.View.GUIResources.Class.NobilityPathController">
+      <point x="29.75" y="14.5" />
+      <point x="109.89285714285714" y="212.0" />
+      <point x="104.85119047619047" y="212.0" />
+      <point x="0.0" y="-14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GUIResources.Class.NobilityPathController" target="ClientPackage.View.GUIResources.Class.MatchController">
+      <point x="-50.33333333333334" y="-14.5" />
+      <point x="54.517857142857125" y="212.0" />
+      <point x="50.39285714285714" y="212.0" />
+      <point x="-29.75" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="191.5" y="207.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

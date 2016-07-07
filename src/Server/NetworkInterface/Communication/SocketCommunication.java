@@ -27,7 +27,7 @@ import java.lang.reflect.Modifier;
 import java.net.Socket;
 import java.util.ArrayList;
 
-/**
+/** It is the implementation of the communication to the server through socket.
  * Created by Emanuele on 09/05/2016.
  */
 public class SocketCommunication extends BaseCommunication implements Runnable {
@@ -65,11 +65,6 @@ public class SocketCommunication extends BaseCommunication implements Runnable {
         CommunicationInfo.SendCommunicationInfo(out, Constants.CODE_JSON_TEST, availableMaps);
     }
 
-    /**
-     * when user select a map
-     *
-     * @param snapshotToSend
-     */
     @Override
     public void sendSelectedMap(SnapshotToSend snapshotToSend) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());

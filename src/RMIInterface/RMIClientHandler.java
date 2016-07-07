@@ -11,7 +11,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-/**
+/** This class acts as a bridge between the server's methods and the client via RMI.
  * Created by Emanuele on 09/05/2016.
  */
 public interface RMIClientHandler extends Remote {

@@ -5,7 +5,7 @@ import CommonModel.GameModel.City.City;
 
 import java.io.Serializable;
 
-/**
+/** This class represents the links between the various cities.
  * Created by Emanuele on 20/05/2016.
  */
 public class Link implements Serializable {

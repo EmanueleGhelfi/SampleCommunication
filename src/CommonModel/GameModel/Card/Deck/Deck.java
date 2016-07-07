@@ -5,6 +5,8 @@ package CommonModel.GameModel.Card.Deck;
  */
 public interface Deck {
 
+    /** Creates a general random deck
+     */
     void createRandomDeck();
 
 }

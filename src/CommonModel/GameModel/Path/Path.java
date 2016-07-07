@@ -8,9 +8,10 @@ import Utilities.Exception.ActionNotPossibleException;
  */
 public interface Path {
 
-    /**
-     * @param user
-     * @param value
+    /** It is the generic method with which it is allowed to go forward in the path implemented by the various classes
+     * @param user is the user that go ahead
+     * @param value is the value of the go ahead
+     * @exception ActionNotPossibleException is the exception raised
      */
     void goAhead(User user, int value) throws ActionNotPossibleException;
 

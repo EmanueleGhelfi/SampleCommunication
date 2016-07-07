@@ -40,7 +40,7 @@ public class MainActionElectCouncilorTest {
 
     /**
      * Elect a councilor in a region
-     * @throws Exception
+     * @throws Exception is the exception
      */
     @Test
     public void testElect() throws Exception {

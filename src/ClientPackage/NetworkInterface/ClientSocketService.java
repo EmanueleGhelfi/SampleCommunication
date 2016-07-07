@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
+/** This is the class that represents clients in the communication took place via socket.
  * Created by Emanuele on 09/05/2016.
  */
 public class ClientSocketService extends ClientService implements Runnable {
@@ -126,7 +126,6 @@ public class ClientSocketService extends ClientService implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("ClientSocketService Started");
         String line;
         try {
             while ((line = in.readLine()) != null) {

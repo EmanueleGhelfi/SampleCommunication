@@ -10,7 +10,7 @@ import Utilities.Exception.ActionNotPossibleException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-/**
+/** This abstract class is one in which the methods that will be ovverrided from deployments in Socket and RMI are written.
  * Created by Emanuele on 09/05/2016.
  */
 public abstract class ClientService {

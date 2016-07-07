@@ -16,22 +16,25 @@ import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Map;
 
-/**
+/** This class has the aim of managing the various Games.
+ * For here we find methods such as the addition of the game, its cancellation and verifying whether a user is down there or not.
  * Created by Emanuele on 09/05/2016.
  */
 public class GamesManager {
 
     private static GamesManager gamesManager;
     private ArrayList<User> users = new ArrayList<>();
-    /**
-     * Created games (and maybe started)
-     */
     private ArrayList<Game> games = new ArrayList<>();
 
+    /** Constructor private (for singleton pattern)
+     */
     private GamesManager() {
         start();
     }
 
+    /** Used for the creation of a new Games Manager according to the Singleton pattern
+     * @return the games manager
+     */
     public static GamesManager getInstance() {
         if (gamesManager == null) {
             gamesManager = new GamesManager();
@@ -39,6 +42,8 @@ public class GamesManager {
         return gamesManager;
     }
 
+    /** Register the communication and start the threads
+     */
     public void start() {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         try {
@@ -60,18 +65,19 @@ public class GamesManager {
         }
     }
 
+    /** Add a user to the game
+     * @param userToAdd is the user added
+     */
     public void addToGame(User userToAdd) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (Game game : games) {
             if (!game.isStarted()) {
-                System.out.println("adding user to a game");
                 game.addUserToGame(userToAdd);
                 userToAdd.setGame(game);
                 userToAdd.setGameController(game.getGameController());
                 return;
             }
         }
-        System.out.println("creating a new game");
         Game game = new Game();
         games.add(game);
         System.out.println(game);
@@ -81,7 +87,10 @@ public class GamesManager {
         System.out.println(userToAdd);
     }
 
-
+    /** Specify that a user with this name is already present
+     * @param username is the username to check
+     * @return true if is already present
+     */
     public boolean userAlreadyPresent(String username) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (User user : users) {
@@ -92,11 +101,18 @@ public class GamesManager {
         return false;
     }
 
+    /** The user is added to other users in game
+     * @param user is the user to add
+     */
     public void AddToUsers(User user) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         users.add(user);
     }
 
+    /** The game is cancelled
+     * @param game is the game that must be cancelled
+     * @param gameController is the gameController of the game
+     */
     public void cancelThisGame(Game game, GameController gameController) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         for (Map.Entry<String, User> userInGame : game.getUsersInGame().entrySet()) {

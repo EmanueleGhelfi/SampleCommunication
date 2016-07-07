@@ -12,7 +12,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-/**
+/** This class acts as a listener for the RMI method.
  * Created by Emanuele on 09/05/2016.
  */
 public class RMIListener implements RMIListenerInterface {

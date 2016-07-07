@@ -263,7 +263,7 @@ public class ClientController {
         return snapshot;
     }
 
-    /** Setter && update the snapshot;
+    /** Setter and update the snapshot;
      * @param snapshot is the snapshot to set;
      */
     public void setSnapshot(SnapshotToSend snapshot) {
@@ -299,18 +299,21 @@ public class ClientController {
     }
 
     /** Bridge used to send the item on sale in the market phase
+     * @param realSaleList are the real sale list
      */
     public void sendSaleItem(ArrayList<BuyableWrapper> realSaleList) {
         clientService.sendSaleItem(realSaleList);
     }
 
     /** Bridge used to send the item that can be bought on market phase
+     * @param buyList is the buy list
      */
     public void onBuy(ArrayList<BuyableWrapper> buyList) {
         clientService.onBuy(buyList);
     }
 
     /** Bridge used to communicate items that are to be remove.
+     * @param item is the item list
      */
     public void removeItemFromMarket(BuyableWrapper item) {
         clientService.onRemoveItemFromMarket(item);

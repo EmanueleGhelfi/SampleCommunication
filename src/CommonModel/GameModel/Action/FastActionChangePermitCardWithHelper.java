@@ -18,13 +18,6 @@ public class FastActionChangePermitCardWithHelper extends Action {
         this.region = region;
     }
 
-    /**
-     * change the visible permit card spending a helper
-     *
-     * @param game
-     * @param user
-     * @throws ActionNotPossibleException
-     */
     @Override
     public void doAction(Game game, User user) throws ActionNotPossibleException {
         // check

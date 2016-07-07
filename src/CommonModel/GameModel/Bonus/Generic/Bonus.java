@@ -11,14 +11,31 @@ import java.util.ArrayList;
  */
 public interface Bonus {
 
+    /** Getter
+     * @param user is the user that gets the bonus
+     * @param game is the game
+     * @throws ActionNotPossibleException is the exception raised
+     */
     void getBonus(User user, Game game) throws ActionNotPossibleException;
 
+    /** Getter
+     * @return the bonus name
+     */
     String getBonusName();
 
+    /** Getter
+     * @return the bonus array list
+     */
     ArrayList<Bonus> getBonusArrayList();
 
+    /** Getter
+     * @return the bonus url
+     */
     ArrayList<String> getBonusURL();
 
+    /** Getter
+     * @return the bonus info
+     */
     ArrayList<String> getBonusInfo();
 
 

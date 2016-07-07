@@ -91,11 +91,6 @@ public class Graphics {
         return scaleTransition;
     }
 
-    /**
-     * Metodo di notifica, ossia quando viene chiamato in basso a destra spunta una notifica che dopo 3 secondi sparisce.
-     *
-     * @param messageOfTheMoment è il testo che sarà stampato a video nella notifica.
-     */
     public static void notification(String messageOfTheMoment, boolean hasADuration) {
         Platform.runLater(new Runnable() {
             @Override

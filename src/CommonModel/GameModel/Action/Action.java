@@ -23,8 +23,18 @@ public abstract class Action implements Serializable {
 
     protected String actionType;
 
+    /** Is the method used to do a generic action
+     * @param game is the game
+     * @param user is the user
+     * @throws ActionNotPossibleException the exception raised
+     */
     public abstract void doAction(Game game, User user) throws ActionNotPossibleException;
 
+    /** Check the action counter
+     * @param user is the user to check
+     * @return if it's possible the action
+     * @throws ActionNotPossibleException the exception raised
+     */
     boolean checkActionCounter(User user) throws ActionNotPossibleException {
         switch (actionType) {
             case Constants.FAST_ACTION:
@@ -41,6 +51,10 @@ public abstract class Action implements Serializable {
 
     }
 
+    /** Remove the action to counter
+     * @param game is the game
+     * @param user is the user
+     */
     void removeAction(Game game, User user) {
         switch (actionType) {
             case Constants.MAIN_ACTION:
@@ -54,6 +68,11 @@ public abstract class Action implements Serializable {
         game.getGameController().sendSnapshotToAll();
     }
 
+    /** Remove the politic cards
+     * @param politicCards are the politic cards
+     * @param user is the user
+     * @param game is the game
+     */
     protected void removePoliticCard(ArrayList<PoliticCard> politicCards, User user, Game game) {
         for (int i = 0; i < politicCards.size(); i++) {
             for (int j = 0; j < user.getPoliticCards().size(); j++) {
@@ -67,6 +86,12 @@ public abstract class Action implements Serializable {
         }
     }
 
+    /** Check the bonus of the region
+     * @param city is the city where check
+     * @param user is the user
+     * @param game is the game
+     * @throws ActionNotPossibleException the exception raised
+     */
     protected void checkRegionBonus(City city, User user, Game game) throws ActionNotPossibleException {
         if (game.getRegion(city.getRegion()).checkRegion(user.getUsersEmporium())) {
             game.getRegionBonusCard(city.getRegion()).getBonus(user, game);
@@ -78,6 +103,12 @@ public abstract class Action implements Serializable {
         }
     }
 
+    /** Check the bonus of the color
+     * @param city is the city
+     * @param user is the user
+     * @param game is the game
+     * @throws ActionNotPossibleException the exception raised
+     */
     protected void checkColorBonus(City city, User user, Game game) throws ActionNotPossibleException {
         if (city.getColor().checkColor(user.getUsersEmporium())) {
             game.getColorBonusCard(city.getColor().getColor()).getBonus(user, game);
@@ -90,6 +121,13 @@ public abstract class Action implements Serializable {
         }
     }
 
+    /** Calculate money to do something
+     * @param correctPoliticCard the correct politic cards
+     * @param politicCards the politic cards
+     * @param bonusCounter the bonus counter
+     * @return the new position in money path
+     * @throws ActionNotPossibleException the exception raised
+     */
     protected int calculateMoney(int correctPoliticCard, ArrayList<PoliticCard> politicCards, int bonusCounter) throws ActionNotPossibleException {
         // calculate multicolor:
         int bonusNumber = 0;
@@ -112,6 +150,12 @@ public abstract class Action implements Serializable {
         return newPositionInMoneyPath;
     }
 
+    /** Count the correct politic card
+     * @param gotCouncil is the council
+     * @param politicCards are the politic cards
+     * @param bonusCounter is the bonus counter
+     * @return the correct politic card
+     */
     protected int countCorrectPoliticCard(GotCouncil gotCouncil, ArrayList<PoliticCard> politicCards, int bonusCounter) {
         int correctPoliticCard = 0;
         // count all correct and bonus card
@@ -133,9 +177,6 @@ public abstract class Action implements Serializable {
         return correctPoliticCard;
     }
 
-    /**
-     * check if an user has placed more than 10 emporiums
-     */
     protected boolean checkEmporiumsAreNotTen(User user) throws ActionNotPossibleException {
         if (user.getUsersEmporium().size() >= Constants.EMPORIUMS_BUILDABLE) {
             throw new ActionNotPossibleException("Hai già edificato 10 empori");
@@ -143,6 +184,12 @@ public abstract class Action implements Serializable {
         return true;
     }
 
+    /** Check if emporium is already present in this city
+     * @param user the user
+     * @param cityWantToBuildIn the city i want to build in
+     * @return true if it goes well
+     * @throws ActionNotPossibleException exception raised
+     */
     protected boolean checkEmporiumsIsAlreadyPresent(User user, City cityWantToBuildIn) throws ActionNotPossibleException {
         for (City city : user.getUsersEmporium()) {
             if (cityWantToBuildIn.equals(city))
@@ -151,6 +198,12 @@ public abstract class Action implements Serializable {
         return true;
     }
 
+    /** Check the near city bonus
+     * @param game is the game
+     * @param user is the user
+     * @param city is the city
+     * @throws ActionNotPossibleException is the exception raised
+     */
     void getNearCityBonus(Game game, User user, City city) throws ActionNotPossibleException {
         CityVisitor cityVisitor = new CityVisitor(game.getMap().getMapGraph(), user.getUsersEmporium());
         for (City cityToVisit : cityVisitor.visit(city)) {
@@ -162,6 +215,5 @@ public abstract class Action implements Serializable {
             }
         }
     }
-
 
 }

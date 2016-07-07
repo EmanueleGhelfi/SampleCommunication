@@ -50,9 +50,6 @@ public class CLIPrinter implements CLIPrinterInterface {
         usageFormatter.printUsage(writer, 80, applicationName, options);
     }
 
-    /**
-     * Write "help" to the provided OutputStream.
-     */
     public static void printHelp(
             final Options options,
             final int printedRowWidth,

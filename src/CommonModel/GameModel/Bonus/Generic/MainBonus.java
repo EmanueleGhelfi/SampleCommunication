@@ -25,7 +25,6 @@ public class MainBonus implements Bonus, Serializable {
 
     /**
      * create an array of bonus
-     *
      * @param minBonus      is the minimum number of bonus
      * @param maxBonus      is the maximum number of bonus
      * @param possibleBonus is the number of possible bonus
@@ -113,13 +112,6 @@ public class MainBonus implements Bonus, Serializable {
         return randomIntArray.contains(7) || randomIntArray.contains(8) || randomIntArray.contains(9);
     }
 
-    /**
-     * Calls get bonus in every bonus
-     *
-     * @param user
-     * @param game
-     * @throws ActionNotPossibleException
-     */
     @Override
     public void getBonus(User user, Game game) throws ActionNotPossibleException {
         for (Bonus bonus : bonusArrayList) {

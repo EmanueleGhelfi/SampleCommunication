@@ -58,19 +58,12 @@ public class GUIView extends Application implements BaseView {
         clientController = ClientController.getInstance();
     }
 
-    /** Initialize the game, method that belongs to Application class.
-     * @throws Exception is the exception raised
-     */
     @Override
     public void init() throws Exception {
         super.init();
         this.clientController.setBaseView(this);
     }
 
-    /** Start the first stage and it shows the login screen.
-     * @param primaryStage
-     * @throws Exception
-     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.stage = primaryStage;

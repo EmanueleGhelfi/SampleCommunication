@@ -1534,11 +1534,6 @@ public class MatchController implements BaseController {
         }
     }
 
-    /**
-     * Called on click on helper image
-     *
-     * @param event
-     */
     public void buyHelper(Event event) {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override

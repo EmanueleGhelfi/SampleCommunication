@@ -6,7 +6,7 @@ import Utilities.Class.Constants;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-/**
+/** This class is used as the connection factory.
  * Created by Emanuele on 09/05/2016.
  */
 public class ClientFactoryService {

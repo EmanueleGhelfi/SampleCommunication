@@ -25,11 +25,6 @@ public class VictoryPointBonus implements Bonus, Serializable {
         this.victoryPoint = randomGenerator.nextInt(Constants.RANDOM_VICTORY_FIRST_PARAMETER) + Constants.RANDOM_VICTORY_SECOND_PARAMETER;
     }
 
-    /**
-     * Fixed victory point generator
-     *
-     * @param victoryPoint
-     */
     public VictoryPointBonus(int victoryPoint) {
         this.victoryPoint = victoryPoint;
     }

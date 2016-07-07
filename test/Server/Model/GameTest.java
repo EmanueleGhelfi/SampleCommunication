@@ -28,11 +28,6 @@ public class GameTest {
         user.setVictoryPathPosition(0);
     }
 
-    /**
-     * Test king bonus card
-     *
-     * @throws Exception
-     */
     @Test
     public void getKingBonusCard() throws Exception {
         KingBonusCard kingBonusCard = game.getKingBonusCard();

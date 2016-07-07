@@ -27,7 +27,7 @@ import Utilities.Exception.MapsNotFoundException;
 import java.io.Serializable;
 import java.util.*;
 
-/**
+/** The Game Controllers and the class that contains the logic of the game.
  * Created by Emanuele on 13/05/2016.
  */
 public class GameController implements Serializable {

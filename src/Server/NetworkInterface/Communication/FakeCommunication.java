@@ -8,7 +8,8 @@ import Server.Model.User;
 
 import java.util.ArrayList;
 
-/**
+/** It is the way in which it is connected FakeUser.
+ * In this case we can override any method of leaving the actions within this fake user meaningless.
  * Created by Giulio on 16/06/2016.
  */
 public class FakeCommunication extends BaseCommunication {

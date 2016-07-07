@@ -7,12 +7,19 @@ import java.io.Serializable;
  */
 public interface BuyableObject extends Serializable, Cloneable {
 
-    //String getType();
-
+    /** Getter of the info of the buyable object
+     * @return the string with info
+     */
     String getInfo();
 
+    /** Getter of the copy
+     * @return the copy of the buyable object
+     */
     BuyableObject getCopy();
 
+    /** Getter of the URL
+     * @return the url to upload the image
+     */
     String getUrl();
 
 }

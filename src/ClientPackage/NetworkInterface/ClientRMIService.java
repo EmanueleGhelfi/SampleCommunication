@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
+/** This is the class that represents clients in the communication took place via RMI.
  * Created by Emanuele on 09/05/2016.
  */
 public class ClientRMIService extends ClientService implements RMIClientInterface {
@@ -44,10 +44,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         UnicastRemoteObject.exportObject(this, 0);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean Connect() {
         try {
@@ -215,10 +211,6 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
         };
         executorService.execute(runnable);
     }
-
-    /***
-     * REGION OF METHODS CALLED BY SERVER
-     **/
 
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) throws RemoteException {

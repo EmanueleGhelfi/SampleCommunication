@@ -4,7 +4,7 @@ import ClientPackage.Controller.ClientController;
 import Utilities.Class.Constants;
 import Utilities.Exception.ViewException;
 
-/**
+/** This class is used for the creation according to the choice of a view.
  * Created by Emanuele on 13/05/2016.
  */
 public class FactoryView {

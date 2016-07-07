@@ -19,7 +19,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-/**
+/** It is the implementation of the communication to the server via RMI.
  * Created by Emanuele on 09/05/2016.
  */
 public class RMICommunication extends BaseCommunication implements RMIClientHandler, Serializable {
@@ -36,14 +36,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         UnicastRemoteObject.exportObject(this, 0);
     }
 
-
-    /**
-     * Overriding RMIClientHandler
-     *
-     * @param username
-     * @return
-     * @throws RemoteException
-     */
     @Override
     public boolean tryToSetName(String username) throws RemoteException {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
@@ -55,38 +47,18 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         return false;
     }
 
-    /**
-     * Overriding RMIClientHandler
-     *
-     * @param electCouncilor
-     * @throws ActionNotPossibleException
-     */
     @Override
     public void test(Action electCouncilor) throws ActionNotPossibleException {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         electCouncilor.doAction(user.getGame(), user);
     }
 
-    /**
-     * Overriding RMIClientHandler
-     * Called by client when the remote object is exported
-     *
-     * @param clientRMIService
-     * @throws RemoteException
-     */
     @Override
     public void sendRemoteClientObject(RMIClientInterface clientRMIService) throws RemoteException {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
         rmiClientInterface = clientRMIService;
     }
 
-    /**
-     * Overriding RMIClientHandler
-     * Called when a user selects the Map
-     *
-     * @param map map selected
-     * @throws RemoteException
-     */
     @Override
     public void sendMap(Map map) throws RemoteException {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
@@ -149,11 +121,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
         user.getGameController().onSelectOldPermitCard(user, permitCard);
     }
 
-    /**
-     * Overriding BaseCommunication
-     *
-     * @param snapshotToSend
-     */
     @Override
     public void sendSnapshot(SnapshotToSend snapshotToSend) {
         InternalLog.loggingSituation(this.getClass().getName(), new Object(){}.getClass().getEnclosingMethod().getName());
@@ -185,7 +152,6 @@ public class RMICommunication extends BaseCommunication implements RMIClientHand
     /**
      * Overriding BaseCommunication
      * Called when sending all maps to user
-     *
      * @param availableMaps all maps available
      */
     @Override

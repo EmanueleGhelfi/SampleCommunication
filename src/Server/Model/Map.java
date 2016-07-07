@@ -23,7 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-/**
+/** Class used for the creation of the various configuration of the maps. It has in itself a main that creates these.
  * Created by Emanuele on 20/05/2016.
  */
 public class Map implements Serializable {

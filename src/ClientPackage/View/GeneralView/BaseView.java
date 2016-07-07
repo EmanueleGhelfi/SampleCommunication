@@ -8,7 +8,7 @@ import Utilities.Exception.ActionNotPossibleException;
 
 import java.util.ArrayList;
 
-/**
+/** This abstract class is that in which are written the methods which will then ovverrided from implementations in the CLI and GUI.
  * Created by Emanuele on 13/05/2016.
  */
 public interface BaseView {

@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
+/** This class acts as a listener for the Socket method.
  * Created by Emanuele on 09/05/2016.
  */
 public class SocketListener implements Runnable {
