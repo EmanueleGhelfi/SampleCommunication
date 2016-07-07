@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Server</OriginalElement>
+  <nodes>
+    <node x="-368.0" y="78.0">Server.Model</node>
+    <node x="119.0" y="152.0">Server.NetworkInterface.Communication</node>
+    <node x="-50.0" y="48.0">Server.Controller</node>
+    <node x="77.0" y="-91.0">Server.NetworkInterface.Listeners</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Server.Controller" target="Server.Model">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Controller" target="Server.NetworkInterface.Listeners">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Model" target="Server.Controller">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.NetworkInterface.Listeners" target="Server.Controller">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Model" target="Server.NetworkInterface.Communication">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Controller" target="Server.NetworkInterface.Communication">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Model" target="Server.Model">
+      <point x="0.0" y="0.0" />
+      <point x="-311.5" y="53.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.NetworkInterface.Listeners" target="Server.Model">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.NetworkInterface.Communication" target="Server.Controller">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Controller" target="Server.Controller">
+      <point x="0.0" y="0.0" />
+      <point x="16.0" y="23.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.NetworkInterface.Communication" target="Server.Model">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.NetworkInterface.Listeners" target="Server.NetworkInterface.Communication">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="-64.5" y="145.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
