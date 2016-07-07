@@ -11,6 +11,14 @@ import java.rmi.RemoteException;
  */
 public class ClientFactoryService {
 
+    /**
+     * @param method RMI or Socket
+     * @param serverIP ip of server
+     * @param clientController client logic
+     * @return ClientService for communication with server
+     * @throws RemoteException
+     * @throws NotBoundException
+     */
     public static ClientService getService(String method, String serverIP, ClientController clientController) throws RemoteException, NotBoundException {
         if (method.equals(Constants.RMI)) {
             return new ClientRMIService(Constants.SERVER, serverIP, clientController);

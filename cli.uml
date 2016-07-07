@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ClientPackage.View</OriginalElement>
+  <nodes>
+    <node x="253.69230769230776" y="119.0">ClientPackage.View.CLIResources.LoginCliController</node>
+    <node x="0.0" y="119.0">ClientPackage.View.GeneralView.BaseView</node>
+    <node x="194.0324883449884" y="0.0">ClientPackage.View.CLIResources.CLIParser</node>
+    <node x="227.19230769230776" y="317.0">ClientPackage.View.GeneralView.FactoryView</node>
+    <node x="402.69230769230774" y="119.0">ClientPackage.View.CLIResources.MatchCliController</node>
+    <node x="445.02826340326345" y="0.0">ClientPackage.View.CLIResources.CliController</node>
+    <node x="238.19230769230776" y="238.0">ClientPackage.View.GeneralView.CLIView</node>
+    <node x="107.69230769230776" y="119.0">ClientPackage.View.CLIResources.ShopCliController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ClientPackage.View.GeneralView.CLIView" target="ClientPackage.View.CLIResources.CliController">
+      <point x="34.15384615384613" y="-14.5" />
+      <point x="309.3461538461539" y="218.0" />
+      <point x="563.5360576923077" y="218.0" />
+      <point x="563.5360576923077" y="99.0" />
+      <point x="531.6532634032635" y="99.0" />
+      <point x="37.125" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.ShopCliController" target="ClientPackage.View.CLIResources.CliController">
+      <point x="42.0" y="-14.5" />
+      <point x="212.69230769230776" y="89.0" />
+      <point x="457.40326340326345" y="89.0" />
+      <point x="-37.125" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.CLIView" target="ClientPackage.View.CLIResources.LoginCliController">
+      <point x="0.0" y="-14.5" />
+      <point x="-43.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.ShopCliController" target="ClientPackage.View.CLIResources.CLIParser">
+      <point x="0.0" y="-14.5" />
+      <point x="170.69230769230776" y="79.0" />
+      <point x="229.4699883449884" y="79.0" />
+      <point x="-5.0625" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.LoginCliController" target="ClientPackage.View.CLIResources.CliController">
+      <point x="43.0" y="-14.5" />
+      <point x="361.19230769230774" y="99.0" />
+      <point x="482.15326340326345" y="99.0" />
+      <point x="-12.375" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.CLIView" target="ClientPackage.View.CLIResources.MatchCliController">
+      <point x="22.769230769230774" y="-14.5" />
+      <point x="297.96153846153857" y="198.0" />
+      <point x="469.19230769230774" y="198.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.FactoryView" target="ClientPackage.View.GeneralView.CLIView">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.ShopCliController" target="ClientPackage.View.GeneralView.CLIView">
+      <point x="42.0" y="14.5" />
+      <point x="212.69230769230776" y="168.0" />
+      <point x="269.5000000000001" y="168.0" />
+      <point x="-5.692307692307679" y="-14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.MatchCliController" target="ClientPackage.View.CLIResources.CLIParser">
+      <point x="-5.6843418860808015E-14" y="-14.5" />
+      <point x="469.19230769230774" y="49.0" />
+      <point x="269.9699883449884" y="49.0" />
+      <point x="35.4375" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.LoginCliController" target="ClientPackage.View.GeneralView.CLIView">
+      <point x="43.0" y="14.5" />
+      <point x="361.19230769230774" y="178.0" />
+      <point x="286.5769230769231" y="178.0" />
+      <point x="11.384615384615358" y="-14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.LoginCliController" target="ClientPackage.View.CLIResources.CLIParser">
+      <point x="-43.0" y="-14.5" />
+      <point x="275.19230769230774" y="79.0" />
+      <point x="239.5949883449884" y="79.0" />
+      <point x="5.0625" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.MatchCliController" target="ClientPackage.View.CLIResources.CliController">
+      <point x="44.333333333333314" y="-14.5" />
+      <point x="513.5256410256411" y="99.0" />
+      <point x="506.90326340326345" y="99.0" />
+      <point x="12.375" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.CLIResources.MatchCliController" target="ClientPackage.View.GeneralView.CLIView">
+      <point x="44.333333333333314" y="14.5" />
+      <point x="513.5256410256411" y="208.0" />
+      <point x="303.6538461538462" y="208.0" />
+      <point x="28.461538461538453" y="-14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.CLIView" target="ClientPackage.View.CLIResources.CLIParser">
+      <point x="-28.46153846153851" y="-14.5" />
+      <point x="246.73076923076925" y="208.0" />
+      <point x="91.50000000000003" y="208.0" />
+      <point x="91.50000000000003" y="49.0" />
+      <point x="199.0949883449884" y="49.0" />
+      <point x="-35.4375" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.CLIView" target="ClientPackage.View.CLIResources.ShopCliController">
+      <point x="-11.384615384615415" y="-14.5" />
+      <point x="263.8076923076924" y="178.0" />
+      <point x="170.69230769230776" y="178.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ClientPackage.View.GeneralView.CLIView" target="ClientPackage.View.GeneralView.BaseView">
+      <point x="-34.15384615384619" y="-14.5" />
+      <point x="241.03846153846158" y="218.0" />
+      <point x="40.5" y="218.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="613.5" y="98.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

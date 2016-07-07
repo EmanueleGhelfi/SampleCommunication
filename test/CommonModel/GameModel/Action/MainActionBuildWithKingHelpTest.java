@@ -124,7 +124,7 @@ public class MainActionBuildWithKingHelpTest {
         action.doAction(game, user);
     }
 
-    //test decrementing emporiums when present an emporium of another user
+    //action decrementing emporiums when present an emporium of another user
     @Test
     public void emporiumPresent() throws ActionNotPossibleException {
         int coin;

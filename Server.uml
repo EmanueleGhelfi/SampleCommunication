@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Server</OriginalElement>
+  <nodes>
+    <node x="-67.5" y="155.0">Server.Model.User</node>
+    <node x="143.5" y="148.0">Server.Model.Game</node>
+    <node x="2.900462962962962" y="0.0">Server.Controller.GameController</node>
+    <node x="34.60416666666667" y="237.0">Server.Controller.GamesManager</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Server.Model.Game" target="Server.Controller.GameController">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Model.Game" target="Server.Model.User">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Controller.GameController" target="Server.Model.User">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Controller.GameController" target="Server.Model.Game">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Controller.GamesManager" target="Server.Model.User">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Model.User" target="Server.Controller.GameController">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Model.User" target="Server.Model.Game">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="Server.Controller.GamesManager" target="Server.Model.Game">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="75.0" y="133.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

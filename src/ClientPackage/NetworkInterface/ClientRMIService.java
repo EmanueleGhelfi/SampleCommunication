@@ -78,7 +78,7 @@ public class ClientRMIService extends ClientService implements RMIClientInterfac
             @Override
             public void run() {
                 try {
-                    rmiClientHandler.test(action);
+                    rmiClientHandler.action(action);
                 } catch (ActionNotPossibleException e) {
                     clientController.onActionNotPossible(e);
                 } catch (RemoteException e) {
